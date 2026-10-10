@@ -1,0 +1,17 @@
+node_modules/
+dist/
+report/
+coverage/
+test-results/
+*.tgz
+
+playwright-report/
+*.tsbuildinfo
+*.log
+mark.crono.json
+test/markdown/chunk-baseline.json
+
+repo/
+script/build/
+.agents/
+.codex/

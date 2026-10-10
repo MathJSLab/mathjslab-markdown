@@ -1,0 +1,18 @@
+{
+  "repository": ".github",
+  "files": [
+    "script/tsconfig.json",
+    "script/helper/copy-repo-files.ts",
+    "script/helper/clean-package-lock.cjs",
+    "script/helper/mark-crono.ts",
+    "script/helper/git-commit.cjs",
+    {
+      "src": "resource/mathjslab-markdown/script/helper/project-tasks.mjs",
+      "dest": "script/helper/project-tasks.mjs"
+    },
+    {
+      "src": "resource/mathjslab-markdown/.prettierrc",
+      "dest": ".prettierrc"
+    }
+  ]
+}

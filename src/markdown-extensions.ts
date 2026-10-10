@@ -1,0 +1,27 @@
+/** Built-in Markdown extension factories and their load-free manifests. */
+export { abcExtension } from './markdown/extensions/abc/extension.js';
+export { abcManifest } from './markdown/extensions/abc/manifest.js';
+export { graphvizExtension } from './markdown/extensions/graphviz/extension.js';
+export { graphvizManifest } from './markdown/extensions/graphviz/manifest.js';
+export { headingIdsExtension } from './markdown/extensions/heading-ids/extension.js';
+export { headingIdsManifest } from './markdown/extensions/heading-ids/manifest.js';
+export { mapsExtension } from './markdown/extensions/maps/extension.js';
+export { mapsManifest } from './markdown/extensions/maps/manifest.js';
+export { mathJaxExtension } from './markdown/extensions/mathjax/extension.js';
+export { mathJaxManifest } from './markdown/extensions/mathjax/manifest.js';
+export { mermaidExtension } from './markdown/extensions/mermaid/extension.js';
+export { mermaidManifest } from './markdown/extensions/mermaid/manifest.js';
+export { model3DExtension } from './markdown/extensions/model-3d/extension.js';
+export { model3DManifest } from './markdown/extensions/model-3d/manifest.js';
+export { molecule3DExtension } from './markdown/extensions/molecule-3d/extension.js';
+export { molecule3DManifest } from './markdown/extensions/molecule-3d/manifest.js';
+export { relativeUrlsExtension } from './markdown/extensions/relative-urls/extension.js';
+export { relativeUrlsManifest } from './markdown/extensions/relative-urls/manifest.js';
+export { smilesExtension } from './markdown/extensions/smiles/extension.js';
+export { smilesManifest } from './markdown/extensions/smiles/manifest.js';
+export { syntaxHighlightExtension } from './markdown/extensions/syntax-highlight/extension.js';
+export { syntaxHighlightManifest } from './markdown/extensions/syntax-highlight/manifest.js';
+export { vegaLiteExtension } from './markdown/extensions/vega-lite/extension.js';
+export { vegaLiteManifest } from './markdown/extensions/vega-lite/manifest.js';
+export { verovioExtension } from './markdown/extensions/verovio/extension.js';
+export { verovioManifest } from './markdown/extensions/verovio/manifest.js';

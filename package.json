@@ -1,0 +1,200 @@
+{
+  "name": "mathjslab-markdown",
+  "version": "0.1.0",
+  "description": "Reusable Markdown engine, educational extensions and document Web Component.",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./dist/types/markdown-core.d.ts",
+      "import": "./dist/source/markdown-core.js",
+      "default": "./dist/source/markdown-core.js"
+    },
+    "./component": {
+      "types": "./dist/types/markdown-component.d.ts",
+      "import": "./dist/source/markdown-component.js",
+      "default": "./dist/source/markdown-component.js"
+    },
+    "./component/register": {
+      "types": "./dist/types/markdown-component-register.d.ts",
+      "import": "./dist/source/markdown-component-register.js",
+      "default": "./dist/source/markdown-component-register.js"
+    },
+    "./extensions": {
+      "types": "./dist/types/markdown-extensions.d.ts",
+      "import": "./dist/source/markdown-extensions.js",
+      "default": "./dist/source/markdown-extensions.js"
+    },
+    "./mathjslab": {
+      "types": "./dist/types/markdown-mathjslab.d.ts",
+      "import": "./dist/source/markdown-mathjslab.js",
+      "default": "./dist/source/markdown-mathjslab.js"
+    },
+    "./mathjslab/worker": {
+      "types": "./dist/types/markdown-mathjslab-worker.d.ts",
+      "import": "./dist/source/markdown-mathjslab-worker.js",
+      "default": "./dist/source/markdown-mathjslab-worker.js"
+    },
+    "./browser": {
+      "types": "./dist/types/markdown-document.d.ts",
+      "import": "./dist/source/markdown-document.js",
+      "default": "./dist/source/markdown-document.js"
+    },
+    "./compat/*": {
+      "types": "./dist/types/*.d.ts",
+      "import": "./dist/source/*.js",
+      "default": "./dist/source/*.js"
+    },
+    "./bundles/*": "./dist/browser/*"
+  },
+  "types": "./dist/types/markdown-core.d.ts",
+  "files": [
+    "dist/",
+    "CHANGES.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "README.md",
+    "doc/"
+  ],
+  "sideEffects": [
+    "./dist/source/markdown-component-register.js",
+    "./dist/source/markdown-document.js"
+  ],
+  "scripts": {
+    "clean:package-lock": "node script/helper/clean-package-lock.cjs",
+    "clean:build": "node script/helper/project-tasks.mjs clean-build",
+    "clean:repository": "node script/helper/project-tasks.mjs clean-repository",
+    "clean:results": "node script/helper/project-tasks.mjs clean-results",
+    "clean": "npm run clean:build && npm run clean:results",
+    "clean:all": "npm run clean && npm run clean:repository && npm run clean:package-lock",
+    "clone:repository": "node script/helper/project-tasks.mjs clone",
+    "copy:repository": "node script/helper/project-tasks.mjs copy",
+    "clone:copy:clean:repository": "npm run clone:repository && npm run copy:repository && npm run clean:repository",
+    "install:approve:all": "npm install-scripts approve --all && npm install",
+    "install:all": "npm install && npm run clone:copy:clean:repository",
+    "update": "npx npm-check-updates -u && npm run install:all",
+    "tsx": "tsx",
+    "npx:tsx": "npx tsx",
+    "crono:start": "npm run tsx -- script/helper/mark-crono.ts start",
+    "crono:mark": "npm run tsx -- script/helper/mark-crono.ts mark",
+    "crono:stop": "npm run tsx -- script/helper/mark-crono.ts stop",
+    "format": "prettier --write .",
+    "lint": "eslint src",
+    "format:lint": "npm run format && npm run lint",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build:package": "tsx ./node_modules/webpack/bin/webpack --config webpack.config.ts",
+    "build:browser": "npm run build:package -- --mode production",
+    "build:dev": "npm run build:types && npm run build:package -- --mode development",
+    "build:prod": "npm run clean:build && npm run build:types && npm run build:browser",
+    "build": "npm run build:prod",
+    "typecheck": "tsc -p tsconfig.build.json --noEmit",
+    "test:unit": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.cjs --runInBand",
+    "test": "npm run test:unit",
+    "test:distribution": "node --test test/distribution/*.test.mjs",
+    "verify:package": "node script/verify-package.mjs",
+    "pack:dry-run": "npm pack --dry-run --ignore-scripts",
+    "prepack": "npm run build && npm run test:distribution && npm run verify:package",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm test",
+    "do:all": "npm run crono:start && npm run clean:all && npm run update && npm run format:lint && npm run typecheck && npm test && npm run build && npm run test:distribution && npm run verify:package && npm run git:all:npm:publish && echo script \"do:all\" finished. && npm run crono:stop",
+    "git:add": "git add .",
+    "git:commit": "node script/helper/git-commit.cjs",
+    "git:push": "git push --set-upstream origin main",
+    "git:all": "npm run git:add && npm run git:commit && npm run git:push",
+    "npm:publish": "npm publish",
+    "build:script": "tsc -p script/tsconfig.json",
+    "prebuild": "npm run build:script",
+    "git:all:npm:publish": "npm run git:all && npm run npm:publish"
+  },
+  "dependencies": {
+    "dompurify": "3.4.16",
+    "highlight.js": "^11.12.0",
+    "marked": "^18.1.0",
+    "marked-gfm-heading-id": "^4.1.4",
+    "marked-highlight": "^2.2.4"
+  },
+  "optionalDependencies": {
+    "@mathjax/mathjax-mhchem-font-extension": "^4.1.3",
+    "@viz-js/viz": "3.31.0",
+    "3dmol": "2.5.5",
+    "abcjs": "6.7.1",
+    "leaflet": "1.9.4",
+    "mathjax": "^4.1.3",
+    "mermaid": "^12.1.0",
+    "smiles-drawer": "^2.4.1",
+    "three": "0.186.1",
+    "topojson-client": "3.1.0",
+    "vega": "6.4.0",
+    "vega-embed": "7.3.0",
+    "vega-lite": "6.5.0",
+    "verovio": "6.3.0"
+  },
+  "peerDependencies": {
+    "mathjslab": "^2.8.0"
+  },
+  "peerDependenciesMeta": {
+    "mathjslab": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/leaflet": "1.9.22",
+    "@types/node": "26.6.5",
+    "@types/three": "0.186.0",
+    "@types/topojson-client": "3.1.5",
+    "@types/topojson-specification": "1.0.5",
+    "@types/webpack": "^5.28.5",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
+    "mathjslab": "file:../mathjslab",
+    "ts-jest": "^29.4.14",
+    "ts-loader": "^9.6.2",
+    "tsx": "^4.23.15",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "webpack": "^5.111.1",
+    "webpack-cli": "^7.2.3",
+    "eslint": "^10.12.0",
+    "@typescript-eslint/eslint-plugin": "^8.71.1",
+    "@typescript-eslint/parser": "^8.71.1",
+    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.10",
+    "globals": "^17.13.0"
+  },
+  "keywords": [
+    "MathJSLab",
+    "markdown",
+    "web-component",
+    "education",
+    "mathematics",
+    "gfm",
+    "mathjax",
+    "mermaid",
+    "worker"
+  ],
+  "homepage": "https://github.com/MathJSLab/mathjslab-markdown#readme",
+  "bugs": {
+    "url": "https://github.com/MathJSLab/mathjslab-markdown/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MathJSLab/mathjslab-markdown.git"
+  },
+  "author": "Sergio Lindau <sergiolindau@gmail.com>",
+  "main": "./dist/source/markdown-core.js",
+  "module": "./dist/source/markdown-core.js",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24",
+    "npm": ">=10"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "unrs-resolver": true,
+    "@parcel/watcher": true
+  }
+}
