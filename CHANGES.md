@@ -1,6 +1,13 @@
 # Release notes
 
-## Unreleased — 0.1.0
+## 0.1.1
+
+- Refresh the README with the MathJSLab logo, project links and package badges.
+- Point package download, CDN, size and SourceRank badges to
+  mathjslab-markdown.
+- Update the MIT license attribution to 2016-2026 and include mathjslab.com.
+
+## 0.1.0
 
 - Align common build helpers and their TypeScript compilation with mathjslab,
   reuse organization repository synchronization, and provide the complete timed

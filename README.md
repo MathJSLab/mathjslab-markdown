@@ -1,4 +1,20 @@
-# mathjslab-markdown
+<p align="center">
+    <a href="https://mathjslab.com/" target="_blank" rel="noopener"><img src="https://mathjslab.com/images/mathjslab-logo.svg" alt="logo" width="210" height="210" /></a>
+</p>
+
+# [mathjslab-markdown - MathJSLab Markdown Engine](https://mathjslab.com/) - [mathjslab.com](https://mathjslab.com/)
+
+[![NPM Version](https://img.shields.io/npm/v/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
+[![NPM Last Update](https://img.shields.io/npm/last-update/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fmathjslab.com%2F)](https://mathjslab.com/)
+[![GitHub Created At](https://img.shields.io/github/created-at/MathJSLab/mathjslab-markdown)](https://github.com/MathJSLab/mathjslab-markdown)
+[![MIT License](https://img.shields.io/npm/l/mathjslab-markdown)](https://github.com/MathJSLab/mathjslab-markdown/blob/main/LICENSE)
+[![NPM Downloads](https://img.shields.io/npm/d18m/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
+[![NPM Downloads per week](https://img.shields.io/npm/dw/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
+[![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hy/mathjslab-markdown)](https://www.jsdelivr.com/package/npm/mathjslab-markdown)
+[![Libraries.io SourceRank](https://img.shields.io/librariesio/sourcerank/npm/mathjslab-markdown)](https://libraries.io/npm/mathjslab-markdown/sourcerank)
+[![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
+[![NPM package minimized gzipped size](https://img.shields.io/bundlejs/size/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
 
 Reusable Markdown engine, educational extensions and optional
 `<markdown-document>` Web Component from the
