@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -107,9 +107,9 @@
     "git:all:npm:publish": "npm run git:all && npm run npm:publish"
   },
   "dependencies": {
-    "dompurify": "3.4.16",
+    "dompurify": "3.4.17",
     "highlight.js": "^11.12.0",
-    "marked": "^18.1.0",
+    "marked": "^18.1.1",
     "marked-gfm-heading-id": "^4.1.4",
     "marked-highlight": "^2.2.4"
   },
@@ -130,7 +130,7 @@
     "verovio": "6.3.0"
   },
   "peerDependencies": {
-    "mathjslab": "^2.8.0"
+    "mathjslab": "^2.9.0"
   },
   "peerDependenciesMeta": {
     "mathjslab": {
@@ -147,7 +147,7 @@
     "@types/webpack": "^5.28.5",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
-    "mathjslab": "file:../mathjslab",
+    "mathjslab": "2.9.0",
     "ts-jest": "^29.4.14",
     "ts-loader": "^9.6.2",
     "tsx": "^4.23.15",
@@ -155,8 +155,8 @@
     "webpack": "^5.111.1",
     "webpack-cli": "^7.2.3",
     "eslint": "^10.12.0",
-    "@typescript-eslint/eslint-plugin": "^8.71.1",
-    "@typescript-eslint/parser": "^8.71.1",
+    "@typescript-eslint/eslint-plugin": "^8.71.2",
+    "@typescript-eslint/parser": "^8.71.2",
     "eslint-plugin-prettier": "^5.5.6",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.10",
@@ -173,7 +173,7 @@
     "mermaid",
     "worker"
   ],
-  "homepage": "https://github.com/MathJSLab/mathjslab-markdown#readme",
+  "homepage": "https://mathjslab.com/",
   "bugs": {
     "url": "https://github.com/MathJSLab/mathjslab-markdown/issues"
   },

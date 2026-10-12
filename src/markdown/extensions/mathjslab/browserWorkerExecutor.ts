@@ -1,5 +1,5 @@
 import { Interpreter, type NodeInput } from 'mathjslab';
-import { RemoteMathJSLabRuntime, type RuntimeHost, type RuntimeOutput, type RuntimeWorkerEndpoint } from 'mathjslab/runtime';
+import { RemoteMathJSLabRuntime, type RuntimeDiagnostic, type RuntimeHost, type RuntimeOutput, type RuntimeWorkerEndpoint } from 'mathjslab/runtime';
 
 import type { MarkdownDocumentContext } from '../../../MarkdownEngine.js';
 import { DefaultMarkdownResourceService } from '../../security.js';
@@ -20,6 +20,7 @@ let executorSequence = 0;
 const statementSources = (interpreter: Interpreter, source: string): string[] => {
   const lines = source.split(/\r?\n/);
   const tree = interpreter.Parse(source);
+  if (tree.type === 'VOID') return [];
   if (tree.type !== 'LIST') return [source];
   return tree.list.map((statement: NodeInput, index: number) => {
     const previous = tree.list[index - 1];
@@ -28,13 +29,19 @@ const statementSources = (interpreter: Interpreter, source: string): string[] =>
     const stopLine = lines[statement.stop.line - 1] ?? '';
     if (statement.stop.line === statement.start.line) {
       if ((!previous || previous.stop.line < statement.start.line) && (!next || next.start.line > statement.start.line)) return startLine;
-      return startLine.substring(statement.start.column, statement.stop.column + 1);
+      return startLine.substring(statement.start.column, statement.stop.column + 1) + (statement.omitOutput ? ';' : '');
     }
     const middle = statement.stop.line > statement.start.line + 1 ? `${lines.slice(statement.start.line, statement.stop.line - 1).join('\n')}\n` : '';
     const start = !previous || previous.stop.line < statement.start.line ? `${startLine}\n` : `${startLine.substring(statement.start.column)}\n`;
     const stop = !next || next.start.line > statement.stop.line ? stopLine : stopLine.substring(0, statement.stop.column + 1);
-    return `${start}${middle}${stop}`.trim();
+    const text = `${start}${middle}${stop}`.trim();
+    return next?.start.line === statement.stop.line && statement.omitOutput ? `${text};` : text;
   });
+};
+
+const runtimeError = (diagnostics: readonly RuntimeDiagnostic[]): Error => {
+  const diagnostic = diagnostics.find((item) => item.severity === 'error') ?? diagnostics[0];
+  return Object.assign(new Error(diagnostics.map((item) => item.message).join('\n')), diagnostic ? { code: diagnostic.code } : {});
 };
 
 /** Creates the Markdown adapter over the package-level MathJSLab runtime. */
@@ -94,8 +101,10 @@ export const createBrowserMathJSLabWorkerExecutor = (options: BrowserMathJSLabWo
 
   const materialize = async (outputs: readonly RuntimeOutput[]): Promise<readonly MathJSLabOutput[]> => {
     const result: MathJSLabOutput[] = [];
-    for (const output of outputs) {
-      if (output.type === 'data' || (output.type === 'text' && !output.text.startsWith('Loaded script from '))) continue;
+    for (const [index, output] of outputs.entries()) {
+      // The runtime emits text/MathML/data representations of the same value.
+      // Keep MathML for that value, and retain independent text effects.
+      if (output.type === 'data' || (output.type === 'text' && outputs[index + 1]?.type === 'mathml')) continue;
       if (output.type === 'visualization') {
         if (output.renderer !== 'plotly') throw new Error(`Unsupported MathJSLab visualization renderer: ${output.renderer}`);
         result.push(
@@ -116,6 +125,7 @@ export const createBrowserMathJSLabWorkerExecutor = (options: BrowserMathJSLabWo
   return {
     toMathML: options.toMathML,
     async createSession(context) {
+      if (disposal) throw new Error('MathJSLab Markdown executor is disposed.');
       const sessionId = `markdown-${executorId}-${++sessionSequence}`;
       contexts.set(sessionId, context);
       let session: Awaited<ReturnType<typeof runtime.createSession>>;
@@ -132,16 +142,18 @@ export const createBrowserMathJSLabWorkerExecutor = (options: BrowserMathJSLabWo
       let sessionDisposal: Promise<void> | undefined;
       return {
         async parse(source, activeContext) {
+          if (sessionDisposal || disposal) throw new Error('MathJSLab Markdown session is disposed.');
           contexts.set(sessionId, activeContext);
           const result = await session.parse(source);
           if (result.diagnostics.some((item) => item.severity === 'error'))
             return {
               statements: [],
-              error: new Error(result.diagnostics.map((item) => item.message).join('\n')),
+              error: runtimeError(result.diagnostics),
             };
           return { statements: statementSources(parser, source) };
         },
         async execute(statement, activeContext): Promise<MathJSLabExecutionResult> {
+          if (sessionDisposal || disposal) throw new Error('MathJSLab Markdown session is disposed.');
           contexts.set(sessionId, activeContext);
           const timeoutMs = activeContext.executionPolicy?.mathjslab?.timeoutMs ?? options.timeoutMs;
           const result = await session.execute(statement, {
@@ -158,27 +170,30 @@ export const createBrowserMathJSLabWorkerExecutor = (options: BrowserMathJSLabWo
             ...(result.status === 'success'
               ? {}
               : {
-                  error: new Error(result.diagnostics.map((item) => item.message).join('\n')),
+                  error: runtimeError(result.diagnostics),
                 }),
           };
         },
         async dispose() {
           if (sessionDisposal) return sessionDisposal;
-          contexts.delete(sessionId);
-          storage.delete(sessionId);
-          sessionDisposal = Promise.resolve().then(() => session.dispose());
+          sessionDisposal = Promise.resolve()
+            .then(() => session.dispose())
+            .finally(() => {
+              contexts.delete(sessionId);
+              storage.delete(sessionId);
+            });
           return sessionDisposal;
         },
       };
     },
     dispose() {
       if (disposal) return disposal;
-      contexts.clear();
-      storage.clear();
       disposal = Promise.resolve().then(async () => {
         try {
           await runtime.dispose();
         } finally {
+          contexts.clear();
+          storage.clear();
           fallbackResources.dispose();
         }
       });

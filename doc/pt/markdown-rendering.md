@@ -552,10 +552,12 @@ sessões por documento, valida a versão do protocolo e encaminha cada operaçã
 sessão correspondente.
 
 O bundle independente exporta `createBrowserMathJSLabWorkerExecutor`. Essa
-factory cria um Worker ES module empacotado separadamente e usa um
-interpretador MathJSLab distinto para cada documento. As variáveis permanecem
-entre fences do mesmo documento e são apagadas no descarte. O Worker não recebe
-referências ao DOM nem ao estado global do aplicativo.
+factory usa `RemoteMathJSLabRuntime` de `mathjslab/runtime` 2.9.0 e recebe
+`workerFactory` do host. Cada sessão cria um Worker ES module com o protocolo
+canônico de `mathjslab/worker`, distinto do protocolo customizado descrito
+acima, e um interpretador MathJSLab distinto para cada documento. As variáveis
+permanecem entre fences do mesmo documento e são apagadas no descarte. O Worker
+não recebe referências ao DOM nem ao estado global do aplicativo.
 
 O aplicativo usa esse executor Worker por padrão para fences `mathjslab`, com
 prazo padrão de dez segundos. As funções `plot`, `plot3`, `surf`, `plot2d` e

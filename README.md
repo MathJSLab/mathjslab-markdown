@@ -2,7 +2,7 @@
     <a href="https://mathjslab.com/" target="_blank" rel="noopener"><img src="https://mathjslab.com/images/mathjslab-logo.svg" alt="logo" width="210" height="210" /></a>
 </p>
 
-# [mathjslab-markdown - MathJSLab Markdown Engine](https://mathjslab.com/) - [mathjslab.com](https://mathjslab.com/)
+# [mathjslab-markdown - MathJSLab Markdown Engine](https://mathjslab.com/)
 
 [![NPM Version](https://img.shields.io/npm/v/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
 [![NPM Last Update](https://img.shields.io/npm/last-update/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
@@ -16,9 +16,9 @@
 [![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
 [![NPM package minimized gzipped size](https://img.shields.io/bundlejs/size/mathjslab-markdown)](https://www.npmjs.com/package/mathjslab-markdown)
 
-Reusable Markdown engine, educational extensions and optional
-`<markdown-document>` Web Component from the
-[MathJSLab project](https://mathjslab.com/). Licensed under the MIT license.
+> A reusable Markdown engine, educational extensions and optional
+> `<markdown-document>` Web Component from the
+> [MathJSLab project](https://mathjslab.com/).
 
 [Repository](https://github.com/MathJSLab/mathjslab-markdown) ·
 [Issues](https://github.com/MathJSLab/mathjslab-markdown/issues) ·
@@ -26,7 +26,7 @@ Reusable Markdown engine, educational extensions and optional
 
 ## Installation and use
 
-The initial release is prepared as version **0.1.0**. After it is published:
+To install use
 
 ```shell
 npm install mathjslab-markdown
@@ -83,7 +83,7 @@ choose to enable. Source ESM uses a bundler CSS inline query for maps.
 | `mathjslab-markdown/bundles/*`          | Standalone browser bundles and assets          |
 | `mathjslab-markdown/compat/*`           | Compatibility modules for application adapters |
 
-MathJSLab is an optional peer dependency (`^2.8.0`). Its integration receives
+MathJSLab is an optional peer dependency (`^2.9.0`). Its integration receives
 executors, Workers and renderers from the host; the core engine has no
 dependency on `mathjslab-app` or Plotly. Standalone bundles share a runtime:
 deploy the entire `dist/browser` tree, including its chunks and assets.
@@ -96,11 +96,11 @@ See the [architecture](doc/architecture.md),
 
 ## Development
 
-Use Node.js `^20.19.0 || ^22.13.0 || >=24` and npm 10 or newer. For joint
-development, clone `mathjslab` and `mathjslab-markdown` as sibling directories
-and build `mathjslab` first. The development dependency `file:../mathjslab`
-intentionally selects that local core; published consumers resolve the optional
-peer from npm instead.
+Use Node.js `^20.19.0 || ^22.13.0 || >=24` and npm 10 or newer. Development and
+release checks use the published `mathjslab` 2.9.0 package. For joint
+development, clone and build `mathjslab` in a sibling directory, then run
+`npm install --no-save --package-lock=false ../mathjslab` to test local
+changes. Restore the published dependency with `npm ci` before release checks.
 
 ```shell
 npm install
@@ -150,3 +150,28 @@ includes the production distribution, documentation and license.
 Publish the compatible `mathjslab` version before consumers enable its
 integration. Commit, push and publication scripts are also available as
 separate maintainer commands; run them only when deliberately releasing.
+
+## License
+
+> [MIT License](https://opensource.org/license/mit)
+>
+> Copyright &copy; 2016-2026 [Sergio Lindau](mailto:sergiolindau@gmail.com),
+> [mathjslab.com](https://mathjslab.com/).
+>
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+> of this software and associated documentation files (the "Software"), to deal
+> in the Software without restriction, including without limitation the rights
+> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the Software is
+> furnished to do so, subject to the following conditions:
+>
+> The above copyright notice and this permission notice shall be included in
+> all copies or substantial portions of the Software.
+>
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+> SOFTWARE.
