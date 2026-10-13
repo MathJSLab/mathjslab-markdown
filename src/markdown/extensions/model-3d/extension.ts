@@ -1,7 +1,7 @@
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
-import { assertSourceSize, observeElementResize, renderExtensionError, resolveResourceUrl } from '../../extensionUtils.js';
+import { assertSourceSize, observeElementResize, renderExtensionError, resolveResourceUrl, waitForElementLayout } from '../../extensionUtils.js';
 import { model3DManifest } from './manifest.js';
-import type { AnimationMixer, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
+import type { AnimationMixer, Object3D, PerspectiveCamera, Scene, Timer, WebGLRenderer } from 'three';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 type Entry = {
@@ -10,6 +10,7 @@ type Entry = {
   renderer: WebGLRenderer;
   controls: OrbitControls;
   mixer?: AnimationMixer;
+  timer?: Timer;
   frame: number | undefined;
   disconnect: () => void;
   disconnectVisibility: () => void;
@@ -48,6 +49,11 @@ export const model3DExtension = (): MarkdownExtension => {
         /* Continue releasing the remaining WebGL resources. */
       }
       try {
+        entry.timer?.dispose();
+      } catch {
+        /* Continue releasing the remaining WebGL resources. */
+      }
+      try {
         entry.controls.removeEventListener('change', entry.onChange);
       } catch {
         /* Continue releasing the remaining WebGL resources. */
@@ -82,6 +88,7 @@ export const model3DExtension = (): MarkdownExtension => {
     let partialScene: Scene | undefined;
     let partialControls: OrbitControls | undefined;
     let partialObject: Object3D | undefined;
+    let partialTimer: Timer | undefined;
     let partialDisconnect = (): void => undefined;
     let partialDisconnectVisibility = (): void => undefined;
     let partialOnChange = (): void => undefined;
@@ -96,6 +103,8 @@ export const model3DExtension = (): MarkdownExtension => {
       ]);
       if (context.signal?.aborted) return;
       dispose(container);
+      await waitForElementLayout(container, context);
+      if (context.signal?.aborted) return;
       const width = Math.max(context.width ?? container.clientWidth ?? 640, 1);
       const height = Math.max(context.height ?? container.clientHeight ?? 420, 1);
       const renderer = (partialRenderer = new THREE.WebGLRenderer({
@@ -129,6 +138,15 @@ export const model3DExtension = (): MarkdownExtension => {
         );
       } else if (language === 'obj') {
         object = new OBJLoader().parse(source);
+        // Bare OBJ files have no MTL palette. The loader's white material
+        // disappears against a light document under the viewer's lights.
+        object.traverse((child) => {
+          if (!(child instanceof THREE.Mesh)) return;
+          const materials = Array.isArray(child.material) ? child.material : [child.material];
+          for (const material of materials) {
+            if ('color' in material && !material.vertexColors && material.color.getHex() === 0xffffff) material.color.setHex(0x78909c);
+          }
+        });
       } else {
         const base = context.sourceUrl ? new URL('.', context.sourceUrl).href : document.baseURI;
         const manager = new THREE.LoadingManager();
@@ -160,7 +178,11 @@ export const model3DExtension = (): MarkdownExtension => {
       camera.updateProjectionMatrix();
       controls.target.copy(sphere.center);
       controls.update();
-      const clock = new THREE.Clock();
+      // Static models need no clock or visibility listener. Animated models
+      // update time once per frame and discard time spent offscreen.
+      const timer = mixer ? (partialTimer = new THREE.Timer()) : undefined;
+      timer?.connect(container.ownerDocument);
+      timer?.reset();
       const onChange = (partialOnChange = (): void => renderer.render(scene, camera));
       const entry: Entry = {
         scene,
@@ -168,6 +190,7 @@ export const model3DExtension = (): MarkdownExtension => {
         renderer,
         controls,
         ...(mixer ? { mixer } : {}),
+        ...(timer ? { timer } : {}),
         frame: undefined,
         disconnect: () => undefined,
         disconnectVisibility: () => undefined,
@@ -179,7 +202,10 @@ export const model3DExtension = (): MarkdownExtension => {
           entry.frame = undefined;
           return;
         }
-        mixer?.update(clock.getDelta());
+        if (mixer && timer) {
+          timer.update();
+          mixer.update(timer.getDelta());
+        }
         renderer.render(scene, camera);
         if (mixer) entry.frame = requestAnimationFrame(draw);
       };
@@ -191,14 +217,14 @@ export const model3DExtension = (): MarkdownExtension => {
         renderer.setSize(nextWidth, nextHeight, false);
         renderer.render(scene, camera);
       });
-      if (typeof IntersectionObserver !== 'undefined' && mixer) {
+      if (typeof IntersectionObserver !== 'undefined') {
         const observer = new IntersectionObserver(([observed]) => {
           visible = observed?.isIntersecting ?? true;
           if (!visible && entry.frame !== undefined) {
             cancelAnimationFrame(entry.frame);
             entry.frame = undefined;
           } else if (visible && entry.frame === undefined) {
-            clock.getDelta();
+            timer?.reset();
             draw();
           }
         });
@@ -211,6 +237,7 @@ export const model3DExtension = (): MarkdownExtension => {
       partialScene = undefined;
       partialControls = undefined;
       partialObject = undefined;
+      partialTimer = undefined;
       partialDisconnect = (): void => undefined;
       partialDisconnectVisibility = (): void => undefined;
       partialOnChange = (): void => undefined;
@@ -218,6 +245,11 @@ export const model3DExtension = (): MarkdownExtension => {
       if (entries.has(container)) {
         dispose(container);
       } else {
+        try {
+          partialTimer?.dispose();
+        } catch {
+          /* Continue releasing partially initialized resources. */
+        }
         try {
           partialDisconnect();
         } catch {

@@ -1,5 +1,30 @@
 # Release notes
 
+## 0.3.0
+
+- Add configurable map baselayers with OpenStreetMap and CARTO presets, custom
+  XYZ providers, per-map selectors and an offline option. Export provider types
+  and presets, support engine and document configuration, and preserve the
+  vector-only default and existing host baselayer hook.
+- Validate map provider configuration and resource policy, sanitize labels and
+  attribution, and report blocked providers and tile failures locally while
+  preserving vector overlays. Document provider setup and cleanup.
+- Install extension styles before viewport measurement, including inside Shadow
+  DOM, and add scoped syntax highlighting styles. Wait for visible, connected
+  map and 3D viewports before allocating renderer resources.
+- Preserve safe local SVG symbol references used by music notation while
+  rejecting external references and active content. Add a Verovio SVG audit
+  helper and visual regression coverage.
+- Fix map point markers, responsive bounds and cleanup; retain molecular atoms
+  and hydrogens alongside protein cartoons, and restore molecular and Vega view
+  updates on resize.
+- Improve bare OBJ visibility and replace the Three.js animation clock with a
+  disposable Timer that excludes hidden and offscreen time.
+- Avoid Mermaid render ID collisions across extension instances and unify
+  fallback diagnostics with extension, language and resolved resource URLs.
+- Add map provider, viewer, layout, SVG, styling, animation timing and public
+  API regression tests.
+
 ## 0.2.0
 
 - Require mathjslab ^2.9.0 for the optional integration and pin development

@@ -1,10 +1,11 @@
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
 import { mermaidManifest } from './manifest.js';
+import { renderExtensionError } from '../../extensionUtils.js';
 
 type MermaidApi = typeof import('mermaid').default;
+let sequence = 0;
 
 export const mermaidExtension = (): MarkdownExtension => {
-  let sequence = 0;
   let loading: Promise<MermaidApi> | undefined;
   const rendered = new Set<Element>();
 
@@ -32,13 +33,7 @@ export const mermaidExtension = (): MarkdownExtension => {
       rendered.add(container);
     } catch (error) {
       if (context.signal?.aborted) return;
-      const message = document.createElement('pre');
-      message.className = 'mermaid-error';
-      message.setAttribute('role', 'alert');
-      message.textContent = `Mermaid: ${error instanceof Error ? error.message : String(error)}`;
-      const code = document.createElement('pre');
-      code.textContent = source;
-      container.replaceChildren(message, code);
+      renderExtensionError(container, 'Mermaid', 'mermaid', source, error, context);
     }
   };
 

@@ -7,6 +7,8 @@ import { cleanupAll, notifyMarkdownDocumentDispose } from './markdown/lifecycle.
 import { markdownDiagnosticCategory, markdownDiagnosticCodes } from './markdown/diagnostics.js';
 import type { MarkdownDiagnostic } from './markdown/diagnostics.js';
 import { Marked, type MarkedExtension, type MarkedOptions } from 'marked';
+import type { MarkdownMapOptions } from './markdown/extensions/maps/baseLayers.js';
+export type { MarkdownMapOptions, MarkdownMapProvider } from './markdown/extensions/maps/baseLayers.js';
 
 export { markdownDiagnosticCategory, markdownDiagnosticCodes } from './markdown/diagnostics.js';
 export type { MarkdownDiagnostic, MarkdownDiagnosticCategory, MarkdownDiagnosticCode, MarkdownDiagnosticEventDetail } from './markdown/diagnostics.js';
@@ -59,6 +61,7 @@ export type MarkdownDocumentContext = {
   fetchResource?: (url: URL, init: RequestInit, context: MarkdownDocumentContext) => Promise<Response>;
   observeResize?: (element: Element, callback: (width: number, height: number) => void) => (() => void) | void;
   createMapBaseLayer?: (leaflet: unknown, context: MarkdownDocumentContext) => { addTo(map: unknown): unknown } | void;
+  mapOptions?: MarkdownMapOptions;
   onDiagnostic?: (diagnostic: MarkdownDiagnostic) => void;
 };
 export type MarkdownExtensionCapability = 'audio' | 'interactive' | 'network' | 'wasm' | 'webgl';
@@ -430,6 +433,12 @@ export class MarkdownEngine {
       allowedCapabilities,
     };
     if (activeContext.signal?.aborted) return;
+    // Styles must exist before a renderer measures its viewport, and must live
+    // in the document's own scope (including a ShadowRoot).
+    const styleContainer = (element as Node).nodeType === 9 ? (element as Document).head : element;
+    if (styleContainer instanceof Element || (typeof ShadowRoot !== 'undefined' && styleContainer instanceof ShadowRoot)) {
+      for (const extension of this.extensions.values()) this.installLocalStyles(styleContainer, extension);
+    }
     for (const extension of this.extensions.values()) {
       if (activeContext.signal?.aborted || this.disposed) return;
       if (!this.extensionAllowed(extension, activeContext)) continue;
@@ -471,10 +480,6 @@ export class MarkdownEngine {
       await extension.typeset?.(element, activeContext);
     }
     if (activeContext.signal?.aborted || this.disposed) return;
-    for (const renderable of found) {
-      const extension = this.extensions.get(renderable.getAttribute('data-markdown-extension') ?? '');
-      if (extension) this.installLocalStyles(renderable, extension);
-    }
   }
   public async dispose(container?: ParentNode): Promise<void> {
     if (container) {
@@ -773,7 +778,7 @@ export class MarkdownEngine {
   private services(): MarkdownEngineServices {
     return { parser: this.parser, profile: this.profile };
   }
-  private installLocalStyles(container: Element, extension: MarkdownExtension): void {
+  private installLocalStyles(container: Element | ShadowRoot, extension: MarkdownExtension): void {
     const styles = extension.manifest?.styles;
     const installed = Array.from(container.children).some((child) => child.tagName === 'STYLE' && child.getAttribute('data-markdown-extension-style') === extension.name);
     if (!styles || installed) return;

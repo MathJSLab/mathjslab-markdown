@@ -155,7 +155,7 @@ export class DefaultMarkdownResourceService implements MarkdownResourceService {
       }
       break;
     }
-    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${url.href}`);
     const length = Number(response.headers.get('content-length'));
     const limit = effectivePolicy(context, this.defaults).maxResourceBytes;
     if (Number.isFinite(length) && length > limit) throw new MarkdownResourcePolicyError(`Resource exceeds the configured limit (${length} bytes)`, 'resource-size-limit');

@@ -133,6 +133,7 @@ describe('standalone Markdown public API', () => {
         'headingIdsManifest',
         'mapsExtension',
         'mapsManifest',
+        'markdownMapProviders',
         'mathJaxExtension',
         'mathJaxManifest',
         'mermaidExtension',

@@ -6,6 +6,8 @@ export { graphvizManifest } from './markdown/extensions/graphviz/manifest.js';
 export { headingIdsExtension } from './markdown/extensions/heading-ids/extension.js';
 export { headingIdsManifest } from './markdown/extensions/heading-ids/manifest.js';
 export { mapsExtension } from './markdown/extensions/maps/extension.js';
+export { markdownMapProviders } from './markdown/extensions/maps/extension.js';
+export type { MarkdownMapOptions, MarkdownMapProvider } from './markdown/extensions/maps/extension.js';
 export { mapsManifest } from './markdown/extensions/maps/manifest.js';
 export { mathJaxExtension } from './markdown/extensions/mathjax/extension.js';
 export { mathJaxManifest } from './markdown/extensions/mathjax/manifest.js';

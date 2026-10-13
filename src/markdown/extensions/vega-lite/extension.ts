@@ -44,6 +44,7 @@ export const vegaLiteExtension = (): MarkdownExtension => {
       await inlineDataUrls(spec, context);
       if (context.signal?.aborted) return;
       const { default: embed } = await import(/* webpackChunkName: "markdown-vega-lite" */ 'vega-embed');
+      if (context.signal?.aborted) return;
       dispose(container);
       result = (await embed(container as HTMLElement, spec, {
         mode: 'vega-lite',
@@ -57,10 +58,11 @@ export const vegaLiteExtension = (): MarkdownExtension => {
         container.replaceChildren();
         return;
       }
+      const activeResult = result;
       disconnect = observeElementResize(container, context, () => {
         if (context.signal?.aborted) return;
-        result?.view.resize();
-        void result?.view.runAsync().catch((error) =>
+        activeResult.view.resize();
+        void activeResult.view.runAsync().catch((error) =>
           context.onDiagnostic?.({
             extension: vegaLiteManifest.name,
             language: 'vega-lite',
