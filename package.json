@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -55,7 +55,7 @@
     "CONTRIBUTING.md",
     "LICENSE",
     "README.md",
-    "doc/"
+    "package.json"
   ],
   "sideEffects": [
     "./dist/source/markdown-component-register.js",

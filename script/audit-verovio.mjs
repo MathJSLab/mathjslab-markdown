@@ -8,7 +8,7 @@ const { default: createDOMPurify } = await import('dompurify');
 const { sanitizeSVG } = await import('../dist/source/markdown/extensionUtils.js');
 const module = await createModule();
 const purifier = createDOMPurify(new JSDOM('').window);
-const document = fs.readFileSync(process.argv[2] ?? '../mathjslab-app/doc/en/test-extensions.md', 'utf8');
+const document = fs.readFileSync(process.argv[2] ?? new URL('../test/markdown/extensions/verovio.md', import.meta.url), 'utf8');
 for (const language of ['mei', 'musicxml']) {
   const source = document.match(new RegExp('```' + language + '\\r?\\n([\\s\\S]*?)```'))[1];
   const toolkit = new VerovioToolkit(module);

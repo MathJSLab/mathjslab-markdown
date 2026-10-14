@@ -1,18 +1,19 @@
-# Música em Markdown
+# Music in Markdown
 
-O fence `abc` é apropriado para autoria simples. A reprodução aparece somente
-quando o integrador habilita áudio e sempre começa por uma ação do usuário.
+The `abc` fence is suitable for concise notation. Playback is presented only
+when the host authorizes audio and starts through a user action.
 
 ```abc
 X:1
-T:Escala de dó maior
+T:C major scale
 M:4/4
 L:1/4
 K:C
 C D E F | G A B c |
 ```
 
-Para partituras completas, use MEI ou MusicXML.
+Use MEI or MusicXML for fuller score representations. Verovio renders their
+notation through the corresponding fences.
 
 ```musicxml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -21,3 +22,6 @@ Para partituras completas, use MEI ou MusicXML.
   <part id="P1"><measure number="1"><attributes><divisions>1</divisions><time><beats>4</beats><beat-type>4</beat-type></time><clef><sign>G</sign><line>2</line></clef></attributes><note><pitch><step>C</step><octave>4</octave></pitch><duration>4</duration><type>whole</type></note></measure></part>
 </score-partwise>
 ```
+
+Score rendering and browser audio availability are distinct. On disposal,
+playback resources/listeners and per-score toolkits must be released.

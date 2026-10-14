@@ -1,5 +1,21 @@
 # Release notes
 
+## 0.3.1
+
+- Add 22 Brazilian Portuguese teaching notes covering all 14 Markdown
+  extensions, with explanations, exercises and commented answers. Include
+  mathematics, six chemistry lessons, music notation, diagrams, charts, maps,
+  molecular structures and a 3D solid.
+- Organize examples by language under `example/pt/`, with descriptive filenames
+  without numeric prefixes, collection indexes and a local CSV resource. Update
+  relative links and include `example/` in the npm package.
+- Consolidate documentation in English under `doc/`, with a documentation
+  index, authoring and integration guides, public API, rendering, lifecycle,
+  security and resource contracts, and an educational extension catalogue.
+  Refresh architecture documentation and README navigation.
+- Make the Verovio SVG audit use the package's own score fixture by default
+  instead of depending on a sibling `mathjslab-app` checkout.
+
 ## 0.3.0
 
 - Add configurable map baselayers with OpenStreetMap and CARTO presets, custom

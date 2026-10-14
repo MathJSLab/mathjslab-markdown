@@ -24,6 +24,30 @@
 [Issues](https://github.com/MathJSLab/mathjslab-markdown/issues) ·
 [Release notes](CHANGES.md) · [Contributing](CONTRIBUTING.md)
 
+## Turn your ideas into digital teaching resources
+
+Creating high-quality digital teaching resources should not require advanced
+programming skills or mastery of complex tools.
+
+With our **Markdown engine**, teachers can transform simple text into rich,
+interactive, and visually engaging educational content. Mathematical equations,
+chemical formulas, molecular structures, charts, diagrams, flowcharts, maps,
+and images can all be incorporated using a simple and accessible language.
+
+**Less time learning tools, more time teaching!**
+
+Technology evolves, but knowledge should not be tied to it. Great teaching
+resources deserve to outlast generations of tools and platforms, preserving
+their essence and the freedom to be edited, updated, and reused for years to
+come.
+
+Our goal is to lower technological barriers and empower educators, allowing
+teachers to focus their efforts on what truly matters: **the knowledge they
+want to share and the learning experiences they wish to provide.**
+
+**Because technology should serve education, not limit the future of
+knowledge.**
+
 ## Installation and use
 
 To install use
@@ -88,11 +112,23 @@ executors, Workers and renderers from the host; the core engine has no
 dependency on `mathjslab-app` or Plotly. Standalone bundles share a runtime:
 deploy the entire `dist/browser` tree, including its chunks and assets.
 
-See the [architecture](doc/architecture.md),
-[public API](doc/pt/markdown-api-publica.md),
-[lifecycle](doc/pt/markdown-lifecycle.md),
-[resource policy](doc/pt/markdown-resources.md) and
-[security policy](doc/pt/markdown-security-policy.md).
+See the [documentation index](doc/README.md), [public API](doc/public-api.md),
+[integration guide](doc/integration.md), [lifecycle](doc/lifecycle.md), and
+[security and resource policy](doc/security-and-resources.md).
+
+## Teaching examples
+
+The [example directory](example/README.md) contains teaching notes organized by
+language. The [Brazilian Portuguese collection](example/pt/README.md) provides
+22 lessons covering all 14 extensions, with explanations, exercises and
+commented answers. Topics include mathematics, chemistry, music, geography,
+history, biology, physics and computing.
+
+Each note identifies the extensions it uses. View the examples with those
+extensions enabled in a host application; ordinary Markdown viewers may display
+rich fences as source code. The collection includes local resources and is
+distributed with the npm package. Additional languages can be added under
+`example/`.
 
 ## Development
 
@@ -145,7 +181,8 @@ package.
 contents, then commits, pushes and publishes the package to npm. Run it only
 when deliberately releasing. `prepack` rebuilds and validates the emitted
 distribution; `prepublishOnly` checks lint, types and unit tests. The package
-includes the production distribution, documentation and license.
+includes the production distribution, documentation, teaching examples and
+license.
 
 Publish the compatible `mathjslab` version before consumers enable its
 integration. Commit, push and publication scripts are also available as

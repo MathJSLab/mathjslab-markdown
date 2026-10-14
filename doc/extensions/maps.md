@@ -1,7 +1,9 @@
-# Mapas em Markdown
+# Maps in Markdown
 
-GeoJSON e TopoJSON são exibidos sobre fundo neutro, sem solicitar tiles
-externos. Uma aplicação hospedeira pode fornecer uma camada-base.
+GeoJSON and TopoJSON provide vector features. The package defaults to a
+neutral, vector-only map without requesting external tiles. A host can opt into
+a baselayer; see [map providers](../map-providers.md). The MathJSLab app
+explicitly selects OpenStreetMap, which does not change the package default.
 
 ```geojson
 {
@@ -10,7 +12,7 @@ externos. Uma aplicação hospedeira pode fornecer uma camada-base.
         {
             "type": "Feature",
             "properties": {
-                "name": "Triângulo didático"
+                "name": "Teaching triangle"
             },
             "geometry": {
                 "type": "Polygon",
@@ -39,3 +41,7 @@ externos. Uma aplicação hospedeira pode fornecer uma camada-base.
     ]
 }
 ```
+
+Provider selection, attribution, resize and resource failures are scoped to
+each map. A failed tile leaves vector features visible and produces a local
+warning. Inline Leaflet styles must be installed in the map's Shadow DOM scope.
