@@ -1,9 +1,17 @@
-# Exemplos didáticos em Markdown
+# Markdown teaching examples
 
-Os exemplos estão organizados por idioma:
+The examples are organized by language:
 
-- [Português brasileiro](pt/README.md): 22 notas didáticas com todas as
-  extensões do pacote.
+- [Brazilian Portuguese](pt/README.md): 50 teaching notes covering all package
+  extensions.
+- [English](en/README.md): 50 teaching notes covering all package extensions.
+- [Spanish](es/README.md): 50 teaching notes covering all package extensions.
 
-Novas coleções em outros idiomas poderão ser adicionadas em subdiretórios de
+There are **150 lesson notes** on mathematics, statistics, physics, chemistry,
+biology, geography, history, music, geometry and computing. Each collection
+covers all 14 engine extensions, with explanations, activities and answers. The
+examples include local data and formats such as MEI, SDF and STL. Corresponding
+filenames are the same in all three languages.
+
+Collections in additional languages can be added in subdirectories of
 `example/`.

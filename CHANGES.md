@@ -1,5 +1,25 @@
 # Release notes
 
+## 0.3.2
+
+- Add 28 new teaching notes in each language, bringing the collection to 50
+  lessons in Brazilian Portuguese, English and Spanish (150 notes total). Cover
+  mathematics, statistics, physics, chemistry, biology, geography, history,
+  music, geometry and computing using all 14 Markdown extensions.
+- Extend the examples with molecular SDF, musical MEI and solid STL formats, as
+  well as executable MathJSLab calculations, embedded chart and map data, a
+  shared observation CSV dataset, cross-language links and heading navigation.
+- Translate all 22 Brazilian Portuguese teaching notes into English and Spanish
+  under `example/en/` and `example/es/`, including exercises, explained
+  answers, diagram labels, chart titles, map descriptions and score metadata.
+- Add translated collection indexes and local CSV resources, preserve
+  corresponding filenames across languages, and update local links and heading
+  anchors for each translation.
+- Update example navigation and README guidance for the three language
+  collections. Clarify that documentation and examples are available in the
+  repository and are excluded from the npm distribution by the package file
+  list.
+
 ## 0.3.1
 
 - Add 22 Brazilian Portuguese teaching notes covering all 14 Markdown

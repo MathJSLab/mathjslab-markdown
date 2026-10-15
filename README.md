@@ -112,23 +112,35 @@ executors, Workers and renderers from the host; the core engine has no
 dependency on `mathjslab-app` or Plotly. Standalone bundles share a runtime:
 deploy the entire `dist/browser` tree, including its chunks and assets.
 
-See the [documentation index](doc/README.md), [public API](doc/public-api.md),
-[integration guide](doc/integration.md), [lifecycle](doc/lifecycle.md), and
-[security and resource policy](doc/security-and-resources.md).
+See the
+[documentation index](https://github.com/MathJSLab/mathjslab-markdown/blob/main/doc/README.md),
+[public API](https://github.com/MathJSLab/mathjslab-markdown/blob/main/doc/public-api.md),
+[integration guide](https://github.com/MathJSLab/mathjslab-markdown/blob/main/doc/integration.md),
+[lifecycle](https://github.com/MathJSLab/mathjslab-markdown/blob/main/doc/lifecycle.md),
+and
+[security and resource policy](https://github.com/MathJSLab/mathjslab-markdown/blob/main/doc/security-and-resources.md).
 
 ## Teaching examples
 
-The [example directory](example/README.md) contains teaching notes organized by
-language. The [Brazilian Portuguese collection](example/pt/README.md) provides
-22 lessons covering all 14 extensions, with explanations, exercises and
-commented answers. Topics include mathematics, chemistry, music, geography,
-history, biology, physics and computing.
+The
+[example directory](https://github.com/MathJSLab/mathjslab-markdown/tree/main/example)
+contains teaching notes organized by language. The
+[Brazilian Portuguese](https://github.com/MathJSLab/mathjslab-markdown/blob/main/example/pt/README.md),
+[English](https://github.com/MathJSLab/mathjslab-markdown/blob/main/example/en/README.md)
+and
+[Spanish](https://github.com/MathJSLab/mathjslab-markdown/blob/main/example/es/README.md)
+collections each provide 50 lessons covering all 14 extensions, with
+explanations, exercises and commented answers. Topics include mathematics,
+chemistry, music, geography, history, biology, physics, statistics, geometry
+and computing. The 150 notes include ABC, MusicXML and MEI scores, SMILES and
+XYZ/SDF molecules, OBJ/STL solids, Mermaid and Graphviz diagrams,
+GeoJSON/TopoJSON maps, Vega-Lite charts and MathJSLab calculations.
 
 Each note identifies the extensions it uses. View the examples with those
 extensions enabled in a host application; ordinary Markdown viewers may display
-rich fences as source code. The collection includes local resources and is
-distributed with the npm package. Additional languages can be added under
-`example/`.
+rich fences as source code. The collections include local resources and are
+available in the repository; `doc/` and `example/` are excluded from the npm
+distribution. Additional languages can be added under `example/`.
 
 ## Development
 
@@ -181,8 +193,9 @@ package.
 contents, then commits, pushes and publishes the package to npm. Run it only
 when deliberately releasing. `prepack` rebuilds and validates the emitted
 distribution; `prepublishOnly` checks lint, types and unit tests. The package
-includes the production distribution, documentation, teaching examples and
-license.
+includes the production distribution, package metadata, README, release notes,
+contributor resources and license. Documentation and teaching examples remain
+available in the repository.
 
 Publish the compatible `mathjslab` version before consumers enable its
 integration. Commit, push and publication scripts are also available as
