@@ -1,6 +1,8 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import webpack from 'webpack';
+import fs from 'node:fs';
+import { collectTikZAssets } from './script/helper/tikz-assets.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
 
@@ -25,6 +27,7 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
         use: [{ loader: 'ts-loader', options: { configFile: 'tsconfig.build.json' } }],
       },
       { test: /\.css$/i, resourceQuery: /inline/, type: 'asset/source' },
+      { test: /run-tex\.js$/i, resourceQuery: /url/, type: 'asset/resource', generator: { filename: 'tikzjax/run-tex.js' } },
     ],
   },
   resolve: {
@@ -47,5 +50,25 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
     publicPath: 'auto',
     clean: true,
   },
-  plugins: [new webpack.IgnorePlugin({ resourceRegExp: /^node:module$/ })],
+  plugins: [
+    new webpack.IgnorePlugin({ resourceRegExp: /^node:module$/ }),
+    {
+      apply(compiler) {
+        compiler.hooks.thisCompilation.tap('TikZRuntimeAssets', (compilation) => {
+          compilation.hooks.processAssets.tap({ name: 'TikZRuntimeAssets', stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL }, () => {
+            for (const asset of collectTikZAssets()) compilation.emitAsset(asset.name, new webpack.sources.RawSource(fs.readFileSync(asset.file)));
+            for (const [packageName, license] of [
+              ['citeproc', 'LICENSE'],
+              ['@citation-js/core', 'LICENSE.md'],
+              ['@citation-js/plugin-bibtex', 'LICENSE.md'],
+              ['@citation-js/plugin-csl', 'LICENSE.md'],
+            ]) {
+              const filename = path.join(directory, 'node_modules', packageName!, license!);
+              compilation.emitAsset(`citations/licenses/${packageName!.replace('@', '').replace('/', '-')}-${license}`, new webpack.sources.RawSource(fs.readFileSync(filename)));
+            }
+          });
+        });
+      },
+    },
+  ],
 });

@@ -122,6 +122,27 @@ and
 
 ## Teaching examples
 
+The optional `citations` feature formats citations and embedded BibTeX/CSL JSON
+bibliographies. See the [authoring guide](doc/extensions/citations.md) and
+[English lesson](example/en/citacoes-e-bibliografia.md).
+
+The optional `tikz` extension compiles TikZ and CircuiTikZ diagrams locally.
+See the [TikZ integration guide](doc/extensions/tikz.md) and
+[English circuit lesson](example/en/circuitos-eletricos.md).
+
+The optional `geometry` extension adds declarative dynamic constructions using
+JSXGraph. See the [geometry guide](doc/extensions/geometry.md) and
+[English geometry lesson](example/en/geometria-dinamica.md).
+
+The optional `wavedrom` extension renders digital timing diagrams from JSON or
+JSON5. See the [WaveDrom guide](doc/extensions/wavedrom.md) and
+[English timing lesson](example/en/diagramas-temporais.md).
+
+The optional `didactic` and `cross-references` extensions add teaching blocks,
+collapsible solutions, captions and numbered document references. See the
+[authoring guide](doc/extensions/didactic-and-references.md) and
+[English example](example/en/blocos-didaticos.md).
+
 The
 [example directory](https://github.com/MathJSLab/mathjslab-markdown/tree/main/example)
 contains teaching notes organized by language. The
@@ -129,12 +150,14 @@ contains teaching notes organized by language. The
 [English](https://github.com/MathJSLab/mathjslab-markdown/blob/main/example/en/README.md)
 and
 [Spanish](https://github.com/MathJSLab/mathjslab-markdown/blob/main/example/es/README.md)
-collections each provide 50 lessons covering all 14 extensions, with
-explanations, exercises and commented answers. Topics include mathematics,
-chemistry, music, geography, history, biology, physics, statistics, geometry
-and computing. The 150 notes include ABC, MusicXML and MEI scores, SMILES and
-XYZ/SDF molecules, OBJ/STL solids, Mermaid and Graphviz diagrams,
-GeoJSON/TopoJSON maps, Vega-Lite charts and MathJSLab calculations.
+collections each provide 82 lessons covering all 20 extensions, with at least
+four distinct notes per extension and language, along with explanations,
+exercises and commented answers. Topics include mathematics, chemistry, music,
+geography, history, biology, physics, statistics, geometry and computing. The
+246 notes include ABC, MusicXML and MEI scores, SMILES and XYZ/SDF molecules,
+OBJ/STL solids, Mermaid and Graphviz diagrams, GeoJSON/TopoJSON maps, Vega-Lite
+charts and MathJSLab calculations, plus teaching blocks, numbered references,
+WaveDrom diagrams, dynamic geometry, TikZ/CircuiTikZ and CSL bibliographies.
 
 Each note identifies the extensions it uses. View the examples with those
 extensions enabled in a host application; ordinary Markdown viewers may display
@@ -144,9 +167,9 @@ distribution. Additional languages can be added under `example/`.
 
 ## Development
 
-Use Node.js `^20.19.0 || ^22.13.0 || >=24` and npm 10 or newer. Development and
-release checks use the published `mathjslab` 2.9.0 package. For joint
-development, clone and build `mathjslab` in a sibling directory, then run
+Use Node.js `^22.13.0 || >=24` and npm 10 or newer. Development and release
+checks use the published `mathjslab` 2.9.0 package. For joint development,
+clone and build `mathjslab` in a sibling directory, then run
 `npm install --no-save --package-lock=false ../mathjslab` to test local
 changes. Restore the published dependency with `npm ci` before release checks.
 

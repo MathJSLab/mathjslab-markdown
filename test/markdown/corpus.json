@@ -1,5 +1,14 @@
 {
   "documents": [
+    { "file": "extensions/citations.md", "extension": "citations", "fences": ["bibtex", "csl-json", "bibliography"] },
+    { "file": "extensions/tikz.md", "extension": "tikz", "fences": ["tikz", "circuitikz"] },
+    { "file": "extensions/geometry.md", "extension": "geometry", "fences": ["geometry"] },
+    {
+      "file": "extensions/wavedrom.md",
+      "extension": "wavedrom",
+      "fences": ["wavedrom"],
+      "source": "https://wavedrom.com/tutorial.html"
+    },
     {
       "file": "extensions/heading-ids.md",
       "extension": "gfm-heading-ids",

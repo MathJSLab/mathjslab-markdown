@@ -1,4 +1,14 @@
 /** Built-in Markdown extension factories and their load-free manifests. */
+export { tikzExtension } from './markdown/extensions/tikz/extension.js';
+export { tikzManifest } from './markdown/extensions/tikz/manifest.js';
+export type { TikZOptions, TikZWorker } from './markdown/extensions/tikz/runtime.js';
+export { geometryExtension } from './markdown/extensions/geometry/extension.js';
+export { geometryManifest } from './markdown/extensions/geometry/manifest.js';
+export type { GeometrySpec, GeometryElementSpec, GeometryElementType, GeometryAttributes } from './markdown/extensions/geometry/spec.js';
+export { didacticExtension } from './markdown/extensions/didactic/extension.js';
+export { didacticManifest } from './markdown/extensions/didactic/manifest.js';
+export { crossReferencesExtension } from './markdown/extensions/cross-references/extension.js';
+export { crossReferencesManifest } from './markdown/extensions/cross-references/manifest.js';
 export { abcExtension } from './markdown/extensions/abc/extension.js';
 export { abcManifest } from './markdown/extensions/abc/manifest.js';
 export { graphvizExtension } from './markdown/extensions/graphviz/extension.js';
@@ -27,3 +37,7 @@ export { vegaLiteExtension } from './markdown/extensions/vega-lite/extension.js'
 export { vegaLiteManifest } from './markdown/extensions/vega-lite/manifest.js';
 export { verovioExtension } from './markdown/extensions/verovio/extension.js';
 export { verovioManifest } from './markdown/extensions/verovio/manifest.js';
+export { waveDromExtension } from './markdown/extensions/wavedrom/extension.js';
+export { waveDromManifest } from './markdown/extensions/wavedrom/manifest.js';
+export { citationsExtension, type CitationsOptions } from './markdown/extensions/citations/extension.js';
+export { citationsManifest } from './markdown/extensions/citations/manifest.js';

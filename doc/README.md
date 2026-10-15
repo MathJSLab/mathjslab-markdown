@@ -4,6 +4,11 @@
 extensions and an optional document Web Component. All documentation in this
 directory is maintained in English.
 
+The [teaching collections](../example/README.md) contain 82 corresponding notes
+in each of Brazilian Portuguese, English and Spanish, with at least four
+distinct notes per extension in every language. Language indexes include
+coverage counts and links to all examples.
+
 - [Architecture and package boundaries](architecture.md)
 - [Integration and deployment](integration.md)
 - [Public API and presets](public-api.md)

@@ -1,5 +1,70 @@
 # Release notes
 
+## 0.4.0
+
+- Retain the latest dependency releases, including Citation.js 0.9.0, webpack
+  5.112.0 and ts-jest 29.4.15. Adapt citations to the renamed CSL `styles`
+  registry and use the upstream types instead of stale ambient declarations.
+  Configure strict, bounded BibTeX conversion without redundant provenance
+  graphs.
+- Align the supported Node.js versions with Citation.js 0.9 requirements:
+  `^22.13.0 || >=24`, removing Node.js 20 support.
+- Exercise all twelve translated bibliography examples against the production
+  browser bundle, checking APA disambiguation, Vancouver numbering, uncited
+  Harvard entries and the absence of metadata requests.
+
+- Expand the three teaching collections to 82 corresponding notes each, with at
+  least four diverse documents for every extension per language. Translate
+  recent renderer lessons, add contrasting examples for established renderers,
+  and publish complete indexes and coverage tables.
+- Keep documentation in English, translate teaching-block code examples and
+  repair colon delimiters. Validate collection parity, local links, reference
+  resolution, input formats and real-renderer output.
+
+- Add optional document-scoped CSL citations and bibliographies, embedded
+  BibTeX/CSL JSON, APA/Vancouver/Harvard styles, page locators, Portuguese
+  terms, contextual numbering/disambiguation and safe typography output.
+- Add citation diagnostics and host style/locale options. Load formatting
+  libraries on demand and include dependency license notices in the browser
+  distribution.
+
+- Add optional TikZ/CircuiTikZ rendering in isolated TeX/WASM Workers, with
+  guarded runtime reads, serialized compilation, deadlines, local font assets,
+  SVG sanitization and document cleanup. Ship runtime assets and notices in the
+  browser distribution and expose trusted host configuration through
+  tikzOptions.
+- Add technical drawing and circuit examples, real compiler tests, malicious
+  resource/SVG checks, and distribution asset checks.
+
+- Add optional declarative dynamic geometry with JSXGraph: draggable and
+  constrained points, dependent constructions, lines, circles, polygons, angles
+  and conics. Validate local references and supported data attributes; require
+  interactive authorization and release boards on update and disposal.
+- Export geometry types, factories and manifests. Add authoring documentation,
+  corpus fixtures, real-renderer dependency/constraint tests and lazy chunk
+  checks.
+
+- Add the optional WaveDrom renderer for JSON/JSON5 digital timing diagrams,
+  with lazy loading, independent SVG symbols and scoped styles, light/dark
+  skins, sanitized local rendering, bounded inputs and lifecycle cleanup.
+- Add WaveDrom authoring documentation, corpus coverage, real-renderer
+  regressions and distribution export/chunk checks.
+
+- Add optional `didactic` and `cross-references` extensions: semantic teaching
+  containers, native collapsible hints and solutions, captioned figures, tables
+  and equations, category numbering, and document-local forward references.
+- Localize block labels in English, Portuguese and Spanish; report missing and
+  duplicate labels, recompute references on updates, and isolate IDs across
+  documents. Export factories and manifests without additional dependencies.
+- Document the authoring syntax and add regression coverage for nesting,
+  sanitization, updates and diagnostics.
+- Validate corresponding examples and local resources across all three
+  languages, coverage for every extension, index entries, local links, heading
+  fragments, teaching references and geometry/XML input. Render bibliography,
+  waveform, geometry, TikZ and music examples with the real libraries.
+- Pass all 28 unit test suites (292 tests), ten distribution tests, lint, type
+  checking, formatting and package-content verification.
+
 ## 0.3.2
 
 - Add 28 new teaching notes in each language, bringing the collection to 50

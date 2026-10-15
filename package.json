@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -114,10 +114,17 @@
     "marked-highlight": "^2.2.4"
   },
   "optionalDependencies": {
+    "@citation-js/core": "0.9.0",
+    "@citation-js/plugin-bibtex": "0.9.0",
+    "@citation-js/plugin-csl": "0.9.0",
     "@mathjax/mathjax-mhchem-font-extension": "^4.1.3",
+    "@rod2ik/tikzjax": "1.6.0",
     "@viz-js/viz": "3.31.0",
     "3dmol": "2.5.5",
     "abcjs": "6.7.1",
+    "citeproc": "2.4.63",
+    "json5": "2.2.3",
+    "jsxgraph": "1.14.0",
     "leaflet": "1.9.4",
     "mathjax": "^4.1.3",
     "mermaid": "^12.2.0",
@@ -127,7 +134,8 @@
     "vega": "6.4.0",
     "vega-embed": "7.3.0",
     "vega-lite": "6.5.0",
-    "verovio": "6.3.0"
+    "verovio": "6.3.0",
+    "wavedrom": "3.7.0"
   },
   "peerDependencies": {
     "mathjslab": "^2.9.0"
@@ -148,11 +156,11 @@
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
     "mathjslab": "2.9.0",
-    "ts-jest": "^29.4.14",
+    "ts-jest": "^29.4.15",
     "ts-loader": "^9.6.2",
     "tsx": "^4.23.15",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "webpack": "^5.111.1",
+    "webpack": "^5.112.0",
     "webpack-cli": "^7.2.3",
     "eslint": "^10.12.0",
     "@typescript-eslint/eslint-plugin": "^8.71.2",
@@ -185,7 +193,7 @@
   "main": "./dist/source/markdown-core.js",
   "module": "./dist/source/markdown-core.js",
   "engines": {
-    "node": "^20.19.0 || ^22.13.0 || >=24",
+    "node": "^22.13.0 || >=24",
     "npm": ">=10"
   },
   "publishConfig": {

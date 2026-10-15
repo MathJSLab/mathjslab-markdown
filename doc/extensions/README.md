@@ -1,19 +1,38 @@
 # Educational extensions
 
+The [example collections](../../example/README.md) provide at least four
+distinct notes for every extension in each of three languages. Browse the
+[English](../../example/en/README.md),
+[Brazilian Portuguese](../../example/pt/README.md) and
+[Spanish](../../example/es/README.md) indexes for topics and coverage counts.
+
+[Citations and bibliography](citations.md) format citation keys and embedded
+BibTeX/CSL JSON with configurable CSL styles.
+
+[TikZ and CircuiTikZ](tikz.md) compile technical drawings and electrical
+circuit diagrams locally in a TeX/WebAssembly Worker.
+
+[Dynamic geometry](geometry.md) renders declarative `geometry` constructions
+with draggable points and dependent geometric objects.
+
+[WaveDrom timing diagrams](wavedrom.md) render `wavedrom` fences locally as
+SVG.
+
 The engine retains GFM parsing and loads specialized renderers when a document
 uses the corresponding fence. Factories and manifests are exported through
 `mathjslab-markdown/extensions`; MathJSLab execution has its separate entry.
 
-| Family                             | Fences                                              | Renderer                    |
-| ---------------------------------- | --------------------------------------------------- | --------------------------- |
-| Diagrams                           | `mermaid`                                           | Mermaid                     |
-| Flat molecules                     | `smiles`                                            | SmilesDrawer                |
-| [Music](music.md)                  | `abc`, `mei`, `musicxml`                            | abcjs and Verovio           |
-| [Maps](maps.md)                    | `geojson`, `topojson`                               | Leaflet and topojson-client |
-| [Declarative charts](vega-lite.md) | `vega-lite`                                         | Vega-Lite                   |
-| [Graphs](graphviz.md)              | `dot`, `graphviz`                                   | Graphviz/Viz.js             |
-| [3D molecules](molecules-3d.md)    | `pdb`, `cif`, `mmcif`, `sdf`, `mol2`, `xyz`, `cube` | 3Dmol.js                    |
-| [3D models](models-3d.md)          | `stl`, `obj`, `gltf`                                | Three.js                    |
+| Family                                                       | Fences                                              | Renderer                    |
+| ------------------------------------------------------------ | --------------------------------------------------- | --------------------------- |
+| Diagrams                                                     | `mermaid`                                           | Mermaid                     |
+| [Teaching blocks and references](didactic-and-references.md) | Colon containers and inline `{@ref label}`          | Built-in, no dependencies   |
+| Flat molecules                                               | `smiles`                                            | SmilesDrawer                |
+| [Music](music.md)                                            | `abc`, `mei`, `musicxml`                            | abcjs and Verovio           |
+| [Maps](maps.md)                                              | `geojson`, `topojson`                               | Leaflet and topojson-client |
+| [Declarative charts](vega-lite.md)                           | `vega-lite`                                         | Vega-Lite                   |
+| [Graphs](graphviz.md)                                        | `dot`, `graphviz`                                   | Graphviz/Viz.js             |
+| [3D molecules](molecules-3d.md)                              | `pdb`, `cif`, `mmcif`, `sdf`, `mol2`, `xyz`, `cube` | 3Dmol.js                    |
+| [3D models](models-3d.md)                                    | `stl`, `obj`, `gltf`                                | Three.js                    |
 
 The document context supplies theme, locale, dimensions, audio authorization,
 URL resolution, resource policy, cancellation, limits and diagnostics. A

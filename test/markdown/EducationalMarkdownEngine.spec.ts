@@ -14,7 +14,7 @@ describe('createEducationalMarkdownEngine', () => {
   });
 
   it('supports the complete catalog and removes duplicate selections', async () => {
-    expect(educationalMarkdownFeatures).toHaveLength(9);
+    expect(educationalMarkdownFeatures).toHaveLength(15);
     const engine = createEducationalMarkdownEngine({
       features: ['graphviz', 'graphviz'],
     });
@@ -24,7 +24,28 @@ describe('createEducationalMarkdownEngine', () => {
 
   it('uses one catalog entry for every published built-in manifest', () => {
     expect(Object.keys(markdownExtensionCatalog).sort()).toEqual(
-      ['abc', 'graphviz', 'heading-ids', 'maps', 'mathjax', 'mathjslab', 'mermaid', 'model-3d', 'molecule-3d', 'relative-urls', 'smiles', 'syntax-highlight', 'vega-lite', 'verovio'].sort(),
+      [
+        'abc',
+        'citations',
+        'cross-references',
+        'didactic',
+        'graphviz',
+        'geometry',
+        'heading-ids',
+        'maps',
+        'mathjax',
+        'mathjslab',
+        'mermaid',
+        'model-3d',
+        'molecule-3d',
+        'relative-urls',
+        'smiles',
+        'tikz',
+        'syntax-highlight',
+        'vega-lite',
+        'verovio',
+        'wavedrom',
+      ].sort(),
     );
     const manifests = Object.values(markdownExtensionCatalog).map(({ manifest }) => manifest);
     expect(manifests.every(({ name, dependencies, fences }) => name.length > 0 && Array.isArray(dependencies) && Array.isArray(fences))).toBe(true);

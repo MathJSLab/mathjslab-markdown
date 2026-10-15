@@ -1,4 +1,14 @@
 import type { MarkdownExtension, MarkdownExtensionManifest } from '../MarkdownEngine.js';
+import { citationsExtension } from './extensions/citations/extension.js';
+import { citationsManifest } from './extensions/citations/manifest.js';
+import { tikzExtension } from './extensions/tikz/extension.js';
+import { tikzManifest } from './extensions/tikz/manifest.js';
+import { geometryExtension } from './extensions/geometry/extension.js';
+import { geometryManifest } from './extensions/geometry/manifest.js';
+import { didacticExtension } from './extensions/didactic/extension.js';
+import { didacticManifest } from './extensions/didactic/manifest.js';
+import { crossReferencesExtension } from './extensions/cross-references/extension.js';
+import { crossReferencesManifest } from './extensions/cross-references/manifest.js';
 import { abcExtension } from './extensions/abc/extension.js';
 import { abcManifest } from './extensions/abc/manifest.js';
 import { graphvizExtension } from './extensions/graphviz/extension.js';
@@ -26,8 +36,25 @@ import { vegaLiteExtension } from './extensions/vega-lite/extension.js';
 import { vegaLiteManifest } from './extensions/vega-lite/manifest.js';
 import { verovioExtension } from './extensions/verovio/extension.js';
 import { verovioManifest } from './extensions/verovio/manifest.js';
+import { waveDromExtension } from './extensions/wavedrom/extension.js';
+import { waveDromManifest } from './extensions/wavedrom/manifest.js';
 
-export type EducationalMarkdownFeature = 'abc' | 'graphviz' | 'maps' | 'mermaid' | 'model-3d' | 'molecule-3d' | 'smiles' | 'vega-lite' | 'verovio';
+export type EducationalMarkdownFeature =
+  | 'abc'
+  | 'citations'
+  | 'cross-references'
+  | 'didactic'
+  | 'geometry'
+  | 'graphviz'
+  | 'maps'
+  | 'mermaid'
+  | 'model-3d'
+  | 'molecule-3d'
+  | 'smiles'
+  | 'tikz'
+  | 'vega-lite'
+  | 'verovio'
+  | 'wavedrom';
 
 export type MarkdownExtensionCatalogEntry = {
   readonly manifest: MarkdownExtensionManifest;
@@ -41,6 +68,11 @@ export type MarkdownExtensionCatalogEntry = {
  * Optional renderer libraries remain dynamically imported by their factories.
  */
 export const markdownExtensionCatalog: Readonly<Record<string, MarkdownExtensionCatalogEntry>> = Object.freeze({
+  citations: { manifest: citationsManifest, create: citationsExtension, educational: true },
+  tikz: { manifest: tikzManifest, create: tikzExtension, educational: true },
+  geometry: { manifest: geometryManifest, create: geometryExtension, educational: true },
+  didactic: { manifest: didacticManifest, create: didacticExtension, educational: true },
+  'cross-references': { manifest: crossReferencesManifest, create: crossReferencesExtension, educational: true },
   abc: { manifest: abcManifest, create: abcExtension, educational: true },
   graphviz: {
     manifest: graphvizManifest,
@@ -90,6 +122,7 @@ export const markdownExtensionCatalog: Readonly<Record<string, MarkdownExtension
     create: verovioExtension,
     educational: true,
   },
+  wavedrom: { manifest: waveDromManifest, create: waveDromExtension, educational: true },
 } satisfies Record<string, MarkdownExtensionCatalogEntry>);
 
 export const educationalMarkdownFeatures = Object.freeze(

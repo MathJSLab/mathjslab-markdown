@@ -13,6 +13,10 @@ import { smilesExtension } from '../../src/markdown/extensions/smiles/extension'
 import { vegaLiteExtension } from '../../src/markdown/extensions/vega-lite/extension';
 import { verovioExtension } from '../../src/markdown/extensions/verovio/extension';
 import { MarkdownEngine } from '../../src/MarkdownEngine';
+import { tikzExtension } from '../../src/markdown/extensions/tikz/extension';
+import { geometryExtension } from '../../src/markdown/extensions/geometry/extension';
+import { waveDromExtension } from '../../src/markdown/extensions/wavedrom/extension';
+import { citationsExtension } from '../../src/markdown/extensions/citations/extension';
 
 type CorpusDocument = {
   file: string;
@@ -33,6 +37,10 @@ const appEngine = (): MarkdownEngine =>
   new MarkdownEngine({
     profile: 'gfm',
     extensions: [
+      citationsExtension(),
+      tikzExtension(),
+      geometryExtension(),
+      waveDromExtension(),
       mermaidExtension(),
       smilesExtension(),
       graphvizExtension(),
@@ -65,10 +73,15 @@ describe('Markdown compatibility corpus', () => {
   it('keeps one fixture for every registered educational fence', () => {
     const expected = [
       'abc',
+      'bibliography',
+      'bibtex',
       'cif',
+      'circuitikz',
+      'csl-json',
       'cube',
       'dot',
       'geojson',
+      'geometry',
       'gltf',
       'graphviz',
       'math',
@@ -83,8 +96,10 @@ describe('Markdown compatibility corpus', () => {
       'sdf',
       'smiles',
       'stl',
+      'tikz',
       'topojson',
       'vega-lite',
+      'wavedrom',
       'xyz',
     ];
     const present = [...new Set(corpus.documents.flatMap(({ fences }) => fences))].sort();
@@ -109,7 +124,7 @@ describe('Markdown compatibility corpus', () => {
 
   it('records authoritative sources for adapted official examples', () => {
     const sourced = corpus.documents.filter(({ source }) => source);
-    expect(sourced.map(({ extension }) => extension).sort()).toEqual(['abc-music', 'graphviz', 'maps', 'vega-lite']);
+    expect(sourced.map(({ extension }) => extension).sort()).toEqual(['abc-music', 'graphviz', 'maps', 'vega-lite', 'wavedrom']);
     for (const fixture of sourced) expect(new URL(fixture.source!).protocol).toBe('https:');
   });
 

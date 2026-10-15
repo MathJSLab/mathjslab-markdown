@@ -1,118 +1,133 @@
 # Markdown lesson notes
 
-This collection contains **50 teaching notes in English**, translated from
-[the Brazilian Portuguese collection](../pt/README.md), covering all 14
-extensions in the mathjslab-markdown catalogue. Each note includes objectives,
-explanations, examples, exercises and answers with explanations. Teaching data
-and geometries are embedded in the notes, except for the local CSV supplied in
-[resources/temperaturas.csv](resources/temperaturas.csv).
+This collection contains **82 notes in English**. Every note has corresponding
+[Brazilian Portuguese](../pt/README.md) and [Spanish](../es/README.md) versions
+with the same filename. Each of the 20 extensions has at least four distinct
+notes per language.
 
-Filenames are shared across language directories to make corresponding lessons
-easy to locate. Command identifiers and CSV column names retain their original
-spelling; their meaning is explained in the notes.
+Notes include explanations, examples, activities and answers. Data are local or
+embedded, including [temperatures](resources/temperaturas.csv) and
+[observations](resources/observacoes.csv). Command identifiers and technical
+formats are preserved across translations.
 
-The new notes add mathematics, physics, chemistry, biology, geography, history,
-music, geometry and computing. The second local resource,
-[resources/observacoes.csv](resources/observacoes.csv), accompanies the lesson
-on means and extreme values.
+## Configuration
+
+Use the GFM profile for headings, relative links and highlighted code. Select
+the extensions listed in each note; optional libraries load on demand. Geometry
+requires `interactive`; TikZ requires `wasm` and `network` for local runtime
+assets. Maps and 3D renderers also depend on host-configured capabilities.
+MathJSLab requires an executor and execution authorization. Set
+`locale: "en-US"` for generated labels. Consult the
+[integration guides](../../doc/extensions/README.md).
+
+## Extension coverage
+
+| Extension          | Notes |
+| ------------------ | ----: |
+| `abc`              |     4 |
+| `citations`        |     4 |
+| `cross-references` |    15 |
+| `didactic`         |    14 |
+| `geometry`         |     4 |
+| `graphviz`         |     4 |
+| `heading-ids`      |    82 |
+| `maps`             |     5 |
+| `mathjax`          |    47 |
+| `mathjslab`        |     7 |
+| `mermaid`          |    15 |
+| `model-3d`         |     4 |
+| `molecule-3d`      |     4 |
+| `relative-urls`    |    61 |
+| `smiles`           |    12 |
+| `syntax-highlight` |     6 |
+| `tikz`             |     4 |
+| `vega-lite`        |     7 |
+| `verovio`          |     4 |
+| `wavedrom`         |     4 |
 
 ## Index
 
-| Note                                                                    | Subject          | Main extensions                                                  |
-| ----------------------------------------------------------------------- | ---------------- | ---------------------------------------------------------------- |
-| [Arithmetic and geometric sequences](progressoes.md)                    | Mathematics      | MathJax                                                          |
-| [Trigonometric functions](trigonometria.md)                             | Mathematics      | MathJSLab, MathJax                                               |
-| [Water cycle](ciclo-da-agua.md)                                         | Science          | Mermaid                                                          |
-| [Investigating germination](metodo-cientifico.md)                       | Science          | Mermaid                                                          |
-| [Organic functional groups](funcoes-organicas.md)                       | Chemistry        | SMILES, MathJax                                                  |
-| [Organic nomenclature](nomenclatura-organica.md)                        | Chemistry        | SMILES, Mermaid                                                  |
-| [Isomerism](isomeria.md)                                                | Chemistry        | SMILES, MathJax                                                  |
-| [Esterification](esterificacao.md)                                      | Chemistry        | SMILES, MathJax/mhchem                                           |
-| [Molecular geometry of water](geometria-molecular.md)                   | Chemistry        | molecule-3d, SMILES, MathJax                                     |
-| [Carbon chains](cadeias-carbonicas.md)                                  | Chemistry        | SMILES                                                           |
-| [Ode to Joy](ode-a-alegria.md)                                          | Music            | ABC                                                              |
-| [Rhythm and scores](ritmo-e-partitura.md)                               | Music            | Verovio/MusicXML                                                 |
-| [Coordinates in Brazil](geografia-coordenadas.md)                       | Geography        | maps/GeoJSON                                                     |
-| [Capitals of Brazil](historia-capitais.md)                              | History          | maps/TopoJSON                                                    |
-| [Grade distribution](estatistica.md)                                    | Statistics       | Vega-Lite, MathJax                                               |
-| [Uniform motion](movimento-uniforme.md)                                 | Physics          | Vega-Lite, MathJax                                               |
-| [Food webs](redes-alimentares.md)                                       | Biology          | Graphviz                                                         |
-| [Tetrahedron](geometria-solidos.md)                                     | Geometry         | model-3d/OBJ, MathJax                                            |
-| [Summing with an algorithm](algoritmos.md)                              | Computing        | syntax-highlight, MathJax                                        |
-| [Reading data](leitura-de-dados.md)                                     | Science and data | relative-urls, heading-ids, syntax-highlight, MathJax            |
-| [Digital communication](comunicacao-digital.md)                         | Computing        | Mermaid                                                          |
-| [Linear systems](sistemas-lineares.md)                                  | Mathematics      | MathJSLab, MathJax                                               |
-| [Musical rests: silence has duration](pausas-musicais.md)               | Music            | ABC, MathJax                                                     |
-| [Intervals: successive and simultaneous notes](intervalos-musicais.md)  | Music            | Verovio/MEI                                                      |
-| [Cube: surface area, volume and triangle mesh](cubo-em-stl.md)          | Geometry         | model-3d/STL, MathJax                                            |
-| [Square-based pyramid: height and volume](piramide-quadrada.md)         | Geometry         | model-3d/OBJ, MathJax                                            |
-| [Binary numbers and place value](numeros-binarios.md)                   | Computing        | syntax-highlight, MathJax                                        |
-| [Insertion sort: building a sorted section](ordenacao-insercao.md)      | Computing        | Mermaid, syntax-highlight                                        |
-| [Mean, median and extreme values](media-e-valores-extremos.md)          | Statistics       | Vega-Lite, MathJax, relative-urls, heading-ids, syntax-highlight |
-| [Balancing equations: conserving atoms](balanceamento-quimico.md)       | Chemistry        | MathJax, MathJSLab                                               |
-| [Atoms and ions: charge and identity](atomos-e-ions.md)                 | Chemistry        | Mermaid, MathJax                                                 |
-| [Mitosis and the cell cycle](mitose.md)                                 | Biology          | Mermaid                                                          |
-| [Photosynthesis: matter and energy](fotossintese.md)                    | Biology          | Graphviz, MathJax                                                |
-| [Genetics: a monohybrid cross](genetica-mendeliana.md)                  | Biology          | Mermaid, MathJax                                                 |
-| [Drainage basins: area and drainage network](bacia-hidrografica.md)     | Geography        | maps/GeoJSON, Mermaid                                            |
-| [Ancient Mediterranean: cities and connections](mediterraneo-antigo.md) | History          | maps/TopoJSON, Mermaid                                           |
-| [Mechanical energy and transformations](energia-mecanica.md)            | Physics          | Graphviz, MathJax                                                |
-| [Series resistors: current and voltage](resistores-em-serie.md)         | Physics          | Mermaid, MathJax                                                 |
-| [Ideal gases: pressure and volume](gases-ideais.md)                     | Physics          | Vega-Lite, MathJax                                               |
-| [Carbon dioxide: bonds and symmetry](dioxido-de-carbono.md)             | Chemistry        | molecule-3d, SMILES, MathJax                                     |
-| [Methane: tetrahedral geometry](metano-tetraedrico.md)                  | Chemistry        | molecule-3d, SMILES, MathJax                                     |
-| [Acids and bases: proton transfer](acidos-bases.md)                     | Chemistry        | MathJax, SMILES                                                  |
-| [Polymers: from unit to chain](polimeros.md)                            | Chemistry        | SMILES, Mermaid, MathJax                                         |
-| [Quadratic functions: roots and vertex](funcao-quadratica.md)           | Mathematics      | MathJax, Vega-Lite                                               |
-| [Matrices and transformations in the plane](matrizes-transformacoes.md) | Mathematics      | MathJSLab, MathJax                                               |
-| [Equivalent fractions and addition](fracoes-equivalentes.md)            | Mathematics      | MathJax, Mermaid                                                 |
-| [Compound growth: a multiplicative model](crescimento-composto.md)      | Mathematics      | MathJSLab, MathJax                                               |
-| [Probability: sums of two dice](probabilidade-dados.md)                 | Statistics       | Vega-Lite, MathJax                                               |
-| [Simple pendulum: period and approximations](pendulo-simples.md)        | Physics          | MathJax, MathJSLab                                               |
-| [Forces and Newton’s second law](leis-de-newton.md)                     | Physics          | Mermaid, MathJax                                                 |
-
-## How to view
-
-Open the notes in a host using the package with the indicated extensions
-enabled. An ordinary Markdown viewer may display rich blocks as source code.
-Use the GFM profile for tables and task lists. Configuration details are in the
-[extension catalogue](../../doc/extensions/README.md) and
-[authoring guide](../../doc/authoring.md).
-
-MathJSLab requires a host-provided executor; executable blocks depend on
-execution policy. Expressions delimited by `%` present mathematical notation.
-Molecules and 3D models require authorized WebGL. Audio, when available,
-requires permission and a user action. Maps can work with vector features only,
-without requesting external basemaps.
-
-To resolve links between notes and the CSV, set `sourceUrl` to each document's
-actual address. The reading-data note demonstrates relative links and
-navigation by heading identifiers; these extensions are useful throughout the
-collection.
-
-## Catalogue coverage
-
-| Identifier         | Example usage                                                                                                                                                                                                                                                    |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `abc`              | [Ode to Joy](ode-a-alegria.md)                                                                                                                                                                                                                                   |
-| `graphviz`         | [Food webs](redes-alimentares.md)                                                                                                                                                                                                                                |
-| `heading-ids`      | [Reading data](leitura-de-dados.md)                                                                                                                                                                                                                              |
-| `maps`             | [Coordinates in Brazil](geografia-coordenadas.md), [Capitals of Brazil](historia-capitais.md)                                                                                                                                                                    |
-| `mathjax`          | [Arithmetic and geometric sequences](progressoes.md), [Esterification](esterificacao.md)                                                                                                                                                                         |
-| `mathjslab`        | [Trigonometric functions](trigonometria.md), [Linear systems](sistemas-lineares.md)                                                                                                                                                                              |
-| `mermaid`          | [Water cycle](ciclo-da-agua.md), [Investigating germination](metodo-cientifico.md), [Organic nomenclature](nomenclatura-organica.md), [Digital communication](comunicacao-digital.md)                                                                            |
-| `model-3d`         | [Tetrahedron](geometria-solidos.md)                                                                                                                                                                                                                              |
-| `molecule-3d`      | [Molecular geometry of water](geometria-molecular.md)                                                                                                                                                                                                            |
-| `relative-urls`    | [Reading data](leitura-de-dados.md)                                                                                                                                                                                                                              |
-| `smiles`           | [Organic functional groups](funcoes-organicas.md), [Organic nomenclature](nomenclatura-organica.md), [Isomerism](isomeria.md), [Esterification](esterificacao.md), [Molecular geometry of water](geometria-molecular.md), [Carbon chains](cadeias-carbonicas.md) |
-| `syntax-highlight` | [Summing with an algorithm](algoritmos.md)                                                                                                                                                                                                                       |
-| `vega-lite`        | [Grade distribution](estatistica.md), [Uniform motion](movimento-uniforme.md)                                                                                                                                                                                    |
-| `verovio`          | [Rhythm and scores](ritmo-e-partitura.md)                                                                                                                                                                                                                        |
-
-All 14 catalogue identifiers are covered. Alternative formats of the same
-extension (for example, MEI and MusicXML) do not require separate notes in this
-collection.
-
-Additional formats demonstrated: [methane in SDF](metano-tetraedrico.md),
-[intervals in MEI](intervalos-musicais.md) and [a cube in STL](cubo-em-stl.md).
-All new notes provide links between languages and navigation to the exercises.
+| Note                                                                            | Extensions used                                                            |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [Acids and bases: proton transfer](acidos-bases.md)                             | `heading-ids`, `mathjax`, `relative-urls`, `smiles`                        |
+| [Alcohol and ether: same formula, different bonds](alcool-e-eter.md)            | `heading-ids`, `mathjax`, `relative-urls`, `smiles`                        |
+| [Algorithms: summing a sequence in JavaScript](algoritmos.md)                   | `heading-ids`, `mathjax`, `syntax-highlight`                               |
+| [Ammonia: pyramidal geometry](amonia-piramidal.md)                              | `heading-ids`, `mathjax`, `molecule-3d`, `relative-urls`, `smiles`         |
+| [Probability tree with TikZ](arvore-de-probabilidade.md)                        | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `tikz`     |
+| [Atoms and ions: charge and identity](atomos-e-ions.md)                         | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                       |
+| [Drainage basins: area and drainage network](bacia-hidrografica.md)             | `heading-ids`, `maps`, `mermaid`, `relative-urls`                          |
+| [Balancing equations: conserving atoms](balanceamento-quimico.md)               | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                     |
+| [Theorems, exercises and references](blocos-didaticos.md)                       | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`  |
+| [Binary search: shrinking the interval](busca-binaria.md)                       | `heading-ids`, `relative-urls`, `syntax-highlight`                         |
+| [Carbon chains and aromaticity](cadeias-carbonicas.md)                          | `heading-ids`, `smiles`                                                    |
+| [Bibliographic catalogue without citations](catalogo-bibliografico.md)          | `citations`, `heading-ids`, `relative-urls`                                |
+| [The water cycle and conservation of matter](ciclo-da-agua.md)                  | `heading-ids`, `mermaid`                                                   |
+| [Technical drawings and electrical circuits](circuitos-eletricos.md)            | `cross-references`, `heading-ids`, `relative-urls`, `tikz`                 |
+| [Circumcenter of a triangle](circuncentro-do-triangulo.md)                      | `cross-references`, `didactic`, `geometry`, `heading-ids`, `relative-urls` |
+| [Citations and bibliography](citacoes-e-bibliografia.md)                        | `citations`, `heading-ids`, `relative-urls`                                |
+| [Numeric citations and source order](citacoes-numericas.md)                     | `citations`, `heading-ids`, `relative-urls`                                |
+| [Comparing measurements: two groups](comparacao-de-medicoes.md)                 | `heading-ids`, `mathjax`, `relative-urls`, `vega-lite`                     |
+| [Compound meter in 6/8](compasso-composto.md)                                   | `abc`, `heading-ids`, `mathjax`, `relative-urls`                           |
+| [Digital communication: request and response](comunicacao-digital.md)           | `heading-ids`, `mermaid`                                                   |
+| [SPI: clock and selection](comunicacao-spi.md)                                  | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom` |
+| [Compound growth: a multiplicative model](crescimento-composto.md)              | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                     |
+| [Cube: surface area, volume and triangle mesh](cubo-em-stl.md)                  | `heading-ids`, `mathjax`, `model-3d`, `relative-urls`                      |
+| [Definitions and examples: vector norm](definicoes-e-exemplos.md)               | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`  |
+| [Induction: sum of the first integers](demonstracao-por-inducao.md)             | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`  |
+| [Project dependencies](dependencias-de-projeto.md)                              | `graphviz`, `heading-ids`, `relative-urls`                                 |
+| [Digital timing diagrams](diagramas-temporais.md)                               | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom` |
+| [Musical dynamics: piano and forte](dinamica-musical.md)                        | `heading-ids`, `relative-urls`, `verovio`                                  |
+| [Carbon dioxide: bonds and symmetry](dioxido-de-carbono.md)                     | `heading-ids`, `mathjax`, `molecule-3d`, `relative-urls`, `smiles`         |
+| [Ellipse: sum of distances to the foci](elipse-e-focos.md)                      | `cross-references`, `didactic`, `geometry`, `heading-ids`, `relative-urls` |
+| [Mechanical energy and transformations](energia-mecanica.md)                    | `graphviz`, `heading-ids`, `mathjax`, `relative-urls`                      |
+| [C major scale in MEI](escala-em-mei.md)                                        | `heading-ids`, `relative-urls`, `verovio`                                  |
+| [Statistics: grade distribution and mean](estatistica.md)                       | `heading-ids`, `mathjax`, `vega-lite`                                      |
+| [Esterification: reactants, products and equilibrium](esterificacao.md)         | `heading-ids`, `mathjax`, `smiles`                                         |
+| [Exercises with hints: successive percentages](exercicios-com-dicas.md)         | `didactic`, `heading-ids`, `mathjax`, `relative-urls`                      |
+| [RC filter: capacitor voltage](filtro-rc.md)                                    | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `tikz`     |
+| [Photosynthesis: matter and energy](fotossintese.md)                            | `graphviz`, `heading-ids`, `mathjax`, `relative-urls`                      |
+| [Equivalent fractions and addition](fracoes-equivalentes.md)                    | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                       |
+| [Quadratic functions: roots and vertex](funcao-quadratica.md)                   | `heading-ids`, `mathjax`, `relative-urls`, `vega-lite`                     |
+| [Organic compound classes: recognizing functional groups](funcoes-organicas.md) | `heading-ids`, `mathjax`, `smiles`                                         |
+| [Ideal gases: pressure and volume](gases-ideais.md)                             | `heading-ids`, `mathjax`, `relative-urls`, `vega-lite`                     |
+| [Genetics: a monohybrid cross](genetica-mendeliana.md)                          | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                       |
+| [Geography: location and coordinates in Brazil](geografia-coordenadas.md)       | `heading-ids`, `maps`                                                      |
+| [Dynamic geometry: midpoints and circles](geometria-dinamica.md)                | `cross-references`, `geometry`, `heading-ids`, `relative-urls`             |
+| [Molecular geometry of water](geometria-molecular.md)                           | `heading-ids`, `mathjax`, `molecule-3d`, `smiles`                          |
+| [Solid geometry: a tetrahedron in OBJ](geometria-solidos.md)                    | `heading-ids`, `mathjax`, `model-3d`                                       |
+| [History: capitals and Brazil's territorial organization](historia-capitais.md) | `heading-ids`, `maps`                                                      |
+| [Intervals: successive and simultaneous notes](intervalos-musicais.md)          | `heading-ids`, `relative-urls`, `verovio`                                  |
+| [Isomerism: same formula, different structures](isomeria.md)                    | `heading-ids`, `mathjax`, `smiles`                                         |
+| [Forces and Newton’s second law](leis-de-newton.md)                             | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                       |
+| [Reading data: tables, units and provenance](leitura-de-dados.md)               | `heading-ids`, `mathjax`, `relative-urls`, `syntax-highlight`              |
+| [Local routes: coordinates and connections](mapa-de-rotas.md)                   | `heading-ids`, `maps`, `mermaid`, `relative-urls`                          |
+| [Matrices and transformations in the plane](matrizes-transformacoes.md)         | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                     |
+| [Mean, median and extreme values](media-e-valores-extremos.md)                  | `heading-ids`, `mathjax`, `relative-urls`, `syntax-highlight`, `vega-lite` |
+| [Ancient Mediterranean: cities and connections](mediterraneo-antigo.md)         | `heading-ids`, `maps`, `mermaid`, `relative-urls`                          |
+| [Canon: delayed voice entry](melodia-em-canon.md)                               | `abc`, `heading-ids`, `relative-urls`                                      |
+| [Methane: tetrahedral geometry](metano-tetraedrico.md)                          | `heading-ids`, `mathjax`, `molecule-3d`, `relative-urls`, `smiles`         |
+| [Investigating seed germination](metodo-cientifico.md)                          | `heading-ids`, `mermaid`                                                   |
+| [Mitosis and the cell cycle](mitose.md)                                         | `heading-ids`, `mermaid`, `relative-urls`                                  |
+| [Physics: uniform motion and graph slope](movimento-uniforme.md)                | `heading-ids`, `mathjax`, `vega-lite`                                      |
+| [Organic nomenclature: from chain to name](nomenclatura-organica.md)            | `heading-ids`, `mermaid`, `smiles`                                         |
+| [Binary numbers and place value](numeros-binarios.md)                           | `heading-ids`, `mathjax`, `relative-urls`, `syntax-highlight`              |
+| [Octahedron: vertices and faces](octaedro-em-obj.md)                            | `heading-ids`, `mathjax`, `model-3d`, `relative-urls`                      |
+| [Ode to Joy: melody, beat and phrases](ode-a-alegria.md)                        | `abc`, `heading-ids`, `mathjax`                                            |
+| [Insertion sort: building a sorted section](ordenacao-insercao.md)              | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`, `syntax-highlight`   |
+| [Pages and citation disambiguation](paginas-e-desambiguacao.md)                 | `citations`, `heading-ids`, `relative-urls`                                |
+| [Parallel and perpendicular lines](paralelas-e-perpendiculares.md)              | `cross-references`, `didactic`, `geometry`, `heading-ids`, `relative-urls` |
+| [Musical rests: silence has duration](pausas-musicais.md)                       | `abc`, `heading-ids`, `mathjax`, `relative-urls`                           |
+| [Simple pendulum: period and approximations](pendulo-simples.md)                | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                     |
+| [Square-based pyramid: height and volume](piramide-quadrada.md)                 | `heading-ids`, `mathjax`, `model-3d`, `relative-urls`                      |
+| [Polymers: from unit to chain](polimeros.md)                                    | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`, `smiles`             |
+| [Probability: sums of two dice](probabilidade-dados.md)                         | `heading-ids`, `mathjax`, `relative-urls`, `vega-lite`                     |
+| [Arithmetic and geometric sequences](progressoes.md)                            | `heading-ids`, `mathjax`                                                   |
+| [UART: start, data and stop](quadro-uart.md)                                    | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom` |
+| [Biology: a simplified food web](redes-alimentares.md)                          | `graphviz`, `heading-ids`                                                  |
+| [Parallel resistors with CircuiTikZ](resistores-em-paralelo.md)                 | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `tikz`     |
+| [Series resistors: current and voltage](resistores-em-serie.md)                 | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                       |
+| [Rhythm and reading a MusicXML score](ritmo-e-partitura.md)                     | `heading-ids`, `verovio`                                                   |
+| [Setup and hold: stability window](setup-e-hold.md)                             | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom` |
+| [Linear systems: solving and checking](sistemas-lineares.md)                    | `heading-ids`, `mathjax`, `mathjslab`                                      |
+| [Sums and vectors: components and dot product](somas-e-vetores.md)              | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                     |
+| [Trigonometric functions and their relationships](trigonometria.md)             | `heading-ids`, `mathjax`, `mathjslab`                                      |

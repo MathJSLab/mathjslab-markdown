@@ -28,6 +28,12 @@ describe('standalone Markdown public API', () => {
   });
 
   test.each([
+    ['citationsExtension', 'citationsManifest'],
+    ['tikzExtension', 'tikzManifest'],
+    ['geometryExtension', 'geometryManifest'],
+    ['waveDromExtension', 'waveDromManifest'],
+    ['didacticExtension', 'didacticManifest'],
+    ['crossReferencesExtension', 'crossReferencesManifest'],
     ['abcExtension', 'abcManifest'],
     ['graphvizExtension', 'graphvizManifest'],
     ['headingIdsExtension', 'headingIdsManifest'],
@@ -125,6 +131,18 @@ describe('standalone Markdown public API', () => {
     );
     expect(Object.keys(extensionApi).sort()).toEqual(
       [
+        'citationsExtension',
+        'citationsManifest',
+        'tikzExtension',
+        'tikzManifest',
+        'geometryExtension',
+        'geometryManifest',
+        'waveDromExtension',
+        'waveDromManifest',
+        'didacticExtension',
+        'didacticManifest',
+        'crossReferencesExtension',
+        'crossReferencesManifest',
         'abcExtension',
         'abcManifest',
         'graphvizExtension',
