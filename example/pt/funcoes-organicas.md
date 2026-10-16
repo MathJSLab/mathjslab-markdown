@@ -20,13 +20,20 @@ não significa pertencer à mesma função.
 
 ### Etanol
 
-```smiles
+Os atributos da linha de abertura controlam a apresentação: largura em
+porcentagem, pixels ou rem; altura em pixels, rem ou auto. O corpo da linguagem
+não muda.
+
+Uma representação pode participar da frase: o etanol :smiles[CCO]{height=2rem}
+contém um grupo OH. O código `:smiles[CCO]` continua sendo texto literal.
+
+```smiles {width=50%}
 CCO
 ```
 
 ### Metoximetano
 
-```smiles
+```smiles {width=12rem height=6rem}
 COC
 ```
 

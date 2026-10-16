@@ -14,7 +14,7 @@ regiões de ligação se distribuem de modo aproximadamente tetraédrico, com
 C
 ```
 
-```sdf
+```sdf {width=24rem height=18rem}
 Metano
   MathJSLab
 

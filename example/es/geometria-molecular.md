@@ -7,6 +7,9 @@
 
 El agua tiene dos hidrógenos unidos a un oxígeno:
 
+Sin atributos, los dibujos SMILES usan su tamaño natural y los modelos 3D usan
+un área compacta y adaptable.
+
 ```smiles
 O
 ```

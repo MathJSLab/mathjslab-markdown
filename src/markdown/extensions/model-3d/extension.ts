@@ -105,8 +105,8 @@ export const model3DExtension = (): MarkdownExtension => {
       dispose(container);
       await waitForElementLayout(container, context);
       if (context.signal?.aborted) return;
-      const width = Math.max(context.width ?? container.clientWidth ?? 640, 1);
-      const height = Math.max(context.height ?? container.clientHeight ?? 420, 1);
+      const width = Math.max((context.renderSize ? container.clientWidth : context.width) ?? container.clientWidth ?? 640, 1);
+      const height = Math.max((context.renderSize ? container.clientHeight : context.height) ?? container.clientHeight ?? 420, 1);
       const renderer = (partialRenderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,

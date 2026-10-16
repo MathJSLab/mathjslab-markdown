@@ -6,8 +6,8 @@ export const graphvizManifest = {
   description: 'Graphviz graphs rendered from the DOT language.',
   dependencies: ['@viz-js/viz', 'dompurify'],
   fences: [
-    { language: 'dot', className: 'graphviz' },
-    { language: 'graphviz', className: 'graphviz' },
+    { language: 'dot', className: 'graphviz', sizing: 'intrinsic' },
+    { language: 'graphviz', className: 'graphviz', sizing: 'intrinsic' },
   ],
   interactive: true,
   capabilities: ['network', 'wasm'],

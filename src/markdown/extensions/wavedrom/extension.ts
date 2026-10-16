@@ -95,6 +95,14 @@ const isolateSVG = (markup: string, css: string, dark: boolean): string => {
       }
     }
   });
+  // <use> instances have their own SVG shadow tree. Ancestor-scoped selectors
+  // cannot reliably style those copies; materialize trusted skin rules on the
+  // symbol definitions so fill/stroke survive instancing inside a Web Component.
+  for (const rule of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    for (const element of svg.querySelectorAll(rule[1]!.trim())) {
+      element.setAttribute('style', `${rule[2]};${element.getAttribute('style') ?? ''}`);
+    }
+  }
   const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
   // Only CSS from the bundled skin is retained, with every selector scoped to this SVG.
   style.textContent = css.replace(

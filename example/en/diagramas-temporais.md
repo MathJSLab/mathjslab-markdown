@@ -12,7 +12,10 @@ Observe {@ref diagram}.
 
 :::: figure Construction {#diagram}
 
-```wavedrom
+The 75% width refers to the content area. The diagram keeps its proportions and
+follows the available space.
+
+```wavedrom {width=75%}
 {
   "signal": [
     {

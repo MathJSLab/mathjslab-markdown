@@ -14,7 +14,7 @@ regiones de enlace se distribuyen de forma aproximadamente tetraédrica, con
 C
 ```
 
-```sdf
+```sdf {width=24rem height=18rem}
 Metano
   MathJSLab
 

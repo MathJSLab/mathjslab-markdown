@@ -5,7 +5,7 @@ export const vegaLiteManifest = {
   name: 'vega-lite',
   description: 'Declarative statistical visualizations using Vega-Lite JSON.',
   dependencies: ['vega', 'vega-lite', 'vega-embed'],
-  fences: [{ language: 'vega-lite', className: 'vega-lite' }],
+  fences: [{ language: 'vega-lite', className: 'vega-lite', sizing: 'intrinsic' }],
   interactive: true,
   capabilities: ['interactive', 'network'],
   formats: [

@@ -1,4 +1,5 @@
 export const markdownDiagnosticCodes = Object.freeze({
+  fenceSizeInvalid: 'fence-size-invalid',
   resourceUrlBlocked: 'resource-url-blocked',
   resourceSizeLimit: 'resource-size-limit',
   resourceLoadError: 'resource-load-error',

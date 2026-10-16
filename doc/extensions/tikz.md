@@ -102,6 +102,10 @@ SVG is sanitized, external references and source-provided CSS are removed, and
 IDs and fonts are namespaced per diagram. Source colors are preserved on a
 white diagram background in both document themes.
 
+In browsers, font faces are loaded explicitly into the document's FontFaceSet
+so labels also work inside Shadow DOM. Disposal removes these faces and revokes
+their associated object URLs.
+
 Compilation errors, missing assets and timeouts preserve the original source
 and emit `extension-render-error`. TeX errors are detected even if the runtime
 produces partial DVI output. Other diagram blocks continue rendering. The

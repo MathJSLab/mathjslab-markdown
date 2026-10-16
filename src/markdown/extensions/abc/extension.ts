@@ -19,7 +19,9 @@ export const abcExtension = (): MarkdownExtension => {
       if (context.signal?.aborted) return;
       dispose(container);
       const tunes = abcjs.renderAbc(container, source, {
-        responsive: 'resize',
+        // The common sizing layer owns the frame when presentation is explicit.
+        // abcjs's responsive wrapper otherwise overwrites width and clips controls.
+        ...(context.renderSize ? {} : { responsive: 'resize' as const }),
         add_classes: true,
       });
       if (!tunes.length) throw new Error('No score could be produced');

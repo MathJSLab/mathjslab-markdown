@@ -8,6 +8,8 @@ import { markdownDiagnosticCategory, markdownDiagnosticCodes } from './markdown/
 import type { MarkdownDiagnostic } from './markdown/diagnostics.js';
 import { Marked, type MarkedExtension, type MarkedOptions } from 'marked';
 import type { MarkdownMapOptions } from './markdown/extensions/maps/baseLayers.js';
+import { applyRenderSize, finishRenderSize, resolveRenderSize, type MarkdownRenderSize, type MarkdownRenderSizing, type MarkdownFenceSizing } from './markdown/renderSizing.js';
+export type { MarkdownRenderSize, MarkdownRenderSizing, MarkdownFenceSizing } from './markdown/renderSizing.js';
 export type { MarkdownMapOptions, MarkdownMapProvider } from './markdown/extensions/maps/baseLayers.js';
 
 export { markdownDiagnosticCategory, markdownDiagnosticCodes } from './markdown/diagnostics.js';
@@ -42,6 +44,8 @@ export interface MarkdownResourceService {
   dispose(): void;
 }
 export type MarkdownDocumentContext = {
+  /** Per-fence presentation, resolved independently of legacy pixel hints. */
+  renderSize?: MarkdownRenderSize;
   sourceUrl?: URL;
   signal?: AbortSignal;
   theme?: 'light' | 'dark';
@@ -67,6 +71,8 @@ export type MarkdownDocumentContext = {
 export type MarkdownExtensionCapability = 'audio' | 'interactive' | 'network' | 'wasm' | 'webgl';
 export type MarkdownProfile = 'core' | 'gfm';
 export type MarkdownFence = {
+  sizing?: MarkdownFenceSizing;
+  defaultSize?: MarkdownRenderSize;
   language: string;
   className: string;
   render: (container: Element, source: string, context: MarkdownDocumentContext) => Promise<void>;
@@ -76,7 +82,7 @@ export type MarkdownExtensionManifest = {
   name: string;
   description: string;
   dependencies: readonly string[];
-  fences: readonly { language: string; className: string }[];
+  fences: readonly { language: string; className: string; sizing?: MarkdownFenceSizing; defaultSize?: MarkdownRenderSize }[];
   styles?: string;
   interactive?: boolean;
   capabilities?: readonly MarkdownExtensionCapability[];
@@ -103,6 +109,7 @@ export type MarkdownExtension = {
   dispose?: () => void | Promise<void>;
 };
 export type MarkdownEngineOptions = {
+  renderSizing?: MarkdownRenderSizing;
   profile?: MarkdownProfile;
   extensions?: MarkdownExtension[];
   maxConcurrentRenders?: number;
@@ -309,8 +316,11 @@ export class MarkdownEngine {
   private readonly renderQueue: ScheduledRendering[] = [];
   private parsingSource = '';
   private parsingCursor = 0;
+  private readonly renderSizing: MarkdownRenderSizing;
+  private readonly sizes = new WeakMap<Element, MarkdownRenderSize | undefined>();
 
   public constructor(options: MarkdownEngineOptions = {}) {
+    this.renderSizing = options.renderSizing ?? {};
     this.profile = options.profile ?? 'gfm';
     this.securityMode = options.securityMode ?? 'trusted';
     this.resourcePolicy = options.resourcePolicy ?? {};
@@ -469,6 +479,7 @@ export class MarkdownEngine {
           });
           return;
         }
+        this.prepareSizing(renderable, entry, this.withFenceDiagnosticContext(activeContext, renderable));
         if (this.shouldDefer(entry.extension, activeContext)) this.deferRendering(renderable, entry, activeContext);
         else await this.renderElement(renderable, entry, activeContext);
       }),
@@ -480,6 +491,7 @@ export class MarkdownEngine {
       await extension.typeset?.(element, activeContext);
     }
     if (activeContext.signal?.aborted || this.disposed) return;
+    for (const renderable of this.findRenderables(element)) finishRenderSize(renderable, this.sizes.get(renderable));
   }
   public async dispose(container?: ParentNode): Promise<void> {
     if (container) {
@@ -597,7 +609,8 @@ export class MarkdownEngine {
         const raw = (token as typeof token & { raw?: string }).raw;
         const line = this.sourceLineForToken(raw);
         const sourceLocation = line === undefined ? '' : ` data-markdown-line="${line}"`;
-        return `<div class="${entry.fence.className}" data-markdown-extension="${entry.extension.name}" data-markdown-language="${language}"${sourceLocation}><pre class="markdown-extension-source">${escapeHTML(token.text)}</pre></div>`;
+        const info = entry.fence.sizing ? ` data-markdown-size-info="${escapeHTML(token.lang?.trim().slice(language.length).trim() ?? '').replace(/"/g, '&quot;')}"` : '';
+        return `<div class="${entry.fence.className}" data-markdown-extension="${entry.extension.name}" data-markdown-language="${language}"${sourceLocation}${info}><pre class="markdown-extension-source">${escapeHTML(token.text)}</pre></div>`;
       },
     };
     this.parser.options(markdownProfiles[this.profile]);
@@ -669,17 +682,30 @@ export class MarkdownEngine {
       removeAbortListener: () => context.signal?.removeEventListener('abort', abort),
     });
   }
+  private prepareSizing(renderable: Element, entry: FenceEntry, diagnosticContext: MarkdownDocumentContext): MarkdownDocumentContext {
+    if (entry.fence.sizing) {
+      if (!this.sizes.has(renderable)) {
+        const size = resolveRenderSize(renderable.getAttribute('data-markdown-size-info') ?? '', entry.extension.name, this.renderSizing, entry.fence.defaultSize, diagnosticContext);
+        this.sizes.set(renderable, size);
+        if (size) applyRenderSize(renderable as HTMLElement, entry.fence.sizing, size);
+      }
+      const size = this.sizes.get(renderable);
+      if (size) diagnosticContext.renderSize = size;
+    }
+    return diagnosticContext;
+  }
   private renderElement(renderable: Element, entry: FenceEntry, context: MarkdownDocumentContext): Promise<void> {
     if (this.disposed || context.signal?.aborted) return Promise.resolve();
     const previous = this.renderings.get(renderable);
     if (previous) return previous;
     const source = renderable.querySelector('.markdown-extension-source')?.textContent ?? '';
-    const diagnosticContext = this.withFenceDiagnosticContext(context, renderable);
+    const diagnosticContext = this.prepareSizing(renderable, entry, this.withFenceDiagnosticContext(context, renderable));
     const pending = this.schedule(async () => {
       if (context.signal?.aborted || this.disposed) return;
       this.rendered.set(renderable, entry.fence);
       try {
         await entry.fence.render(renderable, source, diagnosticContext);
+        finishRenderSize(renderable, diagnosticContext.renderSize);
       } catch (error) {
         try {
           await entry.fence.dispose?.(renderable);

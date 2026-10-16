@@ -1,9 +1,11 @@
+import { sizeViewport } from '../../renderSizing.js';
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
 import { assertSourceSize, observeElementResize, renderExtensionError, waitForElementLayout } from '../../extensionUtils.js';
 import { isMarkdownNodeWithin } from '../../lifecycle.js';
 import { geometryManifest } from './manifest.js';
 import { markdownDiagnosticCodes } from '../../diagnostics.js';
 import { validateGeometrySpec } from './spec.js';
+import { prepareGeometryRuntime } from './compatibility.js';
 
 type Board = import('jsxgraph').Board;
 type Api = typeof import('jsxgraph');
@@ -15,7 +17,10 @@ export const geometryExtension = (): MarkdownExtension => {
   let loading: Promise<{ api: Api; parse: (source: string) => unknown }> | undefined;
   const load = () =>
     (loading ??= Promise.all([import(/* webpackChunkName: "markdown-geometry" */ 'jsxgraph'), import(/* webpackChunkName: "markdown-geometry" */ 'json5')])
-      .then(([{ default: api }, { default: json5 }]) => ({ api, parse: json5.parse }))
+      .then(([{ default: api }, { default: json5 }]) => {
+        prepareGeometryRuntime(api);
+        return { api, parse: json5.parse };
+      })
       .catch((error: unknown) => {
         loading = undefined;
         throw error;
@@ -55,6 +60,7 @@ export const geometryExtension = (): MarkdownExtension => {
       viewport.style.background = dark ? '#151a23' : '#fff';
       viewport.style.color = foreground;
       if (context.height !== undefined && Number.isFinite(context.height) && context.height > 0) viewport.style.height = `${context.height}px`;
+      sizeViewport(viewport, context);
       container.append(viewport);
       await waitForElementLayout(viewport, context);
       if (context.signal?.aborted) {

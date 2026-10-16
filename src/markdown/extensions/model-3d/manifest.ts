@@ -6,9 +6,9 @@ export const model3DManifest = {
   description: 'Interactive 3D models from ASCII STL, OBJ, and glTF JSON.',
   dependencies: ['three'],
   fences: [
-    { language: 'stl', className: 'model-3d' },
-    { language: 'obj', className: 'model-3d' },
-    { language: 'gltf', className: 'model-3d' },
+    { language: 'stl', className: 'model-3d', sizing: 'viewport' },
+    { language: 'obj', className: 'model-3d', sizing: 'viewport' },
+    { language: 'gltf', className: 'model-3d', sizing: 'viewport' },
   ],
   interactive: true,
   capabilities: ['interactive', 'network', 'webgl'],

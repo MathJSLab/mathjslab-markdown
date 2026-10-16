@@ -7,6 +7,9 @@
 
 Water has two hydrogens bonded to one oxygen:
 
+Without attributes, SMILES drawings use their natural size and 3D models use a
+compact, responsive viewport.
+
 ```smiles
 O
 ```

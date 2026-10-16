@@ -6,8 +6,8 @@ export const tikzManifest = {
   description: 'TikZ and CircuiTikZ diagrams compiled locally in isolated Web Workers.',
   dependencies: ['@rod2ik/tikzjax', 'dompurify'],
   fences: [
-    { language: 'tikz', className: 'tikz' },
-    { language: 'circuitikz', className: 'tikz' },
+    { language: 'tikz', className: 'tikz', sizing: 'intrinsic' },
+    { language: 'circuitikz', className: 'tikz', sizing: 'intrinsic' },
   ],
   capabilities: ['wasm', 'network'],
   formats: [

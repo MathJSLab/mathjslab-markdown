@@ -6,8 +6,8 @@ export const verovioManifest = {
   description: 'Academic music scores rendered from MEI or MusicXML.',
   dependencies: ['verovio', 'dompurify'],
   fences: [
-    { language: 'mei', className: 'verovio-music' },
-    { language: 'musicxml', className: 'verovio-music' },
+    { language: 'mei', className: 'verovio-music', sizing: 'intrinsic' },
+    { language: 'musicxml', className: 'verovio-music', sizing: 'intrinsic' },
   ],
   capabilities: ['wasm'],
   formats: [

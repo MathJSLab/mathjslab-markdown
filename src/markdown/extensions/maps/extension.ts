@@ -1,3 +1,4 @@
+import { sizeViewport } from '../../renderSizing.js';
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
 import { assertSourceSize, observeElementResize, renderExtensionError, waitForElementLayout } from '../../extensionUtils.js';
 import { mapsManifest } from './manifest.js';
@@ -64,6 +65,7 @@ export const mapsExtension = (options: MarkdownMapOptions = {}): MarkdownExtensi
       viewport.style.width = '100%';
       viewport.setAttribute('role', 'application');
       viewport.setAttribute('aria-label', language === 'topojson' ? 'TopoJSON map' : 'GeoJSON map');
+      sizeViewport(viewport, context);
       container.append(style, viewport);
       await waitForElementLayout(viewport, context);
       if (context.signal?.aborted) return;

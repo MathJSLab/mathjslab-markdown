@@ -1,6 +1,7 @@
 /// <reference types="jest" />
 import { jest } from '@jest/globals';
 import { TextEncoder } from 'node:util';
+import { readFileSync } from 'node:fs';
 
 const viewer = {
   addModel: jest.fn(),
@@ -72,4 +73,41 @@ it('cancels layout waiting for a disconnected viewport before resources are allo
   controller.abort();
   await expect(operation).resolves.toBeUndefined();
   expect(cancelAnimationFrame).toHaveBeenCalled();
+});
+
+it.each(['pdb', 'cif', 'mmcif', 'sdf', 'mol2', 'xyz', 'cube'])('sizes the %s viewport before initialization and retains resize/disposal', async (language) => {
+  jest.clearAllMocks();
+  const { createEducationalMarkdownEngine } = await import('../../src/markdown/createEducationalMarkdownEngine.js');
+  const engine = createEducationalMarkdownEngine({ features: ['molecule-3d'] });
+  const fixture = readFileSync(new URL('./extensions/molecule-3d.md', import.meta.url), 'utf8');
+  const container = document.createElement('div');
+  const parsed = document.createElement('div');
+  parsed.innerHTML = engine.parse(fixture);
+  const source = parsed.querySelector(`[data-markdown-language="${language}"] .markdown-extension-source`)!.textContent!;
+  document.body.append(container);
+  const bounds = jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({ width: 384, height: 288 } as DOMRect);
+  let resize: (() => void) | undefined;
+  const disconnect = jest.fn();
+  try {
+    const session = await engine.renderDocument('```' + language + ' {width=50% height=18rem}\n' + source + '\n```', container, {
+      observeResize: (_element, callback) => {
+        resize = () => callback(384, 288);
+        return disconnect;
+      },
+    });
+    const frame = container.querySelector<HTMLElement>('.molecule-3d')!;
+    expect(frame.style.width).toBe('50%');
+    expect(frame.style.height).toBe('18rem');
+    expect(frame.firstElementChild?.getAttribute('style')).toContain('height: 100%');
+    expect(viewer.addModel).toHaveBeenCalledWith(source, language === 'mmcif' ? 'cif' : language, { keepH: true });
+    resize!();
+    expect(viewer.resize).toHaveBeenCalledTimes(1);
+    await session.dispose();
+    expect(disconnect).toHaveBeenCalled();
+    expect(viewer.clear).toHaveBeenCalled();
+  } finally {
+    await engine.dispose();
+    bounds.mockRestore();
+    container.remove();
+  }
 });

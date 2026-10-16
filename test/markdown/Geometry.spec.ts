@@ -2,6 +2,7 @@ import { jest } from '@jest/globals';
 import { TextEncoder } from 'node:util';
 import { readFileSync } from 'node:fs';
 import { geometryExtension } from '../../src/markdown/extensions/geometry/extension.js';
+import { prepareGeometryRuntime } from '../../src/markdown/extensions/geometry/compatibility.js';
 import { validateGeometrySpec } from '../../src/markdown/extensions/geometry/spec.js';
 import { createEducationalMarkdownEngine } from '../../src/markdown/createEducationalMarkdownEngine.js';
 import type { MarkdownDiagnostic } from '../../src/MarkdownEngine.js';
@@ -11,6 +12,22 @@ const source = "{elements: [{id:'M',type:'midpoint',parents:['A','B']},{id:'A',t
 const fence = (input = source) => `\`\`\`geometry\n${input}\n\`\`\``;
 
 describe('declarative geometry with the real JSXGraph renderer', () => {
+  test('supports Math functions that sort after the last JessieCode operand', async () => {
+    const { default: api } = await import('jsxgraph');
+    const prototype = api.JessieCode.prototype as unknown as { getPossibleOperands(): { all: Record<string, { origin: string }> } };
+    const original = prototype.getPossibleOperands;
+    Object.defineProperty(Math, 'zzFutureMathFunction', { configurable: true, value: () => 1 });
+    try {
+      prepareGeometryRuntime(api);
+      const operands = prototype.getPossibleOperands.call(Object.create(prototype));
+      expect(operands.all.zzFutureMathFunction?.origin).toBe('Math');
+      expect(operands.all.sin?.origin).toBe('Math');
+      expect(operands.all.E).toBeUndefined();
+    } finally {
+      Reflect.deleteProperty(Math, 'zzFutureMathFunction');
+      prototype.getPossibleOperands = original;
+    }
+  });
   let bounds: ReturnType<typeof jest.spyOn>;
   let clientWidth: ReturnType<typeof jest.spyOn>;
   let clientHeight: ReturnType<typeof jest.spyOn>;

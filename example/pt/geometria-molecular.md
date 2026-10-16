@@ -7,6 +7,9 @@ molecule-3d, SMILES e MathJax.
 
 A água possui dois hidrogênios ligados a um oxigênio:
 
+Sem atributos, os desenhos SMILES usam o tamanho natural e os modelos 3D usam
+uma área compacta e responsiva.
+
 ```smiles
 O
 ```

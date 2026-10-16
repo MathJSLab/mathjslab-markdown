@@ -66,6 +66,39 @@ const circuit = String.raw`\begin{circuitikz}[american]\draw (0,0) to[battery1,l
 const fence = (source: string, language = 'tikz') => `\`\`\`${language}\n${source}\n\`\`\``;
 
 describe('TikZ with the real TeX WASM worker', () => {
+  test('registers fonts for Shadow DOM and removes them on disposal', async () => {
+    const previousFace = Object.getOwnPropertyDescriptor(globalThis, 'FontFace');
+    const previousFonts = Object.getOwnPropertyDescriptor(document, 'fonts');
+    const faces = new Set<unknown>();
+    class TestFontFace {
+      constructor(
+        public family: string,
+        public source: ArrayBuffer,
+      ) {}
+      async load() {
+        return this;
+      }
+    }
+    Object.defineProperty(globalThis, 'FontFace', { configurable: true, value: TestFontFace });
+    Object.defineProperty(document, 'fonts', { configurable: true, value: { add: (face: unknown) => faces.add(face), delete: (face: unknown) => faces.delete(face) } });
+    const extension = tikzExtension(options);
+    const container = document.createElement('div');
+    document.createElement('div').attachShadow({ mode: 'open' }).append(container);
+    try {
+      await extension.fences![0]!.render(container, tikz, context);
+      expect(container.querySelector('[role="alert"]')).toBeNull();
+      expect(faces.size).toBeGreaterThan(0);
+      for (const face of faces) expect((face as TestFontFace).family).toMatch(/^markdown-tikz-/);
+      await extension.dispose!();
+      expect(faces.size).toBe(0);
+    } finally {
+      await extension.dispose!();
+      if (previousFace) Object.defineProperty(globalThis, 'FontFace', previousFace);
+      else Reflect.deleteProperty(globalThis, 'FontFace');
+      if (previousFonts) Object.defineProperty(document, 'fonts', previousFonts);
+      else Reflect.deleteProperty(document, 'fonts');
+    }
+  }, 30_000);
   afterEach(() => {
     for (const worker of active) {
       void worker.terminate();

@@ -4,7 +4,7 @@ export const mermaidManifest = {
   name: 'mermaid',
   description: 'Mermaid diagrams rendered as SVG.',
   dependencies: ['mermaid'],
-  fences: [{ language: 'mermaid', className: 'mermaid' }],
+  fences: [{ language: 'mermaid', className: 'mermaid', sizing: 'intrinsic' }],
   interactive: true,
   capabilities: ['interactive', 'network', 'wasm'],
   styles: `

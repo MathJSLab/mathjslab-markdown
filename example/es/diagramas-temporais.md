@@ -12,7 +12,10 @@ Observe la {@ref diagram}.
 
 :::: figure Construcción {#diagram}
 
-```wavedrom
+La anchura del 75% se refiere al área de contenido. El diagrama mantiene sus
+proporciones y se adapta al espacio disponible.
+
+```wavedrom {width=75%}
 {
   "signal": [
     {

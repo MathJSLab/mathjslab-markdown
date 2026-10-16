@@ -6,8 +6,8 @@ export const mapsManifest = {
   description: 'Offline vector maps from GeoJSON and TopoJSON.',
   dependencies: ['leaflet', 'topojson-client'],
   fences: [
-    { language: 'geojson', className: 'markdown-map' },
-    { language: 'topojson', className: 'markdown-map' },
+    { language: 'geojson', className: 'markdown-map', sizing: 'viewport' },
+    { language: 'topojson', className: 'markdown-map', sizing: 'viewport' },
   ],
   interactive: true,
   capabilities: ['interactive', 'network'],

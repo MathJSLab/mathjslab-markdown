@@ -2,6 +2,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import webpack from 'webpack';
 import fs from 'node:fs';
+import MinimizerPlugin from 'minimizer-webpack-plugin';
 import { collectTikZAssets } from './script/helper/tikz-assets.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
@@ -35,7 +36,12 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
     fallback: { module: false },
     extensionAlias: { '.js': ['.js', '.ts'] },
   },
-  optimization: { runtimeChunk: 'single', splitChunks: { chunks: 'all' } },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: { chunks: 'all' },
+    // Font glyph chunks add many independent assets; bound minifier memory.
+    minimizer: [new MinimizerPlugin({ parallel: 2 })],
+  },
   ignoreWarnings: [
     {
       module: /node_modules[\\/]mathjax[\\/]tex-svg\.js$/,

@@ -1,6 +1,7 @@
 import type { MarkdownExtension } from '../../../MarkdownEngine.js';
 import { isMarkdownNodeWithin } from '../../lifecycle.js';
 import { mathJaxManifest } from './manifest.js';
+import { mathJaxFontLoaders } from './fonts.js';
 
 type MathToken = {
   type: 'github-math-inline' | 'github-math-block';
@@ -16,6 +17,11 @@ type MathJaxApi = {
 };
 
 const loadMathJaxComponent = (path: string): Promise<unknown> => {
+  const dynamicFont = /\/(?:mathjax-newcm|@mathjax\/mathjax-newcm-font(?:@[^/]+)?)\/svg\/dynamic\/([A-Za-z0-9-]+)\.js$/.exec(path);
+  if (dynamicFont) {
+    const load = mathJaxFontLoaders[`${dynamicFont[1]}.js`];
+    return load ? load() : Promise.reject(new Error(`Unsupported MathJax font: ${path}`));
+  }
   if (path.endsWith('/@mathjax/mathjax-mhchem-font-extension/svg.js')) {
     return import(/* webpackChunkName: "markdown-mathjax" */ '@mathjax/mathjax-mhchem-font-extension/svg.js');
   }
@@ -170,6 +176,7 @@ export const mathJaxExtension = (): MarkdownExtension => {
       {
         language: 'math',
         className: 'mathjax-pending',
+        sizing: 'intrinsic',
         render: async () => undefined,
       },
     ],

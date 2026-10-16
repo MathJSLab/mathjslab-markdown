@@ -2,7 +2,7 @@ declare module 'smiles-drawer' {
   type SmilesTree = object;
 
   class SvgDrawer {
-    public constructor(options?: { width?: number; height?: number }, clear?: boolean);
+    public constructor(options?: { width?: number; height?: number; scale?: number }, clear?: boolean);
     public draw(tree: SmilesTree, target: SVGSVGElement, themeName?: 'light' | 'dark'): SVGSVGElement;
   }
 

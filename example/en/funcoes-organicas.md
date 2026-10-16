@@ -20,13 +20,19 @@ not mean belonging to the same compound class.
 
 ### Ethanol
 
-```smiles
+Opening-line attributes control presentation: width in percentages, pixels or
+rem; height in pixels, rem or auto. The language body stays unchanged.
+
+A structure can participate in a sentence: ethanol :smiles[CCO]{height=2rem}
+contains an OH group. The code `:smiles[CCO]` remains literal text.
+
+```smiles {width=50%}
 CCO
 ```
 
 ### Methoxymethane
 
-```smiles
+```smiles {width=12rem height=6rem}
 COC
 ```
 

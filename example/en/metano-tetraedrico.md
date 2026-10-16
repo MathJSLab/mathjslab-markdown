@@ -13,7 +13,7 @@ approximately tetrahedral arrangement, with angles close to $109.5^\circ$.
 C
 ```
 
-```sdf
+```sdf {width=24rem height=18rem}
 Methane
   MathJSLab
 

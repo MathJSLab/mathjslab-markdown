@@ -1,4 +1,5 @@
 import { TextEncoder } from 'node:util';
+import { readFileSync } from 'node:fs';
 import { createEducationalMarkdownEngine } from '../../src/markdown/createEducationalMarkdownEngine.js';
 import { waveDromExtension } from '../../src/markdown/extensions/wavedrom/extension.js';
 import type { MarkdownDiagnostic } from '../../src/MarkdownEngine.js';
@@ -9,6 +10,23 @@ const fence = (source = waveform) => `\`\`\`wavedrom\n${source}\n\`\`\``;
 const createEngine = () => createEducationalMarkdownEngine({ features: ['wavedrom'], securityMode: 'sanitized', allowedCapabilities: [] });
 
 describe('WaveDrom timing diagrams with the real renderer', () => {
+  test.each(['pt', 'en', 'es'].flatMap((locale) => ['comunicacao-spi', 'diagramas-temporais', 'quadro-uart', 'setup-e-hold'].map((file) => ({ locale, file }))))(
+    'renders the $locale/$file lesson with styled symbols',
+    async ({ locale, file }) => {
+      const engine = createEducationalMarkdownEngine({ features: ['wavedrom', 'didactic', 'cross-references'] });
+      const container = document.createElement('div');
+      try {
+        const source = readFileSync(new URL(`../../example/${locale}/${file}.md`, import.meta.url), 'utf8');
+        const session = await engine.renderDocument(source, container);
+        expect(container.querySelector('[role="alert"]')).toBeNull();
+        expect(container.querySelectorAll('svg')).toHaveLength(file === 'diagramas-temporais' ? 2 : 1);
+        for (const svg of container.querySelectorAll('svg')) expect(svg.querySelector('defs .s1')?.getAttribute('style')).toMatch(/fill:\s*none/);
+        await session.dispose();
+      } finally {
+        await engine.dispose();
+      }
+    },
+  );
   test('parses comments and strict JSON, and rejects executable expressions', async () => {
     const extension = waveDromExtension();
     const container = document.createElement('div');
@@ -62,6 +80,7 @@ describe('WaveDrom timing diagrams with the real renderer', () => {
     expect(svg.textContent).toContain('clk');
     expect(svg.textContent).toContain('A');
     expect(svg.querySelectorAll('use').length).toBeGreaterThan(0);
+    expect(svg.querySelector('defs .s1')?.getAttribute('style')).toMatch(/fill:\s*none/);
     for (const use of svg.querySelectorAll('use')) {
       const target = use.getAttribute('href') ?? use.getAttribute('xlink:href');
       expect(target).toMatch(/^#markdown-wavedrom-/);

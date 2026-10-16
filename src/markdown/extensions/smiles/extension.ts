@@ -1,5 +1,6 @@
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
 import { smilesManifest } from './manifest.js';
+import { smilesInline } from './inline.js';
 
 type SmilesDrawerApi = typeof import('smiles-drawer').default;
 
@@ -19,7 +20,7 @@ export const smilesExtension = (): MarkdownExtension => {
       if (context.signal?.aborted) return;
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.id = `mathjslab-smiles-${++sequence}`;
-      const drawer = new SmilesDrawer.SvgDrawer({ width: 500, height: 300 });
+      const drawer = new SmilesDrawer.SvgDrawer({ width: 500, height: 300, scale: 1 });
       await new Promise<void>((resolve, reject) => {
         SmilesDrawer.parse(
           source.trim(),
@@ -41,11 +42,11 @@ export const smilesExtension = (): MarkdownExtension => {
       rendered.add(container);
     } catch (error) {
       if (context.signal?.aborted) return;
-      const message = document.createElement('pre');
+      const message = document.createElement(container.hasAttribute('data-markdown-inline') ? 'span' : 'pre');
       message.className = 'smiles-error';
       message.setAttribute('role', 'alert');
       message.textContent = `SMILES: ${error instanceof Error ? error.message : String(error)}`;
-      const code = document.createElement('pre');
+      const code = document.createElement(container.hasAttribute('data-markdown-inline') ? 'span' : 'pre');
       code.textContent = source;
       container.replaceChildren(message, code);
     }
@@ -59,6 +60,7 @@ export const smilesExtension = (): MarkdownExtension => {
   return {
     name: smilesManifest.name,
     manifest: smilesManifest,
+    marked: { extensions: [smilesInline] },
     fences: [{ ...smilesManifest.fences[0], render, dispose: disposeContainer }],
     dispose() {
       for (const container of rendered) container.replaceChildren();

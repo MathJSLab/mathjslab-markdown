@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -107,6 +107,7 @@
     "git:all:npm:publish": "npm run git:all && npm run npm:publish"
   },
   "dependencies": {
+    "@mathjax/mathjax-newcm-font": "^4.1.3",
     "dompurify": "3.4.17",
     "highlight.js": "^11.12.0",
     "marked": "^18.1.1",
@@ -168,7 +169,8 @@
     "eslint-plugin-prettier": "^5.5.7",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.10",
-    "globals": "^17.13.0"
+    "globals": "^17.13.0",
+    "minimizer-webpack-plugin": "5.13.0"
   },
   "keywords": [
     "MathJSLab",

@@ -1,3 +1,4 @@
+import { sizeViewport } from '../../renderSizing.js';
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
 import { assertSourceSize, observeElementResize, renderExtensionError, waitForElementLayout } from '../../extensionUtils.js';
 import { molecule3DManifest } from './manifest.js';
@@ -31,6 +32,7 @@ export const molecule3DExtension = (): MarkdownExtension => {
       viewport.style.height = '100%';
       viewport.setAttribute('role', 'application');
       viewport.setAttribute('aria-label', `Interactive ${language.toUpperCase()} molecular structure`);
+      sizeViewport(viewport, context);
       container.append(viewport);
       await waitForElementLayout(viewport, context);
       if (context.signal?.aborted) return;

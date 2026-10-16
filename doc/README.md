@@ -1,5 +1,8 @@
 # Markdown engine documentation
 
+See [renderer size and layout](render-sizing.md) for responsive dimensions,
+host defaults, chemical presentation and inline SMILES directives.
+
 `mathjslab-markdown` provides a reusable Markdown engine, educational
 extensions and an optional document Web Component. All documentation in this
 directory is maintained in English.

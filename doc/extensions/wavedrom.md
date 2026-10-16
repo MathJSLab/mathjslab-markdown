@@ -53,6 +53,10 @@ interactive capability is required. Bundled JavaScript assets must still be
 deployed normally. Each diagram gets its own symbol IDs and scoped skin CSS,
 including in Shadow DOM. External SVG resources and active content are removed.
 
+Trusted skin declarations are also applied directly to symbol definitions. This
+preserves their strokes and fills in SVG `use` instances, whose shadow trees
+cannot reliably match selectors scoped to an ancestor SVG.
+
 The document theme selects the default or dark skin. `config.skin: 'default'`
 or `'dark'` overrides that choice. Unknown skin names produce a local error.
 Diagrams scale down to the container width; overflow remains scrollable.

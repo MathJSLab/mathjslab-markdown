@@ -1,5 +1,41 @@
 # Release notes
 
+## 0.5.0
+
+- Add validated renderer presentation attributes (`width`, `height`, `display`)
+  on fence opening lines, global and per-extension host defaults, and per-block
+  render contexts. Fit SVGs proportionally and resize interactive viewports
+  without changing native language data or scaling controls.
+- Render SMILES at natural size and use compact responsive 4:3 molecular
+  viewports. Support true inline structures with `:smiles[CCO]{height=2rem}`,
+  including bracketed atoms, while preserving literal code.
+- Demonstrate natural, percentage and explicit dimensions plus inline chemistry
+  in corresponding Portuguese, English and Spanish lessons. Document the API
+  and extension integration in English.
+
+- Register TikZ fonts with the document FontFaceSet so TeX labels render inside
+  Shadow DOM, and release the faces when the diagram is disposed.
+- Materialize trusted WaveDrom skin styles on SVG symbols to preserve strokes,
+  fills and bus labels across SVG use instances in Web Components.
+- Bundle MathJax New Computer Modern dynamic glyph components locally,
+  including script letters used by the three translated pendulum lessons.
+- Bound production minification to two workers to avoid exhausting memory when
+  compiling the additional font chunks alongside a development server.
+- Correct the UART and SPI timing examples in English, Portuguese and Spanish:
+  extend the UART high level without artificial notches, and show four SPI
+  clock pulses followed by a clean return to idle.
+
+- Work around JSXGraph 1.14 operand discovery failing on browsers with newer
+  Math functions. Detect the affected runtime, preserve operand metadata and
+  test functions that sort beyond JessieCode's built-in names.
+
+- Keep sized ABC scores in normal document flow so notation and audio controls
+  retain their space. Correct the mmCIF fixture used to validate all seven
+  molecular formats.
+- Validate sizing, inline chemistry, diagnostics, lifecycle cleanup and
+  translated examples with 346 unit tests and 12 production distribution tests;
+  verify application types and 15 application integration tests.
+
 ## 0.4.0
 
 - Retain the latest dependency releases, including Citation.js 0.9.0, webpack

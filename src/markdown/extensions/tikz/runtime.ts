@@ -81,9 +81,11 @@ export const compileTikZ = async (source: string, language: string, options: Tik
   const ownedResources = originalContext.resources ? undefined : new DefaultMarkdownResourceService();
   const context: MarkdownDocumentContext = { ...originalContext, signal: controller.signal, resources: originalContext.resources ?? ownedResources! };
   const urls: string[] = [];
+  const fonts: FontFace[] = [];
   let worker: TikZWorker | undefined;
   let workerUrl: string | undefined;
   const cleanupFonts = (): void => {
+    for (const font of fonts.splice(0)) document.fonts.delete(font);
     for (const url of urls.splice(0)) context.resources!.revokeObjectURL(url);
     ownedResources?.dispose();
   };
@@ -224,6 +226,14 @@ export const compileTikZ = async (source: string, language: string, options: Tik
     let css = '';
     for (const family of families) {
       const bytes = await readBytes(new URL(`fonts/${family}.woff2`, base), context);
+      // CSS @font-face rules inside a shadow root do not register document fonts.
+      // Register the uniquely named face explicitly and remove it on disposal.
+      if (typeof FontFace !== 'undefined' && document.fonts) {
+        const font = new FontFace(`${prefix}${family}`, bytes as Uint8Array<ArrayBuffer>);
+        await font.load();
+        document.fonts.add(font);
+        fonts.push(font);
+      }
       const url = context.resources!.createObjectURL(new Blob([bytes as Uint8Array<ArrayBuffer>], { type: 'font/woff2' }));
       urls.push(url);
       css += `@font-face{font-family:${prefix}${family};src:url("${url}") format("woff2");}`;

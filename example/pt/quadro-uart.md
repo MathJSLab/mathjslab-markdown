@@ -17,7 +17,7 @@ Observe a {@ref diagram}.
   "signal": [
     {
       "name": "TX",
-      "wave": "1010111"
+      "wave": "10101.."
     },
     {
       "name": "frame",

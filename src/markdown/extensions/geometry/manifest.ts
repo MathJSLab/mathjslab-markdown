@@ -5,7 +5,7 @@ export const geometryManifest = {
   name: 'geometry',
   description: 'Declarative interactive geometry constructions rendered with JSXGraph.',
   dependencies: ['jsxgraph', 'json5'],
-  fences: [{ language: 'geometry', className: 'geometry' }],
+  fences: [{ language: 'geometry', className: 'geometry', sizing: 'viewport' }],
   interactive: true,
   capabilities: ['interactive'],
   formats: [{ language: 'geometry', mimeTypes: ['application/json', 'application/json5'], extensions: ['.json', '.json5'] }],

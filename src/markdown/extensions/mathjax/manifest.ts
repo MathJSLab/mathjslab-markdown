@@ -4,7 +4,7 @@ export const mathJaxManifest = {
   name: 'mathjax',
   description: 'GitHub-compatible TeX expressions rendered as SVG by MathJax.',
   dependencies: ['mathjax'],
-  fences: [{ language: 'math', className: 'mathjax-pending' }],
+  fences: [{ language: 'math', className: 'mathjax-pending', sizing: 'intrinsic' }],
   interactive: true,
   capabilities: ['interactive'],
   styles: `

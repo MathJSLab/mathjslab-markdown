@@ -27,12 +27,13 @@ _atom_site.group_PDB
 _atom_site.id
 _atom_site.type_symbol
 _atom_site.label_atom_id
+_atom_site.label_comp_id
 _atom_site.Cartn_x
 _atom_site.Cartn_y
 _atom_site.Cartn_z
-ATOM 1 O O 0.000 0.000 0.000
-ATOM 2 H H1 0.759 0.000 0.504
-ATOM 3 H H2 -0.759 0.000 0.504
+ATOM 1 O O HOH 0.000 0.000 0.000
+ATOM 2 H H1 HOH 0.759 0.000 0.504
+ATOM 3 H H2 HOH -0.759 0.000 0.504
 ```
 
 ```sdf

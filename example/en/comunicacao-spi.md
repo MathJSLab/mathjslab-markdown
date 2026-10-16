@@ -20,7 +20,7 @@ Observe {@ref diagram}.
     },
     {
       "name": "SCLK",
-      "wave": "0p....0."
+      "wave": "0p...l.."
     },
     {
       "name": "MOSI",
