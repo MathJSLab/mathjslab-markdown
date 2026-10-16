@@ -1,5 +1,29 @@
 # Release notes
 
+## 0.5.3
+
+- Add the mathematics and physics of music lesson in Portuguese, English and
+  Spanish, with nested exercises, hints and solutions, mathematical formulas,
+  maps, charts and musical scores. Update language indexes and coverage tables
+  to 83 corresponding notes per language (249 total).
+
+- Balance nested didactic and caption containers with a delimiter stack,
+  supporting equal colon counts while preserving longer outer delimiters. Keep
+  fenced code literal and respect exact closing delimiter lengths.
+- Prevent Marked start hints from reinterpreting incomplete longer delimiters
+  as shorter valid containers. Preserve missing outer closers as literal text.
+- Cover isolated and nested exercises, hints and solutions, titles, labels,
+  real MathJax output, registration orders, parser profiles and updates. Add a
+  production browser distribution regression for nesting and references.
+- Document complete nested syntax, required parent closers, extension enabling
+  and the distinction between directives and literal fenced code examples.
+
+- Preserve complete colon opening lines, identifiers and inline references
+  through Prettier formatting in all three music lessons. Add formatter
+  round-trip regressions and document protection for long titles and labels.
+- Validate all 31 unit test suites (368 tests), 13 production distribution
+  tests, type checking, lint and package contents.
+
 ## 0.5.2
 
 - Make inline presentation an explicit renderer capability; retain block layout

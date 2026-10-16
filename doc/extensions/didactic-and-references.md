@@ -20,8 +20,11 @@ remain unchanged. The core engine does not enable them automatically.
 
 The `didactic` extension recognizes `definition`, `theorem`, `proof`,
 `example`, `exercise`, `hint` and `solution`. A title and a trailing `{#label}`
-are optional. Titles are plain text; bodies support Markdown and other enabled
-extensions.
+are optional. Use lowercase English kind names, a space after at least three
+colons, and an opening line followed by a newline. Put the identifier after the
+title on the same line. Titles are plain text; bodies support Markdown and
+other enabled extensions. `exercise` renders a semantic `<section>`; `hint` and
+`solution` render collapsible `<details>` with a `<summary>`.
 
 ```markdown
 :::: theorem Pythagorean theorem {#pythagoras}
@@ -49,12 +52,87 @@ The hypotenuse is 5 units long.
 :::
 ```
 
-Hints and solutions use native `<details>` and `<summary>`, initially closed,
-with keyboard support supplied by the browser. Outer containers must use more
-colons than their nested containers. Closing delimiters must match their
-opening delimiter exactly and occupy their own line. Delimiters inside fenced
-code are literal. Unknown kinds and unclosed containers remain ordinary
-Markdown.
+Hints and solutions are initially closed, with keyboard support supplied by the
+browser. Containers nest by balancing openings and closings. Equal colon counts
+are supported; using more colons for outer blocks remains supported and can
+make the structure easier to read. Every block needs its own closing line, with
+exactly the same number of colons as its opening. A closer belongs to the
+innermost open block with that delimiter; it does not close a parent while a
+child remains open.
+
+The following exercise contains a hint and a solution. The final `:::` closes
+the exercise, separately from the two closers for its children:
+
+```markdown
+::: exercise Monochord experiment {#monochord-exercise}
+
+A string of length $80\,\mathrm{cm}$ produces $220\,\mathrm{Hz}$. What length
+produces $330\,\mathrm{Hz}$ at the same tension?
+
+::: hint A clue {#monochord-hint}
+
+Use $f_2/f_1=L_1/L_2$.
+
+:::
+
+::: solution Worked answer {#monochord-solution}
+
+$$L_2=80\frac{220}{330}=\frac{160}{3}\,\mathrm{cm}.$$
+
+:::
+
+:::
+```
+
+Delimiters inside code fences are literal, including fences whose language is
+`makefile` or `markdown`. To render a didactic component, place its directive
+directly in the document, outside a backtick or tilde code fence. Unknown kinds
+and unclosed containers remain ordinary Markdown; the parser does not invent
+missing closers. If the final exercise closer above is omitted, its opening
+line remains visible rather than becoming an exercise component.
+
+## Recognition and troubleshooting
+
+Formatting tools can treat a colon opening line as ordinary prose and wrap a
+long title or its `{#label}` onto the next line. Keep each opening on one line.
+When using Prettier with `proseWrap: "always"`, put `<!-- prettier-ignore -->`
+immediately before the opening paragraph to preserve it:
+
+```markdown
+<!-- prettier-ignore -->
+::: exercise A long title that must remain together with its identifier {#exercise}
+
+Exercise content.
+
+:::
+```
+
+The comment is an authoring instruction for the formatter and does not change
+the didactic syntax. Apply it to nested openings and caption containers too
+when their titles might be wrapped. A label on the following line is body text,
+not the identifier of the container.
+
+Prettier may also split an inline `{@ref label}` token across lines. Keep that
+token intact and use the same ignore comment before its containing paragraph
+when automatic wrapping would split it. A line break inside the reference is
+not accepted reference syntax.
+
+- Enable `didactic` explicitly or select `features: "all"`. Creating the core
+  `MarkdownEngine` or omitting `features` does not enable teaching blocks.
+- `cross-references` is optional for teaching blocks. It adds document-scoped
+  IDs, numbering and reference links to their `{#label}` metadata. Without it,
+  labels remain metadata rather than generated HTML target IDs.
+- Both registration orders of `didactic` and `cross-references` are supported,
+  including nesting teaching blocks inside captions and vice versa. Both the
+  `core` and `gfm` profiles recognize colon containers.
+- Check all closing lines, their colon counts, and any surrounding code fence
+  when a directive appears literally. A child closer never replaces the
+  required parent closer. Titles may be localized text, but directive names
+  remain English (`exercise`, `hint`, `solution`).
+- Recognition happens in the Marked block tokenizer. `renderDocument` then
+  localizes headings, resolves enabled references and typesets mathematical
+  content. Literal opening lines indicate a disabled extension, a code example
+  or unmatched syntax rather than a CSS or component styling issue.
 
 ## Captions and references
 

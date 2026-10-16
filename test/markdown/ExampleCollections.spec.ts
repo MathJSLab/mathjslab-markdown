@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { TextEncoder, TextDecoder } from 'node:util';
 import JSON5 from 'json5';
+import { spawnSync } from 'node:child_process';
 import { createEducationalMarkdownEngine } from '../../src/markdown/createEducationalMarkdownEngine.js';
 import { markdownExtensionCatalog } from '../../src/markdown/extensionCatalog.js';
 import { mathJSLabExtension } from '../../src/markdown/extensions/mathjslab/extension.js';
@@ -87,6 +88,25 @@ describe('three-language teaching collections', () => {
       });
       for (const lang of ['en', 'es']) expect({ file, ...shape(parse(read(`example/${lang}/${file}`))) }).toEqual({ file, ...shape(original) });
     }
+  });
+
+  test.each(languages)('preserves the %s music lesson headers and labels through repository formatting', async (lang) => {
+    const file = path.join(root, 'example', lang, 'music-pitagoras.md');
+    const source = fs.readFileSync(file, 'utf8');
+    const result = spawnSync(process.execPath, [path.join(root, 'node_modules/prettier/bin/prettier.cjs'), file], { cwd: root, encoding: 'utf8' });
+    expect({ status: result.status, error: result.stderr }).toEqual({ status: 0, error: '' });
+    const formatted = result.stdout;
+    const headers = (text: string) =>
+      Array.from(parse(text).querySelectorAll('[data-markdown-block]'), (node) => ({
+        kind: node.getAttribute('data-markdown-block'),
+        label: node.getAttribute('data-markdown-label'),
+        title: node.querySelector('.markdown-block-heading')?.textContent,
+      }));
+    expect(headers(formatted)).toEqual(headers(source));
+    const labels = headers(formatted).map((header) => header.label);
+    expect(labels).toContain('tabela-pitagorica');
+    expect(labels).toContain('partitura-pitagorica');
+    expect(formatted).toBe(source);
   });
 
   test('keeps local document links, resource links and heading fragments valid in examples and documentation', () => {

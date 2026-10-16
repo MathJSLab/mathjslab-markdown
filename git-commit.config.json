@@ -1,3 +1,3 @@
 {
-  "message": "fix(rendering): preserve native sizes and require explicit inline support"
+  "message": "fix: prepare 0.5.3 with balanced didactic containers\n\nRecognize nested teaching and caption containers with equal or different colon counts, preserving code fences and exact closers. Prevent Marked start hooks from shortening unmatched delimiters.\n\nCover titles, identifiers, mathematical content, registration orders, profiles, updates and production rendering. Document complete exercise, hint and solution syntax and configuration.\n\nAdd the translated music and Pythagoras lesson in all three languages and update indexes and extension coverage to 83 notes per language (249 total).\n\nProtect long colon directive headers from Prettier wrapping, restore all music lesson labels in the three languages and keep inline reference tokens intact and add formatter round-trip regressions."
 }
