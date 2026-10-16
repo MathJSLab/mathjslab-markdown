@@ -53,8 +53,12 @@ MathJax remains typographic and unchanged.
 
 ## Structures inside a sentence
 
-Fences are block Markdown. `display=inline` allows adjacent fence frames to sit
-side by side, but cannot move a fence into an existing paragraph.
+Fences default to block Markdown. Inline frames require an explicit renderer
+opt-in (`supportsInline: true`): SMILES and fenced MathJax support it. Charts,
+WaveDrom diagrams, circuits, scores, maps and interactive viewports stay block
+elements. Unsupported inline requests produce a warning and fall back to block.
+Display-only changes preserve native graphic dimensions and responsive
+behavior. An inline-capable fence still cannot move into an existing paragraph.
 
 With the SMILES extension enabled, use a text directive for a structure inside
 a sentence:

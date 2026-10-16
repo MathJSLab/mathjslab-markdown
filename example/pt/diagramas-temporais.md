@@ -12,11 +12,13 @@ Observe a {@ref diagram}.
 
 :::: figure Construção {#diagram}
 
-A largura de 75% refere-se à área de conteúdo. O diagrama mantém as proporções
-e acompanha o espaço disponível.
+Os dois diagramas usam a mesma escala nativa. Os atributos opcionais de largura
+e altura redimensionam o diagrama inteiro proporcionalmente; não são
+necessários por padrão.
 
-```wavedrom {width=75%}
+```wavedrom
 {
+  "config": { "hscale": 2 },
   "signal": [
     {
       "name": "clock",
@@ -45,6 +47,7 @@ e acompanha o espaço disponível.
 
 ```wavedrom
 {
+  "config": { "hscale": 2 },
   "signal": [
     [
       "Controle",

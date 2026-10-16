@@ -4,7 +4,7 @@ export const smilesManifest = {
   name: 'smiles',
   description: 'Two-dimensional molecular structures from SMILES notation.',
   dependencies: ['smiles-drawer'],
-  fences: [{ language: 'smiles', className: 'smiles', sizing: 'intrinsic', defaultSize: { width: 'auto', height: 'auto' } }],
+  fences: [{ language: 'smiles', className: 'smiles', sizing: 'intrinsic', supportsInline: true, defaultSize: { width: 'auto', height: 'auto' } }],
   styles: `
 .smiles { box-sizing: border-box; max-width: 100%; overflow-x: auto; }
 .smiles[data-markdown-inline] { display: inline-block; vertical-align: middle; }

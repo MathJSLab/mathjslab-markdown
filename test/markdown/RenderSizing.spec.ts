@@ -14,6 +14,7 @@ const extension = (seen: Array<{ source: string; context: MarkdownDocumentContex
       language: 'picture',
       className: 'picture',
       sizing: kind,
+      supportsInline: true,
       render: async (container, source, context) => {
         seen.push({ source, context });
         container.innerHTML = '<svg viewBox="0 0 200 100" width="200" height="100"><path d="M0 0L200 100"/></svg><button>Control</button>';
@@ -23,6 +24,28 @@ const extension = (seen: Array<{ source: string; context: MarkdownDocumentContex
 });
 
 describe('renderer size attributes', () => {
+  test('rejects inline requests for block renderers at every configuration layer', () => {
+    for (const [info, configuration] of [
+      ['{display=inline}', {}],
+      ['', { defaults: { display: 'inline' as const } }],
+      ['', { extensions: { wavedrom: { display: 'inline' as const } } }],
+    ] as const) {
+      const diagnostics: MarkdownDiagnostic[] = [];
+      expect(resolveRenderSize(info, 'wavedrom', configuration, undefined, { onDiagnostic: (d) => diagnostics.push(d) })).toEqual({ display: 'block' });
+      expect(diagnostics).toHaveLength(1);
+    }
+  });
+  test('display-only presentation preserves intrinsic SVG size and controls', async () => {
+    const seen: Array<{ source: string; context: MarkdownDocumentContext }> = [];
+    const engine = new MarkdownEngine({ profile: 'core', extensions: [extension(seen)] });
+    const container = document.createElement('div');
+    await engine.renderDocument(fence('{display=block}'), container);
+    expect(container.querySelector('svg')?.getAttribute('style')).toBeNull();
+    expect(container.querySelector('svg')?.getAttribute('width')).toBe('200');
+    expect(container.querySelector('svg')?.getAttribute('height')).toBe('100');
+    expect(container.querySelector('button')?.getAttribute('style')).toBeNull();
+    await engine.dispose();
+  });
   test.each(['auto', '50%', '100%', '240px', '18rem', '.5rem'])('accepts width %s with quoted and unquoted values', (value) => {
     for (const input of [`{width=${value}}`, `{width="${value}"}`, `{width='${value}'}`]) {
       expect(resolveRenderSize(input, 'picture', {}, undefined, {})).toEqual({ width: value });
@@ -44,6 +67,7 @@ describe('renderer size attributes', () => {
       },
       { width: '100%', height: 'auto' },
       { onDiagnostic: (d) => diagnostics.push(d) },
+      true,
     );
     expect(size).toEqual({ width: '24rem', height: '15rem', display: 'inline' });
     expect(diagnostics).toHaveLength(2);

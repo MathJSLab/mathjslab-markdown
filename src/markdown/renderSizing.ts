@@ -31,6 +31,7 @@ export const resolveRenderSize = (
   configuration: MarkdownRenderSizing,
   native: MarkdownRenderSize | undefined,
   context: MarkdownDocumentContext,
+  supportsInline = false,
 ): MarkdownRenderSize | undefined => {
   const warn = (message: string): void => context.onDiagnostic?.({ extension: name, code: 'fence-size-invalid', category: 'extension', severity: 'warning', message });
   const supplied: Record<string, unknown> = {};
@@ -72,6 +73,10 @@ export const resolveRenderSize = (
       else warn(`Invalid ${key}: ${String(value)}. Using defaults.`);
     }
   }
+  if (result.display === 'inline' && !supportsInline) {
+    warn('This renderer supports block presentation only. Using display=block.');
+    result.display = 'block';
+  }
   return Object.keys(result).length ? Object.freeze(result) : undefined;
 };
 
@@ -103,6 +108,8 @@ export const applyRenderSize = (element: HTMLElement, kind: MarkdownFenceSizing,
 export const finishRenderSize = (element: Element, size: MarkdownRenderSize | undefined): void => {
   if (!size || element.getAttribute('data-markdown-sized') !== 'intrinsic') return;
   applyRenderSize(element as HTMLElement, 'intrinsic', size);
+  // Display alone must never rewrite native SVG dimensions or responsive wrappers.
+  if (size.width === undefined && size.height === undefined) return;
   for (const svg of element.querySelectorAll<SVGSVGElement>('svg')) {
     if (svg.parentElement?.closest('svg')) continue;
     const viewBox = svg

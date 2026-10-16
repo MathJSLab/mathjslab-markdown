@@ -1,5 +1,16 @@
 # Release notes
 
+## 0.5.2
+
+- Make inline presentation an explicit renderer capability; retain block layout
+  for diagrams, charts, circuits, scores and interactive viewports, with a
+  diagnostic and block fallback for unsupported inline requests.
+- Preserve intrinsic SVG dimensions and ABC responsiveness for display-only
+  changes. Retain readable chemical scales from 0.5.1 without changing other
+  renderers' native defaults.
+- Restore a consistent native scale for both timing diagrams in the translated
+  lessons; keep proportional sizing available when explicitly requested.
+
 ## 0.5.1
 
 - Increase the default SMILES presentation scale to 1.75 for fences and 1.5 for

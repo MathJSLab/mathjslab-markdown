@@ -12,11 +12,12 @@ Observe {@ref diagram}.
 
 :::: figure Construction {#diagram}
 
-The 75% width refers to the content area. The diagram keeps its proportions and
-follows the available space.
+Both diagrams use the same native scale. Optional width and height attributes
+resize a complete diagram proportionally; they are not needed by default.
 
-```wavedrom {width=75%}
+```wavedrom
 {
+  "config": { "hscale": 2 },
   "signal": [
     {
       "name": "clock",
@@ -45,6 +46,7 @@ follows the available space.
 
 ```wavedrom
 {
+  "config": { "hscale": 2 },
   "signal": [
     [
       "Control",

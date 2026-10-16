@@ -71,6 +71,8 @@ export type MarkdownDocumentContext = {
 export type MarkdownExtensionCapability = 'audio' | 'interactive' | 'network' | 'wasm' | 'webgl';
 export type MarkdownProfile = 'core' | 'gfm';
 export type MarkdownFence = {
+  /** Inline frames require an explicit renderer opt-in. */
+  supportsInline?: boolean;
   sizing?: MarkdownFenceSizing;
   defaultSize?: MarkdownRenderSize;
   language: string;
@@ -82,7 +84,7 @@ export type MarkdownExtensionManifest = {
   name: string;
   description: string;
   dependencies: readonly string[];
-  fences: readonly { language: string; className: string; sizing?: MarkdownFenceSizing; defaultSize?: MarkdownRenderSize }[];
+  fences: readonly { language: string; className: string; sizing?: MarkdownFenceSizing; defaultSize?: MarkdownRenderSize; supportsInline?: boolean }[];
   styles?: string;
   interactive?: boolean;
   capabilities?: readonly MarkdownExtensionCapability[];
@@ -685,7 +687,14 @@ export class MarkdownEngine {
   private prepareSizing(renderable: Element, entry: FenceEntry, diagnosticContext: MarkdownDocumentContext): MarkdownDocumentContext {
     if (entry.fence.sizing) {
       if (!this.sizes.has(renderable)) {
-        const size = resolveRenderSize(renderable.getAttribute('data-markdown-size-info') ?? '', entry.extension.name, this.renderSizing, entry.fence.defaultSize, diagnosticContext);
+        const size = resolveRenderSize(
+          renderable.getAttribute('data-markdown-size-info') ?? '',
+          entry.extension.name,
+          this.renderSizing,
+          entry.fence.defaultSize,
+          diagnosticContext,
+          entry.fence.supportsInline === true,
+        );
         this.sizes.set(renderable, size);
         if (size) applyRenderSize(renderable as HTMLElement, entry.fence.sizing, size);
       }
