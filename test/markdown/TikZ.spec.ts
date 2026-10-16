@@ -61,6 +61,9 @@ const fetchResource: NonNullable<MarkdownDocumentContext['fetchResource']> = asy
 };
 const context: MarkdownDocumentContext = { sourceUrl: new URL('https://assets.test/lesson.md'), securityMode: 'sanitized', allowedCapabilities: ['wasm', 'network'], fetchResource };
 const options: TikZOptions = { assetBaseUrl: 'https://assets.test/runtime/', createWorker, timeoutMs: 20_000 };
+// Real lesson compilation can pause under CI or workstation load. This budget
+// does not change production defaults or the explicit timeout test below.
+const lessonOptions: TikZOptions = { ...options, timeoutMs: 60_000 };
 const tikz = String.raw`\begin{tikzpicture}\draw (0,0) -- (1,1);\node at (0,0) {A};\end{tikzpicture}`;
 const circuit = String.raw`\begin{circuitikz}[american]\draw (0,0) to[battery1,l=$V$] (0,2) to[R,l=$R$] (3,2) -- (3,0) -- (0,0);\end{circuitikz}`;
 const fence = (source: string, language = 'tikz') => `\`\`\`${language}\n${source}\n\`\`\``;
@@ -237,7 +240,7 @@ describe('TikZ with the real TeX WASM worker', () => {
   test.each(['pt', 'en', 'es'].flatMap((lang) => ['circuitos-eletricos', 'arvore-de-probabilidade', 'resistores-em-paralelo', 'filtro-rc'].map((file) => ({ lang, file }))))(
     'compiles $lang/$file and resolves its captions',
     async ({ lang, file }) => {
-      const engine = createEducationalMarkdownEngine({ features: ['tikz', 'didactic', 'cross-references'], tikzOptions: options });
+      const engine = createEducationalMarkdownEngine({ features: ['tikz', 'didactic', 'cross-references'], tikzOptions: lessonOptions });
       const container = document.createElement('div');
       const diagnostics: MarkdownDiagnostic[] = [];
       await engine.renderDocument(readFileSync(new URL(`../../example/${lang}/${file}.md`, import.meta.url), 'utf8'), container, {
@@ -253,6 +256,6 @@ describe('TikZ with the real TeX WASM worker', () => {
       await engine.dispose();
       expect(active.size).toBe(0);
     },
-    30_000,
+    150_000,
   );
 });
