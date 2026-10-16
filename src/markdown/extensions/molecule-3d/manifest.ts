@@ -7,7 +7,7 @@ export const molecule3DManifest = {
   name: 'molecule-3d',
   description: 'Interactive molecular structures rendered with 3Dmol.js.',
   dependencies: ['3dmol'],
-  fences: languages.map((language) => ({ language, className: 'molecule-3d', sizing: 'viewport', defaultSize: { width: '24rem', height: 'auto' } })),
+  fences: languages.map((language) => ({ language, className: 'molecule-3d', sizing: 'viewport', defaultSize: { width: '30rem', height: 'auto' } })),
   interactive: true,
   capabilities: ['interactive', 'webgl'],
   formats: languages.map((language) => ({
@@ -15,7 +15,7 @@ export const molecule3DManifest = {
     extensions: [`.${language}`],
   })),
   styles: `${extensionStyles('molecule-3d')}
-.molecule-3d { background: var(--calc-surface, #fff); width: 24rem; max-width: 100%; height: auto; aspect-ratio: 4 / 3; min-height: 0; }
+.molecule-3d { background: var(--calc-surface, #fff); width: 30rem; max-width: 100%; height: auto; aspect-ratio: 4 / 3; min-height: 0; }
 .molecule-3d > canvas { height: 100% !important; width: 100% !important; }
 `,
 } as const satisfies MarkdownExtensionManifest;

@@ -116,7 +116,10 @@ export const finishRenderSize = (element: Element, size: MarkdownRenderSize | un
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
     if (size.width && size.width !== 'auto') svg.style.width = '100%';
     else if (size.height && size.height !== 'auto' && ratio) svg.style.width = `calc(${size.height} * ${ratio})`;
-    else if (size.width === 'auto' && viewBox?.[2]) svg.style.width = `${viewBox[2]}px`;
+    else if (size.width === 'auto' && viewBox?.[2]) {
+      const intrinsicWidth = Number(svg.getAttribute('width'));
+      svg.style.width = `${Number.isFinite(intrinsicWidth) && intrinsicWidth > 0 ? intrinsicWidth : viewBox[2]}px`;
+    }
     svg.style.height = size.height && size.height !== 'auto' ? size.height : 'auto';
     // MathJax emits an inline-block wrapper; prevent it retaining natural width.
     const math = svg.closest('mjx-container') as HTMLElement | null;

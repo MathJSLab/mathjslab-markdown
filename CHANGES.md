@@ -1,5 +1,16 @@
 # Release notes
 
+## 0.5.1
+
+- Increase the default SMILES presentation scale to 1.75 for fences and 1.5 for
+  inline structures. Preserve the drawer's explicit intrinsic SVG size instead
+  of replacing it with unscaled viewBox coordinates. Keep proportional fitting,
+  narrow-screen limits and explicit author dimensions.
+- Enlarge the default molecular 3D viewport from 24rem to 30rem, retaining its
+  responsive 4:3 aspect ratio and native rotation and zoom.
+- Document the readable chemistry defaults and add regressions for block and
+  inline scales and explicit size overrides.
+
 ## 0.5.0
 
 - Add validated renderer presentation attributes (`width`, `height`, `display`)

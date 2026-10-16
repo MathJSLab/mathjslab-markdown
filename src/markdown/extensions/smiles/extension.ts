@@ -20,7 +20,8 @@ export const smilesExtension = (): MarkdownExtension => {
       if (context.signal?.aborted) return;
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.id = `mathjslab-smiles-${++sequence}`;
-      const drawer = new SmilesDrawer.SvgDrawer({ width: 500, height: 300, scale: 1 });
+      const scale = container.hasAttribute('data-markdown-inline') ? 1.5 : 1.75;
+      const drawer = new SmilesDrawer.SvgDrawer({ width: 500, height: 300, scale });
       await new Promise<void>((resolve, reject) => {
         SmilesDrawer.parse(
           source.trim(),
@@ -36,6 +37,10 @@ export const smilesExtension = (): MarkdownExtension => {
         );
       });
       if (context.signal?.aborted) return;
+      // Preserve the drawer's readable intrinsic size through the shared sizing
+      // pass. The viewBox describes coordinates, not the display scale.
+      svg.setAttribute('width', String(parseFloat(svg.style.width)));
+      svg.setAttribute('height', String(parseFloat(svg.style.height)));
       svg.setAttribute('role', 'img');
       svg.setAttribute('aria-label', `SMILES: ${source.trim()}`);
       container.replaceChildren(svg);

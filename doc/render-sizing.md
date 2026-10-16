@@ -36,11 +36,13 @@ cameras through their native APIs.
 
 ## Chemistry defaults
 
-SMILES drawings use their natural size. Small molecules are not enlarged to
-fill the page; wider drawings shrink to fit narrow containers.
+SMILES drawings use a readable intrinsic scale: 1.75 times the drawer's
+coordinate size for fences and 1.5 times for inline directives. Small molecules
+are not enlarged to fill the page; wider drawings shrink to fit narrow
+containers. Explicit dimensions override this presentation size.
 
 PDB, CIF, mmCIF, SDF, MOL2, XYZ and CUBE share a molecular viewer with default
-width `24rem`, limited to available space, and automatic height at a 4:3 aspect
+width `30rem`, limited to available space, and automatic height at a 4:3 aspect
 ratio. Explicit attributes override this compact viewport. Rotation and zoom
 remain available; presentation does not change molecular coordinates.
 

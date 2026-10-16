@@ -28,6 +28,11 @@ test('production sizing preserves inline chemistry and fits SVG graphics', async
     assert.equal(container.querySelector('code').textContent, ':smiles[CCO]');
     const natural = container.querySelector('div.smiles svg');
     assert.match(natural.style.width, /px$/);
+    const coordinates = natural
+      .getAttribute('viewBox')
+      .split(/[\s,]+/)
+      .map(Number);
+    assert.ok(Math.abs(parseFloat(natural.style.width) - coordinates[2] * 1.75) < 0.001);
     const graph = container.querySelector('[data-markdown-language="dot"]');
     assert.equal(graph.style.width, '50%');
     assert.equal(graph.querySelector('svg').style.height, '8rem');

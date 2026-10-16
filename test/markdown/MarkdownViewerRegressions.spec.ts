@@ -79,6 +79,7 @@ it.each(['pdb', 'cif', 'mmcif', 'sdf', 'mol2', 'xyz', 'cube'])('sizes the %s vie
   jest.clearAllMocks();
   const { createEducationalMarkdownEngine } = await import('../../src/markdown/createEducationalMarkdownEngine.js');
   const engine = createEducationalMarkdownEngine({ features: ['molecule-3d'] });
+  expect(molecule3DExtension().fences!.find((fence) => fence.language === language)!.defaultSize).toEqual({ width: '30rem', height: 'auto' });
   const fixture = readFileSync(new URL('./extensions/molecule-3d.md', import.meta.url), 'utf8');
   const container = document.createElement('div');
   const parsed = document.createElement('div');

@@ -166,7 +166,35 @@ describe('natural chemical drawings and true inline SMILES', () => {
     expect(svg).not.toBeNull();
     expect(svg.style.width).toMatch(/px$/);
     expect(svg.style.width).not.toBe('100%');
+    const coordinates = svg
+      .getAttribute('viewBox')!
+      .split(/[\s,]+/)
+      .map(Number);
+    expect(parseFloat(svg.style.width)).toBeCloseTo(coordinates[2]! * 1.75);
+    expect(Number(svg.getAttribute('width'))).toBeCloseTo(coordinates[2]! * 1.75);
     expect(svg.getAttribute('aria-label')).toBe(`SMILES: ${source}`);
+    await engine.dispose();
+  });
+  test('uses a moderate readable scale for unsized inline molecules', async () => {
+    const engine = createEducationalMarkdownEngine({ features: ['smiles'] });
+    const container = document.createElement('div');
+    await engine.renderDocument('Ethanol :smiles[CCO] in a sentence.', container);
+    const svg = container.querySelector<SVGSVGElement>('p > span.smiles svg')!;
+    const coordinates = svg
+      .getAttribute('viewBox')!
+      .split(/[\s,]+/)
+      .map(Number);
+    expect(parseFloat(svg.style.width)).toBeCloseTo(coordinates[2]! * 1.5);
+    await engine.dispose();
+  });
+  test('explicit dimensions override the larger chemical defaults', async () => {
+    const engine = createEducationalMarkdownEngine({ features: ['smiles'] });
+    const container = document.createElement('div');
+    await engine.renderDocument('```smiles {width=12rem height=6rem}\nCCO\n```', container);
+    expect(container.querySelector<HTMLElement>('.smiles')!.style.width).toBe('12rem');
+    const svg = container.querySelector<SVGSVGElement>('svg')!;
+    expect(svg.style.width).toBe('100%');
+    expect(svg.style.height).toBe('6rem');
     await engine.dispose();
   });
   test('embeds balanced atom brackets inside a paragraph and leaves code literal', async () => {
