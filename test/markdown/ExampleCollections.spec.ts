@@ -90,24 +90,29 @@ describe('three-language teaching collections', () => {
     }
   });
 
-  test.each(languages)('preserves the %s music lesson headers and labels through repository formatting', async (lang) => {
-    const file = path.join(root, 'example', lang, 'music-pitagoras.md');
-    const source = fs.readFileSync(file, 'utf8');
-    const result = spawnSync(process.execPath, [path.join(root, 'node_modules/prettier/bin/prettier.cjs'), file], { cwd: root, encoding: 'utf8' });
-    expect({ status: result.status, error: result.stderr }).toEqual({ status: 0, error: '' });
-    const formatted = result.stdout;
-    const headers = (text: string) =>
-      Array.from(parse(text).querySelectorAll('[data-markdown-block]'), (node) => ({
-        kind: node.getAttribute('data-markdown-block'),
-        label: node.getAttribute('data-markdown-label'),
-        title: node.querySelector('.markdown-block-heading')?.textContent,
-      }));
-    expect(headers(formatted)).toEqual(headers(source));
-    const labels = headers(formatted).map((header) => header.label);
-    expect(labels).toContain('tabela-pitagorica');
-    expect(labels).toContain('partitura-pitagorica');
-    expect(formatted).toBe(source);
-  });
+  test.each(languages.flatMap((lang) => ['music-pitagoras', 'digital-communication-buses', 'electrical-circuits'].map((lesson) => ({ lang, lesson }))))(
+    'preserves $lang/$lesson headers and labels through repository formatting',
+    async ({ lang, lesson }) => {
+      const file = path.join(root, 'example', lang, `${lesson}.md`);
+      const source = fs.readFileSync(file, 'utf8');
+      const result = spawnSync(process.execPath, [path.join(root, 'node_modules/prettier/bin/prettier.cjs'), file], { cwd: root, encoding: 'utf8' });
+      expect({ status: result.status, error: result.stderr }).toEqual({ status: 0, error: '' });
+      const formatted = result.stdout;
+      const headers = (text: string) =>
+        Array.from(parse(text).querySelectorAll('[data-markdown-block]'), (node) => ({
+          kind: node.getAttribute('data-markdown-block'),
+          label: node.getAttribute('data-markdown-label'),
+          title: node.querySelector('.markdown-block-heading')?.textContent,
+        }));
+      expect(headers(formatted)).toEqual(headers(source));
+      const labels = headers(formatted).map((header) => header.label);
+      if (lesson === 'music-pitagoras') {
+        expect(labels).toContain('tabela-pitagorica');
+        expect(labels).toContain('partitura-pitagorica');
+      }
+      expect(formatted).toBe(source);
+    },
+  );
 
   test('keeps local document links, resource links and heading fragments valid in examples and documentation', () => {
     const scan = (directory: string): string[] =>
@@ -178,7 +183,8 @@ describe('three-language teaching collections', () => {
         const diagnostics: unknown[] = [];
         const session = await renderers.renderDocument(source, container, { locale: locales[lang], onDiagnostic: (diagnostic) => diagnostics.push(diagnostic) });
         expect({ file, lang, diagnostics }).toEqual({ file, lang, diagnostics: [] });
-        if (/^```wavedrom/m.test(source)) expect(container.querySelectorAll('svg')).toHaveLength((source.match(/^```wavedrom/gm) ?? []).length);
+        if (/^```wavedrom/m.test(source))
+          expect(container.querySelectorAll('[data-markdown-language="wavedrom"] > svg.WaveDrom')).toHaveLength((source.match(/^```wavedrom/gm) ?? []).length);
         if (/^```bibliography/m.test(source)) expect(container.querySelectorAll('.markdown-bibliography-entry').length).toBeGreaterThan(0);
         expect(container.querySelector('[role="alert"], .markdown-extension-fallback, .markdown-citation-unresolved')).toBeNull();
         await session.dispose();

@@ -1,6 +1,6 @@
 # Markdown lesson notes
 
-This collection contains **83 notes in English**. Every note has corresponding
+This collection contains **85 notes in English**. Every note has corresponding
 [Brazilian Portuguese](../pt/README.md) and [Spanish](../es/README.md) versions
 with the same filename. Each of the 20 extensions has at least four distinct
 notes per language.
@@ -26,24 +26,24 @@ MathJSLab requires an executor and execution authorization. Set
 | ------------------ | ----: |
 | `abc`              |     5 |
 | `citations`        |     4 |
-| `cross-references` |    16 |
-| `didactic`         |    15 |
+| `cross-references` |    18 |
+| `didactic`         |    17 |
 | `geometry`         |     4 |
 | `graphviz`         |     4 |
-| `heading-ids`      |    83 |
+| `heading-ids`      |    85 |
 | `maps`             |     6 |
-| `mathjax`          |    48 |
+| `mathjax`          |    50 |
 | `mathjslab`        |     7 |
-| `mermaid`          |    16 |
+| `mermaid`          |    18 |
 | `model-3d`         |     4 |
 | `molecule-3d`      |     4 |
 | `relative-urls`    |    61 |
 | `smiles`           |    12 |
 | `syntax-highlight` |     6 |
-| `tikz`             |     4 |
-| `vega-lite`        |     8 |
+| `tikz`             |     6 |
+| `vega-lite`        |    10 |
 | `verovio`          |     5 |
-| `wavedrom`         |     4 |
+| `wavedrom`         |     5 |
 
 ## Index
 
@@ -76,8 +76,10 @@ MathJSLab requires an executor and execution authorization. Set
 | [Induction: sum of the first integers](demonstracao-por-inducao.md)                              | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`                                  |
 | [Project dependencies](dependencias-de-projeto.md)                                               | `graphviz`, `heading-ids`, `relative-urls`                                                                 |
 | [Digital timing diagrams](diagramas-temporais.md)                                                | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom`                                 |
+| [Digital communication buses: from bits to distributed systems](digital-communication-buses.md)  | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `mermaid`, `tikz`, `vega-lite`, `wavedrom`       |
 | [Musical dynamics: piano and forte](dinamica-musical.md)                                         | `heading-ids`, `relative-urls`, `verovio`                                                                  |
 | [Carbon dioxide: bonds and symmetry](dioxido-de-carbono.md)                                      | `heading-ids`, `mathjax`, `molecule-3d`, `relative-urls`, `smiles`                                         |
+| [Electrical Circuits](electrical-circuits.md)                                                    | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `mermaid`, `tikz`, `vega-lite`                   |
 | [Ellipse: sum of distances to the foci](elipse-e-focos.md)                                       | `cross-references`, `didactic`, `geometry`, `heading-ids`, `relative-urls`                                 |
 | [Mechanical energy and transformations](energia-mecanica.md)                                     | `graphviz`, `heading-ids`, `mathjax`, `relative-urls`                                                      |
 | [C major scale in MEI](escala-em-mei.md)                                                         | `heading-ids`, `relative-urls`, `verovio`                                                                  |

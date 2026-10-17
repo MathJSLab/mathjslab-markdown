@@ -1,5 +1,21 @@
 # Release notes
 
+## 0.5.4
+
+- Add digital communication bus and electrical circuit lessons in Portuguese,
+  English and Spanish, covering serial interfaces, timing diagrams, circuit
+  models, transient responses and alternating-current analysis.
+- Update all language indexes and extension coverage tables to 85 notes per
+  language (255 total), including the six new translated lesson files.
+- Protect didactic and caption headers and inline reference paragraphs from
+  Prettier wrapping. Extend formatter round-trip regressions to the two new
+  lessons in all three languages.
+
+- Scope WaveDrom corpus SVG assertions to timing diagrams so MathJax graphics
+  in mixed lessons do not inflate the expected diagram count.
+- Validate 374 unit tests in 31 suites, 13 distribution tests, type checking,
+  lint, production compilation and package contents.
+
 ## 0.5.3
 
 - Add the mathematics and physics of music lesson in Portuguese, English and
