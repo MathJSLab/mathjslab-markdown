@@ -1,5 +1,53 @@
 # Release notes
 
+## 0.6.0
+
+- Add VHDL, Verilog and SystemVerilog syntax highlighting and extend WaveDrom
+  with register maps and declarative logic expressions, preserving timing
+  diagrams, sizing, themes and lifecycle behavior.
+- Add local netlist schematics from bounded Yosys JSON, with explicit top
+  selection, buses, generic cells, sanitized/scoped SVG and lazy layout
+  loading. Bundle the renderer and layout engine licenses.
+- Add explicitly authorized application-owned HDL simulation and synthesis
+  executors, multi-file requests, compiler diagnostics and VCD, WaveJSON and
+  netlist outputs. Preserve batch-only adapters and disabled execution
+  defaults.
+- Add browser HTTP and Node-only backend entries, optional native GHDL,
+  Icarus/VVP and Yosys integration, capability discovery, bounded isolated
+  jobs, cancellation and asynchronous cleanup. Provide an authenticated
+  loopback development service and reproducible optional Windows tool
+  preparation.
+- Add interactive Run/Pause/Step/Reset sessions with four-state inputs/outputs,
+  step limits, stale-result protection and deterministic native replay that
+  preserves clock-boundary input history. Keep replay distinct from a
+  persistent simulator kernel; native compilers remain optional host
+  installations.
+- Consolidate HDL and MathJSLab session ownership, late-acquisition cleanup and
+  idempotent disposal. Add configurable shared execution scheduling with fair
+  dispatch, per-document concurrency, bounded queues and execution deadlines.
+- Add ordered progress/log/VCD updates, bounded NDJSON streaming, UTF-8
+  decoding, legacy JSON fallback and coalesced previews. Preserve viewer
+  choices and external document cancellation after initial typesetting; commit
+  interactive time and outputs only after final validation.
+- Add bounded declarative input timelines and exact four-state output checks.
+  Split advances at event boundaries, record expected/actual outcomes, continue
+  after mismatches and reset history/results with the session.
+- Add VCD signal search, transition navigation, dual cursors with exact time
+  differences and unsigned/signed decimal inspection. Keep confirmed batch
+  waveforms interactive after executor cleanup.
+- Add user-triggered VCD, exact event CSV, standalone SVG, netlist JSON,
+  result/session JSON and log TXT exports. Include confirmed input history and
+  check outcomes, enforce file limits, clean download URLs on disposal and
+  support the optional onHDLExport host callback.
+- Document the public APIs, backend profiles, scheduling, incremental results,
+  inspection and exports in English. Expand and index equivalent lessons in
+  Portuguese, English and Spanish: 105 notes per language, 315 total, covering
+  all 24 extensions with at least four notes per extension and language.
+- Validate 576 engine tests in 39 suites, 51 backend/toolchain tests, 21
+  production distribution tests and five application configuration tests.
+  Verify lint, engine/application types, production build and the 785-file npm
+  package. Preserve the existing four Webpack dependency/bundle-size warnings.
+
 ## 0.5.4
 
 - Add digital communication bus and electrical circuit lessons in Portuguese,

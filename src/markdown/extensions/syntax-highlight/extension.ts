@@ -18,6 +18,8 @@ import rust from 'highlight.js/lib/languages/rust';
 import sql from 'highlight.js/lib/languages/sql';
 import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
+import vhdl from 'highlight.js/lib/languages/vhdl';
+import verilog from 'highlight.js/lib/languages/verilog';
 import { markedHighlight } from 'marked-highlight';
 import { syntaxHighlightManifest } from './manifest.js';
 
@@ -40,6 +42,8 @@ const languages = {
   sql,
   typescript,
   xml,
+  vhdl,
+  verilog,
 };
 
 const aliases: Record<string, keyof typeof languages> = {
@@ -59,6 +63,9 @@ const aliases: Record<string, keyof typeof languages> = {
   sh: 'bash',
   ts: 'typescript',
   tsx: 'typescript',
+  sv: 'verilog',
+  systemverilog: 'verilog',
+  vhd: 'vhdl',
 };
 
 for (const [name, definition] of Object.entries(languages)) {

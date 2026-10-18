@@ -15,8 +15,26 @@ circuit diagrams locally in a TeX/WebAssembly Worker.
 [Dynamic geometry](geometry.md) renders declarative `geometry` constructions
 with draggable points and dependent geometric objects.
 
-[WaveDrom timing diagrams](wavedrom.md) render `wavedrom` fences locally as
-SVG.
+[WaveDrom timing, register and logic diagrams](wavedrom.md) render `wavedrom`
+fences locally as SVG.
+
+[VHDL and Verilog source presentation](hdl.md) adds HDL syntax highlighting
+without compiling or executing source code.
+
+[Digital schematics from netlists](netlist.md) renders local Yosys JSON
+connectivity as SVG, including buses and generic cells.
+
+[HDL execution](hdl-execution.md) integrates application-provided executors for
+VHDL/Verilog simulation and synthesis, with explicit execution policy.
+
+[VCD simulation results](vcd.md) provides a proportional time axis, signal
+selection and cursor inspection for local recordings and HDL results.
+
+[Interactive HDL simulation](hdl-interactive.md) adds input controls and
+Run/Pause/Step/Reset through an explicitly authorized stateful host session.
+
+[Real HDL backends](hdl-backends.md) provides optional GHDL, Icarus and Yosys
+adapters, a browser/service bridge and deterministic interactive replay.
 
 The engine retains GFM parsing and loads specialized renderers when a document
 uses the corresponding fence. Factories and manifests are exported through

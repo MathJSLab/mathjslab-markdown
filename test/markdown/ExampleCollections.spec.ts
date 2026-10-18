@@ -8,6 +8,8 @@ import { createEducationalMarkdownEngine } from '../../src/markdown/createEducat
 import { markdownExtensionCatalog } from '../../src/markdown/extensionCatalog.js';
 import { mathJSLabExtension } from '../../src/markdown/extensions/mathjslab/extension.js';
 import { validateGeometrySpec } from '../../src/markdown/extensions/geometry/spec.js';
+import { hdlExtension } from '../../src/markdown/extensions/hdl/extension.js';
+import { hdlInteractiveExtension } from '../../src/markdown/extensions/hdl-interactive/extension.js';
 
 Object.assign(globalThis, { TextEncoder, TextDecoder });
 const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -21,7 +23,11 @@ const notes = (lang: string): string[] =>
 const read = (relative: string): string => fs.readFileSync(path.join(root, relative), 'utf8');
 const engine = createEducationalMarkdownEngine({
   features: 'all',
-  extensions: [mathJSLabExtension({ toMathML: () => '<math/>', createSession: async () => ({ parse: () => ({ statements: [] }), execute: () => ({ status: 'success' }) }) })],
+  extensions: [
+    mathJSLabExtension({ toMathML: () => '<math/>', createSession: async () => ({ parse: () => ({ statements: [] }), execute: () => ({ status: 'success' }) }) }),
+    hdlExtension({ createSession: () => ({ execute: () => ({ status: 'success' }), dispose: () => {} }) }),
+    hdlInteractiveExtension({}),
+  ],
 });
 const aliases = new Map(Object.entries(markdownExtensionCatalog).map(([key, { manifest }]) => [manifest.name, key]));
 const parse = (source: string): HTMLDivElement => {

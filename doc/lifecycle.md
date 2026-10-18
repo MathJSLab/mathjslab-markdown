@@ -71,3 +71,6 @@ not treat component disposal as global disposal of that external engine.
 Worker termination cannot preserve a suspended workspace. The standard adapter
 starts a clean session rather than replaying commands. Custom shared-Worker
 transports must invalidate every session in the terminated generation.
+
+See [execution sessions and scheduling](execution-scheduling.md) for shared
+compute quotas, cancellation, executor deadlines and asynchronous cleanup.

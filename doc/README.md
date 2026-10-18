@@ -7,8 +7,8 @@ host defaults, chemical presentation and inline SMILES directives.
 extensions and an optional document Web Component. All documentation in this
 directory is maintained in English.
 
-The [teaching collections](../example/README.md) contain 82 corresponding notes
-in each of Brazilian Portuguese, English and Spanish, with at least four
+The [teaching collections](../example/README.md) contain 104 corresponding
+notes in each of Brazilian Portuguese, English and Spanish, with at least four
 distinct notes per extension in every language. Language indexes include
 coverage counts and links to all examples.
 
@@ -17,6 +17,10 @@ coverage counts and links to all examples.
 - [Public API and presets](public-api.md)
 - [Rendering, navigation and diagnostics](rendering.md)
 - [Lifecycle and resource ownership](lifecycle.md)
+- [Execution sessions and scheduling](execution-scheduling.md)
+- [Incremental HDL results](incremental-results.md)
+- [HDL inspection and local export](inspection-and-export.md)
+- [HDL stimuli and checks](extensions/hdl-interactive.md#scripted-stimuli-and-checks)
 - [Security and resource policy](security-and-resources.md)
 - [Markdown authoring and mathematical syntax](authoring.md)
 - [Educational extension catalogue](extensions/README.md)

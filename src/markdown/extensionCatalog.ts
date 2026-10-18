@@ -13,6 +13,12 @@ import { abcExtension } from './extensions/abc/extension.js';
 import { abcManifest } from './extensions/abc/manifest.js';
 import { graphvizExtension } from './extensions/graphviz/extension.js';
 import { graphvizManifest } from './extensions/graphviz/manifest.js';
+import { netlistExtension } from './extensions/netlist/extension.js';
+import { netlistManifest } from './extensions/netlist/manifest.js';
+import { hdlManifest } from './extensions/hdl/manifest.js';
+import { vcdExtension } from './extensions/vcd/extension.js';
+import { vcdManifest } from './extensions/vcd/manifest.js';
+import { hdlInteractiveManifest } from './extensions/hdl-interactive/manifest.js';
 import { headingIdsExtension } from './extensions/heading-ids/extension.js';
 import { headingIdsManifest } from './extensions/heading-ids/manifest.js';
 import { mapsExtension } from './extensions/maps/extension.js';
@@ -50,10 +56,12 @@ export type EducationalMarkdownFeature =
   | 'mermaid'
   | 'model-3d'
   | 'molecule-3d'
+  | 'netlist'
   | 'smiles'
   | 'tikz'
   | 'vega-lite'
   | 'verovio'
+  | 'vcd'
   | 'wavedrom';
 
 export type MarkdownExtensionCatalogEntry = {
@@ -84,6 +92,10 @@ export const markdownExtensionCatalog: Readonly<Record<string, MarkdownExtension
   mathjax: { manifest: mathJaxManifest, create: mathJaxExtension },
   // MathJSLab requires an integrator-provided executor and is created from its adapter.
   mathjslab: { manifest: mathJSLabManifest },
+  // HDL execution requires an explicitly authorized application-owned executor.
+  hdl: { manifest: hdlManifest },
+  'hdl-interactive': { manifest: hdlInteractiveManifest },
+  vcd: { manifest: vcdManifest, create: vcdExtension, educational: true },
   mermaid: {
     manifest: mermaidManifest,
     create: mermaidExtension,
@@ -123,6 +135,7 @@ export const markdownExtensionCatalog: Readonly<Record<string, MarkdownExtension
     educational: true,
   },
   wavedrom: { manifest: waveDromManifest, create: waveDromExtension, educational: true },
+  netlist: { manifest: netlistManifest, create: netlistExtension, educational: true },
 } satisfies Record<string, MarkdownExtensionCatalogEntry>);
 
 export const educationalMarkdownFeatures = Object.freeze(

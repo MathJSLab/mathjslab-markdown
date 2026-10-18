@@ -59,6 +59,20 @@ test('WaveDrom exports stay load-free and produce a lazy browser chunk', async (
   assert.ok(files.some((file) => /^markdown-wavedrom\..*\.js$/.test(file)));
 });
 
+test('netlist exports stay load-free and ship the layout chunk and licenses', async () => {
+  const extensions = await import('mathjslab-markdown/extensions');
+  assert.equal(typeof extensions.netlistExtension, 'function');
+  assert.equal(extensions.netlistManifest.name, 'netlist');
+  const require = createRequire(import.meta.url);
+  assert.equal(
+    Object.keys(require.cache).some((file) => /[\\/]node_modules[\\/]netlistsvg[\\/]/.test(file)),
+    false,
+  );
+  const files = readdirSync(new URL('../../dist/browser/chunks/', import.meta.url));
+  assert.ok(files.some((file) => /^markdown-netlist\..*\.js$/.test(file)));
+  for (const file of ['netlistsvg-LICENSE', 'elkjs-LICENSE']) assert.ok(statSync(new URL('../../dist/browser/netlist/licenses/' + file, import.meta.url)).size > 0);
+});
+
 test('teaching extensions are available from the emitted public entry point without a DOM', async () => {
   const extensions = await import('mathjslab-markdown/extensions');
   const core = await import('mathjslab-markdown');

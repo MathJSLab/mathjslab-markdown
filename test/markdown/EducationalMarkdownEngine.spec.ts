@@ -14,7 +14,7 @@ describe('createEducationalMarkdownEngine', () => {
   });
 
   it('supports the complete catalog and removes duplicate selections', async () => {
-    expect(educationalMarkdownFeatures).toHaveLength(15);
+    expect(educationalMarkdownFeatures).toHaveLength(17);
     const engine = createEducationalMarkdownEngine({
       features: ['graphviz', 'graphviz'],
     });
@@ -32,12 +32,16 @@ describe('createEducationalMarkdownEngine', () => {
         'graphviz',
         'geometry',
         'heading-ids',
+        'hdl',
+        'hdl-interactive',
+        'vcd',
         'maps',
         'mathjax',
         'mathjslab',
         'mermaid',
         'model-3d',
         'molecule-3d',
+        'netlist',
         'relative-urls',
         'smiles',
         'tikz',
@@ -51,6 +55,8 @@ describe('createEducationalMarkdownEngine', () => {
     expect(manifests.every(({ name, dependencies, fences }) => name.length > 0 && Array.isArray(dependencies) && Array.isArray(fences))).toBe(true);
     expect(new Set(manifests.map(({ name }) => name)).size).toBe(manifests.length);
     expect(markdownExtensionCatalog.mathjslab?.create).toBeUndefined();
+    expect(markdownExtensionCatalog.hdl?.create).toBeUndefined();
+    expect(educationalMarkdownFeatures).not.toContain('hdl');
     expect(educationalMarkdownFeatures).toEqual(expect.arrayContaining(['abc', 'graphviz', 'maps', 'mermaid', 'model-3d', 'molecule-3d', 'smiles', 'vega-lite', 'verovio']));
     expect(educationalMarkdownFeatures.every((feature) => markdownExtensionCatalog[feature]?.create)).toBe(true);
   });

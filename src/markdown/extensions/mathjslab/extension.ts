@@ -1,3 +1,4 @@
+import { ManagedExecutionSession } from '../../execution/session.js';
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
 import type { MathJSLabExecutionResult, MathJSLabExecutionSession, MathJSLabExecutor, MathJSLabNodeOutput, MathJSLabParseResult } from './executor.js';
 import { mathJSLabManifest } from './manifest.js';
@@ -57,7 +58,7 @@ const inline = (executor: MathJSLabExecutor) => ({
 });
 
 type SessionEntry = {
-  session?: Promise<MathJSLabExecutionSession>;
+  lease: ManagedExecutionSession<MathJSLabExecutionSession>;
   operation: Promise<void>;
   nextBlockIndex: number;
   statementCount: number;
@@ -146,8 +147,8 @@ export const mathJSLabExtension = (executor: MathJSLabExecutor): MarkdownExtensi
     delete entry.unlink;
     entry.disposal = Promise.resolve()
       .then(async () => {
+        await entry.lease.dispose();
         await entry.operation.catch(() => undefined);
-        if (entry.session) await (await entry.session).dispose?.();
       })
       .finally(() => {
         if (sessions.get(key) === entry) sessions.delete(key);
@@ -162,6 +163,7 @@ export const mathJSLabExtension = (executor: MathJSLabExecutor): MarkdownExtensi
     let entry = sessions.get(key);
     if (entry) return entry;
     entry = {
+      lease: new ManagedExecutionSession<MathJSLabExecutionSession>(signal),
       operation: Promise.resolve(),
       nextBlockIndex: 0,
       statementCount: 0,
@@ -202,11 +204,13 @@ export const mathJSLabExtension = (executor: MathJSLabExecutor): MarkdownExtensi
       extension: mathJSLabManifest.name,
       language: mathJSLabManifest.fences[0].language,
       code:
-        code === 'MATHJSLAB_TIMEOUT'
+        code === 'MATHJSLAB_TIMEOUT' || code === 'execution-timeout'
           ? markdownDiagnosticCodes.mathJSLabExecutionTimeout
           : code === 'MATHJSLAB_WORKER_RESTARTED'
             ? markdownDiagnosticCodes.mathJSLabWorkerRestarted
-            : markdownDiagnosticCodes.mathJSLabExecutionError,
+            : code === 'execution-queue-limit'
+              ? code
+              : markdownDiagnosticCodes.mathJSLabExecutionError,
       category: 'execution',
       severity: 'error',
       ...(context.sourceUrl ? { sourceUrl: context.sourceUrl } : {}),
@@ -243,11 +247,14 @@ export const mathJSLabExtension = (executor: MathJSLabExecutor): MarkdownExtensi
     }
     const operation = entry.operation.then(async () => {
       if (entry.disposed || context.signal?.aborted) return;
-      entry.session ??= Promise.resolve(executor.createSession(context));
-      const session = await entry.session;
       let parsed: MathJSLabParseResult;
       try {
-        parsed = await session.parse(source, context);
+        parsed = await entry.lease.run(
+          context,
+          (active) => executor.createSession(active),
+          (session, active) => session.parse(source, active),
+          { timeoutMs: configured.timeoutMs === undefined ? undefined : Math.max(1, executionLimit(configured.timeoutMs, 30000)) },
+        );
       } catch (error) {
         if (entry.disposed || context.signal?.aborted) return;
         container.replaceChildren();
@@ -286,11 +293,17 @@ export const mathJSLabExtension = (executor: MathJSLabExecutor): MarkdownExtensi
         container.append(result);
         let execution: MathJSLabExecutionResult;
         try {
-          execution = await session.execute(statements[statementIndex]!, {
-            ...context,
-            blockIndex,
-            statementIndex,
-          });
+          execution = await entry.lease.run(
+            context,
+            (active) => executor.createSession(active),
+            (session, active) =>
+              session.execute(statements[statementIndex]!, {
+                ...active,
+                blockIndex,
+                statementIndex,
+              }),
+            { timeoutMs: configured.timeoutMs === undefined ? undefined : Math.max(1, executionLimit(configured.timeoutMs, 30000)) },
+          );
         } catch (error) {
           if (entry.disposed || context.signal?.aborted) return;
           reportExecutionFailure(context, error);
@@ -298,6 +311,7 @@ export const mathJSLabExtension = (executor: MathJSLabExecutor): MarkdownExtensi
         }
         if (entry.disposed || context.signal?.aborted) return;
         await showResult(result, execution);
+        if (entry.lease.controller.signal.aborted) return;
       }
       rendered.add(container);
     });

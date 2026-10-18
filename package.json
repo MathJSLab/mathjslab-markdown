@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -45,7 +45,17 @@
       "import": "./dist/source/*.js",
       "default": "./dist/source/*.js"
     },
-    "./bundles/*": "./dist/browser/*"
+    "./bundles/*": "./dist/browser/*",
+    "./hdl": {
+      "types": "./dist/types/markdown-hdl.d.ts",
+      "import": "./dist/source/markdown-hdl.js",
+      "default": "./dist/source/markdown-hdl.js"
+    },
+    "./hdl/node": {
+      "types": "./dist/types/markdown-hdl-node.d.ts",
+      "import": "./dist/source/markdown-hdl-node.js",
+      "default": "./dist/source/markdown-hdl-node.js"
+    }
   },
   "types": "./dist/types/markdown-core.d.ts",
   "files": [
@@ -104,7 +114,10 @@
     "npm:publish": "npm publish",
     "build:script": "tsc -p script/tsconfig.json",
     "prebuild": "npm run build:script",
-    "git:all:npm:publish": "npm run git:all && npm run npm:publish"
+    "git:all:npm:publish": "npm run git:all && npm run npm:publish",
+    "test:hdl:real": "npm run build:types && node --test --test-timeout=120000 test/hdl/*.test.mjs",
+    "serve:hdl": "npm run build:types && node script/serve-hdl.mjs",
+    "prepare:hdl:tools": "node script/prepare-hdl-tools.mjs"
   },
   "dependencies": {
     "@mathjax/mathjax-newcm-font": "^4.1.3",
@@ -129,6 +142,7 @@
     "leaflet": "1.9.4",
     "mathjax": "^4.1.3",
     "mermaid": "^12.2.0",
+    "netlistsvg": "1.0.2",
     "smiles-drawer": "^2.4.1",
     "three": "0.186.1",
     "topojson-client": "3.1.0",
@@ -154,23 +168,23 @@
     "@types/topojson-client": "3.1.5",
     "@types/topojson-specification": "1.0.5",
     "@types/webpack": "^5.28.5",
+    "@typescript-eslint/eslint-plugin": "^8.71.2",
+    "@typescript-eslint/parser": "^8.71.2",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.7",
+    "globals": "^17.13.0",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
     "mathjslab": "2.9.0",
+    "minimizer-webpack-plugin": "5.13.0",
+    "prettier": "^3.9.10",
     "ts-jest": "^29.4.15",
     "ts-loader": "^9.6.2",
     "tsx": "^4.23.15",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "webpack": "^5.112.0",
-    "webpack-cli": "^7.2.3",
-    "eslint": "^10.13.0",
-    "@typescript-eslint/eslint-plugin": "^8.71.2",
-    "@typescript-eslint/parser": "^8.71.2",
-    "eslint-plugin-prettier": "^5.5.7",
-    "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.10",
-    "globals": "^17.13.0",
-    "minimizer-webpack-plugin": "5.13.0"
+    "webpack-cli": "^7.2.3"
   },
   "keywords": [
     "MathJSLab",
@@ -206,5 +220,11 @@
     "esbuild": true,
     "unrs-resolver": true,
     "@parcel/watcher": true
+  },
+  "overrides": {
+    "netlistsvg": {
+      "json5": "$json5",
+      "yargs": "^17.7.2"
+    }
   }
 }

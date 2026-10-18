@@ -18,6 +18,7 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
     extensions: path.join(directory, 'src', 'markdown-extensions.ts'),
     mathjslab: path.join(directory, 'src', 'markdown-mathjslab.ts'),
     'mathjslab-worker': path.join(directory, 'src', 'markdown-mathjslab-worker.ts'),
+    hdl: path.join(directory, 'src', 'markdown-hdl.ts'),
   },
   experiments: { outputModule: true },
   module: {
@@ -57,6 +58,9 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
     clean: true,
   },
   plugins: [
+    new webpack.NormalModuleReplacementPlugin(/^elkjs$/, (resource) => {
+      if (/[\\/]netlistsvg[\\/]/.test(resource.context)) resource.request = path.join(directory, 'node_modules/netlistsvg/node_modules/elkjs/lib/elk.bundled.js');
+    }),
     new webpack.IgnorePlugin({ resourceRegExp: /^node:module$/ }),
     {
       apply(compiler) {
@@ -71,6 +75,13 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
             ]) {
               const filename = path.join(directory, 'node_modules', packageName!, license!);
               compilation.emitAsset(`citations/licenses/${packageName!.replace('@', '').replace('/', '-')}-${license}`, new webpack.sources.RawSource(fs.readFileSync(filename)));
+            }
+            for (const [packageName, asset] of [
+              ['netlistsvg', 'netlistsvg'],
+              ['netlistsvg/node_modules/elkjs', 'elkjs'],
+            ]) {
+              const filename = path.join(directory, 'node_modules', packageName!, 'LICENSE');
+              compilation.emitAsset(`netlist/licenses/${asset}-LICENSE`, new webpack.sources.RawSource(fs.readFileSync(filename)));
             }
           });
         });

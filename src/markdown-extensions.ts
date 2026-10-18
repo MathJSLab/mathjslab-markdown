@@ -39,5 +39,35 @@ export { verovioExtension } from './markdown/extensions/verovio/extension.js';
 export { verovioManifest } from './markdown/extensions/verovio/manifest.js';
 export { waveDromExtension } from './markdown/extensions/wavedrom/extension.js';
 export { waveDromManifest } from './markdown/extensions/wavedrom/manifest.js';
+export { netlistExtension } from './markdown/extensions/netlist/extension.js';
+export { netlistManifest } from './markdown/extensions/netlist/manifest.js';
+export { hdlExtension } from './markdown/extensions/hdl/extension.js';
+export { hdlManifest } from './markdown/extensions/hdl/manifest.js';
+export { hdlInteractiveExtension } from './markdown/extensions/hdl-interactive/extension.js';
+export { hdlInteractiveManifest } from './markdown/extensions/hdl-interactive/manifest.js';
+export type {
+  HDLStimulus,
+  HDLCheck,
+  HDLInteractiveSignal,
+  HDLInteractiveInput,
+  HDLInteractiveRequest,
+  HDLInteractiveStep,
+  HDLInteractiveResult,
+  HDLInteractiveSession,
+} from './markdown/extensions/hdl-interactive/executor.js';
+export { vcdExtension } from './markdown/extensions/vcd/extension.js';
+export { vcdManifest } from './markdown/extensions/vcd/manifest.js';
+export { parseVCD, vcdValueAt } from './markdown/extensions/vcd/parser.js';
+export type { VCDChange, VCDSignal, VCDDocument } from './markdown/extensions/vcd/parser.js';
+export type { HDLExecutor, HDLExecutionSession, HDLExecutionRequest, HDLExecutionResult, HDLCompilerDiagnostic, HDLSourceFile, HDLLanguage } from './markdown/extensions/hdl/executor.js';
+export type { MarkdownNetlistInput, YosysNetlist, NetlistModule, NetlistCell, NetlistPort, NetlistBit } from './markdown/extensions/netlist/spec.js';
 export { citationsExtension, type CitationsOptions } from './markdown/extensions/citations/extension.js';
 export { citationsManifest } from './markdown/extensions/citations/manifest.js';
+
+export type { HDLExecutionUpdate } from './markdown/hdl/updates.js';
+
+export { exportVCDCSV } from './markdown/extensions/vcd/export.js';
+export type { VCDCSVOptions } from './markdown/extensions/vcd/export.js';
+export type { HDLArtifact } from './markdown/hdl/artifacts.js';
+
+export type { HDLCheckResult } from './markdown/extensions/hdl-interactive/executor.js';

@@ -112,3 +112,15 @@ resize helpers, caches and application modules are not supported public APIs.
 Use [integration](integration.md), [rendering](rendering.md),
 [lifecycle](lifecycle.md) and [security](security-and-resources.md) for the
 corresponding contracts.
+
+See [execution sessions and scheduling](execution-scheduling.md) for shared
+compute quotas, cancellation, executor deadlines and asynchronous cleanup.
+
+## HDL inspection and export
+
+`MarkdownDocumentContext.onHDLExport` optionally handles user-requested local
+`HDLArtifact` text files instead of the default browser download. The
+extensions entry exports `exportVCDCSV`, `VCDCSVOptions` and `HDLCheckResult`.
+Existing HDL backend contracts do not change. See
+[inspection and export](inspection-and-export.md) for file semantics, report
+versioning, limits and lifecycle.

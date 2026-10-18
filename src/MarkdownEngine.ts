@@ -1,3 +1,6 @@
+import type { HDLArtifact } from './markdown/hdl/artifacts.js';
+import type { HDLExecutionUpdate } from './markdown/hdl/updates.js';
+import { createMarkdownExecutionScheduler, type MarkdownExecutionScheduler, type MarkdownExecutionSchedulerOptions } from './markdown/execution/scheduler.js';
 import { headingIdsExtension } from './markdown/extensions/heading-ids/extension.js';
 import { mathJaxExtension } from './markdown/extensions/mathjax/extension.js';
 import { relativeUrlsExtension } from './markdown/extensions/relative-urls/extension.js';
@@ -11,6 +14,7 @@ import type { MarkdownMapOptions } from './markdown/extensions/maps/baseLayers.j
 import { applyRenderSize, finishRenderSize, resolveRenderSize, type MarkdownRenderSize, type MarkdownRenderSizing, type MarkdownFenceSizing } from './markdown/renderSizing.js';
 export type { MarkdownRenderSize, MarkdownRenderSizing, MarkdownFenceSizing } from './markdown/renderSizing.js';
 export type { MarkdownMapOptions, MarkdownMapProvider } from './markdown/extensions/maps/baseLayers.js';
+export type { HDLExecutionUpdate } from './markdown/hdl/updates.js';
 
 export { markdownDiagnosticCategory, markdownDiagnosticCodes } from './markdown/diagnostics.js';
 export type { MarkdownDiagnostic, MarkdownDiagnosticCategory, MarkdownDiagnosticCode, MarkdownDiagnosticEventDetail } from './markdown/diagnostics.js';
@@ -24,6 +28,8 @@ export type MarkdownExecutionPolicy = {
   maxSourceBytes?: number;
   maxBlocks?: number;
   maxStatements?: number;
+  /** Interactive step limit; maxStatements remains the legacy fallback. */
+  maxSteps?: number;
   timeoutMs?: number;
 };
 export type MarkdownExecutionPolicies = Readonly<Record<string, MarkdownExecutionPolicy>>;
@@ -46,6 +52,13 @@ export interface MarkdownResourceService {
 export type MarkdownDocumentContext = {
   /** Per-fence presentation, resolved independently of legacy pixel hints. */
   renderSize?: MarkdownRenderSize;
+  /** Optional ordered HDL updates; scoped to a single dispatched action. */
+  onHDLUpdate?: (update: HDLExecutionUpdate) => void;
+  /** Optional synchronous host handler for user-requested local HDL exports. */
+  onHDLExport?: (artifact: HDLArtifact) => void;
+  executionScheduler?: MarkdownExecutionScheduler;
+  /** Stable scheduling identity shared by all execution blocks in this document. */
+  executionOwner?: object;
   sourceUrl?: URL;
   signal?: AbortSignal;
   theme?: 'light' | 'dark';
@@ -81,6 +94,8 @@ export type MarkdownFence = {
   dispose?: (container: Element) => void | Promise<void>;
 };
 export type MarkdownExtensionManifest = {
+  /** Opt into visible-mode deferral without requiring an unrelated host capability. */
+  deferRendering?: boolean;
   name: string;
   description: string;
   dependencies: readonly string[];
@@ -111,6 +126,8 @@ export type MarkdownExtension = {
   dispose?: () => void | Promise<void>;
 };
 export type MarkdownEngineOptions = {
+  executionScheduling?: MarkdownExecutionSchedulerOptions;
+  executionScheduler?: MarkdownExecutionScheduler;
   renderSizing?: MarkdownRenderSizing;
   profile?: MarkdownProfile;
   extensions?: MarkdownExtension[];
@@ -174,6 +191,7 @@ const linkedController = (external?: AbortSignal): { controller: AbortController
 };
 
 class MarkdownDocumentSession implements MarkdownDocument {
+  private readonly executionOwner = {};
   private context: MarkdownDocumentContext;
   private operation: Promise<void> = Promise.resolve();
   private controller = new AbortController();
@@ -239,6 +257,7 @@ class MarkdownDocumentSession implements MarkdownDocument {
     const activeContext: MarkdownDocumentContext = {
       ...context,
       signal: linked.controller.signal,
+      executionOwner: context.executionOwner ?? this.executionOwner,
       resources: this.resources,
     };
     this.operation = (async () => {
@@ -309,6 +328,8 @@ export class MarkdownEngine {
   private readonly sessions = new Map<HTMLElement, MarkdownDocumentSession>();
   private readonly extensions = new Map<string, MarkdownExtension>();
   private readonly fences = new Map<string, FenceEntry>();
+  private readonly executionScheduler: MarkdownExecutionScheduler;
+  private readonly ownsExecutionScheduler: boolean;
   private readonly maxConcurrentRenders: number;
   private readonly securityMode: MarkdownSecurityMode;
   private readonly resourcePolicy: MarkdownResourcePolicy;
@@ -322,6 +343,8 @@ export class MarkdownEngine {
   private readonly sizes = new WeakMap<Element, MarkdownRenderSize | undefined>();
 
   public constructor(options: MarkdownEngineOptions = {}) {
+    this.executionScheduler = options.executionScheduler ?? createMarkdownExecutionScheduler(options.executionScheduling);
+    this.ownsExecutionScheduler = !options.executionScheduler;
     this.renderSizing = options.renderSizing ?? {};
     this.profile = options.profile ?? 'gfm';
     this.securityMode = options.securityMode ?? 'trusted';
@@ -420,8 +443,12 @@ export class MarkdownEngine {
       ...context,
       signal: linked.controller.signal,
     }).finally(() => {
-      linked.unlink();
-      this.hookOperations.delete(entry);
+      // Interactive resources outlive initial typesetting. Keep parent cancellation
+      // linked until their root is disposed, rather than orphaning idle sessions.
+      if (!context.signal) {
+        linked.unlink();
+        this.hookOperations.delete(entry);
+      }
     });
     return entry.operation;
   }
@@ -440,6 +467,8 @@ export class MarkdownEngine {
         : (context.allowedCapabilities ?? this.allowedCapabilities ?? defaultCapabilities);
     const activeContext: MarkdownDocumentContext = {
       ...context,
+      executionScheduler: this.executionScheduler,
+      executionOwner: context.executionOwner ?? context.signal ?? element,
       securityMode: context.securityMode ?? this.securityMode,
       executionPolicy,
       allowedCapabilities,
@@ -511,7 +540,10 @@ export class MarkdownEngine {
       await this.initialization?.catch(() => undefined);
       await cleanupAll([
         ...sessions.map((session) => () => session),
-        ...Array.from(this.hookOperations, (entry) => () => this.disposeContainer(entry.root)),
+        ...Array.from(
+          new Set(Array.from(this.hookOperations, (entry) => entry.root)),
+          (root) => () => (Array.from(this.hookOperations).some((entry) => entry.root === root) ? this.disposeContainer(root) : undefined),
+        ),
         () => (typeof document === 'undefined' ? undefined : this.disposeContainer(document)),
         async () => {
           for (const entry of this.deferred.values()) {
@@ -534,6 +566,7 @@ export class MarkdownEngine {
         ...Array.from(this.extensions.values())
           .reverse()
           .map((extension) => () => extension.dispose?.()),
+        () => (this.ownsExecutionScheduler ? this.executionScheduler.dispose() : undefined),
       ]);
     });
     for (const scheduled of this.renderQueue.splice(0)) {
@@ -638,6 +671,7 @@ export class MarkdownEngine {
   private shouldDefer(extension: MarkdownExtension, context: MarkdownDocumentContext): boolean {
     if (context.renderMode !== 'visible' || typeof IntersectionObserver === 'undefined') return false;
     const capabilities = extension.manifest?.capabilities ?? [];
+    if (extension.manifest?.deferRendering) return true;
     return capabilities.some((capability) => capability === 'audio' || capability === 'interactive' || capability === 'wasm' || capability === 'webgl');
   }
   private allowedCapabilitiesFor(mode: MarkdownSecurityMode): readonly MarkdownExtensionCapability[] {
@@ -825,3 +859,5 @@ export class MarkdownEngine {
 }
 
 export default MarkdownEngine;
+
+export type { HDLArtifact } from './markdown/hdl/artifacts.js';

@@ -2,14 +2,14 @@
 
 The examples are organized by language:
 
-- [Brazilian Portuguese](pt/README.md): 85 teaching notes covering all package
+- [Brazilian Portuguese](pt/README.md): 105 teaching notes covering all package
   extensions.
-- [English](en/README.md): 85 teaching notes covering all package extensions.
-- [Spanish](es/README.md): 85 teaching notes covering all package extensions.
+- [English](en/README.md): 105 teaching notes covering all package extensions.
+- [Spanish](es/README.md): 105 teaching notes covering all package extensions.
 
-There are **255 lesson notes** on mathematics, statistics, physics, chemistry,
+There are **315 lesson notes** on mathematics, statistics, physics, chemistry,
 biology, geography, history, music, geometry and computing. Each collection
-covers all 20 engine extensions, with at least four distinct notes per
+covers all 24 engine extensions, with at least four distinct notes per
 extension in each language, including explanations, activities and answers. The
 examples include local data and formats such as MEI, SDF and STL. Corresponding
 filenames are the same in all three languages.

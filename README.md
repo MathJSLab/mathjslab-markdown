@@ -103,6 +103,8 @@ choose to enable. Source ESM uses a bundler CSS inline query for maps.
 | `mathjslab-markdown/extensions`         | Educational extensions and manifests           |
 | `mathjslab-markdown/mathjslab`          | Optional MathJSLab execution integration       |
 | `mathjslab-markdown/mathjslab/worker`   | Worker transport and protocol                  |
+| `mathjslab-markdown/hdl`                | Browser-safe HDL backend client                |
+| `mathjslab-markdown/hdl/node`           | Optional native HDL adapters and HTTP handler  |
 | `mathjslab-markdown/browser`            | Aggregate browser entry point                  |
 | `mathjslab-markdown/bundles/*`          | Standalone browser bundles and assets          |
 | `mathjslab-markdown/compat/*`           | Compatibility modules for application adapters |
@@ -111,6 +113,14 @@ MathJSLab is an optional peer dependency (`^2.9.0`). Its integration receives
 executors, Workers and renderers from the host; the core engine has no
 dependency on `mathjslab-app` or Plotly. Standalone bundles share a runtime:
 deploy the entire `dist/browser` tree, including its chunks and assets.
+
+Optional [real HDL backends](doc/extensions/hdl-backends.md) use host-installed
+GHDL, Icarus and Yosys, with explicit execution authorization. Native tools are
+separate from browser bundles and are not included in the npm package.
+
+HDL and MathJSLab use shared
+[execution sessions and scheduling](doc/execution-scheduling.md), with
+configurable concurrency, bounded queues and asynchronous cleanup.
 
 See the
 [documentation index](https://github.com/MathJSLab/mathjslab-markdown/blob/main/doc/README.md),
@@ -150,11 +160,11 @@ contains teaching notes organized by language. The
 [English](https://github.com/MathJSLab/mathjslab-markdown/blob/main/example/en/README.md)
 and
 [Spanish](https://github.com/MathJSLab/mathjslab-markdown/blob/main/example/es/README.md)
-collections each provide 82 lessons covering all 20 extensions, with at least
-four distinct notes per extension and language, along with explanations,
+collections each provide 104 lessons covering all package extensions, with at
+least four distinct notes per extension and language, along with explanations,
 exercises and commented answers. Topics include mathematics, chemistry, music,
 geography, history, biology, physics, statistics, geometry and computing. The
-246 notes include ABC, MusicXML and MEI scores, SMILES and XYZ/SDF molecules,
+312 notes include ABC, MusicXML and MEI scores, SMILES and XYZ/SDF molecules,
 OBJ/STL solids, Mermaid and Graphviz diagrams, GeoJSON/TopoJSON maps, Vega-Lite
 charts and MathJSLab calculations, plus teaching blocks, numbered references,
 WaveDrom diagrams, dynamic geometry, TikZ/CircuiTikZ and CSL bibliographies.

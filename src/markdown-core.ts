@@ -10,3 +10,5 @@ export * from './markdown/createEducationalMarkdownEngine.js';
 export { markdownExtensionCatalog } from './markdown/extensionCatalog.js';
 export type { MarkdownExtensionCatalogEntry } from './markdown/extensionCatalog.js';
 export * from './markdown/createMarkdownEnginePreset.js';
+
+export * from './markdown/execution/scheduler.js';

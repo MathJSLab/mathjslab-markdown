@@ -1,9 +1,9 @@
 # Notas de clase en Markdown
 
-Esta colección contiene **85 notas en español**. Todas tienen versiones
+Esta colección contiene **105 notas en español**. Todas tienen versiones
 correspondientes en [portugués brasileño](../pt/README.md) e
 [inglés](../en/README.md), con los mismos nombres de archivo. Cada una de las
-20 extensiones tiene al menos cuatro notas distintas por idioma.
+24 extensiones tiene al menos cuatro notas distintas por idioma.
 
 Las notas incluyen explicaciones, ejemplos, actividades y respuestas. Los datos
 son locales o están incorporados, incluidas las
@@ -32,20 +32,24 @@ MathJSLab requiere un ejecutor y autorización de ejecución. Configure
 | `didactic`         |    17 |
 | `geometry`         |     4 |
 | `graphviz`         |     4 |
-| `heading-ids`      |    85 |
+| `heading-ids`      |   105 |
+| `hdl`              |     4 |
+| `hdl-interactive`  |     5 |
 | `maps`             |     6 |
 | `mathjax`          |    50 |
 | `mathjslab`        |     7 |
 | `mermaid`          |    18 |
 | `model-3d`         |     4 |
+| `netlist`          |     4 |
 | `molecule-3d`      |     4 |
 | `relative-urls`    |    61 |
 | `smiles`           |    12 |
-| `syntax-highlight` |     6 |
+| `syntax-highlight` |     7 |
 | `tikz`             |     6 |
 | `vega-lite`        |    10 |
 | `verovio`          |     5 |
-| `wavedrom`         |     5 |
+| `vcd`              |     4 |
+| `wavedrom`         |     7 |
 
 ## Índice
 
@@ -68,6 +72,7 @@ MathJSLab requiere un ejecutor y autorización de ejecución. Configure
 | [Circuncentro de un triángulo](circuncentro-do-triangulo.md)                                             | `cross-references`, `didactic`, `geometry`, `heading-ids`, `relative-urls`                                 |
 | [Citas y bibliografía](citacoes-e-bibliografia.md)                                                       | `citations`, `heading-ids`, `relative-urls`                                                                |
 | [Citas numéricas y orden de las fuentes](citacoes-numericas.md)                                          | `citations`, `heading-ids`, `relative-urls`                                                                |
+| [VHDL y Verilog: cuatro descripciones de hardware](codigo-hdl.md)                                        | `heading-ids`, `syntax-highlight`                                                                          |
 | [Comparación de mediciones: dos grupos](comparacao-de-medicoes.md)                                       | `heading-ids`, `mathjax`, `relative-urls`, `vega-lite`                                                     |
 | [Compás compuesto en 6/8](compasso-composto.md)                                                          | `abc`, `heading-ids`, `mathjax`, `relative-urls`                                                           |
 | [Comunicación digital: solicitud y respuesta](comunicacao-digital.md)                                    | `heading-ids`, `mermaid`                                                                                   |
@@ -88,6 +93,7 @@ MathJSLab requiere un ejecutor y autorización de ejecución. Configure
 | [Estadística: distribución de calificaciones y media](estatistica.md)                                    | `heading-ids`, `mathjax`, `vega-lite`                                                                      |
 | [Esterificación: reactivos, productos y equilibrio](esterificacao.md)                                    | `heading-ids`, `mathjax`, `smiles`                                                                         |
 | [Ejercicios con pistas: porcentajes sucesivos](exercicios-com-dicas.md)                                  | `didactic`, `heading-ids`, `mathjax`, `relative-urls`                                                      |
+| [Expresiones lógicas: puertas y combinaciones](expressoes-logicas.md)                                    | `heading-ids`, `wavedrom`                                                                                  |
 | [Filtro RC: tensión en el condensador](filtro-rc.md)                                                     | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `tikz`                                     |
 | [Fotosíntesis: materia y energía](fotossintese.md)                                                       | `graphviz`, `heading-ids`, `mathjax`, `relative-urls`                                                      |
 | [Fracciones equivalentes y suma](fracoes-equivalentes.md)                                                | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                                                       |
@@ -129,6 +135,7 @@ MathJSLab requiere un ejecutor y autorización de ejecución. Configure
 | [Progresiones aritméticas y geométricas](progressoes.md)                                                 | `heading-ids`, `mathjax`                                                                                   |
 | [UART: inicio, datos y parada](quadro-uart.md)                                                           | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom`                                 |
 | [Biología: una red alimentaria simplificada](redes-alimentares.md)                                       | `graphviz`, `heading-ids`                                                                                  |
+| [Registros digitales: campos y formatos](registradores-digitais.md)                                      | `heading-ids`, `wavedrom`                                                                                  |
 | [Resistencias en paralelo con CircuiTikZ](resistores-em-paralelo.md)                                     | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `tikz`                                     |
 | [Resistencias en serie: corriente y tensión](resistores-em-serie.md)                                     | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                                                       |
 | [Ritmo y lectura de una partitura en MusicXML](ritmo-e-partitura.md)                                     | `heading-ids`, `verovio`                                                                                   |
@@ -136,3 +143,20 @@ MathJSLab requiere un ejecutor y autorización de ejecución. Configure
 | [Sistemas lineales: resolver y comprobar](sistemas-lineares.md)                                          | `heading-ids`, `mathjax`, `mathjslab`                                                                      |
 | [Sumas y vectores: componentes y producto escalar](somas-e-vetores.md)                                   | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                                                     |
 | [Funciones trigonométricas y sus relaciones](trigonometria.md)                                           | `heading-ids`, `mathjax`, `mathjslab`                                                                      |
+| [Puerta AND: esquema de netlist](porta-and-netlist.md)                                                   | `heading-ids`, `netlist`                                                                                   |
+| [Multiplexor de cuatro bits: buses](multiplexador-netlist.md)                                            | `heading-ids`, `netlist`                                                                                   |
+| [Sumador de cuatro bits: estructura RTL](somador-netlist.md)                                             | `heading-ids`, `netlist`                                                                                   |
+| [Flip-flop D: conexiones y reloj](registrador-netlist.md)                                                | `heading-ids`, `netlist`                                                                                   |
+| [HDL: simulación de una puerta AND](hdl-porta-and.md)                                                    | `heading-ids`, `hdl`                                                                                       |
+| [HDL: síntesis de un multiplexor](hdl-multiplexador.md)                                                  | `heading-ids`, `hdl`                                                                                       |
+| [HDL: síntesis de un sumador con acarreo](hdl-somador.md)                                                | `heading-ids`, `hdl`                                                                                       |
+| [HDL: simulación de un contador síncrono](hdl-contador.md)                                               | `heading-ids`, `hdl`                                                                                       |
+| [VCD: puerta AND y eventos irregulares](vcd-porta-and.md)                                                | `heading-ids`, `vcd`                                                                                       |
+| [VCD: reset y contador de cuatro bits](vcd-contador.md)                                                  | `heading-ids`, `vcd`                                                                                       |
+| [VCD: bus tri-state y valores desconocidos](vcd-barramento.md)                                           | `heading-ids`, `vcd`                                                                                       |
+| [VCD: handshake y alias jerárquicos](vcd-handshake.md)                                                   | `heading-ids`, `vcd`                                                                                       |
+| [Simulación interactiva: puerta AND](hdl-live-and.md)                                                    | `heading-ids`, `hdl-interactive`                                                                           |
+| [Simulación interactiva: multiplexor](hdl-live-mux.md)                                                   | `heading-ids`, `hdl-interactive`                                                                           |
+| [Simulación interactiva: contador y reset](hdl-live-counter.md)                                          | `heading-ids`, `hdl-interactive`                                                                           |
+| [Simulación interactiva: registro con enable](hdl-live-register.md)                                      | `heading-ids`, `hdl-interactive`                                                                           |
+| [HDL: estímulos y verificaciones](hdl-stimuli-checks.md)                                                 | `heading-ids`, `hdl-interactive`                                                                           |

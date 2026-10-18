@@ -1,8 +1,8 @@
 # Notas de aula em Markdown
 
-Esta coleção reúne **85 notas em português brasileiro**. Todas têm versões
+Esta coleção reúne **105 notas em português brasileiro**. Todas têm versões
 correspondentes em [inglês](../en/README.md) e [espanhol](../es/README.md), com
-os mesmos nomes de arquivo. Cada uma das 20 extensões tem pelo menos quatro
+os mesmos nomes de arquivo. Cada uma das 24 extensões tem pelo menos quatro
 notas distintas por idioma.
 
 As notas incluem explicações, exemplos, atividades e respostas. Os dados são
@@ -30,20 +30,24 @@ de execução. Configure `locale: "pt-BR"` para os rótulos gerados. Consulte os
 | `didactic`         |    17 |
 | `geometry`         |     4 |
 | `graphviz`         |     4 |
-| `heading-ids`      |    85 |
+| `heading-ids`      |   105 |
+| `hdl`              |     4 |
+| `hdl-interactive`  |     5 |
 | `maps`             |     6 |
 | `mathjax`          |    50 |
 | `mathjslab`        |     7 |
 | `mermaid`          |    18 |
 | `model-3d`         |     4 |
+| `netlist`          |     4 |
 | `molecule-3d`      |     4 |
 | `relative-urls`    |    61 |
 | `smiles`           |    12 |
-| `syntax-highlight` |     6 |
+| `syntax-highlight` |     7 |
 | `tikz`             |     6 |
 | `vega-lite`        |    10 |
 | `verovio`          |     5 |
-| `wavedrom`         |     5 |
+| `vcd`              |     4 |
+| `wavedrom`         |     7 |
 
 ## Índice
 
@@ -66,6 +70,7 @@ de execução. Configure `locale: "pt-BR"` para os rótulos gerados. Consulte os
 | [Circuncentro de um triângulo](circuncentro-do-triangulo.md)                                             | `cross-references`, `didactic`, `geometry`, `heading-ids`, `relative-urls`                                 |
 | [Citações e bibliografia](citacoes-e-bibliografia.md)                                                    | `citations`, `heading-ids`, `relative-urls`                                                                |
 | [Citações numéricas e ordem das fontes](citacoes-numericas.md)                                           | `citations`, `heading-ids`, `relative-urls`                                                                |
+| [VHDL e Verilog: quatro descrições de hardware](codigo-hdl.md)                                           | `heading-ids`, `syntax-highlight`                                                                          |
 | [Comparação de medições: dois grupos](comparacao-de-medicoes.md)                                         | `heading-ids`, `mathjax`, `relative-urls`, `vega-lite`                                                     |
 | [Compasso composto em 6/8](compasso-composto.md)                                                         | `abc`, `heading-ids`, `mathjax`, `relative-urls`                                                           |
 | [Comunicação digital: pedido e resposta](comunicacao-digital.md)                                         | `heading-ids`, `mermaid`                                                                                   |
@@ -86,6 +91,7 @@ de execução. Configure `locale: "pt-BR"` para os rótulos gerados. Consulte os
 | [Estatística: distribuição de notas e média](estatistica.md)                                             | `heading-ids`, `mathjax`, `vega-lite`                                                                      |
 | [Esterificação: reagentes, produtos e equilíbrio](esterificacao.md)                                      | `heading-ids`, `mathjax`, `smiles`                                                                         |
 | [Exercícios com dicas: porcentagens sucessivas](exercicios-com-dicas.md)                                 | `didactic`, `heading-ids`, `mathjax`, `relative-urls`                                                      |
+| [Expressões lógicas: portas e combinações](expressoes-logicas.md)                                        | `heading-ids`, `wavedrom`                                                                                  |
 | [Filtro RC: tensão no capacitor](filtro-rc.md)                                                           | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `tikz`                                     |
 | [Fotossíntese: matéria e energia](fotossintese.md)                                                       | `graphviz`, `heading-ids`, `mathjax`, `relative-urls`                                                      |
 | [Frações equivalentes e adição](fracoes-equivalentes.md)                                                 | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                                                       |
@@ -127,6 +133,7 @@ de execução. Configure `locale: "pt-BR"` para os rótulos gerados. Consulte os
 | [Progressões aritméticas e geométricas](progressoes.md)                                                  | `heading-ids`, `mathjax`                                                                                   |
 | [UART: início, dados e parada](quadro-uart.md)                                                           | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom`                                 |
 | [Biologia: uma rede alimentar simplificada](redes-alimentares.md)                                        | `graphviz`, `heading-ids`                                                                                  |
+| [Registradores digitais: campos e formatos](registradores-digitais.md)                                   | `heading-ids`, `wavedrom`                                                                                  |
 | [Resistores em paralelo com CircuiTikZ](resistores-em-paralelo.md)                                       | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `tikz`                                     |
 | [Resistores em série: corrente e tensão](resistores-em-serie.md)                                         | `heading-ids`, `mathjax`, `mermaid`, `relative-urls`                                                       |
 | [Ritmo e leitura de partitura em MusicXML](ritmo-e-partitura.md)                                         | `heading-ids`, `verovio`                                                                                   |
@@ -134,3 +141,20 @@ de execução. Configure `locale: "pt-BR"` para os rótulos gerados. Consulte os
 | [Sistemas lineares: resolver e verificar](sistemas-lineares.md)                                          | `heading-ids`, `mathjax`, `mathjslab`                                                                      |
 | [Somas e vetores: componentes e produto escalar](somas-e-vetores.md)                                     | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                                                     |
 | [Funções trigonométricas e suas relações](trigonometria.md)                                              | `heading-ids`, `mathjax`, `mathjslab`                                                                      |
+| [Porta AND: esquema por netlist](porta-and-netlist.md)                                                   | `heading-ids`, `netlist`                                                                                   |
+| [Multiplexador de quatro bits: barramentos](multiplexador-netlist.md)                                    | `heading-ids`, `netlist`                                                                                   |
+| [Somador de quatro bits: estrutura RTL](somador-netlist.md)                                              | `heading-ids`, `netlist`                                                                                   |
+| [Flip-flop D: conexões e clock](registrador-netlist.md)                                                  | `heading-ids`, `netlist`                                                                                   |
+| [HDL: simulação de uma porta AND](hdl-porta-and.md)                                                      | `heading-ids`, `hdl`                                                                                       |
+| [HDL: síntese de um multiplexador](hdl-multiplexador.md)                                                 | `heading-ids`, `hdl`                                                                                       |
+| [HDL: síntese de um somador com carry](hdl-somador.md)                                                   | `heading-ids`, `hdl`                                                                                       |
+| [HDL: simulação de um contador síncrono](hdl-contador.md)                                                | `heading-ids`, `hdl`                                                                                       |
+| [VCD: porta AND e eventos irregulares](vcd-porta-and.md)                                                 | `heading-ids`, `vcd`                                                                                       |
+| [VCD: reset e contador de quatro bits](vcd-contador.md)                                                  | `heading-ids`, `vcd`                                                                                       |
+| [VCD: barramento tri-state e valores desconhecidos](vcd-barramento.md)                                   | `heading-ids`, `vcd`                                                                                       |
+| [VCD: handshake e aliases hierárquicos](vcd-handshake.md)                                                | `heading-ids`, `vcd`                                                                                       |
+| [Simulação interativa: porta AND](hdl-live-and.md)                                                       | `heading-ids`, `hdl-interactive`                                                                           |
+| [Simulação interativa: multiplexador](hdl-live-mux.md)                                                   | `heading-ids`, `hdl-interactive`                                                                           |
+| [Simulação interativa: contador e reset](hdl-live-counter.md)                                            | `heading-ids`, `hdl-interactive`                                                                           |
+| [Simulação interativa: registrador com enable](hdl-live-register.md)                                     | `heading-ids`, `hdl-interactive`                                                                           |
+| [HDL: estímulos e verificações](hdl-stimuli-checks.md)                                                   | `heading-ids`, `hdl-interactive`                                                                           |

@@ -3,27 +3,83 @@ import { assertSourceSize, renderExtensionError, sanitizeSVG } from '../../exten
 import { isMarkdownNodeWithin } from '../../lifecycle.js';
 import { waveDromManifest } from './manifest.js';
 
-type WaveSource = Record<string, unknown> & { signal: unknown[]; config?: Record<string, unknown> };
+type WaveSource = Record<string, unknown> & { signal?: unknown[]; reg?: unknown[]; assign?: unknown[]; config?: Record<string, unknown> };
 let sequence = 0;
 
 const validate = (value: unknown): WaveSource => {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WaveJSON must be an object with a nonempty signal array');
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('WaveJSON must be an object with one diagram family');
   const source = value as WaveSource;
-  if (!Array.isArray(source.signal) || !source.signal.length) throw new Error('WaveJSON requires a nonempty signal array');
+  const families = ['signal', 'reg', 'assign'].filter((key) => Object.hasOwn(source, key));
+  if (families.length !== 1) throw new Error('WaveJSON requires exactly one of signal, reg or assign');
+  const family = families[0]!;
+  if (!Array.isArray(source[family]) || !(source[family] as unknown[]).length) throw new Error(`WaveJSON requires a nonempty ${family} array`);
   if (source.config !== undefined && (!source.config || typeof source.config !== 'object' || Array.isArray(source.config))) throw new Error('WaveJSON config must be an object');
   if (source.config?.skin !== undefined && !['default', 'dark'].includes(String(source.config.skin))) throw new Error('Supported WaveDrom skins: default, dark');
   let nodes = 0;
-  const check = (item: unknown, depth: number): void => {
+  const check = (item: unknown, depth: number, numericLabel = false): void => {
     if (++nodes > 20_000 || depth > 32) throw new Error('WaveJSON exceeds the structure limit');
-    if (typeof item === 'number' && (!Number.isFinite(item) || Math.abs(item) > 4096)) throw new Error('WaveJSON numbers must be finite and between -4096 and 4096');
+    if (typeof item === 'number' && (!Number.isFinite(item) || Math.abs(item) > (numericLabel ? 0xffff_ffff : 4096)))
+      throw new Error('WaveJSON numbers exceed finite layout or register-label limits');
     if (item && typeof item === 'object') {
       for (const [key, child] of Object.entries(item)) {
         if (['__proto__', 'constructor', 'prototype'].includes(key)) throw new Error(`Unsupported WaveJSON key: ${key}`);
-        check(child, depth + 1);
+        check(child, depth + 1, numericLabel || (family === 'reg' && (key === 'name' || key === 'attr')));
       }
     }
   };
   check(source, 0);
+  if (family === 'reg') {
+    let bits = 0;
+    for (const field of source.reg!) {
+      if (!field || typeof field !== 'object' || Array.isArray(field)) throw new Error('Register fields must be objects');
+      const entry = field as Record<string, unknown>;
+      if (typeof entry.bits !== 'number' || !Number.isInteger(entry.bits) || entry.bits < 1) throw new Error('Register field bits must be positive integers');
+      if (typeof entry.name === 'number' && entry.bits > 32) throw new Error('Numeric register names support at most 32 bits; use a text label for wider fields');
+      bits += entry.bits;
+      if (bits > 4096 || source.reg!.length > 256) throw new Error('Register exceeds field or bit limits');
+      for (const key of ['name', 'attr']) {
+        const label = entry[key];
+        if (
+          label !== undefined &&
+          typeof label !== 'string' &&
+          typeof label !== 'number' &&
+          !(key === 'attr' && Array.isArray(label) && label.every((item) => typeof item === 'string' || typeof item === 'number'))
+        )
+          throw new Error('Register labels must be text or numbers');
+      }
+      if (Array.isArray(entry.attr) && entry.attr.length > 16) throw new Error('Register exceeds attribute limit');
+    }
+    const config = source.config ?? {};
+    for (const key of ['bits', 'lanes', 'hspace', 'vspace', 'fontsize'])
+      if (config[key] !== undefined && (typeof config[key] !== 'number' || !Number.isInteger(config[key]) || (config[key] as number) < 1))
+        throw new Error(`Register ${key} must be a positive integer`);
+    if (config.bits !== undefined && (config.bits as number) < bits) throw new Error('Register config.bits cannot be smaller than its fields');
+    if (Number(config.lanes ?? 1) > Math.min(256, Number(config.bits ?? bits))) throw new Error('Register lanes exceed available bits or lane limit');
+    if (Number(config.bits ?? bits) * Number(config.lanes ?? 1) > 65_536) throw new Error('Register exceeds expanded bit limit');
+    if (Number(config.fontsize ?? 14) > 64 || Number(config.vspace ?? 60) > 512) throw new Error('Register font or vertical spacing exceeds layout limit');
+    return source;
+  }
+  if (family === 'assign') {
+    let gates = 0;
+    const expression = (value: unknown, depth: number): void => {
+      if (++gates > 512 || depth > 16) throw new Error('Logic expression exceeds gate or depth limits');
+      if (typeof value === 'string' && value.length > 0 && value.length <= 256) return;
+      if (!Array.isArray(value) || value.length < 2 || !['&', '~&', '|', '~|', '^', '~^', '~', '=', '+', '-', '*'].includes(String(value[0])))
+        throw new Error('Unsupported logic expression; use operator arrays and signal names');
+      if (value[0] === '~' && value.length !== 2) throw new Error('NOT requires one operand');
+      value.slice(1).forEach((child) => expression(child, depth + 1));
+    };
+    if (source.assign!.length > 64) throw new Error('Logic diagram exceeds output limit');
+    for (const output of source.assign!) {
+      if (!Array.isArray(output) || output.length !== 2 || typeof output[0] !== 'string' || !output[0].length || output[0].length > 256)
+        throw new Error('Assignments require [output name, expression]');
+      expression(output[1], 0);
+    }
+    for (const key of ['fontWidth', 'treeSpacing'])
+      if (source.config?.[key] !== undefined && (typeof source.config[key] !== 'number' || source.config[key] <= 0 || source.config[key] > 128))
+        throw new Error(`Logic ${key} must be between 0 and 128`);
+    return source;
+  }
   let lanes = 0;
   let cells = 0;
   const scale = Math.min(100, Math.max(1, Math.round(Number(source.config?.hscale) || 1)));
@@ -47,18 +103,39 @@ const validate = (value: unknown): WaveSource => {
       if (cells > 65_536) throw new Error('WaveJSON exceeds the 65536 waveform-cell limit');
     });
   };
-  signals(source.signal);
+  signals(source.signal!);
   if (!lanes) throw new Error('WaveJSON requires at least one signal');
   return source;
 };
 
 /** Namespace before sanitizing: native WaveDrom symbol IDs can start with digits. */
-const isolateSVG = (markup: string, css: string, dark: boolean): string => {
+const isolateSVG = (markup: string, css: string, dark: boolean, monochrome = false): string => {
   const template = document.createElement('template');
   template.innerHTML = markup;
   const svg = template.content.querySelector('svg');
   if (!svg) throw new Error('WaveDrom did not produce an SVG diagram');
   if (dark) svg.querySelector('[id="waves_0"] > rect')?.setAttribute('style', 'stroke:none;fill:#1e1e1e');
+  if (dark && monochrome) {
+    // Register palette fills are bright; keep white labels readable on dark
+    // pages while retaining the field's native color coding.
+    svg.querySelectorAll('rect[style*="fill:"]').forEach((element) => element.setAttribute('style', `${element.getAttribute('style')};fill-opacity:.25`));
+    svg.querySelectorAll('[stroke], [fill]').forEach((element) => {
+      for (const name of ['stroke', 'fill']) {
+        const color = element.getAttribute(name);
+        if (color === 'black' || color === '#000') element.setAttribute(name, '#eee');
+        if (color === 'white' || color === '#fff') element.setAttribute(name, '#1e1e1e');
+      }
+    });
+    css = css
+      .replace(/#eee\b/g, '#333')
+      .replace(/#ecc\b/g, '#533')
+      .replace(/#cce\b/g, '#335')
+      .replace(/#aaa\b/g, '#444')
+      .replace(/#777\b/g, '#555')
+      .replace(/#ccc\b/g, '#777')
+      .replace(/#000\b/g, '#eee')
+      .replace(/#fff\b/g, '#1e1e1e');
+  }
   const prefix = `markdown-wavedrom-${++sequence}-`;
   const ids = new Map<string, string>();
   template.content.querySelectorAll('[id]').forEach((element) => {
@@ -149,11 +226,20 @@ export const waveDromExtension = (): MarkdownExtension => {
       const skins = { default: JSON.parse(JSON.stringify(useDark ? dark.dark : api.waveSkin.default)) as unknown[] };
       const css = (skins.default[2] as unknown[])[2] as string;
       // Index zero initializes lane geometry and includes all symbol definitions.
-      const svg = await sanitizeSVG(isolateSVG(api.onml.stringify(api.renderAny(0, input, skins)), css, useDark));
+      const tree = api.renderAny(0, input, skins);
+      // assign's direct style child is generated by the library, never by input:
+      // its restricted grammar accepts only operator arrays and text leaves.
+      const nativeCSS = input.assign
+        ? tree
+            .filter((child) => Array.isArray(child) && child[0] === 'style')
+            .map((child) => (child as unknown[])[1])
+            .join('')
+        : '';
+      const svg = await sanitizeSVG(isolateSVG(api.onml.stringify(tree), input.signal ? css : `${nativeCSS}\ntext{fill:#000}`, useDark, !input.signal));
       if (context.signal?.aborted) return;
       container.innerHTML = svg;
       container.querySelector('svg')?.setAttribute('role', 'img');
-      container.querySelector('svg')?.setAttribute('aria-label', 'WaveDrom timing diagram');
+      container.querySelector('svg')?.setAttribute('aria-label', input.reg ? 'WaveDrom register diagram' : input.assign ? 'WaveDrom logic diagram' : 'WaveDrom timing diagram');
       rendered.add(container);
     } catch (error) {
       if (!context.signal?.aborted) renderExtensionError(container, 'WaveDrom', 'wavedrom', source, error, context);
