@@ -1,5 +1,12 @@
 # HDL: scripted stimuli and checks
 
+Execution requirements: an application-authorized HDL executor and a service
+with GHDL (VHDL), Icarus/VVP (Verilog simulation) and Yosys (synthesis). In
+mathjslab-app 0.6.0, production execution is disabled; development requires the
+loopback service, token and application settings in
+sessionStorage["mathjslab.hdl.backend"], followed by a reload. Markdown cannot
+authorize execution. A source listing is not a simulation result.
+
 Run the sequence and inspect the checks. Inputs change at 0 and 7 ns. The
 output is checked at 7 and 12 ns. Reset restores the sequence.
 

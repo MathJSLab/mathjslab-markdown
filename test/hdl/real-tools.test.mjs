@@ -10,6 +10,7 @@ import { createHTTPHDLExecutor } from '../../dist/source/markdown-hdl.js';
 import { parseVCD, vcdValueAt } from '../../dist/source/markdown/extensions/vcd/parser.js';
 import { hdlToolOptions } from '../../script/helper/hdl-tool-options.mjs';
 
+const verified = { source: 0, batch: 0, interactive: 0 };
 const tools = hdlToolOptions();
 const directory = await mkdtemp(path.join(tmpdir(), 'hdl-real-tests-'));
 const executor = createNativeHDLExecutor({ allowNativeExecution: true, ...tools, temporaryDirectory: directory });
@@ -107,6 +108,7 @@ for (const locale of ['en', 'pt', 'es'])
             assert.ok(Object.keys(module.ports).length);
             assert.ok(Object.keys(module.cells).length);
           }
+          verified.batch++;
         } finally {
           await session.dispose();
         }
@@ -114,52 +116,129 @@ for (const locale of ['en', 'pt', 'es'])
     });
   }
 
-for (const lesson of ['hdl-live-and', 'hdl-live-mux', 'hdl-live-counter', 'hdl-live-register']) {
-  test(`real interactive HDL: ${lesson} preserves input history and sequential state`, async () => {
-    for (const request of await extract(lesson, 'en', 'live')) {
-      const session = await executor.createInteractiveSession(request, {});
+for (const locale of ['en', 'pt', 'es'])
+  for (const lesson of ['hdl-live-and', 'hdl-live-mux', 'hdl-live-counter', 'hdl-live-register']) {
+    test(`real interactive HDL: ${locale}/${lesson} preserves input history and sequential state`, async () => {
+      for (const request of await extract(lesson, locale, 'live')) {
+        const session = await executor.createInteractiveSession(request, {});
+        try {
+          const initial = Object.fromEntries(request.inputs.map((input) => [input.name, input.initial]));
+          const first = await session.step({ advanceNs: 10, inputs: initial }, {});
+          assert.equal(first.timeNs, 10);
+          const secondInputs =
+            lesson === 'hdl-live-and'
+              ? { a: '1', b: '1' }
+              : lesson === 'hdl-live-counter'
+                ? { rst: '0' }
+                : lesson === 'hdl-live-register'
+                  ? { d: '1010', enable: '0' }
+                  : { ...initial, s: '1' };
+          const second = await session.step({ advanceNs: 10, inputs: secondInputs }, {});
+          const third = await session.step({ advanceNs: 10, inputs: secondInputs }, {});
+          assert.equal(third.timeNs, 30);
+          assert.ok(parseVCD(third.vcd).signals.length);
+          if (lesson === 'hdl-live-and') assert.equal(second.values.y, '1');
+          if (lesson === 'hdl-live-mux') assert.equal(second.values.y, '1010');
+          if (lesson === 'hdl-live-counter') {
+            assert.equal(first.values.q, '0000');
+            assert.equal(second.values.q, '0001');
+            assert.equal(third.values.q, '0010');
+          }
+          if (lesson === 'hdl-live-register') {
+            assert.equal(first.values.q, '0101');
+            assert.equal(second.values.q, '0101');
+            assert.equal(third.values.q, '0101');
+          }
+        } finally {
+          await session.dispose();
+        }
+        const reset = await executor.createInteractiveSession(request, {});
+        try {
+          const again = await reset.step({ advanceNs: 10, inputs: Object.fromEntries(request.inputs.map((input) => [input.name, input.initial])) }, {});
+          assert.equal(again.timeNs, 10);
+          if (lesson === 'hdl-live-counter') assert.equal(again.values.q, '0000');
+          verified.interactive++;
+        } finally {
+          await reset.dispose();
+        }
+      }
+    });
+  }
+
+for (const locale of ['en', 'pt', 'es']) {
+  test(`plain HDL examples compile and synthesize without pretending code fences execute: ${locale}`, async () => {
+    const source = await readFile(new URL(`../../example/${locale}/codigo-hdl.md`, import.meta.url), 'utf8');
+    const matches = [...source.matchAll(/```(vhdl|verilog)\n([\s\S]*?)\n```/g)];
+    assert.equal(matches.length, 8);
+    for (const [index, match] of matches.entries()) {
+      const session = await executor.createSession({});
       try {
-        const initial = Object.fromEntries(request.inputs.map((input) => [input.name, input.initial]));
-        const first = await session.step({ advanceNs: 10, inputs: initial }, {});
-        assert.equal(first.timeNs, 10);
-        const secondInputs =
-          lesson === 'hdl-live-and'
-            ? { a: '1', b: '1' }
-            : lesson === 'hdl-live-counter'
-              ? { rst: '0' }
-              : lesson === 'hdl-live-register'
-                ? { d: '1010', enable: '0' }
-                : { ...initial, s: '1' };
-        const second = await session.step({ advanceNs: 10, inputs: secondInputs }, {});
-        const third = await session.step({ advanceNs: 10, inputs: secondInputs }, {});
-        assert.equal(third.timeNs, 30);
-        assert.ok(parseVCD(third.vcd).signals.length);
-        if (lesson === 'hdl-live-and') assert.equal(second.values.y, '1');
-        if (lesson === 'hdl-live-mux') assert.equal(second.values.y, '1010');
-        if (lesson === 'hdl-live-counter') {
-          assert.equal(first.values.q, '0000');
-          assert.equal(second.values.q, '0001');
-          assert.equal(third.values.q, '0010');
-        }
-        if (lesson === 'hdl-live-register') {
-          assert.equal(first.values.q, '0101');
-          assert.equal(second.values.q, '0101');
-          assert.equal(third.values.q, '0101');
-        }
+        const result = await session.execute(
+          {
+            language: match[1],
+            operation: 'synthesize',
+            top: ['and_gate', 'mux2', 'dff', 'counter4'][Math.floor(index / 2)],
+            files: [{ name: match[1] === 'vhdl' ? 'source.vhd' : 'source.v', source: match[2] }],
+          },
+          {},
+        );
+        assert.equal(result.status, 'success', `${locale}/${index}: ${result.logs}`);
+        assert.ok(result.netlist);
+        verified.source++;
       } finally {
         await session.dispose();
       }
-      const reset = await executor.createInteractiveSession(request, {});
+    }
+  });
+  test(`scripted real replay uses each translated stimulus/check boundary: ${locale}`, async () => {
+    for (const request of await extract('hdl-stimuli-checks', locale, 'live')) {
+      const session = await executor.createInteractiveSession(request, {});
       try {
-        const again = await reset.step({ advanceNs: 10, inputs: Object.fromEntries(request.inputs.map((input) => [input.name, input.initial])) }, {});
-        assert.equal(again.timeNs, 10);
-        if (lesson === 'hdl-live-counter') assert.equal(again.values.q, '0000');
+        let time = 0;
+        const inputs = Object.fromEntries(request.inputs.map((input) => [input.name, input.initial]));
+        for (const check of request.checks) {
+          for (const stimulus of request.stimuli) if (stimulus.timeNs <= time) Object.assign(inputs, stimulus.inputs);
+          const result = await session.step({ advanceNs: check.timeNs - time, inputs: { ...inputs } }, {});
+          time = result.timeNs;
+          assert.equal(result.values[check.signal], check.expected, `${locale}/${request.language}/${check.id}`);
+          const recording = parseVCD(result.vcd);
+          const unitNs = { s: 1e9, ms: 1e6, us: 1e3, ns: 1, ps: 1e-3, fs: 1e-6 };
+          assert.equal(
+            recording.endTime,
+            Math.round(result.timeNs / (recording.timescale.magnitude * unitNs[recording.timescale.unit])),
+            request.language + ' retains the verified checkpoint',
+          );
+        }
+        verified.interactive++;
       } finally {
-        await reset.dispose();
+        await session.dispose();
       }
     }
   });
 }
+test('stable replay outputs retain elapsed VCD duration without invented transitions', async () => {
+  for (const language of ['vhdl', 'verilog']) {
+    const request = (await extract('hdl-live-and', 'en', 'live')).find((request) => request.language === language);
+    const session = await executor.createInteractiveSession(request, {});
+    try {
+      for (const advanceNs of [7, 5]) {
+        const result = await session.step({ advanceNs, inputs: { a: '1', b: '1' } }, {});
+        const recording = parseVCD(result.vcd);
+        const unitNs = { s: 1e9, ms: 1e6, us: 1e3, ns: 1, ps: 1e-3, fs: 1e-6 };
+        assert.equal(recording.endTime, Math.round(result.timeNs / (recording.timescale.magnitude * unitNs[recording.timescale.unit])));
+        const y = recording.signals.find((signal) => signal.name === 'markdown_replay.y');
+        assert.ok(y);
+        assert.equal(y.changes.at(-1).value, '1');
+        assert.ok(
+          y.changes.every((change) => change.time === 0),
+          'checkpoint timestamp does not invent a value transition',
+        );
+      }
+    } finally {
+      await session.dispose();
+    }
+  }
+});
 
 test('real compilation errors include source locations and changed source changes behavior', async () => {
   for (const language of ['vhdl', 'verilog']) {
@@ -267,6 +346,20 @@ test('browser HTTP contract reaches real simulators for batch and interactive re
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   try {
+    const endpoint = `http://127.0.0.1:${server.address().port}/hdl`;
+    const preflight = await fetch(endpoint + '/sessions', {
+      method: 'OPTIONS',
+      headers: { Origin: 'http://localhost:8080', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'authorization,content-type' },
+    });
+    assert.equal(preflight.status, 204);
+    assert.equal(preflight.headers.get('access-control-allow-origin'), 'http://localhost:8080');
+    assert.ok(preflight.headers.get('access-control-allow-headers').includes('Authorization'));
+    const denied = await fetch(endpoint + '/capabilities', { headers: { Origin: 'https://denied.test', Authorization: 'Bearer ' + token } });
+    assert.equal(denied.status, 403);
+    assert.equal(denied.headers.get('access-control-allow-origin'), null);
+    const unauthorized = await fetch(endpoint + '/capabilities', { headers: { Origin: 'http://localhost:8080' } });
+    assert.equal(unauthorized.status, 401);
+    assert.equal(unauthorized.headers.get('access-control-allow-origin'), 'http://localhost:8080');
     const client = createHTTPHDLExecutor({ endpoint: `http://127.0.0.1:${server.address().port}/hdl`, token });
     assert.equal((await client.capabilities()).languages.vhdl.simulate, true);
     for (const request of await extract('hdl-porta-and', 'en', 'run')) {
@@ -349,6 +442,7 @@ test('Markdown controls render real HDL over HTTP, inspect results and release s
       frame.querySelector('[data-hdl-action=step]').click();
       await wait(() => frame.getAttribute('data-hdl-time') === '10');
       assert.equal(frame.querySelector('table').rows[1].cells[1].textContent, '0');
+      assert.ok(frame.querySelector('.vcd-graphic svg'), 'first stable replay step must draw its confirmed interval');
       frame.querySelector('fieldset select').value = '1';
       frame.querySelector('[data-hdl-action=step]').click();
       await wait(() => frame.getAttribute('data-hdl-time') === '20');
@@ -373,6 +467,29 @@ test('Markdown controls render real HDL over HTTP, inspect results and release s
       await wait(() => frame.getAttribute('data-hdl-time') === '0');
       assert.equal(frame.querySelectorAll('[data-status=pending]').length, 2);
     }
+    await documentSession.dispose();
+    documentSession = await engine.renderDocument(await readFile(new URL('../../example/pt/hdl-live-counter.md', import.meta.url), 'utf8'), container, {
+      locale: 'pt-BR',
+      onDiagnostic: (diagnostic) => diagnostics.push(diagnostic),
+    });
+    for (const frame of container.querySelectorAll('.hdl-interactive')) {
+      frame.querySelector('[data-hdl-action=run]').click();
+      await wait(() => Number(frame.getAttribute('data-hdl-time')) >= 10);
+      frame.querySelector('[data-hdl-action=pause]').click();
+      await wait(() => !frame.querySelector('[data-hdl-action=step]').disabled);
+      const paused = Number(frame.getAttribute('data-hdl-time'));
+      await new Promise((resolve) => setTimeout(resolve, 120));
+      assert.equal(Number(frame.getAttribute('data-hdl-time')), paused);
+      frame.querySelector('fieldset select').value = '0';
+      frame.querySelector('[data-hdl-action=step]').click();
+      await wait(() => Number(frame.getAttribute('data-hdl-time')) === paused + 10);
+      assert.equal(frame.querySelector('table').rows[1].cells[1].textContent, '0001');
+      frame.querySelector('[data-hdl-action=reset]').click();
+      await wait(() => frame.getAttribute('data-hdl-time') === '0');
+      frame.querySelector('[data-hdl-action=step]').click();
+      await wait(() => frame.getAttribute('data-hdl-time') === '10');
+      assert.equal(frame.querySelector('table').rows[1].cells[1].textContent, '0000');
+    }
     assert.deepEqual(
       diagnostics.filter((diagnostic) => diagnostic.severity === 'error'),
       [],
@@ -390,4 +507,9 @@ test('Markdown controls render real HDL over HTTP, inspect results and release s
       else delete globalThis[name];
     }
   }
+});
+
+test('complete real three-language HDL inventory is validated without silent skips', () => {
+  assert.deepEqual(verified, { source: 24, batch: 24, interactive: 30 });
+  console.log('Real HDL inventory verified: ' + JSON.stringify(verified));
 });

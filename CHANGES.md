@@ -1,5 +1,32 @@
 # Release notes
 
+## 0.6.1
+
+- Resolve public package imports to source entry points in Jest so application
+  integration tests also run after cleaning the distribution, before building.
+
+- Validate the complete 78-fence pt/en/es HDL inventory with actual GHDL 6.0.0,
+  Icarus/VVP 14 development and Yosys 0.70+157: 69 backend tests without skips.
+  Retain 21 passing production distribution tests, app compatibility checks and
+  package verification. Provide an audit report and a tested drop-in app
+  configuration without enabling native production execution.
+
+- Preserve the verified native replay checkpoint timestamp after clipping the
+  private drain tick. Stable Verilog outputs now retain their elapsed VCD
+  interval instead of appearing as zero-duration recordings, without inventing
+  signal changes. Add real-compiler regressions for held outputs and all
+  locales.
+
+- Recognize executable HDL fences in full educational profiles without an
+  executor and show actionable setup diagnostics instead of plain code or
+  apparently usable simulation controls. Preserve explicit host authorization.
+- Probe optional backend capabilities within cancellable execution deadlines;
+  report missing toolchains before acquiring compiler sessions. Improve HTTP
+  connection, token, CORS and incorrect-endpoint diagnostics.
+- Audit HDL lessons in all three languages and document their execution
+  prerequisites, replay semantics, production limits and concrete application
+  integration changes.
+
 ## 0.6.0
 
 - Add VHDL, Verilog and SystemVerilog syntax highlighting and extend WaveDrom

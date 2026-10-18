@@ -1,5 +1,12 @@
 # HDL: synthesizing a multiplexer
 
+Execution requirements: an application-authorized HDL executor and a service
+with GHDL (VHDL), Icarus/VVP (Verilog simulation) and Yosys (synthesis). In
+mathjslab-app 0.6.0, production execution is disabled; development requires the
+loopback service, token and application settings in
+sessionStorage["mathjslab.hdl.backend"], followed by a reload. Markdown cannot
+authorize execution. A source listing is not a simulation result.
+
 Requires an application-provided, authorized HDL executor. The engine includes
 no compiler or simulator. The application converts simulation output to
 WaveJSON or synthesis output to Yosys JSON; chosen tools and optimizations may

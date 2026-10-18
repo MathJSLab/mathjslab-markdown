@@ -598,3 +598,60 @@ test('service shutdown releases incomplete HTTP bodies instead of waiting for cl
   await service.close();
   await disconnected;
 });
+
+test('HTTP setup failures provide actionable connection, credentials and endpoint diagnostics', async () => {
+  const unavailable = createHTTPHDLExecutor({
+    endpoint: 'http://127.0.0.1:8787/hdl',
+    token,
+    fetch: async () => {
+      throw new TypeError('Failed to fetch');
+    },
+  });
+  await assert.rejects(unavailable.capabilities(), /service is running.*Origin\/CORS/);
+  for (const status of [401, 403, 404]) {
+    const client = createHTTPHDLExecutor({ endpoint: 'https://hdl.test/hdl', token, fetch: async () => new Response(JSON.stringify({ error: 'denied' }), { status }) });
+    await assert.rejects(client.capabilities(), status === 401 ? /session token/ : status === 403 ? /allowedOrigins/ : /base endpoint/);
+  }
+  const html = createHTTPHDLExecutor({ endpoint: 'https://hdl.test/hdl', token, fetch: async () => new Response('<html>application shell</html>', { status: 200 }) });
+  await assert.rejects(html.capabilities(), /invalid JSON.*proxy\/login page/);
+});
+
+test('capability discovery shares host scheduling and aborts on client disconnect', async () => {
+  let started = false,
+    cancelled = false;
+  const service = await serve(
+    {
+      capabilities: async (context) => {
+        started = true;
+        return new Promise((resolve) =>
+          context.signal.addEventListener(
+            'abort',
+            () => {
+              cancelled = true;
+              resolve({ languages: {}, tools: {} });
+            },
+            { once: true },
+          ),
+        );
+      },
+      createSession: () => {
+        throw new Error('not used');
+      },
+    },
+    { executionScheduling: { maxConcurrent: 1 } },
+  );
+  const controller = new AbortController();
+  try {
+    const client = createHTTPHDLExecutor({ endpoint: service.endpoint, token });
+    const pending = client.capabilities({ signal: controller.signal });
+    await until(() => started);
+    assert.equal(service.snapshot().active, 1);
+    controller.abort();
+    await assert.rejects(pending);
+    await until(() => cancelled);
+    await until(() => service.snapshot().active === 0);
+  } finally {
+    controller.abort();
+    await service.close();
+  }
+});

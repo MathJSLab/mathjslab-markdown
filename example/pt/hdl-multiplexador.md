@@ -1,5 +1,13 @@
 # HDL: síntese de um multiplexador
 
+Requisitos de execução: executor HDL autorizado pelo aplicativo e serviço com
+GHDL (VHDL), Icarus/VVP (simulação Verilog) e Yosys (síntese). No mathjslab-app
+0.6.0, a execução em produção está desabilitada; em desenvolvimento é preciso
+configurar o serviço loopback, o token e as opções do aplicativo em
+sessionStorage["mathjslab.hdl.backend"] e recarregar a página. O Markdown não
+pode autorizar a execução. Uma listagem do código não é um resultado de
+simulação.
+
 Requer um executor HDL fornecido e autorizado pelo aplicativo. O engine não
 inclui compilador ou simulador. O aplicativo converte a saída da simulação para
 WaveJSON ou a síntese para JSON do Yosys; as ferramentas e otimizações

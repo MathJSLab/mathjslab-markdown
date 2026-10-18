@@ -1,5 +1,13 @@
 # HDL: estímulos e verificações
 
+Requisitos de execução: executor HDL autorizado pelo aplicativo e serviço com
+GHDL (VHDL), Icarus/VVP (simulação Verilog) e Yosys (síntese). No mathjslab-app
+0.6.0, a execução em produção está desabilitada; em desenvolvimento é preciso
+configurar o serviço loopback, o token e as opções do aplicativo em
+sessionStorage["mathjslab.hdl.backend"] e recarregar a página. O Markdown não
+pode autorizar a execução. Uma listagem do código não é um resultado de
+simulação.
+
 Execute a sequência e inspecione as verificações. As entradas mudam em 0 e 7
 ns. A saída é verificada em 7 e 12 ns. Reiniciar restaura a sequência.
 

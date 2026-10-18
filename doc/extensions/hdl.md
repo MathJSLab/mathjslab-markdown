@@ -37,3 +37,6 @@ explicitly authorized host executor.
 The [three-language examples](../../example/README.md) include matching AND,
 multiplexer, D flip-flop and counter descriptions in both languages, four
 register maps and four logic-expression examples.
+
+See [HDL setup and troubleshooting](hdl-troubleshooting.md) for browser/app
+integration, deployment limits and the three-language audit.

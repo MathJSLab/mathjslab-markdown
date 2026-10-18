@@ -149,3 +149,6 @@ log/VCD streaming, provisional previews and final-result compatibility.
 
 See [inspection and local exports](../inspection-and-export.md) for available
 files, host callbacks and format limits.
+
+See [HDL setup and troubleshooting](hdl-troubleshooting.md) for browser/app
+integration, deployment limits and the three-language audit.

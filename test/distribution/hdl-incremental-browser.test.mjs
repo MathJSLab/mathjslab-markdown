@@ -21,6 +21,10 @@ test('production browser consumes HTTP updates, previews VCD in Shadow DOM and c
   const token = 'a'.repeat(64);
   const handler = createHDLHTTPHandler(
     {
+      capabilities: async () => ({
+        languages: { vhdl: { simulate: false, synthesize: false, interactive: false }, verilog: { simulate: true, synthesize: false, interactive: false } },
+        tools: {},
+      }),
       createSession: () => ({
         execute: async (_request, context) => {
           context.onHDLUpdate?.({ type: 'progress', phase: 'simulate' });

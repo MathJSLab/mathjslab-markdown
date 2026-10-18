@@ -1,5 +1,13 @@
 # HDL: simulación de un contador síncrono
 
+Requisitos de ejecución: ejecutor HDL autorizado por la aplicación y servicio
+con GHDL (VHDL), Icarus/VVP (simulación Verilog) y Yosys (síntesis). En
+mathjslab-app 0.6.0, la ejecución en producción está deshabilitada; en
+desarrollo hay que configurar el servicio loopback, el token y las opciones de
+la aplicación en sessionStorage["mathjslab.hdl.backend"] y recargar la página.
+Markdown no puede autorizar la ejecución. Una lista de código no es un
+resultado de simulación.
+
 Requiere un executor HDL proporcionado y autorizado por la aplicación. El
 engine no incluye compilador ni simulador. La aplicación convierte la
 simulación a WaveJSON o la síntesis a JSON de Yosys; las herramientas y

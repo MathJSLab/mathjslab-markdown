@@ -313,7 +313,7 @@ export const createNativeHDLExecutor = (options: NativeHDLExecutorOptions): HDLB
 
   return {
     createSession,
-    async capabilities(): Promise<HDLBackendCapabilities> {
+    async capabilities(context: MarkdownDocumentContext = {}): Promise<HDLBackendCapabilities> {
       const states: Record<string, { available: boolean; version?: string; error?: string }> = {};
       for (const [name, executable] of Object.entries(tools)) {
         try {
@@ -321,11 +321,12 @@ export const createNativeHDLExecutor = (options: NativeHDLExecutorOptions): HDLB
             executable,
             [name === 'iverilog' || name === 'vvp' ? '-V' : name === 'yosys' ? '-V' : '--version'],
             options.temporaryDirectory ?? tmpdir(),
-            new AbortController().signal,
+            context.signal ?? new AbortController().signal,
             new Set(),
           );
           states[name] = { available: result.code === 0, version: result.text.trim().slice(0, 2048) };
         } catch (error) {
+          context.signal?.throwIfAborted();
           states[name] = { available: false, error: error instanceof Error ? error.message : String(error) };
         }
       }
@@ -404,6 +405,12 @@ export const createNativeHDLExecutor = (options: NativeHDLExecutorOptions): HDLB
                 }
               }
               recording = parseVCD(vcd);
+              // The verified checkpoint is real elapsed time even if no signal changed.
+              // Clipping the private drain tick must not erase that duration.
+              if (recording.endTime < targetTicks) {
+                vcd = vcd.trimEnd() + `\n#${targetTicks}\n`;
+                recording = parseVCD(vcd);
+              }
               const outputs: Record<string, string> = {};
               for (const output of request.outputs) {
                 const name = language === 'vhdl' ? output.name.toLowerCase() : output.name;

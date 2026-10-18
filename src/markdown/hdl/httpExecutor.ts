@@ -19,14 +19,26 @@ export const createHTTPHDLExecutor = (options: HTTPHDLExecutorOptions): HDLBacke
   endpoint.pathname = endpoint.pathname.replace(/\/$/, '') + '/';
   const fetch = options.fetch ?? globalThis.fetch;
   const call = async <T>(route: string, method: string, body?: unknown, signal?: AbortSignal, onUpdate?: (update: HDLExecutionUpdate) => void): Promise<T> => {
-    const response = await fetch(new URL(route, endpoint), {
-      method,
-      headers: { Authorization: `Bearer ${options.token}`, 'Content-Type': 'application/json', ...(onUpdate ? { Accept: 'application/x-ndjson' } : {}) },
-      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-      ...(signal ? { signal } : {}),
-      credentials: 'omit',
-      redirect: 'error',
-    });
+    let response: Response;
+    try {
+      response = await fetch(new URL(route, endpoint), {
+        method,
+        headers: { Authorization: `Bearer ${options.token}`, 'Content-Type': 'application/json', ...(onUpdate ? { Accept: 'application/x-ndjson' } : {}) },
+        ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+        ...(signal ? { signal } : {}),
+        credentials: 'omit',
+        redirect: 'error',
+      });
+    } catch (cause) {
+      signal?.throwIfAborted();
+      throw new Error(
+        'Cannot reach the HDL service at ' +
+          endpoint.origin +
+          endpoint.pathname +
+          '. Check that the service is running, the endpoint, allowed Origin/CORS, HTTPS mixed-content and browser local-network permissions. A browser cannot distinguish all of these failures.',
+        { cause },
+      );
+    }
     const reader = response.body?.getReader();
     if (!reader) throw new Error('Empty HDL service response');
     const decoder = new TextDecoder('utf-8', { fatal: true });
@@ -80,11 +92,24 @@ export const createHTTPHDLExecutor = (options: HTTPHDLExecutorOptions): HDLBacke
       if (!complete || result === undefined) throw new Error('Incomplete HDL result stream');
       return result;
     }
-    const data = JSON.parse(text) as T & { error?: string; code?: string };
+    let data: T & { error?: string; code?: string };
+    try {
+      data = JSON.parse(text) as T & { error?: string; code?: string };
+    } catch (cause) {
+      throw new Error(`HDL service returned HTTP ${response.status} with invalid JSON. Check the /hdl base endpoint and any proxy/login page.`, { cause });
+    }
     if (!response.ok) {
       if (data.code === 'execution-queue-limit' || data.code === 'execution-cancelled' || data.code === 'execution-timeout')
         throw new MarkdownExecutionError(data.code, data.error ?? `HDL service returned ${response.status}`);
-      throw new Error(data.error ?? `HDL service returned ${response.status}`);
+      const action =
+        response.status === 401
+          ? ' Check the application session token and restart/reconfigure it if the service token changed.'
+          : response.status === 403
+            ? ' Check HDL_ORIGINS / allowedOrigins against the exact application Origin.'
+            : response.status === 404
+              ? ' Check the service base endpoint (normally /hdl).'
+              : '';
+      throw new Error((data.error ?? `HDL service returned ${response.status}`) + ` (HTTP ${response.status}).` + action);
     }
     return data;
   };
@@ -116,7 +141,7 @@ export const createHTTPHDLExecutor = (options: HTTPHDLExecutorOptions): HDLBacke
     };
   };
   return {
-    capabilities: () => call<HDLBackendCapabilities>('capabilities', 'GET'),
+    capabilities: (context = {}) => call<HDLBackendCapabilities>('capabilities', 'GET', undefined, context.signal),
     async createSession(context) {
       const remote = await session('batch', context);
       return { dispose: remote.dispose, execute: (request: HDLExecutionRequest, context: MarkdownDocumentContext) => remote.invoke<HDLExecutionResult>('execute', request, context) };

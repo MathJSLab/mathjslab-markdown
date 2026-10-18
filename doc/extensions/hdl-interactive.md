@@ -4,8 +4,10 @@ Register `hdlInteractiveExtension(executor)` from
 `mathjslab-markdown/extensions`. The optional
 `HDLExecutor.createInteractiveSession` method supplies the stateful backend;
 interactive-only adapter objects are also accepted by this factory. Batch-only
-executors remain compatible. This extension is not automatically registered by
-`features: "all"`.
+executors remain compatible. `features: "all"` and full presets register
+non-executing fallback handlers when no host HDL extensions are supplied. They
+report missing configuration; they do not supply an executor or authorize
+simulation.
 
 The optional [real HDL backend](hdl-backends.md) implements this contract
 through deterministic replay with actual GHDL/Icarus compilation. Its
@@ -56,10 +58,13 @@ the specified direction and width, and can be driven/observed by its simulator.
 
 Input values are exactly `width` bits using `0/1/x/z`. One-bit inputs use a
 dropdown; buses use text fields. Outputs are read-only current values. The
-source is not edited or recompiled when changing an input. Edits are applied at
-the next step; the host must settle the design after applying them. Sequential
-designs need a clock in their testbench or an appropriate host clock source.
-Advancing time does not invent clock edges for a held input.
+source fence is not edited when changing an input. Edits are applied at the
+next step. A persistent host may retain a compiled design; the native replay
+adapter recompiles and replays the complete confirmed input history on every
+step, so elapsed runtime grows with the history. Input changes at a checkpoint
+apply to the following interval; the previous clock edge keeps its previous
+inputs. Sequential designs need a clock in their testbench or an appropriate
+host clock source. Advancing time does not invent clock edges for a held input.
 
 Run repeatedly advances time in bounded batches; Step advances one batch. Pause
 stops scheduling new batches, preserving the session; the in-flight batch may
@@ -204,3 +209,6 @@ Complete examples for both HDL languages are available in the corresponding
 
 See [inspection and local exports](../inspection-and-export.md) for available
 files, host callbacks and format limits.
+
+See [HDL setup and troubleshooting](hdl-troubleshooting.md) for browser/app
+integration, deployment limits and the three-language audit.

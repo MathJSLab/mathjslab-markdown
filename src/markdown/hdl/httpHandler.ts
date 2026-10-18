@@ -110,7 +110,15 @@ export const createHDLHTTPHandler = (executor: HDLBackendExecutor, options: HDLH
     const route = pathname.startsWith(prefix + '/') ? pathname.slice(prefix.length + 1).split('/') : [];
     try {
       if (request.method === 'GET' && route.length === 1 && route[0] === 'capabilities') {
-        send(response, 200, await executor.capabilities());
+        const controller = new AbortController();
+        const disconnected = (): void => controller.abort();
+        response.once('close', disconnected);
+        try {
+          const result = await executionScheduler.run((signal) => executor.capabilities({ signal }), { signal: controller.signal, owner: controller });
+          send(response, 200, result);
+        } finally {
+          response.removeListener('close', disconnected);
+        }
         return;
       }
       if (route[0] !== 'sessions') {

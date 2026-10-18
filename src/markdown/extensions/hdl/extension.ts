@@ -1,3 +1,4 @@
+import { assertHDLAvailable, hdlSetupMessage } from '../../hdl/availability.js';
 import { createHDLExports, serializeHDLSVG } from '../../hdl/artifacts.js';
 import { createHDLPreview } from '../../hdl/preview.js';
 import { createHDLUpdateReceiver, hdlProgressLabel } from '../../hdl/updates.js';
@@ -16,7 +17,7 @@ import { hdlManifest } from './manifest.js';
 const bounded = (value: number | undefined, fallback: number, max: number): number => (Number.isFinite(value) ? Math.max(0, Math.min(max, Math.floor(value!))) : fallback);
 type Entry = ManagedExecutionSession<HDLExecutionSession>;
 
-export const hdlExtension = (executor: HDLExecutor): MarkdownExtension => {
+export const hdlExtension = (executor?: HDLExecutor): MarkdownExtension => {
   const netlist = netlistExtension();
   const waves = waveDromExtension();
   const simulation = vcdExtension();
@@ -56,9 +57,13 @@ export const hdlExtension = (executor: HDLExecutor): MarkdownExtension => {
     context.onDiagnostic?.({ extension: 'hdl', code, category, severity: 'error', message });
   };
   const render = async (container: Element, source: string, context: MarkdownDocumentContext, language: HDLLanguage): Promise<void> => {
+    if (!executor) {
+      report(container, source, context, 'hdl-executor-missing', hdlSetupMessage(context, true), 'policy');
+      return;
+    }
     const policy = context.executionPolicy?.hdl ?? {};
     if (policy.enabled !== true || (context.securityMode !== 'trusted' && !policy.allowInRestrictedMode)) {
-      report(container, source, context, 'hdl-execution-disabled', 'Execution requires explicit host authorization', 'policy');
+      report(container, source, context, 'hdl-execution-disabled', hdlSetupMessage(context, false), 'policy');
       return;
     }
     const key = context.signal ?? context;
@@ -99,7 +104,10 @@ export const hdlExtension = (executor: HDLExecutor): MarkdownExtension => {
       if (controller.signal.aborted) return;
       const response: HDLExecutionResult = await entry.run(
         executionContext,
-        (active) => executor.createSession(active),
+        async (active) => {
+          await assertHDLAvailable(executor, language, request.operation, active);
+          return executor.createSession(active);
+        },
         (session, active) => session.execute(request, active),
         {
           timeoutMs: Math.max(1, bounded(policy.timeoutMs, 30_000, 300_000)),

@@ -1,3 +1,4 @@
+import { assertHDLAvailable, hdlSetupMessage } from '../../hdl/availability.js';
 import { createHDLExports } from '../../hdl/artifacts.js';
 import { createHDLPreview } from '../../hdl/preview.js';
 import { createHDLUpdateReceiver, hdlProgressLabel } from '../../hdl/updates.js';
@@ -18,7 +19,7 @@ type Frame = { dispose: () => Promise<void> };
 const limit = (value: number | undefined, fallback: number, ceiling: number): number => (Number.isFinite(value) ? Math.max(0, Math.min(ceiling, Math.floor(value!))) : fallback);
 const close = (run: Run): Promise<void> => run.dispose();
 
-export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInteractiveSession'>): MarkdownExtension => {
+export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInteractiveSession' | 'capabilities'> = {}): MarkdownExtension => {
   const frames = new Map<Element, Frame>();
   const clearing = new Map<Element, Promise<void>>();
   const counts = new WeakMap<object, number>();
@@ -48,10 +49,16 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
       context.onDiagnostic?.({ extension: 'hdl-interactive', code, category, severity, message });
     let policyBlocked = false;
     try {
+      if (!executor.createInteractiveSession) {
+        policyBlocked = true;
+        const message = hdlSetupMessage(context, true);
+        diagnostic('hdl-executor-missing', message, 'policy');
+        throw new Error(message);
+      }
       if (policy.enabled !== true || (context.securityMode !== 'trusted' && !policy.allowInRestrictedMode)) {
         policyBlocked = true;
-        diagnostic('hdl-interactive-disabled', 'Interactive execution requires explicit host authorization', 'policy');
-        throw new Error('Interactive execution requires explicit host authorization');
+        diagnostic('hdl-interactive-disabled', hdlSetupMessage(context, false), 'policy');
+        throw new Error(hdlSetupMessage(context, false));
       }
       const key = context.signal ?? context;
       const index = counts.get(key) ?? 0;
@@ -270,7 +277,10 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
         try {
           const result = await current.run(
             { ...context, onHDLUpdate: (update) => updates.receive(update) },
-            (active) => executor.createInteractiveSession!(backendRequest, active),
+            async (active) => {
+              await assertHDLAvailable(executor, language, 'interactive', active);
+              return executor.createInteractiveSession!(backendRequest, active);
+            },
             (session, active) => session.step({ advanceNs, inputs: values }, active),
             {
               timeoutMs: Math.max(1, limit(policy.timeoutMs, 30000, 300000)),

@@ -215,3 +215,10 @@ engine and HTTP host queues, per-owner limits and session disposal guarantees.
 
 See [incremental HDL results](../incremental-results.md) for optional progress,
 log/VCD streaming, provisional previews and final-result compatibility.
+
+See [HDL setup and troubleshooting](hdl-troubleshooting.md) for browser/app
+integration, deployment limits and the three-language audit.
+
+Stable replay recordings retain the verified checkpoint timestamp even when no
+signal changes occur. Removing the private drain tick does not remove elapsed
+simulation time or add artificial value transitions.

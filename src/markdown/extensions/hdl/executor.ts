@@ -1,3 +1,4 @@
+import type { HDLBackendCapabilities } from '../../hdl/backend.js';
 import type { MarkdownDocumentContext } from '../../../MarkdownEngine.js';
 import type { MarkdownNetlistInput } from '../netlist/spec.js';
 import type { HDLInteractiveRequest, HDLInteractiveSession } from '../hdl-interactive/executor.js';
@@ -35,6 +36,8 @@ export interface HDLExecutionSession {
   dispose(): void | Promise<void>;
 }
 export interface HDLExecutor {
+  /** Optional host discovery; does not authorize execution. */
+  capabilities?(context?: MarkdownDocumentContext): Promise<HDLBackendCapabilities>;
   /** Optional stateful adapter; batch-only executors remain compatible. */
   createInteractiveSession?(request: HDLInteractiveRequest, context: MarkdownDocumentContext): HDLInteractiveSession | Promise<HDLInteractiveSession>;
   /** One isolated session per executable fence. The host owns tools and sandboxing. */

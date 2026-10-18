@@ -1,3 +1,4 @@
+import type { MarkdownDocumentContext } from '../../MarkdownEngine.js';
 import type { HDLExecutor } from '../extensions/hdl/executor.js';
 import type { HDLExecutionUpdate } from './updates.js';
 
@@ -8,5 +9,5 @@ export type HDLBackendCapabilities = Readonly<{
   tools: Readonly<Record<string, Readonly<{ available: boolean; version?: string; error?: string }>>>;
 }>;
 export interface HDLBackendExecutor extends HDLExecutor {
-  capabilities(): Promise<HDLBackendCapabilities>;
+  capabilities(context?: MarkdownDocumentContext): Promise<HDLBackendCapabilities>;
 }

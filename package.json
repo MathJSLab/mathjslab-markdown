@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -177,7 +177,7 @@
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
     "mathjslab": "2.9.0",
-    "minimizer-webpack-plugin": "5.13.0",
+    "minimizer-webpack-plugin": "5.13.1",
     "prettier": "^3.9.10",
     "ts-jest": "^29.4.15",
     "ts-loader": "^9.6.2",

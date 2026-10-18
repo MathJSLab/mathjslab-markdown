@@ -1,5 +1,13 @@
 # Simulação interativa: contador e reset
 
+Requisitos de execução: executor HDL autorizado pelo aplicativo e serviço com
+GHDL (VHDL), Icarus/VVP (simulação Verilog) e Yosys (síntese). No mathjslab-app
+0.6.0, a execução em produção está desabilitada; em desenvolvimento é preciso
+configurar o serviço loopback, o token e as opções do aplicativo em
+sessionStorage["mathjslab.hdl.backend"] e recarregar a página. O Markdown não
+pode autorizar a execução. Uma listagem do código não é um resultado de
+simulação.
+
 Requer uma sessão interativa fornecida e autorizada pelo aplicativo. Avançar
 aplica as entradas e simula 10 ns. Executar repete passos; Pausar mantém o
 estado. Reiniciar encerra a sessão e restaura as entradas. Os exemplos

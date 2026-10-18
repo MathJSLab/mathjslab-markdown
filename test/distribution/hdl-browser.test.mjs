@@ -89,6 +89,25 @@ test('production HDL host contract transports all translated requests through a 
     assert.equal(calls.length, 24);
     assert.deepEqual(new Set(calls.map((request) => request.language)), new Set(['vhdl', 'verilog']));
     assert.deepEqual(new Set(calls.map((request) => request.operation)), new Set(['simulate', 'synthesize']));
+    await engine.dispose();
+    engine = createEducationalMarkdownEngine({ features: 'all', executionPolicy: { hdl: { enabled: true }, 'hdl-interactive': { enabled: true } } });
+    for (const locale of ['pt', 'en', 'es']) {
+      const container = document.createElement('div'),
+        diagnostics = [];
+      const session = await engine.renderDocument('```verilog\nmodule gate;endmodule\n```\n\n```verilog-run\n{}\n```\n\n```vhdl-live\n{}\n```', container, {
+        locale,
+        onDiagnostic: (value) => diagnostics.push(value),
+      });
+      assert.deepEqual(
+        diagnostics.map((value) => value.code),
+        ['hdl-executor-missing', 'hdl-executor-missing'],
+      );
+      assert.equal(container.querySelector('button'), null);
+      assert.ok(container.querySelector('code.hljs'));
+      assert.ok(container.textContent.includes('hdlExtension(executor)'));
+      await session.dispose();
+    }
+    assert.equal(calls.length, 24, 'unavailable fallback must not execute HDL');
   } finally {
     await engine?.dispose();
     await Promise.all([...active].map((worker) => worker.terminate()));

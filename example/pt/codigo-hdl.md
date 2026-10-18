@@ -1,7 +1,9 @@
 # VHDL e Verilog: quatro descrições de hardware
 
-Os exemplos são declarativos. Diagramas mostram a estrutura; não executam uma
-simulação.
+Estes oito fences apenas exibem código com destaque de sintaxe. Eles não
+compilam, sintetizam ou simulam hardware e não criam controles interativos.
+Para essas operações, use as aulas específicas de execução com um backend
+autorizado.
 
 ## 1. Porta AND
 

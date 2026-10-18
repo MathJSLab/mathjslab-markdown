@@ -1,3 +1,5 @@
+import { hdlExtension } from './extensions/hdl/extension.js';
+import { hdlInteractiveExtension } from './extensions/hdl-interactive/extension.js';
 import { MarkdownEngine, type MarkdownEngineOptions, type MarkdownExtension } from '../MarkdownEngine.js';
 import { createEducationalMarkdownExtension, educationalMarkdownFeatures, type EducationalMarkdownFeature } from './extensionCatalog.js';
 import { mapsExtension, type MarkdownMapOptions } from './extensions/maps/extension.js';
@@ -23,6 +25,9 @@ export const createEducationalMarkdownEngine = (options: EducationalMarkdownEngi
   const { features = [], extensions = [], mapOptions, tikzOptions, citationsOptions, ...engineOptions } = options;
   const selected = features === 'all' ? educationalMarkdownFeatures : features;
   const unique = Array.from(new Set(selected));
+  const complete = educationalMarkdownFeatures.every((feature) => unique.includes(feature));
+  const supplied = (name: string, languages: readonly string[]): boolean =>
+    extensions.some((extension) => extension.name === name || extension.fences?.some((fence) => languages.includes(fence.language)));
   return new MarkdownEngine({
     ...engineOptions,
     extensions: [
@@ -35,6 +40,8 @@ export const createEducationalMarkdownEngine = (options: EducationalMarkdownEngi
               ? citationsExtension(citationsOptions)
               : createEducationalMarkdownExtension(feature),
       ),
+      ...(complete && !supplied('hdl', ['vhdl-run', 'verilog-run']) ? [hdlExtension()] : []),
+      ...(complete && !supplied('hdl-interactive', ['vhdl-live', 'verilog-live']) ? [hdlInteractiveExtension()] : []),
       ...extensions,
     ],
   });

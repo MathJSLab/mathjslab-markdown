@@ -20,6 +20,8 @@ coverage counts and links to all examples.
 - [Execution sessions and scheduling](execution-scheduling.md)
 - [Incremental HDL results](incremental-results.md)
 - [HDL inspection and local export](inspection-and-export.md)
+- [HDL setup and application troubleshooting](extensions/hdl-troubleshooting.md)
+- [HDL example audit results](hdl-audit-results.md)
 - [HDL stimuli and checks](extensions/hdl-interactive.md#scripted-stimuli-and-checks)
 - [Security and resource policy](security-and-resources.md)
 - [Markdown authoring and mathematical syntax](authoring.md)
