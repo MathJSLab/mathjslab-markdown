@@ -59,6 +59,7 @@ const ghdlBuildInputs = new Set(
     'build-in-container.sh',
     'build.sh',
     'Dockerfile',
+    'build-packages.lock',
     'ghdl_synth_test.mjs',
     'pack-libraries.py',
     'grt-stdio.adb',

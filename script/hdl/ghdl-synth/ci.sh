@@ -26,6 +26,8 @@ docker build --tag "$image" "$script_dir"
 # Both builds use this exact image. Record its identity and every installed package.
 docker image inspect "$image" > "$evidence/container-image.json"
 docker run --rm "$image" dpkg-query -W > "$evidence/container-packages.txt"
+docker run --rm "$image" cat /opt/ghdl-build-debs.sha256 > "$evidence/build-debs.sha256"
+docker run --rm "$image" cat /opt/ghdl-installed-packages.lock > "$evidence/installed-packages.lock"
 sha256sum "$script_dir/Dockerfile" "$script_dir/build-in-container.sh" "$script_dir/pack-libraries.py" > "$evidence/recipe-sha256.txt"
 
 for attempt in 1 2; do

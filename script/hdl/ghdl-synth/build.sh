@@ -19,4 +19,4 @@ docker run --rm \
   --volume "$output_dir:/output" \
   --workdir /repo \
   "$image" \
-  /repo/script/hdl/ghdl-synth/build-in-container.sh
+  bash /repo/script/hdl/ghdl-synth/build-in-container.sh
