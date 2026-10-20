@@ -26,7 +26,10 @@ runtime with WASI libc and leaves the project-owned Yosys build unchanged.
 - AdaWebPack 24.0.0 release archive, verified by SHA-256
 - ghdl-browser commit `e98e5a6c6fd6c48a789705ae9900c6b34b3cb414`
 - GCC 14.1.0 commit `ed10445fe222d3973ae13eda9bf211f315c5e3f9`
-- Ubuntu 24.04 with LLVM/Clang/LLD 16 in the build container
+- Ubuntu 24.04 Linux/amd64 base image fixed by OCI SHA-256 digest
+- All 236 installed package versions in `build-packages.lock`, including the
+  transitive GNAT 13 / LLVM/Clang/LLD 16 dependencies
+- SHA-256 verification of downloaded `.deb` files before installation
 
 ghdl-browser provides the wasm runtime stubs and frontend compatibility
 patches. The build removes its simulation-only WAT backend and restores GHDL's
@@ -41,6 +44,14 @@ The first build can be triggered by pushing the dedicated build branch; it does
 not require merging unvalidated changes into main or publishing the package.
 
 Docker and network access to the pinned upstream repositories are required.
+The container is a developer build environment, never a visitor dependency.
+Package versions cannot float: installation must exactly match the complete
+lock, and downloaded package bytes must match their integrity manifest. There
+is no fallback to newer versions. Availability of the pinned upstream downloads
+is still needed; if a historical package disappears, restore its exact bytes
+from a verified archive rather than relaxing the version or hash checks.
+Ubuntu's snapshot service is not required by this recipe (it returned 5xx in
+the development environment during setup).
 From the repository root:
 
 ```bash

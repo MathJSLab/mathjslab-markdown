@@ -3,12 +3,15 @@ FROM --platform=linux/amd64 ubuntu:24.04@sha256:68ee22004a9109b44973313b02ff7b1d
 ENV DEBIAN_FRONTEND=noninteractive
 
 COPY build-packages.lock /opt/ghdl-build-packages.lock
+COPY build-debs.sha256 /opt/ghdl-expected-debs.sha256
 # Pin the complete installed closure, not just the directly requested tools.
 # Missing historical versions fail the build instead of selecting replacements.
 RUN rm -f /etc/apt/apt.conf.d/docker-clean \
   && apt-get update \
   && xargs apt-get install --download-only -y --no-install-recommends < /opt/ghdl-build-packages.lock \
   && (cd /var/cache/apt/archives && sha256sum *.deb > /opt/ghdl-build-debs.sha256) \
+  && (cd /var/cache/apt/archives && sha256sum --check /opt/ghdl-expected-debs.sha256) \
+  && diff -u /opt/ghdl-expected-debs.sha256 /opt/ghdl-build-debs.sha256 \
   && xargs apt-get install --no-download -y --no-install-recommends < /opt/ghdl-build-packages.lock \
   && dpkg-query -W -f='${binary:Package}=${Version}\n' > /opt/ghdl-installed-packages.lock \
   && diff -u /opt/ghdl-build-packages.lock /opt/ghdl-installed-packages.lock \

@@ -1,6 +1,7 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
+import { verifyGHDLReproduction } from './helper/verify-ghdl-reproduction.mjs';
 const base = new URL('../assets/hdl/', import.meta.url);
 const lock = JSON.parse(await readFile(new URL('toolchain.lock.json', base), 'utf8'));
 for (const [name, entry] of Object.entries(lock.files)) {
@@ -14,6 +15,11 @@ for (const folder of ['icarus', 'yosys', 'ghdl', 'nvc'])
     if (name === 'COPYING' || name === 'NOTICE.md') continue;
     assert.ok(lock.files[folder + '/' + name], 'Unpinned tool asset: ' + folder + '/' + name);
   }
+if (lock.ghdl?.reproducibleBuildVerified === true) {
+  await verifyGHDLReproduction(lock, new URL('./hdl/ghdl-synth/', import.meta.url));
+  const frontend = await readFile(new URL('ghdl/frontend.mjs', base), 'utf8');
+  for (const name of ['ghdl-synth.wasm', 'libraries.tar.gz']) assert.ok(frontend.includes("'" + lock.files['ghdl/' + name].sha256 + "'"), 'Stale GHDL host integrity binding: ' + name);
+}
 if (lock.nvc?.reproducibleBuildVerified === true) {
   const source = new URL('./hdl/nvc-browser/', import.meta.url);
   const sourceLock = JSON.parse(await readFile(new URL('sources.lock.json', source), 'utf8'));
