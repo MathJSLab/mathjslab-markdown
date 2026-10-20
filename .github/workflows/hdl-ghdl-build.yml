@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
   push:
     branches: [codex/hdl-build]
+    paths:
+      - .github/workflows/hdl-ghdl-build.yml
+      - script/hdl/ghdl-synth/**
 
 permissions:
   contents: read

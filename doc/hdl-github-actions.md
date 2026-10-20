@@ -24,11 +24,11 @@ npm run hdl:ci:push
 npm run hdl:ci:status
 ```
 
-O push de um commit novo para essa branch inicia o workflow
-`HDL GHDL Linux build`. O script exige árvore limpa, branch dedicada e o
-repositório `MathJSLab/mathjslab-markdown` como destino. Não usa force push e
-não altera `main`. Não use `git:all:npm:publish` ou `do:all` para esse
-trabalho.
+O push de um commit novo que altere a receita GHDL ou o próprio workflow nessa
+branch inicia o workflow `HDL GHDL Linux build`. O script exige árvore limpa,
+branch dedicada e o repositório `MathJSLab/mathjslab-markdown` como destino.
+Não usa force push e não altera `main`. Não use `git:all:npm:publish` ou
+`do:all` para esse trabalho.
 
 Se o push informar que tudo já estava atualizado, não surge outra execução.
 Abra a execução anterior e use **Re-run jobs**. O workflow também declara
@@ -44,8 +44,9 @@ utilizadas.
 
 ## Resultados e download
 
-`hdl:ci:status` usa a API pública, sem token. Limites de requisição ou um
-repositório privado podem impedir essa consulta; nesse caso use a página do
+`hdl:ci:status` usa a API pública, sem token, acrescentando os certificados do
+sistema quando a versão do Node oferece esse recurso. Limites de requisição ou
+um repositório privado podem impedir essa consulta; nesse caso use a página do
 GitHub autenticada. Na execução, abra os passos para ler os logs e a seção
 **Artifacts** para baixar `ghdl-candidate-<commit>-<tentativa>`.
 

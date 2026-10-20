@@ -24,7 +24,10 @@ for (const differing of [undefined, 'ghdl-synth.wasm', 'libraries.tar.gz']) {
       assert.equal(result.status, differing ? 1 : 0, result.stderr.toString());
       const evidence = JSON.parse(readFileSync(report));
       assert.equal(evidence.identical, !differing);
-      assert.deepEqual(evidence.files.filter((file) => !file.identical).map((file) => file.name), differing ? [differing] : []);
+      assert.deepEqual(
+        evidence.files.filter((file) => !file.identical).map((file) => file.name),
+        differing ? [differing] : [],
+      );
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

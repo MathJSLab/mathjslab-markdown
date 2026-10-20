@@ -8,6 +8,14 @@ const repository = 'MathJSLab/mathjslab-markdown';
 const workflow = 'hdl-ghdl-build.yml';
 const page = `https://github.com/${repository}/actions/workflows/${workflow}`;
 const [command = 'help', runId] = process.argv.slice(2);
+// Respect the workstation's trusted CA store (including corporate roots).
+// Never bypass certificate verification. Older Node versions can use their
+// normal CA configuration; recent versions can add the OS trust store.
+if (command === 'status' && process.allowedNodeEnvironmentFlags.has('--use-system-ca') && !process.execArgv.includes('--use-system-ca')) {
+  const child = spawnSync(process.execPath, ['--use-system-ca', fileURLToPath(import.meta.url), ...process.argv.slice(2)], { cwd, stdio: 'inherit', shell: false });
+  if (child.error) console.error(child.error.message);
+  process.exit(child.status ?? 1);
+}
 function run(tool, args, capture = false) {
   const result = spawnSync(tool, args, { cwd, encoding: 'utf8', stdio: capture ? 'pipe' : 'inherit', shell: false });
   if (result.error) throw new Error(`${tool} indisponível: ${result.error.message}`);
@@ -33,10 +41,11 @@ try {
     const response = await fetch(url, { headers: { Accept: 'application/vnd.github+json' }, signal: AbortSignal.timeout(30000) });
     if (!response.ok) throw new Error(`GitHub API: HTTP ${response.status}. Consulte ${page}`);
     const { workflow_runs: runs } = await response.json();
-    for (const item of runs.filter((item) => item.path === `.github/workflows/${workflow}`)) {
+    const matching = runs.filter((item) => item.path === `.github/workflows/${workflow}`);
+    for (const item of matching) {
       console.log(`${item.id} | ${item.head_sha.slice(0, 12)} | ${item.status} | ${item.conclusion ?? '-'}\n${item.html_url}`);
     }
-    if (!runs.length) console.log(`Nenhuma execução encontrada.\n${page}`);
+    if (!matching.length) console.log(`Nenhuma execução encontrada. O GitHub pode levar alguns instantes após o push para registrar a execução.\n${page}`);
   } else if (command === 'download') {
     if (!/^\d+$/.test(runId ?? '')) throw new Error('Informe o ID: npm run hdl:ci:download -- 123456789');
     const probe = spawnSync('gh', ['--version'], { stdio: 'ignore', shell: false });
