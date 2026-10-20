@@ -1,12 +1,11 @@
 # HDL: estímulos y verificaciones
 
-Requisitos de ejecución: ejecutor HDL autorizado por la aplicación y servicio
-con GHDL (VHDL), Icarus/VVP (simulación Verilog) y Yosys (síntesis). En
-mathjslab-app 0.6.0, la ejecución en producción está deshabilitada; en
-desarrollo hay que configurar el servicio loopback, el token y las opciones de
-la aplicación en sessionStorage["mathjslab.hdl.backend"] y recargar la página.
-Markdown no puede autorizar la ejecución. Una lista de código no es un
-resultado de simulación.
+Ejecución en el cliente: la aplicación debe autorizar createBrowserHDLExecutor
+y alojar sus assets WebAssembly/Worker. Verilog usa Icarus y YoWASP en el
+navegador, sin servicio, token ni sessionStorage. La síntesis VHDL-2008 usa
+GHDL y YoWASP en el navegador; simulación e interactividad VHDL-2008 usan
+el runtime NVC. Markdown no puede autorizar la ejecución. Consulte
+doc/extensions/hdl-troubleshooting.md y doc/hdl-browser-results.md.
 
 Ejecute la secuencia e inspeccione las verificaciones. Las entradas cambian en
 0 y 7 ns. La salida se verifica en 7 y 12 ns. Reiniciar restaura la secuencia.

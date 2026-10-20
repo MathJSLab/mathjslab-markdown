@@ -68,7 +68,7 @@ export const parseVCD = (source: string): VCDDocument => {
       signals.push({ name, id: id!, width, changes: data.changes });
       names.add(name);
     } else if (command === '$enddefinitions') {
-      if (values.length || scopes.length || !signals.length || !timescale) throw new Error('Incomplete VCD definitions');
+      if (values.length || scopes.length || !timescale) throw new Error('Incomplete VCD definitions');
       defined = true;
     } else throw new Error(`Unsupported VCD header directive: ${command}`);
   }

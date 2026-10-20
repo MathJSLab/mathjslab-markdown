@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "icarus": {
+    "repository": "https://github.com/steveicarus/iverilog",
+    "commit": "c7530dbcc186de2f21eacde14fd28061b885924c",
+    "port": "MathJSLab static-Wasm adaptation, script/hdl/icarus-browser/",
+    "license": "GPL-2.0-or-later; runtime notices in icarus/RUNTIME-LICENSES.txt",
+    "emsdk": {
+      "repository": "https://github.com/emscripten-core/emsdk",
+      "commit": "3b3963d86a5c97adaf6eaa845cdfe0b811c2f960",
+      "version": "6.0.12",
+      "release": "6e9f6885cb17a3d6c8fd488a5cff730f50aba61d",
+      "emscriptenCommit": "5488e0871d46d19a3209988190fa6a653126256f"
+    },
+    "correspondingSourceVerified": true,
+    "reproducibleBuildVerified": true,
+    "reproductionEvidence": "script/hdl/icarus-browser/reproduction.json",
+    "reproductionScope": "Two independent source/build directories on the same Windows/MSYS2 host with the same pinned SDK/cache; not a cross-machine, cross-platform or clean-toolchain-cache claim",
+    "replacesDownloadedSnapshot": {
+      "repository": "https://github.com/senolgulgonul/verisim",
+      "commit": "b4a67720b11f1f80aa68c1d79dc66980a060017f"
+    }
+  },
+  "yosys": {
+    "package": "@yowasp/yosys",
+    "version": "0.70.62-dev.1236",
+    "integrity": "sha512-WHdf7CuCZG49jw4A41qK8pFOQYlzLGPAGj8uDIjYn7EaRDDVBmSg27F9vDQjhO/RulTEG6DcBaE81tHiZ01ffg==",
+    "license": "ISC"
+  },
+  "files": {
+    "icarus/COPYING": {
+      "bytes": 18092,
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643"
+    },
+    "icarus/ivl.js": {
+      "bytes": 96605,
+      "sha256": "90c3017285daa25cbed9bc0829bd638569fe10c3ae502809c0c9afe215d89405"
+    },
+    "icarus/ivl.wasm": {
+      "bytes": 1869963,
+      "sha256": "fe67867171589bb742fa06da2637143e958319b03774480db10d5caa6b80fd58"
+    },
+    "icarus/ivlpp.js": {
+      "bytes": 85895,
+      "sha256": "69df37f25e564108374bebeac92d456ac3e10f4213095e1b6f55a8a218292546"
+    },
+    "icarus/ivlpp.wasm": {
+      "bytes": 103405,
+      "sha256": "2b1cecf2755a60010c07f0c3d59feb1362f50007e601974e1d412ac3a131b102"
+    },
+    "icarus/vvp.js": {
+      "bytes": 95083,
+      "sha256": "d505e7aeab2cbe8c6c67b907e4e4feb1bc6e4c09804a7fa8e2b674afa16000cd"
+    },
+    "icarus/vvp.wasm": {
+      "bytes": 1049121,
+      "sha256": "cee6ab6bfd388ed4c78d9a85a1b16f700d639c70950e4725b509b6ee8d6027c3"
+    },
+    "yosys/bundle.js": {
+      "bytes": 479441,
+      "sha256": "f4e490763019582038924499f5aff964294c175302c65a8368eacd1bbea13773"
+    },
+    "yosys/yosys-resources.0.tar": {
+      "bytes": 10557440,
+      "sha256": "66d25c8db8a7269de61e7a5f0a2ccfb9dd1766c9f1aed9beaead03036b518742"
+    },
+    "yosys/yosys.core.wasm": {
+      "bytes": 66855533,
+      "sha256": "6a7159504029e01fe508c5e77d50ded109603e67ebb4f7cee2f2dc82d25f43c3"
+    },
+    "yosys/yosys.core2.wasm": {
+      "bytes": 34681,
+      "sha256": "ace1cb4255004a19b981504ed09b89a3434ac6793b2eb63c1b9b94f832787663"
+    },
+    "yosys/yosys.core3.wasm": {
+      "bytes": 1382,
+      "sha256": "7a150b14646a4399c6808550bc6d002159b866a5bdeec53d1fb862037513c497"
+    },
+    "yosys/yosys.core4.wasm": {
+      "bytes": 630,
+      "sha256": "619c1d191cf4aa9a55e6650f35f6c3e6d976a2268cf702fa697370c4ad317990"
+    },
+    "yosys/COPYING": {
+      "bytes": 777,
+      "sha256": "6998b5724d4cb3f459d1c12b6bd0cdbfa9c949ef14d0fb6d7d97d97404e5b5f3"
+    },
+    "ghdl/APACHE-2.0": {
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "ghdl/COPYING": {
+      "bytes": 17895,
+      "sha256": "aef8b4222b79d0dbf6bf17cfff71c90a6a6bb8917a4162abe417b469ed22da2e"
+    },
+    "ghdl/frontend.mjs": {
+      "bytes": 11475,
+      "sha256": "0c88f7556842bd2d86fe110cdc4c08e311ee6b4193d7d06cb895b9288e688561"
+    },
+    "ghdl/ghdl-synth.wasm": {
+      "bytes": 1931378,
+      "sha256": "245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e"
+    },
+    "ghdl/libraries.tar.gz": {
+      "bytes": 451833,
+      "sha256": "2cdbaa338e47ad5577549c4eb343891b9de4be1677341eda26ef34802db01da2"
+    },
+    "ghdl/NOTICE.md": {
+      "bytes": 1976,
+      "sha256": "2c9365bd2bf331b8fab4f6d1500149fabdab03125d09980de099475c12ca0bd2"
+    },
+    "ghdl/resources.mjs": {
+      "bytes": 2692,
+      "sha256": "92f5797eeb4f867c8f611146853a67e1af20e642c0e0c6e301c4c89f9196d19c"
+    },
+    "nvc/COPYING": {
+      "bytes": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    "nvc/EMSCRIPTEN-LICENSE": {
+      "bytes": 5093,
+      "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86"
+    },
+    "nvc/frontend.mjs": {
+      "bytes": 3201,
+      "sha256": "886a894eeb99693cb2efde5ea40a12867710fa634129f0a68856780f8c98bc51"
+    },
+    "nvc/libraries.tar.gz": {
+      "bytes": 202332,
+      "sha256": "4e727910bf47c615fb3879ba8c33e4bb9e009e8f511038e830089cb7931d0770"
+    },
+    "nvc/NOTICE.md": {
+      "bytes": 2882,
+      "sha256": "b0f15a73cc0a792791b9668f7c589dc8b30d1b41effeb8d2a16acfb9361e0cf6"
+    },
+    "nvc/nvc.mjs": {
+      "bytes": 139641,
+      "sha256": "1312f1ff5780550fc1433f2d6ae0d5e7e9b0cbc72fd8b0214102acb7197b7fb5"
+    },
+    "nvc/nvc.wasm": {
+      "bytes": 2668468,
+      "sha256": "b07c22ecbacefd68cc8962f57b0e9678eae334bd3ba1b73595af56ffbe341a52"
+    },
+    "icarus/RUNTIME-LICENSES.txt": {
+      "bytes": 67152,
+      "sha256": "a4f367c9dff909bbfe9d6efd11aa0ad875f93dfe4b82621a329b23d355bf1188"
+    }
+  },
+  "ghdl": {
+    "repository": "https://github.com/cachanova/synth-explorer",
+    "commit": "d4dab3def346cb9fdac5bc171d801bd091df72e1",
+    "upstream": "ghdl/ghdl@37ad91899ea3f311423eb91e34f42c0ae1948f79",
+    "version": "5.0.1",
+    "standard": "08",
+    "operations": [
+      "synthesize"
+    ],
+    "license": "GPL-2.0-or-later (compiler); Apache-2.0 (host bindings)",
+    "reproducibleBuildVerified": false
+  },
+  "nvc": {
+    "version": "1.22.0",
+    "standard": "08",
+    "operation": "simulate",
+    "sdk": "Emscripten 6.0.12",
+    "source": "script/hdl/nvc-browser/sources.lock.json",
+    "license": "GPL-3.0-or-later",
+    "reproducibleBuildVerified": true,
+    "wasmHeapMaximumBytes": 536870912,
+    "sharedMemory": false,
+    "reproductionEvidence": "script/hdl/nvc-browser/reproduction.json"
+  }
+}

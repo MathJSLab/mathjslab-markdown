@@ -5,6 +5,8 @@ import { readFileSync } from 'node:fs';
 test('HDL backend exports separate browser transport from native Node tools', async () => {
   const browser = await import('mathjslab-markdown/hdl');
   assert.equal(typeof browser.createHTTPHDLExecutor, 'function');
+  assert.equal(typeof browser.createBrowserHDLExecutor, 'function');
+  assert.ok(import.meta.resolve('mathjslab-markdown/hdl/assets/toolchain.lock.json').endsWith('/dist/browser/hdl/toolchain.lock.json'));
   assert.equal(browser.createNativeHDLExecutor, undefined);
   const native = await import('mathjslab-markdown/hdl/node');
   assert.equal(typeof native.createNativeHDLExecutor, 'function');
@@ -16,6 +18,7 @@ test('HDL backend exports separate browser transport from native Node tools', as
   await scheduler.dispose();
   const bundle = await import('../../dist/browser/hdl.js');
   assert.equal(typeof bundle.createHTTPHDLExecutor, 'function');
+  assert.equal(typeof bundle.createBrowserHDLExecutor, 'function');
   assert.equal(bundle.createNativeHDLExecutor, undefined);
   assert.doesNotMatch(readFileSync(new URL('../../dist/browser/hdl.js', import.meta.url), 'utf8'), /node:child_process|allowNativeExecution|taskkill/);
 });

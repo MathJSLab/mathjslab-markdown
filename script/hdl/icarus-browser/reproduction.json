@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-20",
+  "scope": "Two independent source/build directories on the same Windows/MSYS2 host with the same pinned SDK/cache; not a cross-machine, cross-platform or clean-toolchain-cache claim",
+  "method": [
+    "A: development build, with generated parser/lexer objects rebuilt after fixing MSYS prefix-map conversion",
+    "C: full uninterrupted recipe from fresh complete archived inputs using the final canonical path flags",
+    "After C completed, same-line dated modification notices were added and affected units rebuilt in both roots; these comments preserved source line numbers and all six artifact bytes",
+    "All original source files plus four generated bootstrap/version files match; final JS/Wasm bytes match and Wasm contains no developer build-root strings",
+    "Final packaged prepare.py and patch were applied to a third fresh source tree; all 6102 original files matched the compiled source trees"
+  ],
+  "tools": {
+    "emscripten": "6.0.12",
+    "make": "4.4.1",
+    "flex": "2.6.4",
+    "bison": "3.8.2",
+    "python": "3.13.3",
+    "hostGcc": "15.3.0",
+    "bootstrapNode": "26.7.0",
+    "sdkNode": "24.19.0",
+    "autoconfBootstrap": "2.71",
+    "gperfBootstrap": "3.3"
+  },
+  "originalFilesCompared": 6102,
+  "artifacts": {
+    "ivlpp.js": {
+      "bytes": 85895,
+      "sha256": "69df37f25e564108374bebeac92d456ac3e10f4213095e1b6f55a8a218292546"
+    },
+    "ivlpp.wasm": {
+      "bytes": 103405,
+      "sha256": "2b1cecf2755a60010c07f0c3d59feb1362f50007e601974e1d412ac3a131b102"
+    },
+    "ivl.js": {
+      "bytes": 96605,
+      "sha256": "90c3017285daa25cbed9bc0829bd638569fe10c3ae502809c0c9afe215d89405"
+    },
+    "ivl.wasm": {
+      "bytes": 1869963,
+      "sha256": "fe67867171589bb742fa06da2637143e958319b03774480db10d5caa6b80fd58"
+    },
+    "vvp.js": {
+      "bytes": 95083,
+      "sha256": "d505e7aeab2cbe8c6c67b907e4e4feb1bc6e4c09804a7fa8e2b674afa16000cd"
+    },
+    "vvp.wasm": {
+      "bytes": 1049121,
+      "sha256": "cee6ab6bfd388ed4c78d9a85a1b16f700d639c70950e4725b509b6ee8d6027c3"
+    }
+  },
+  "sourceInputs": {
+    "inputsSHA256": {
+      "sources/iverilog-c7530db.tar.gz": "323acb25d721492c9be6b945d863dfd925bfc29c0f2ba218ac09b09bd629925b",
+      "browser.patch": "3b32998806f52b2d767b2f1d8440265538bc9b0e7149a330ac686bee26d792b4",
+      "bootstrap/configure": "47ffe413be48704e74588bddc9872b6b118a9d7aa26a10ba958491bc3cc2a28d",
+      "bootstrap/lexor_keyword.cc": "6fb26c90b23b628d21953d2a7d7e1bccbaa64e79091dae106510457f2b164a7e",
+      "bootstrap/vhdlpp/lexor_keyword.cc": "baa58052db95ccfaf41984d374623c6de1862ed86e4a164c57c35801d6237ef1",
+      "prepare.py": "d0b432d2e32465d18fa77bbf241f9d09b9507ecdb44f030345139e4f9b42dde1",
+      "build.sh": "9d8d6d715a6eb45ffbe76c654c4eab78b247adc55490831e950f4f48efa4ee2f",
+      "RUNTIME-LICENSES.txt": "a4f367c9dff909bbfe9d6efd11aa0ad875f93dfe4b82621a329b23d355bf1188",
+      "compare-builds.py": "b7e49f7213bbbfe3eee7e135d25375cbf0f38fe5b3fd3219081af47302d3d511"
+    },
+    "emsdk": {
+      "repository": "https://github.com/emscripten-core/emsdk",
+      "commit": "3b3963d86a5c97adaf6eaa845cdfe0b811c2f960",
+      "version": "6.0.12",
+      "release": "6e9f6885cb17a3d6c8fd488a5cff730f50aba61d",
+      "emscriptenCommit": "5488e0871d46d19a3209988190fa6a653126256f"
+    },
+    "zlib": {
+      "version": "1.3.2",
+      "archive": "../nvc-browser/sources/zlib-1.3.2.tar.gz",
+      "archiveSHA256": "b99a0b86c0ba9360ec7e78c4f1e43b1cbdf1e6936c8fa0f6835c0cd694a495a1",
+      "emscriptenPortSHA512": "16fea4df307a68cf0035858abe2fd550250618a97590e202037acd18a666f57afc10f8836cbbd472d54a0e76539d0e558cb26f059d53de52ff90634bbf4f47d4"
+    }
+  },
+  "finalSourceDerivationVerified": true
+}

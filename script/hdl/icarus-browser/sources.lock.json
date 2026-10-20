@@ -1,0 +1,42 @@
+{
+  "status": "two-root-source-reconstruction-verified-windows",
+  "upstream": {
+    "repository": "https://github.com/steveicarus/iverilog",
+    "commit": "c7530dbcc186de2f21eacde14fd28061b885924c",
+    "license": "GPL-2.0-or-later (with individual-file notices in complete archive)"
+  },
+  "emsdk": {
+    "repository": "https://github.com/emscripten-core/emsdk",
+    "commit": "3b3963d86a5c97adaf6eaa845cdfe0b811c2f960",
+    "version": "6.0.12",
+    "release": "6e9f6885cb17a3d6c8fd488a5cff730f50aba61d",
+    "emscriptenCommit": "5488e0871d46d19a3209988190fa6a653126256f"
+  },
+  "zlib": {
+    "version": "1.3.2",
+    "archive": "../nvc-browser/sources/zlib-1.3.2.tar.gz",
+    "archiveSHA256": "b99a0b86c0ba9360ec7e78c4f1e43b1cbdf1e6936c8fa0f6835c0cd694a495a1",
+    "emscriptenPortSHA512": "16fea4df307a68cf0035858abe2fd550250618a97590e202037acd18a666f57afc10f8836cbbd472d54a0e76539d0e558cb26f059d53de52ff90634bbf4f47d4"
+  },
+  "bootstrap": {
+    "autoconf": "2.71",
+    "gperf": "3.3",
+    "commands": [
+      "autoconf -f",
+      "gperf -o -i 7 -C -k '1-4,6,9,$' -H keyword_hash -N check_identifier -t lexor_keyword.gperf > lexor_keyword.cc",
+      "cd vhdlpp && gperf -o -i 7 --ignore-case -C -k '1-4,6,9,$' -H keyword_hash -N check_identifier -t lexor_keyword.gperf > lexor_keyword.cc"
+    ]
+  },
+  "inputsSHA256": {
+    "sources/iverilog-c7530db.tar.gz": "323acb25d721492c9be6b945d863dfd925bfc29c0f2ba218ac09b09bd629925b",
+    "browser.patch": "3b32998806f52b2d767b2f1d8440265538bc9b0e7149a330ac686bee26d792b4",
+    "bootstrap/configure": "47ffe413be48704e74588bddc9872b6b118a9d7aa26a10ba958491bc3cc2a28d",
+    "bootstrap/lexor_keyword.cc": "6fb26c90b23b628d21953d2a7d7e1bccbaa64e79091dae106510457f2b164a7e",
+    "bootstrap/vhdlpp/lexor_keyword.cc": "baa58052db95ccfaf41984d374623c6de1862ed86e4a164c57c35801d6237ef1",
+    "prepare.py": "d0b432d2e32465d18fa77bbf241f9d09b9507ecdb44f030345139e4f9b42dde1",
+    "build.sh": "9d8d6d715a6eb45ffbe76c654c4eab78b247adc55490831e950f4f48efa4ee2f",
+    "RUNTIME-LICENSES.txt": "a4f367c9dff909bbfe9d6efd11aa0ad875f93dfe4b82621a329b23d355bf1188",
+    "compare-builds.py": "b7e49f7213bbbfe3eee7e135d25375cbf0f38fe5b3fd3219081af47302d3d511"
+  },
+  "reproducibleBuildVerified": true
+}

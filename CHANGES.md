@@ -1,5 +1,26 @@
 # Release notes
 
+## Unreleased — browser HDL candidate (publication blocked)
+
+- Add a self-hosted Icarus/YoWASP Worker executor, pinned compiler assets and
+  static application integration, with real browser tests and shared replay.
+- Add self-hosted GHDL WebAssembly VHDL-2008 synthesis, original source diagnostics,
+  IEEE.NUMERIC_STD coverage and archived upstream build inputs.
+- Add real NVC VHDL-2008 simulation and interactive replay, Wasm32 runtime fixes,
+  temporal/VCD regression fixtures, complete source archives and a pinned build recipe.
+- Verify byte-identical NVC JS/Wasm/libraries across independent Windows build roots,
+  and preserve real elapsed VCD/CSV time for testbenches without signals.
+- Replace the downloaded VeriSim binaries with a source-built Icarus static-Wasm port;
+  distribute complete corresponding sources, dated patches, bootstrap inputs,
+  Emscripten pins and runtime licenses. Verify matching six-artifact builds in
+  two Windows/MSYS2 roots and cap each module's Wasm heap at 512 MiB.
+- Correct packaged GHDL build paths and complete its six-source smoke suite.
+- Guard normal publication against unresolved HDL source/build gates.
+- Independent GHDL source-build reconstruction remains a release blocker.
+  The exact browser/language profile and app revalidation requirements are in
+  doc/hdl-browser-results.md; complete-language compatibility is not claimed.
+
+
 ## 0.6.1
 
 - Resolve public package imports to source entry points in Jest so application

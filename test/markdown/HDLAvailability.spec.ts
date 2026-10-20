@@ -104,46 +104,19 @@ describe('HDL availability and application integration', () => {
       await engine.dispose();
     }
   });
-  test.each(['production', 'development'])('drop-in app candidate shows blocked fences with absent configuration: %s', async (environment) => {
+  test.each(['production', 'development'])('static app integration explicitly authorizes browser execution: %s', (environment) => {
     const previous = process.env.NODE_ENV;
-    process.env.NODE_ENV = environment;
-    window.sessionStorage.removeItem('mathjslab.hdl.backend');
-    const configuration = markdownHDLConfiguration();
-    const engine = new MarkdownEngine(configuration);
-    const container = document.createElement('div');
     try {
-      await engine.renderDocument(source('verilog-live', live), container);
-      expect(container.querySelector('[role=alert]')).not.toBeNull();
-      expect(container.querySelector('button')).toBeNull();
-      expect(configuration.executionPolicy).toEqual({});
+      process.env.NODE_ENV = environment;
+      const configuration = markdownHDLConfiguration();
+      expect(configuration.executionPolicy).toEqual({ hdl: { enabled: true }, 'hdl-interactive': { enabled: true } });
+      expect(configuration.extensions.map((extension) => extension.name)).toEqual(['hdl', 'hdl-interactive']);
+      expect(window.sessionStorage.getItem('mathjslab.hdl.backend')).toBeNull();
     } finally {
-      await engine.dispose();
       process.env.NODE_ENV = previous;
     }
   });
-  test('drop-in app candidate validates loopback credentials and preserves the production boundary', () => {
-    const previous = process.env.NODE_ENV;
-    const settings = { enabled: true, endpoint: 'http://127.0.0.1:8787/hdl', token: 'a'.repeat(64) };
-    try {
-      process.env.NODE_ENV = 'development';
-      window.sessionStorage.setItem('mathjslab.hdl.backend', JSON.stringify(settings));
-      expect(markdownHDLConfiguration().executionPolicy).toEqual({ hdl: { enabled: true }, 'hdl-interactive': { enabled: true } });
-      process.env.NODE_ENV = 'production';
-      expect(markdownHDLConfiguration().executionPolicy).toEqual({});
-      process.env.NODE_ENV = 'development';
-      for (const data of [
-        { ...settings, token: '' },
-        { ...settings, endpoint: 'https://external.test/hdl' },
-        { ...settings, enabled: false },
-      ]) {
-        window.sessionStorage.setItem('mathjslab.hdl.backend', JSON.stringify(data));
-        const configuration = markdownHDLConfiguration();
-        expect(configuration.executionPolicy).toEqual({});
-        expect(configuration.extensions.map((extension) => extension.name)).toEqual(['hdl', 'hdl-interactive']);
-      }
-    } finally {
-      process.env.NODE_ENV = previous;
-      window.sessionStorage.removeItem('mathjslab.hdl.backend');
-    }
+  test('static app integration rejects third-party tool origins', () => {
+    expect(() => markdownHDLConfiguration('https://external.test/hdl/')).toThrow('hosted with the application');
   });
 });

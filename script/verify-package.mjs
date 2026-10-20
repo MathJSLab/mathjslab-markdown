@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -23,6 +24,17 @@ const output = JSON.parse(result.stdout);
 const packed = Array.isArray(output) ? output[0] : (output[manifest.name] ?? output);
 assert.ok(Array.isArray(packed.files), 'Unexpected npm pack result keys: ' + Object.keys(packed).join(', '));
 const files = new Set(packed.files.map((file) => file.path));
+const hdlPrefix = 'dist/browser/hdl/';
+const hdlLock = JSON.parse(fs.readFileSync(path.join(root, hdlPrefix, 'toolchain.lock.json'), 'utf8'));
+for (const [name, entry] of Object.entries(hdlLock.files)) {
+  assert.ok(files.has(hdlPrefix + name), 'Missing packaged HDL asset: ' + name);
+  const bytes = fs.readFileSync(path.join(root, hdlPrefix, name));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), entry.sha256, 'Packaged HDL integrity: ' + name);
+}
+for (const name of ['browser-worker.mjs', 'NOTICE.md', 'toolchain.lock.json']) {
+  assert.ok(files.has(hdlPrefix + name), 'Missing HDL integration asset: ' + name);
+  assert.deepEqual(fs.readFileSync(path.join(root, hdlPrefix, name)), fs.readFileSync(path.join(root, 'assets/hdl', name)), 'Stale HDL distribution: ' + name);
+}
 for (const file of ['README.md', 'CHANGES.md', 'LICENSE', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md']) assert.ok(files.has(file), 'Missing package file: ' + file);
 for (const [name, entry] of Object.entries(manifest.exports)) {
   for (const target of typeof entry === 'string' ? [entry] : Object.values(entry)) {
@@ -38,7 +50,74 @@ for (const [name, entry] of Object.entries(manifest.exports)) {
     }
   }
 }
-for (const file of files) assert.ok(!/^(src|test|script|repo|report|coverage|test-results|playwright-report)\//.test(file), 'Development artifact in package: ' + file);
+// Deliberately distribute the pinned compiler build recipe/patches, not general
+// development tooling. Consumers can audit the source of the shipped Wasm port.
+const ghdlBuildInputs = new Set(
+  [
+    'blackbox-verilog.patch',
+    'bug.adb',
+    'build-in-container.sh',
+    'build.sh',
+    'Dockerfile',
+    'ghdl_synth_test.mjs',
+    'grt-stdio.adb',
+    'grt-stdio.patch',
+    'README.md',
+    'synth_api.adb',
+    'synth_api.ads',
+    'test.sh',
+    'tests/and_gate.vhdl',
+    'tests/adder8.vhdl',
+    'tests/counter.vhdl',
+    'tests/fsm.vhdl',
+    'tests/syntax_error.vhdl',
+    'tests/sem_error.vhdl',
+  ].map((name) => 'script/hdl/ghdl-synth/' + name),
+);
+for (const file of ghdlBuildInputs) assert.ok(files.has(file), 'Missing GHDL build input: ' + file);
+const nvcBuildInputs = new Set(
+  [
+    'README.md',
+    'sources.lock.json',
+    'reproduction.json',
+    'release-wasm.patch',
+    'upstream-wasm.patch',
+    'single-thread.patch',
+    'build.sh',
+    'prepare.py',
+    'pack-libraries.py',
+    'compare-builds.py',
+    'gen_wasm_symtab.sh',
+    'libffi_stub.c',
+    'sources/nvc-1.22.0.tar.gz',
+    'sources/zstd-1.5.6.tar.gz',
+    'sources/libffi-3.4.6.tar.gz',
+    'sources/zlib-1.3.2.tar.gz',
+  ].map((name) => 'script/hdl/nvc-browser/' + name),
+);
+for (const file of nvcBuildInputs) assert.ok(files.has(file), 'Missing corresponding NVC source/build input: ' + file);
+const icarusBuildInputs = new Set(
+  [
+    'README.md',
+    'sources.lock.json',
+    'reproduction.json',
+    'browser.patch',
+    'build.sh',
+    'prepare.py',
+    'compare-builds.py',
+    'bootstrap/configure',
+    'bootstrap/lexor_keyword.cc',
+    'bootstrap/vhdlpp/lexor_keyword.cc',
+    'sources/iverilog-c7530db.tar.gz',
+    'RUNTIME-LICENSES.txt',
+  ].map((name) => 'script/hdl/icarus-browser/' + name),
+);
+for (const file of icarusBuildInputs) assert.ok(files.has(file), 'Missing corresponding Icarus source/build input: ' + file);
+for (const file of files)
+  assert.ok(
+    ghdlBuildInputs.has(file) || nvcBuildInputs.has(file) || icarusBuildInputs.has(file) || !/^(src|test|script|repo|report|coverage|test-results|playwright-report)\//.test(file),
+    'Development artifact in package: ' + file,
+  );
 const walk = (directory) => {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     const filename = path.join(directory, entry.name);

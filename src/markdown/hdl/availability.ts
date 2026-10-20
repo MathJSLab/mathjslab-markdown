@@ -27,6 +27,8 @@ export const assertHDLAvailable = async (
   if (operation === 'interactive' ? profile.interactive !== false : profile[operation]) return;
   const tools = operation === 'synthesize' ? (language === 'vhdl' ? ['ghdl', 'yosys'] : ['yosys']) : language === 'vhdl' ? ['ghdl'] : ['iverilog', 'vvp'];
   const unavailable = tools.filter((name) => capabilities.tools?.[name]?.available !== true);
+  const browserError = capabilities.tools?.['browser-runtime']?.error;
+  if (browserError) throw new Error(`HDL browser executor does not support ${language} ${operation}: ${browserError}`);
   throw new Error(
     `HDL backend does not support ${language} ${operation}. Install/configure ${tools.join(', ')} on the service host and check GET /capabilities${unavailable.length ? '; unavailable: ' + unavailable.join(', ') : ''}. Native tools are not bundled with the browser or npm package.`,
   );

@@ -15,3 +15,5 @@ repo/
 script/build/
 .agents/
 .codex/
+.hdl-research/
+.cache/

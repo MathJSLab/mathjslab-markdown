@@ -1,5 +1,12 @@
 # VHDL and Verilog: four hardware descriptions
 
+Client execution: the application must authorize createBrowserHDLExecutor and
+host its WebAssembly/Worker assets. Verilog uses Icarus and YoWASP in the
+browser, without a service, token or sessionStorage. VHDL-2008 synthesis uses
+GHDL and YoWASP in the browser; VHDL-2008 simulation and interactivity use NVC.
+Markdown cannot authorize execution. See doc/extensions/hdl-troubleshooting.md
+and doc/hdl-browser-results.md.
+
 These eight fences display highlighted source only. They do not compile,
 synthesize or simulate hardware, and do not create interactive controls. Use
 the dedicated execution lessons with an authorized backend for those

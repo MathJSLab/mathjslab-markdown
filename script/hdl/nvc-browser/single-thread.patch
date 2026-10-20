@@ -1,0 +1,30 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -157,7 +157,11 @@
+     AC_SEARCH_LIBS([dlopen], [dl dld], [], [
+       AC_MSG_ERROR([unable to find the dlopen() function])
+     ])
+-    AX_PTHREAD([], [AC_MSG_ERROR([pthread not found])])
++    AS_IF([test x$host_os = xemscripten],
++      [AC_DEFINE([HAVE_PTHREAD], [1], [Single-thread Emscripten pthread stubs])
++       PTHREAD_CFLAGS=
++       PTHREAD_LIBS=],
++      [AX_PTHREAD([], [AC_MSG_ERROR([pthread not found])])])
+     DIR_SEP=/
+     PATH_SEP=\:
+     pathprog="echo"
+--- a/src/thread.c
++++ b/src/thread.c
+@@ -522,6 +522,12 @@
+       max_workers = MAX(1, MIN(max_workers, limit));
+    }
+ 
++#if defined __EMSCRIPTEN__ && !defined __EMSCRIPTEN_PTHREADS__
++   // Use NVC's own serial work queues and synchronous async_do path.
++   // No OS threads, shared memory, or replacement HDL scheduler.
++   max_workers = 1;
++#endif
++
+    assert(max_workers > 0);
+ 
+ #ifdef DEBUG

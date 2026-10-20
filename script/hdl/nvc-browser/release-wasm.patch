@@ -1,0 +1,583 @@
+--- a/src/util.h
++++ b/src/util.h
+@@ -20,6 +20,16 @@
+ 
+ #ifdef HAVE_CONFIG_H
+ #include "config.h"
++#endif
++
++// autoheader silently drops PATH_SEP and DLL_EXT from config.h.in; provide
++// sane fallbacks so any platform without explicit configure handling builds.
++#ifndef PATH_SEP
++#define PATH_SEP ":"
++#endif
++
++#ifndef DLL_EXT
++#define DLL_EXT "so"
+ #endif
+ 
+ #ifndef _GNU_SOURCE
+--- a/src/jit/jit-ffi.c
++++ b/src/jit/jit-ffi.c
+@@ -122,6 +122,8 @@
+    HMODULE exe_handle = GetModuleHandle(NULL);
+    if (exe_handle == NULL)
+       fatal("failed to get handle to main process");
++#elif defined __EMSCRIPTEN__
++   void *exe_handle = (void *)1;
+ #else
+    void *exe_handle = dlopen(NULL, RTLD_NOW);
+    if (exe_handle == NULL)
+@@ -224,6 +226,9 @@
+    HMODULE handle = LoadLibrary(abs);
+    if (handle == NULL)
+       fatal_win32("failed to load %s", abs);
++#elif defined __EMSCRIPTEN__
++   fatal("loading shared library %s is not supported in the wasm build", abs);
++   void *handle = NULL;
+ #else
+    void *handle = dlopen(abs, RTLD_LAZY);
+    if (handle == NULL)
+@@ -247,6 +252,8 @@
+ {
+ #ifdef __MINGW32__
+    FreeLibrary(dll->handle);
++#elif defined __EMSCRIPTEN__
++   // No dynamic libraries are loaded by the Wasm frontend.
+ #else
+    dlclose(dll->handle);
+ #endif
+@@ -277,6 +284,10 @@
+    else {
+ #ifdef __MINGW32__
+       return (void *)(uintptr_t)GetProcAddress(dll->handle, name);
++#elif defined __EMSCRIPTEN__
++      (void)dll;
++      extern void *nvc_wasm_dlsym(const char *);
++      return nvc_wasm_dlsym(name);
+ #else
+       return dlsym(dll->handle, name);
+ #endif
+--- a/src/jit/jit-priv.h
++++ b/src/jit/jit-priv.h
+@@ -95,7 +95,7 @@
+    JIT_SZ_16 = 1,
+    JIT_SZ_32 = 2,
+    JIT_SZ_64 = 3,
+-   JIT_SZ_PTR = JIT_SZ_64,
++   JIT_SZ_PTR = sizeof(void *) == 4 ? JIT_SZ_32 : JIT_SZ_64,
+    JIT_SZ_UNSPEC = 7
+ } jit_size_t;
+ 
+--- a/src/jit/jit-exits.c
++++ b/src/jit/jit-exits.c
+@@ -391,8 +391,11 @@
+          sig_shared_t *shared = args[0].pointer;
+ 
+          ffi_closure_t *closure = *(ffi_closure_t **)(args[1].pointer + 0);
+-         int32_t        nlits   = *(int64_t *)(args[1].pointer + 8);
+-         int32_t        flags   = *(int32_t *)(args[1].pointer + 16);
++         // irgen_op_store packs a native pointer followed by int64/int32.
++         // Wasm32 pointers occupy four bytes, not the host ABI's eight.
++         int32_t nlits = *(int64_t *)(args[1].pointer + sizeof(void *));
++         int32_t flags = *(int32_t *)(args[1].pointer + sizeof(void *)
++                                      + sizeof(int64_t));
+ 
+          x_resolve_signal(shared, closure, nlits, flags);
+       }
+--- a/src/jit/jit-code.c
++++ b/src/jit/jit-code.c
+@@ -596,7 +596,9 @@
+       nvc_printf("$$\n");
+    }
+ 
++#ifndef __wasm__
+    __builtin___clear_cache((char *)span->base, (char *)blob->wptr);
++#endif
+ 
+    thread_wx_mode(WX_EXECUTE);
+ 
+@@ -854,9 +856,11 @@
+       __IMM64((uintptr_t)dest)
+    };
+ #else
++   (void)blob; (void)dest;
+    should_not_reach_here();
+ #endif
+ 
++#if defined ARCH_X86_64 || defined ARCH_ARM64
+    void *prev = memmem(blob->veneers, blob->wptr - blob->veneers,
+                        veneer, ARRAY_LEN(veneer));
+    if (prev != NULL)
+@@ -868,6 +872,7 @@
+       code_blob_emit(blob, veneer, ARRAY_LEN(veneer));
+       return addr;
+    }
++#endif
+ }
+ 
+ #if !defined __MINGW32__ && !defined __APPLE__
+--- a/src/jit/Makemodule.am
++++ b/src/jit/Makemodule.am
+@@ -14,7 +14,8 @@
+ 	src/jit/jit-layout.h \
+ 	src/jit/jit-layout.c \
+ 	src/jit/jit-intrin.c \
+-	src/jit/jit-tramp.c
++	src/jit/jit-tramp.c \
++	src/jit/wasm_symtab.c
+ 
+ if ARCH_X86_64
+ lib_libnvc_a_SOURCES += src/jit/jit-x86.c
+--- a/src/jit/jit-interp.c
++++ b/src/jit/jit-interp.c
+@@ -714,7 +714,7 @@
+ 
+ static void interp_lea(jit_interp_t *state, jit_ir_t *ir)
+ {
+-   state->regs[ir->result].pointer = interp_get_pointer(state, ir->arg1);
++   state->regs[ir->result].integer = (uintptr_t)(interp_get_pointer(state, ir->arg1));
+ }
+ 
+ static void interp_fexp(jit_interp_t *state, jit_ir_t *ir)
+@@ -837,7 +837,7 @@
+    else if (bytes == 0)
+       bytes = 1;   // Never return a NULL pointer
+ 
+-   state->regs[ir->result].pointer = mspace_alloc(state->mspace, bytes);
++   state->regs[ir->result].integer = (uintptr_t)(mspace_alloc(state->mspace, bytes));
+ 
+    thread->anchor = NULL;
+ }
+@@ -850,7 +850,7 @@
+    state->anchor->irpos = ir - state->func->irbuf;
+ 
+    const size_t bytes = interp_get_int(state, ir->arg1);
+-   state->regs[ir->result].pointer = tlab_alloc(state->tlab, bytes);
++   state->regs[ir->result].integer = (uintptr_t)(tlab_alloc(state->tlab, bytes));
+ 
+    thread->anchor = NULL;
+ }
+@@ -858,7 +858,7 @@
+ static void interp_salloc(jit_interp_t *state, jit_ir_t *ir)
+ {
+    assert(ir->arg1.int64 + ir->arg2.int64 <= state->func->framesz);
+-   state->regs[ir->result].pointer = state->frame + ir->arg1.int64;
++   state->regs[ir->result].integer = (uintptr_t)(state->frame + ir->arg1.int64);
+ }
+ 
+ static void interp_exit(jit_interp_t *state, jit_ir_t *ir)
+@@ -872,7 +872,7 @@
+    JIT_ASSERT(ir->arg1.kind == JIT_VALUE_HANDLE);
+    jit_func_t *f = jit_get_func(state->func->jit, ir->arg1.handle);
+    void *ptr = load_acquire(jit_get_privdata_ptr(state->func->jit, f));
+-   state->regs[ir->result].pointer = ptr;
++   state->regs[ir->result].integer = (uintptr_t)(ptr);
+ }
+ 
+ static void interp_putpriv(jit_interp_t *state, jit_ir_t *ir)
+--- a/src/jit/jit-intrin.c
++++ b/src/jit/jit-intrin.c
+@@ -133,6 +133,15 @@
+ };
+ #endif
+ 
++// spread_nibble is referenced by the scalar __spread_bits_8 helper below
++// and so must be defined regardless of vector ISA availability.
++static const uint32_t spread_nibble[16] = {
++   0x02020202, 0x03020202, 0x02030202, 0x03030202,
++   0x02020302, 0x03020302, 0x02030302, 0x03030302,
++   0x02020203, 0x03020203, 0x02030203, 0x03030203,
++   0x02020303, 0x03020303, 0x02030303, 0x03030303,
++};
++
+ #if defined HAVE_SSE41 || defined HAVE_NEON
+ 
+ // Compressed lookup tables for vectorised intrinsics.  Note the
+@@ -192,13 +201,6 @@
+ __attribute__((aligned(16)))
+ static const uint8_t lane_iota[16] = {
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+-};
+-
+-static const uint32_t spread_nibble[16] = {
+-   0x02020202, 0x03020202, 0x02030202, 0x03030202,
+-   0x02020302, 0x03020302, 0x02030302, 0x03030302,
+-   0x02020203, 0x03020203, 0x02030203, 0x03030203,
+-   0x02020303, 0x03020303, 0x02030303, 0x03030303,
+ };
+ 
+ #ifdef HAVE_SSE41
+--- a/src/rt/wave.c
++++ b/src/rt/wave.c
+@@ -153,18 +153,28 @@
+    fstWriterClose(wd->fst_ctx);
+ 
+    if (wd->vcdfile) {
+-      void *xc = fstReaderOpen(wd->tmpfst);
+-      if (xc == NULL)
+-         fatal("fstReaderOpen failed for temporary FST file");
+-
+-      fstReaderSetVcdExtensions(xc, 1);
+-      if (!fstReaderProcessHier(xc, wd->vcdfile))
+-         fatal("fstReaderProcessHier failed");
+-
+-      fstReaderSetFacProcessMaskAll(xc);
+-      fstReaderIterBlocks(xc, NULL, NULL, wd->vcdfile);
+-
+-      fstReaderClose(xc);
++      if (wd->dumped.count == 0) {
++         // FST has no readable value section without variables. Export only
++         // the real runtime endpoint; do not invent a signal or transition.
++         fprintf(wd->vcdfile, "$version " PACKAGE_STRING " $end\n"
++                 "$timescale 1 fs $end\n$enddefinitions $end\n"
++                 "#0\n$dumpvars\n$end\n#%" PRIu64 "\n",
++                 model_now(m, NULL));
++      }
++      else {
++         void *xc = fstReaderOpen(wd->tmpfst);
++         if (xc == NULL)
++            fatal("fstReaderOpen failed for temporary FST file");
++
++         // Emit ordinary digital VCD, without GTKWave attribute directives.
++         fstReaderSetVcdExtensions(xc, 0);
++         if (!fstReaderProcessHier(xc, wd->vcdfile))
++            fatal("fstReaderProcessHier failed");
++
++         fstReaderSetFacProcessMaskAll(xc);
++         fstReaderIterBlocks(xc, NULL, NULL, wd->vcdfile);
++         fstReaderClose(xc);
++      }
+       fclose(wd->vcdfile);
+       wd->vcdfile = NULL;
+ 
+@@ -377,7 +387,7 @@
+             ft->sdt     = FST_SDT_VHDL_STD_ULOGIC;
+             ft->vartype = FST_VT_SV_LOGIC;
+             ft->fn      = fst_fmt_chars;
+-            ft->u.map   = "UX01ZWLH-";
++            ft->u.map   = wd->vcdfile ? "xx01zx01x" : "UX01ZWLH-";
+             ft->size    = 1;
+             break;
+ 
+@@ -398,7 +408,15 @@
+             break;
+ 
+          case W_STD_CHAR: ft->sdt = FST_SDT_VHDL_CHARACTER; break;
+-         case W_STD_BOOL: ft->sdt = FST_SDT_VHDL_BOOLEAN; break;
++         case W_STD_BOOL:
++            ft->sdt = FST_SDT_VHDL_BOOLEAN;
++            if (wd->vcdfile) {
++               ft->vartype = FST_VT_SV_LOGIC;
++               ft->fn = fst_fmt_chars;
++               ft->u.map = "01";
++               ft->size = 1;
++            }
++            break;
+          default:         ft->sdt = FST_SDT_NONE; break;
+          }
+       }
+@@ -733,7 +751,7 @@
+    data->decl   = d;
+    data->signal = s;
+    data->dumper = wd;
+-   data->watch  = watch_new(wd->model, fst_event_cb, data, WATCH_POSTPONED, 1);
++   data->watch  = watch_new(wd->model, fst_event_cb, data, wd->vcdfile ? WATCH_EVENT : WATCH_POSTPONED, 1);
+ 
+    const int width = signal_width(data->signal);
+    model_set_event_cb(wd->model, data->signal, 0, width, data->watch);
+@@ -775,7 +793,7 @@
+ 
+    data->decl   = d;
+    data->signal = s;
+-   data->watch  = watch_new(wd->model, fst_event_cb, data, WATCH_POSTPONED, 1);
++   data->watch  = watch_new(wd->model, fst_event_cb, data, wd->vcdfile ? WATCH_EVENT : WATCH_POSTPONED, 1);
+ 
+    const int width = signal_width(data->signal);
+    model_set_event_cb(wd->model, data->signal, 0, width, data->watch);
+@@ -1072,7 +1090,7 @@
+ 
+    data->decl   = wrap;
+    data->signal = s;
+-   data->watch  = watch_new(wd->model, fst_event_cb, data, WATCH_POSTPONED, 1);
++   data->watch  = watch_new(wd->model, fst_event_cb, data, wd->vcdfile ? WATCH_EVENT : WATCH_POSTPONED, 1);
+ 
+    const int width = signal_width(data->signal);
+    model_set_event_cb(wd->model, data->signal, 0, width, data->watch);
+@@ -1109,6 +1127,7 @@
+    tb_downcase(tb);
+ 
+    // TODO: store the component name in T_HIER somehow?
++   if (wd->vcdfile) st = FST_ST_VCD_MODULE;
+    fstWriterSetScope(wd->fst_ctx, st, tb_get(tb), "");
+ 
+    if (wd->gtkw != NULL) {
+--- a/src/rt/stdenv.c
++++ b/src/rt/stdenv.c
+@@ -205,7 +205,7 @@
+ }
+ 
+ DLLEXPORT
+-void _std_env_stop(jit_scalar_t *args)
++void _std_env_stop(jit_scalar_t *args, tlab_t *tlab)
+ {
+    const int32_t finish      = args[2].integer;
+    const int32_t have_status = args[3].integer;
+@@ -663,7 +663,7 @@
+ }
+ 
+ DLLEXPORT
+-void _std_env_get_vhdl_assert_count(jit_scalar_t *args)
++void _std_env_get_vhdl_assert_count(jit_scalar_t *args, tlab_t *tlab)
+ {
+    vhdl_severity_t severity_level = args[1].integer;
+    args[0].integer = get_vhdl_assert_count(severity_level);
+@@ -676,7 +676,7 @@
+ }
+ 
+ DLLEXPORT
+-void _std_env_set_vhdl_assert_enable(jit_scalar_t *args)
++void _std_env_set_vhdl_assert_enable(jit_scalar_t *args, tlab_t *tlab)
+ {
+    vhdl_severity_t severity_level = args[2].integer;
+    bool enable = !!args[3].integer;
+@@ -685,7 +685,7 @@
+ }
+ 
+ DLLEXPORT
+-void _std_env_get_vhdl_assert_enable(jit_scalar_t *args)
++void _std_env_get_vhdl_assert_enable(jit_scalar_t *args, tlab_t *tlab)
+ {
+    vhdl_severity_t severity_level = args[1].integer;
+    args[0].integer = get_vhdl_assert_enable(severity_level);
+--- a/src/rt/model.c
++++ b/src/rt/model.c
+@@ -1046,6 +1046,8 @@
+ 
+    jit_set_silent(m->jit, true);
+ 
++   // Context arguments must use their pointer member: passing the 8-byte
++   // jit_scalar_t union through Wasm32 varargs misaligns subsequent arguments.
+    // Memoise the function for all two value cases
+ 
+    for (int i = 0; i < nlits; i++) {
+@@ -1053,7 +1055,7 @@
+          int8_t args[2] = { i, j };
+          jit_scalar_t result;
+          if (jit_try_call(m->jit, memo->closure.handle, &result,
+-                          memo->closure.args[0], args, 2)) {
++                          memo->closure.args[0].pointer, args, 2)) {
+             assert(result.integer < nlits && result.integer >= 0);
+             memo->tab2[i][j] = result.integer;
+          }
+@@ -1068,7 +1070,7 @@
+       int8_t args[1] = { i };
+       jit_scalar_t result;
+       if (jit_try_call(m->jit, memo->closure.handle, &result,
+-                       memo->closure.args[0], args, 1)) {
++                       memo->closure.args[0].pointer, args, 1)) {
+          memo->tab1[i] = result.integer;
+          identity = identity && (memo->tab1[i] == i);
+       }
+@@ -1888,7 +1890,7 @@
+ 
+       jit_scalar_t result;
+       if (jit_try_call(m->jit, r->closure.handle, &result,
+-                       r->closure.args[0], inputs, nonnull))
++                       r->closure.args[0].pointer, inputs, nonnull))
+          put_driving(m, n, result.pointer + n->signal->offset
+                      + n->offset - rscope->offset);
+       else
+@@ -1917,7 +1919,7 @@
+             type *p = (type *)resolved;                                 \
+             jit_scalar_t result;                                        \
+             if (!jit_try_call(m->jit, r->closure.handle, &result,       \
+-                              r->closure.args[0], vals, nonnull))       \
++                              r->closure.args[0].pointer, vals, nonnull))       \
+                m->force_stop = true;                                    \
+             p[j] = result.integer;                                      \
+          } while (0)
+--- a/src/thread.c
++++ b/src/thread.c
+@@ -58,7 +58,7 @@
+ #define SUSPEND_TIMEOUT 1
+ #define THREAD_NAME_LEN 16
+ 
+-#if !defined __MINGW32__ && !defined __APPLE__
++#if !defined __MINGW32__ && !defined __APPLE__ && !defined __EMSCRIPTEN__
+ #define POSIX_SUSPEND 1
+ #define SIGSUSPEND    SIGRTMIN
+ #define SIGRESUME     (SIGRTMIN + 1)
+@@ -522,6 +522,10 @@
+       max_workers = MAX(1, MIN(max_workers, limit));
+    }
+ 
++#if defined __EMSCRIPTEN__ && !defined __EMSCRIPTEN_PTHREADS__
++   // NVC's existing serial work queues and synchronous async_do implementation.
++   max_workers = 1;
++#endif
+    assert(max_workers > 0);
+ 
+ #ifdef DEBUG
+@@ -1374,6 +1378,8 @@
+ #elif defined __SANITIZE_THREAD__
+    // https://github.com/google/sanitizers/issues/1179
+    fatal_trace("stop_world is not supported with tsan");
++#elif defined __EMSCRIPTEN__
++   // wasm: no cross-thread signal-based suspension; rely on cooperative model
+ #else
+    assert(sem_trywait(&stop_sem) == -1 && errno == EAGAIN);
+ 
+@@ -1437,6 +1443,8 @@
+       if (kern_result != KERN_SUCCESS)
+          fatal_trace("failed to resume thread %d (%d)", i, kern_result);
+    }
++#elif defined __EMSCRIPTEN__
++   (void)maxthread;
+ #else
+    assert(sem_trywait(&stop_sem) == -1 && errno == EAGAIN);
+ 
+--- a/src/vhpi/vhpi_user.h
++++ b/src/vhpi/vhpi_user.h
+@@ -52,7 +52,7 @@
+ typedef signed __int64 int64_t;
+ typedef signed __int32 int32_t;
+ typedef signed __int8 int8_t;
+-#elif defined(__MINGW32__) || defined(__APPLE__)
++#elif defined(__MINGW32__) || defined(__APPLE__) || defined(__EMSCRIPTEN__)
+ #include <stdint.h>
+ #elif defined(__linux)
+ #include <inttypes.h>
+--- a/src/util.c
++++ b/src/util.c
+@@ -102,7 +102,7 @@
+ #define POOL_PAGE_MIN   POOL_PAGE_4K
+ #define POOL_PAGE_MAX   POOL_PAGE_1M
+ 
+-#if ASAN_ENABLED
++#if ASAN_ENABLED || defined __EMSCRIPTEN__
+ #define POOL_REDZONE 16
+ #else
+ #define POOL_REDZONE 0
+@@ -1058,7 +1058,7 @@
+    return result;
+ }
+ 
+-#if !ASAN_ENABLED
++#if !ASAN_ENABLED && !defined __EMSCRIPTEN__
+ static long nvc_page_size(void)
+ {
+ #ifdef __MINGW32__
+@@ -1073,7 +1073,7 @@
+ 
+ void nvc_munmap(void *ptr, size_t length)
+ {
+-#if ASAN_ENABLED
++#if ASAN_ENABLED || defined __EMSCRIPTEN__
+    free(ptr);
+ #elif !defined __MINGW32__
+    if (munmap(ptr, length) != 0)
+@@ -1086,7 +1086,7 @@
+ 
+ void *nvc_memalign(size_t align, size_t sz)
+ {
+-#if ASAN_ENABLED
++#if ASAN_ENABLED || defined __EMSCRIPTEN__
+    void *ptr;
+    if (posix_memalign(&ptr, align, sz) != 0)
+       fatal_errno("posix_memalign");
+@@ -1137,7 +1137,7 @@
+    if (length > 0 && !VirtualProtect(ptr, length, map[prot], &old_prot))
+       fatal_win32("VirtualProtect");
+ #else
+-#if ASAN_ENABLED
++#if ASAN_ENABLED || defined __EMSCRIPTEN__
+    // LeakSanitizer will not detect leaks in regions mapped read-only
+    if (prot == MEM_RO || prot == MEM_NONE)
+       return;
+@@ -2016,10 +2016,30 @@
+        tb_cat(tb, buffer);
+ #else
+    char abs_from[PATH_MAX], abs_to[PATH_MAX];
++#ifdef __EMSCRIPTEN__
++   // NODERAWFS accepts absolute Windows filenames, but libc realpath treats
++   // their drive prefix as relative. The build passes already canonical paths.
++   if (from != NULL && strlen(from) > 2 && from[1] == ':'
++       && from[2] == '/' && strncmp(from, to, strlen(from)) == 0
++       && to[strlen(from)] == '/') {
++      tb_cat(tb, to + strlen(from) + 1);
++      return;
++   }
++#endif
+    if (from == NULL || realpath(from, abs_from) == NULL)
+       goto fallback;
+    else if (realpath(to, abs_to) == NULL)
+       goto fallback;
++
++#ifdef __EMSCRIPTEN__
++   // The developer-only NODERAWFS driver uses host realpath(), which returns
++   // backslashes on Windows. MEMFS uses slashes. Normalize before splitting
++   // so --relative also produces portable standard-library locations.
++   for (char *p = abs_from; *p; p++)
++      if (*p == '\\') *p = '/';
++   for (char *p = abs_to; *p; p++)
++      if (*p == '\\') *p = '/';
++#endif
+ 
+    A(char *) from_parts = AINIT;
+    A(char *) to_parts = AINIT;
+--- a/src/symbols.txt
++++ b/src/symbols.txt
+@@ -10,7 +10,7 @@
+   _std_to_string_real_digits;
+   _std_to_string_real_format;
+   _std_to_string_time;
+-  _pollyfil_to_hstring_bit_vec;
++  _polyfill_to_hstring_bit_vec;
+   _polyfill_to_ostring_bit_vec;
+   _polyfill_to_string_real_format;
+ 
+--- a/src/object.h
++++ b/src/object.h
+@@ -168,7 +168,8 @@
+ STATIC_ASSERT(sizeof(object_t) == 16);
+ 
+ typedef bool (*object_copy_pred_t)(object_t *, void *);
+-typedef bool (*object_copy_fn_t)(object_t *, void *);
++// Copy callbacks return void (tree_copy_fn_t/type_copy_fn_t). Wasm checks this ABI.
++typedef void (*object_copy_fn_t)(object_t *, void *);
+ 
+ typedef struct _object_copy_ctx {
+    generation_t       generation;
+--- a/thirdparty/cpustate.c
++++ b/thirdparty/cpustate.c
+@@ -32,7 +32,14 @@
+ #define STATIC_ASSERT(x)
+ #endif
+ 
+-#if defined __unix__ || defined __APPLE__
++#if defined __EMSCRIPTEN__
++
++void fill_cpu_state(struct cpu_state *cpu, ucontext_t *uc)
++{
++   memset(cpu, '\0', sizeof(struct cpu_state));
++}
++
++#elif defined __unix__ || defined __APPLE__
+ 
+ void fill_cpu_state(struct cpu_state *cpu, ucontext_t *uc)
+ {
+--- a/thirdparty/fstapi.c
++++ b/thirdparty/fstapi.c
+@@ -41,6 +41,11 @@
+ 
+ #ifdef FST_INCLUDE_CONFIG
+ #include <config.h>
++#endif
++
++// Preserve equal-time value changes in the Wasm digital VCD export.
++#if defined __EMSCRIPTEN__
++#undef FST_REMOVE_DUPLICATE_VC
+ #endif
+ 
+ #include "fstapi.h"

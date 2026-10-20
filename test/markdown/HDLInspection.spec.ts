@@ -18,6 +18,11 @@ const wait = async (condition: () => boolean) => {
 };
 
 describe('HDL inspection and local exports', () => {
+  test('CSV exports actual recording endpoints without inventing signal columns', () => {
+    const empty = '$timescale 1 fs $end\n$enddefinitions $end\n#0\n$dumpvars\n$end\n#133000000\n';
+    expect(exportVCDCSV(empty)).toBe('"tick (1 fs)"\r\n"0"\r\n"133000000"\r\n');
+    expect(exportVCDCSV(empty, { signals: [] })).toBe(exportVCDCSV(empty));
+  });
   test('CSV preserves exact event times, held bits, aliases, x/z and escaped headings', () => {
     const csv = exportVCDCSV(trace, { start: 2, end: 8, signals: ['data'] });
     expect(csv).toBe('"tick (10 ps)","data"\r\n"2","xxxx"\r\n"3","1110"\r\n"7","zzzz"\r\n"8","zzzz"\r\n');

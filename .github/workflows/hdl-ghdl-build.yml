@@ -1,0 +1,35 @@
+name: HDL GHDL Linux build
+run-name: GHDL reconstruction at ${{ github.sha }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/hdl-build]
+
+permissions:
+  contents: read
+
+# Keep builds sequential, without cancelling a build whose evidence is being collected.
+concurrency:
+  group: hdl-ghdl-reconstruction
+  cancel-in-progress: false
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Reconstruct twice and compare
+        run: bash script/hdl/ghdl-synth/ci.sh
+      - name: Preserve candidate artifacts and diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ghdl-candidate-${{ github.sha }}-${{ github.run_attempt }}
+          path: .hdl-research/ghdl-ci/
+          if-no-files-found: error
+          retention-days: 7

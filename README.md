@@ -114,9 +114,15 @@ executors, Workers and renderers from the host; the core engine has no
 dependency on `mathjslab-app` or Plotly. Standalone bundles share a runtime:
 deploy the entire `dist/browser` tree, including its chunks and assets.
 
-Optional [real HDL backends](doc/extensions/hdl-backends.md) use host-installed
-GHDL, Icarus and Yosys, with explicit execution authorization. Native tools are
-separate from browser bundles and are not included in the npm package.
+The [browser HDL executor](doc/extensions/hdl-troubleshooting.md) runs real Icarus
+simulation and YoWASP synthesis in isolated Workers with self-hosted Wasm assets.
+Application authorization is explicit in development and static production.
+GHDL now provides real VHDL-2008 synthesis, including tested IEEE.NUMERIC_STD
+sources. NVC now provides VHDL-2008 simulation and interactive replay in Workers.
+NVC and the source-built Icarus port include complete sources and verified matching
+artifacts across independent Windows build roots. GHDL's independent source build
+remains a publication blocker; see
+the [browser report and release blockers](doc/hdl-browser-results.md).
 
 HDL and MathJSLab use shared
 [execution sessions and scheduling](doc/execution-scheduling.md), with

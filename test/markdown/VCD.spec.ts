@@ -32,6 +32,11 @@ b1010 "
 const fence = (text = source) => '```vcd {width=50% height=20rem}\n' + text + '\n```';
 
 describe('digital VCD simulation results', () => {
+  test('preserves the elapsed time of a recording without signal declarations', () => {
+    const empty = '$timescale 1 fs $end\n$enddefinitions $end\n#0\n$dumpvars\n$end\n#133000000\n';
+    expect(parseVCD(empty)).toEqual({ timescale: { magnitude: 1, unit: 'fs' }, signals: [], endTime: 133000000, sameTimeChanges: 0 });
+    expect(() => parseVCD(empty + '1!\n')).toThrow('Unknown VCD identifier');
+  });
   test('keeps wide values in the table and bounds dense windows without sampling', async () => {
     const header = '$timescale 1ns $end\n$var reg 256 ! bus $end\n$enddefinitions $end\n$dumpvars\nbx !\n$end\n';
     const engine = new MarkdownEngine({ extensions: [vcdExtension()] });

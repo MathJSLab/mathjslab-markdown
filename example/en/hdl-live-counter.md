@@ -1,11 +1,11 @@
 # Interactive simulation: counter and reset
 
-Execution requirements: an application-authorized HDL executor and a service
-with GHDL (VHDL), Icarus/VVP (Verilog simulation) and Yosys (synthesis). In
-mathjslab-app 0.6.0, production execution is disabled; development requires the
-loopback service, token and application settings in
-sessionStorage["mathjslab.hdl.backend"], followed by a reload. Markdown cannot
-authorize execution. A source listing is not a simulation result.
+Client execution: the application must authorize createBrowserHDLExecutor and
+host its WebAssembly/Worker assets. Verilog uses Icarus and YoWASP in the
+browser, without a service, token or sessionStorage. VHDL-2008 synthesis uses
+GHDL and YoWASP in the browser; VHDL-2008 simulation and interactivity use NVC.
+Markdown cannot authorize execution. See doc/extensions/hdl-troubleshooting.md
+and doc/hdl-browser-results.md.
 
 Requires an application-provided, authorized interactive session. Step applies
 inputs and simulates 10 ns. Run repeats steps; Pause preserves state. Reset

@@ -1,0 +1,8 @@
+# Toolchain integrity hashes refer to exact bytes, including JavaScript assets.
+assets/hdl/** -text
+# Recipes are also integrity checked; keep their byte representation portable.
+script/hdl/** text eol=lf
+script/hdl/**/sources/*.tar.gz -text
+# Linux build entry points must survive checkout from a Windows workstation.
+*.sh text eol=lf
+*.patch text eol=lf

@@ -1,17 +1,14 @@
 # HDL: simulación de una puerta AND
 
-Requisitos de ejecución: ejecutor HDL autorizado por la aplicación y servicio
-con GHDL (VHDL), Icarus/VVP (simulación Verilog) y Yosys (síntesis). En
-mathjslab-app 0.6.0, la ejecución en producción está deshabilitada; en
-desarrollo hay que configurar el servicio loopback, el token y las opciones de
-la aplicación en sessionStorage["mathjslab.hdl.backend"] y recargar la página.
-Markdown no puede autorizar la ejecución. Una lista de código no es un
-resultado de simulación.
+Ejecución en el cliente: la aplicación debe autorizar createBrowserHDLExecutor
+y alojar sus assets WebAssembly/Worker. Verilog usa Icarus y YoWASP en el
+navegador, sin servicio, token ni sessionStorage. La síntesis VHDL-2008 usa
+GHDL y YoWASP en el navegador; simulación e interactividad VHDL-2008 usan
+el runtime NVC. Markdown no puede autorizar la ejecución. Consulte
+doc/extensions/hdl-troubleshooting.md y doc/hdl-browser-results.md.
 
-Requiere un executor HDL proporcionado y autorizado por la aplicación. El
-engine no incluye compilador ni simulador. La aplicación convierte la
-simulación a WaveJSON o la síntesis a JSON de Yosys; las herramientas y
-optimizaciones elegidas pueden producir representaciones distintas.
+El ejecutor devuelve registros VCD y netlists JSON de Yosys. Las herramientas y
+optimizaciones pueden producir representaciones diferentes.
 
 ## VHDL
 

@@ -11,7 +11,7 @@ export const exportVCDCSV = (source: string, options: VCDCSVOptions = {}): strin
   if (options.signals && (new Set(options.signals).size !== options.signals.length || options.signals.some((name) => !model.signals.some((signal) => signal.name === name))))
     throw new Error('Invalid CSV signal selection');
   const selected = model.signals.filter((signal) => !options.signals || options.signals.includes(signal.name));
-  if (!selected.length || selected.length > 32) throw new Error('CSV requires 1 to 32 signals');
+  if ((!selected.length && model.signals.length > 0) || selected.length > 32) throw new Error('CSV requires 1 to 32 signals when the recording contains signals');
   const times = new Set([start, end]);
   for (const signal of selected) for (const change of signal.changes) if (change.time >= start && change.time <= end) times.add(change.time);
   if (times.size > 4096) throw new Error('CSV exceeds 4096 rows; narrow the time window');

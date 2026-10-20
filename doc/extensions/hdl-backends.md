@@ -1,8 +1,15 @@
+> Legacy native/HTTP adapter reference. Static applications must use
+> [the browser executor](hdl-troubleshooting.md). Browser VHDL-2008 now uses NVC simulation/replay and GHDL synthesis;
+> services are not a fallback for that requirement. The npm distribution now
+> also contains browser Wasm assets; the no-toolchain statement below describes
+> the earlier native-only distribution.
+
 # Real HDL backends
 
 The optional native adapter compiles the author's actual VHDL or Verilog. It
 does not select handwritten circuit models by the top name. Browser and Node
-entries are separate; no compiler binary or toolchain is shipped in npm.
+entries are separate. The browser Wasm toolchain is described in the browser
+guide; this section describes only the legacy native adapter.
 
 | Operation            | VHDL                                     | Verilog / SystemVerilog              |
 | -------------------- | ---------------------------------------- | ------------------------------------ |

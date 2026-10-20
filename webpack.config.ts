@@ -66,6 +66,15 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
       apply(compiler) {
         compiler.hooks.thisCompilation.tap('TikZRuntimeAssets', (compilation) => {
           compilation.hooks.processAssets.tap({ name: 'TikZRuntimeAssets', stage: webpack.Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL }, () => {
+            const hdl = path.join(directory, 'assets', 'hdl');
+            const copyHDL = (folder: string, prefix: string) => {
+              for (const entry of fs.readdirSync(folder, { withFileTypes: true })) {
+                if (entry.isDirectory()) copyHDL(path.join(folder, entry.name), `${prefix}${entry.name}/`);
+                // Preserve pinned third-party bytes, including loaders and notices.
+                else compilation.emitAsset(`${prefix}${entry.name}`, new webpack.sources.RawSource(fs.readFileSync(path.join(folder, entry.name))), { minimized: true });
+              }
+            };
+            copyHDL(hdl, 'hdl/');
             for (const asset of collectTikZAssets()) compilation.emitAsset(asset.name, new webpack.sources.RawSource(fs.readFileSync(asset.file)));
             for (const [packageName, license] of [
               ['citeproc', 'LICENSE'],
