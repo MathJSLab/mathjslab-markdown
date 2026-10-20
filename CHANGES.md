@@ -1,6 +1,6 @@
 # Release notes
 
-## Unreleased — browser HDL
+## 0.7.0 — 2026-10-20
 
 - Add a self-hosted Icarus/YoWASP Worker executor, pinned compiler assets and
   static application integration, with real browser tests and shared replay.
@@ -22,6 +22,11 @@
   the exact source recipe; reject stale proof before publication.
   The exact browser/language profile and app revalidation requirements are in
   doc/hdl-browser-results.md; complete-language compatibility is not claimed.
+
+- Validate the promoted static distribution in Chrome and Edge: 402 package
+  browser cases and 231 application integration cases, including all ten HDL
+  lesson families in Portuguese, English and Spanish. Preserve explicit host
+  authorization, local-only HDL processing and ordinary static hosting.
 
 
 ## 0.6.1
