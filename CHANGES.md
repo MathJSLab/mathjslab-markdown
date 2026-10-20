@@ -1,6 +1,6 @@
 # Release notes
 
-## Unreleased — browser HDL candidate (publication blocked)
+## Unreleased — browser HDL
 
 - Add a self-hosted Icarus/YoWASP Worker executor, pinned compiler assets and
   static application integration, with real browser tests and shared replay.
@@ -16,7 +16,10 @@
   two Windows/MSYS2 roots and cap each module's Wasm heap at 512 MiB.
 - Correct packaged GHDL build paths and complete its six-source smoke suite.
 - Guard normal publication against unresolved HDL source/build gates.
-- Independent GHDL source-build reconstruction remains a release blocker.
+- Reconstruct GHDL from pinned Linux inputs: immutable Ubuntu digest, all 236
+  installed package versions and hashes of all 145 downloaded .deb files.
+  Promote the matching Wasm/libraries and bind their reproduction evidence to
+  the exact source recipe; reject stale proof before publication.
   The exact browser/language profile and app revalidation requirements are in
   doc/hdl-browser-results.md; complete-language compatibility is not claimed.
 

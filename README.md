@@ -120,9 +120,10 @@ Application authorization is explicit in development and static production.
 GHDL now provides real VHDL-2008 synthesis, including tested IEEE.NUMERIC_STD
 sources. NVC now provides VHDL-2008 simulation and interactive replay in Workers.
 NVC and the source-built Icarus port include complete sources and verified matching
-artifacts across independent Windows build roots. GHDL's independent source build
-remains a publication blocker; see
-the [browser report and release blockers](doc/hdl-browser-results.md).
+artifacts across independent Windows build roots. GHDL has matching clean Linux
+reconstructions with an immutable Ubuntu base, a complete package-version lock
+and verified package hashes. See the [browser report](doc/hdl-browser-results.md)
+and [reconstruction workflow](doc/hdl-github-actions.md) for evidence and scope.
 
 HDL and MathJSLab use shared
 [execution sessions and scheduling](doc/execution-scheduling.md), with

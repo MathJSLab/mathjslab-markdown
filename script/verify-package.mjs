@@ -61,6 +61,8 @@ const ghdlBuildInputs = new Set(
     'Dockerfile',
     'build-packages.lock',
     'build-debs.sha256',
+    'sources.lock.json',
+    'reproduction.json',
     'ghdl_synth_test.mjs',
     'pack-libraries.py',
     'grt-stdio.adb',

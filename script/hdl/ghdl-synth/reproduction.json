@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-20",
+  "scope": "Two independent clean compiler/SDK caches in a reconstructed Linux amd64 container pinned by Ubuntu digest, all installed package versions and downloaded .deb SHA-256; same CI host. SDK archive is pinned, not rebuilt from source. Not cross-platform or cross-machine reproducibility.",
+  "ci": {
+    "url": "https://github.com/MathJSLab/mathjslab-markdown/actions/runs/39482133976",
+    "commit": "1d2683aeccd9f45f19452c919dd4589d3910074b"
+  },
+  "sourceInputs": {
+    "toolchain": {
+      "schema": 1,
+      "reproducibleBuildVerified": true,
+      "ghdl": {
+        "repository": "https://github.com/ghdl/ghdl",
+        "commit": "37ad91899ea3f311423eb91e34f42c0ae1948f79",
+        "version": "5.0.1"
+      },
+      "adawebpack": {
+        "version": "24.0.0",
+        "url": "https://github.com/godunko/adawebpack/releases/download/24.0.0/adawebpack-24.0.0.tar.gz",
+        "sha256": "8edaae8b9987a20aec430d750f30033f12f953ce2b6437afb87fbf8cc1063796"
+      },
+      "frontend": {
+        "repository": "https://github.com/UnsignedChad/ghdl-browser",
+        "commit": "e98e5a6c6fd6c48a789705ae9900c6b34b3cb414"
+      },
+      "gccRuntime": {
+        "repository": "https://github.com/gcc-mirror/gcc",
+        "commit": "ed10445fe222d3973ae13eda9bf211f315c5e3f9"
+      },
+      "environment": {
+        "architecture": "linux/amd64",
+        "baseImage": "ubuntu:24.04@sha256:68ee22004a9109b44973313b02ff7b1de250f1de0f5ecb628d73f579aaff33ac",
+        "installedPackages": 236,
+        "downloadedDebs": 145,
+        "packageVersions": "build-packages.lock",
+        "packageIntegrity": "build-debs.sha256",
+        "snapshotServiceRequired": false
+      }
+    },
+    "recipeSHA256": {
+      "Dockerfile": "775a5220d3d1d328b57eb138c62bf0b0ce785e5d9f3ae29ee0d86a60b902b516",
+      "build-packages.lock": "1a826f12f6a6679e4e8eca1fbc75e686641b4ac3a7e0946b4fbfd23ee09598bf",
+      "build-debs.sha256": "4ab8ec90299a257f235e5b6e48d02789c2c7e8a3b386e9b3bfbff0ddc114f609",
+      "build.sh": "44de539d82e550d108f52fa1cfd368b962c605bf24fea8506ea7b16523554480",
+      "build-in-container.sh": "94cec60699f2990ed94d4e89f6cf32f50992713fc03a816aa47170ce4299ae51",
+      "pack-libraries.py": "2170d482db3d30540104b3eb12f10b6eaa38c4e69f90cc9b0ca4921312ca76a0",
+      "blackbox-verilog.patch": "1188c78917ffed8bcf93a6d56ba1c472706fa4282bb2f9d266ca1a3d4d6fdefa",
+      "grt-stdio.patch": "7d273acf0cd155733d8556b8615440c210614f2ada203f8886c191078d39ceb8",
+      "grt-stdio.adb": "96cb409b7ce185713f998f41a52a9eea805e37f92a27a95fe89b337b3f499bcc",
+      "bug.adb": "22fc4df581a44d4f11dc3d061ab5b7e4788e9b047c19fff16a5bd5805eac989a",
+      "synth_api.adb": "46ee123b77de0a7ef5abab437224da35eafd073ccc9190767ecf6e29bda102c2",
+      "synth_api.ads": "bbc9fc2f44c796cfcb9b37991e12a3d5f81cb240fdf909a1bd5cf9d17411d416"
+    }
+  },
+  "containerImageID": "sha256:e806f32da3e7b94985b43ce41c44274f746ffb5031ae505e5004161c51512e8a",
+  "comparison": {
+    "identical": true,
+    "files": [
+      {
+        "name": "ghdl-synth.wasm",
+        "first": "245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e",
+        "second": "245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e",
+        "identical": true
+      },
+      {
+        "name": "libraries.tar.gz",
+        "first": "e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a",
+        "second": "e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a",
+        "identical": true
+      }
+    ],
+    "scope": "Two clean caches in the same recorded Linux container image; not cross-host reproducibility or browser validation."
+  },
+  "builds": [
+    {
+      "artifacts": {
+        "ghdl-synth.wasm": {
+          "bytes": 1931378,
+          "sha256": "245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e"
+        },
+        "libraries.tar.gz": {
+          "bytes": 443586,
+          "sha256": "e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a"
+        }
+      }
+    },
+    {
+      "artifacts": {
+        "ghdl-synth.wasm": {
+          "bytes": 1931378,
+          "sha256": "245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e"
+        },
+        "libraries.tar.gz": {
+          "bytes": 443586,
+          "sha256": "e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a"
+        }
+      }
+    }
+  ],
+  "artifacts": {
+    "ghdl-synth.wasm": {
+      "bytes": 1931378,
+      "sha256": "245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e"
+    },
+    "libraries.tar.gz": {
+      "bytes": 443586,
+      "sha256": "e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a"
+    }
+  }
+}

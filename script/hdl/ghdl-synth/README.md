@@ -90,8 +90,9 @@ then checks successful synthesis and provenance for simple combinational logic,
 syntax and semantic failure diagnostics. These Node smoke tests do not replace `test/hdl-browser/vhdl-synthesis.mjs`,
 which executes the packaged Worker in a real browser on static hosting.
 The first two Linux CI executions reconstructed matching Wasm and passed all
-smoke tests, but detected library timestamp differences (see below). Ubuntu
-packages and the container base still need digest/snapshot pinning.
+smoke tests, but detected library timestamp differences (see below). The current
+recipe pins the base digest, complete package closure and downloaded package
+hashes; see sources.lock.json and reproduction.json for the final executed scope.
 
 ## Runtime contract
 
@@ -149,5 +150,14 @@ archives and passed the six Wasm smoke tests. The corrected Linux recipe then
 passed run `39477964053`: both clean caches, all smoke tests and byte comparison
 of both final artifacts. The Linux library archive SHA-256 is
 `e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a`.
-Container/package input pinning, candidate review and real browser validation
-are still required before any reproducibility flag or packaged asset changes.
+The subsequent pinned runs `39480843148` and `39482133976` reproduced both
+artifacts. The final run verifies all downloaded package hashes before install.
+Its exact candidates are promoted; reproduction.json binds both builds to the
+recipe and sources.lock.json records the compiler, SDK and Linux inputs.
+
+The scope is two clean compiler/SDK caches on the same CI host, using the pinned
+SDK archive; rebuilding that SDK from source or proving cross-platform byte
+identity is not claimed. The package release guard checks all twelve recipe
+input hashes and both artifact receipts before allowing publication checks to
+proceed. The compiler source build does not authorize visitor execution; that
+still requires the trusted application's explicit browser executor policy.

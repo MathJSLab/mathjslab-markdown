@@ -69,6 +69,7 @@
     "doc/hdl-github-actions.md",
     "doc/extensions/hdl-troubleshooting.md",
     "doc/integration/MarkdownHDLConfiguration.ts",
+    "doc/integration/mathjslab-app-empty-trace.patch",
     "CHANGES.md",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",

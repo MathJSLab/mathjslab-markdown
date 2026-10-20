@@ -124,5 +124,9 @@ The source-built Icarus modules include complete sources, SDK pins and two-root
 Windows reconstruction evidence under `script/hdl/icarus-browser/`. Each module
 has a 512 MiB Wasm heap ceiling. Real-valued VCD variables remain unsupported by
 the digital importer, although real mathematical functions can execute.
-See the report for the remaining GHDL independent-source-build release blocker.
+GHDL's pinned Linux build and promoted assets now have independent clean-cache
+reconstruction evidence in `script/hdl/ghdl-synth/reproduction.json`. The release
+check verifies the source recipe, package pins, both builds and asset hashes;
+matching binaries alone cannot bypass these checks. See the browser report for
+the tested profile and integrated-app validation status.
 No publication is claimed by this work.

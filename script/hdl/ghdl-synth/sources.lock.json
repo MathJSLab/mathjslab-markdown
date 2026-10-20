@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "reproducibleBuildVerified": true,
+  "ghdl": {
+    "repository": "https://github.com/ghdl/ghdl",
+    "commit": "37ad91899ea3f311423eb91e34f42c0ae1948f79",
+    "version": "5.0.1"
+  },
+  "adawebpack": {
+    "version": "24.0.0",
+    "url": "https://github.com/godunko/adawebpack/releases/download/24.0.0/adawebpack-24.0.0.tar.gz",
+    "sha256": "8edaae8b9987a20aec430d750f30033f12f953ce2b6437afb87fbf8cc1063796"
+  },
+  "frontend": {
+    "repository": "https://github.com/UnsignedChad/ghdl-browser",
+    "commit": "e98e5a6c6fd6c48a789705ae9900c6b34b3cb414"
+  },
+  "gccRuntime": {
+    "repository": "https://github.com/gcc-mirror/gcc",
+    "commit": "ed10445fe222d3973ae13eda9bf211f315c5e3f9"
+  },
+  "environment": {
+    "architecture": "linux/amd64",
+    "baseImage": "ubuntu:24.04@sha256:68ee22004a9109b44973313b02ff7b1de250f1de0f5ecb628d73f579aaff33ac",
+    "installedPackages": 236,
+    "downloadedDebs": 145,
+    "packageVersions": "build-packages.lock",
+    "packageIntegrity": "build-debs.sha256",
+    "snapshotServiceRequired": false
+  }
+}

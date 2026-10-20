@@ -9,11 +9,66 @@ Complete-language support and cross-platform reproduction are not claimed.
 NVC now has byte-identical results from two independent Windows build roots;
 the source-built Icarus port now has matching artifacts across two Windows build
 roots and complete corresponding sources. The Linux GHDL reconstruction now
-passes byte comparison in Actions run 39477964053; its publication gate still
-requires container/package pinning and candidate promotion. Historical
+passes byte comparison with pinned inputs in Actions run 39482133976; its
+validated assets are promoted and source/reproduction release gates pass. Historical
 investigations and earlier results below do not validate later distributions.
 
-## Current frozen distribution validation (2026-10-20)
+## Promoted pinned GHDL distribution validation (2026-10-20)
+
+The exact GHDL candidates from pinned Linux run `39482133976` are now promoted.
+The source/reproduction release gate passes for GHDL, NVC and Icarus. The GHDL
+Wasm remains `245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`;
+the canonical library archive is
+`e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a`.
+The complete deployed HDL lock SHA-256 is
+`5084bd775a957873e9177ec2ddc52cd54ce8c01bc0210629627b85776dd23b9e`.
+
+After rebuilding production, the full real-browser matrix passed again:
+**201 cases in Chrome 155.0.8059.85 and 201 in Edge 155.0.4283.62**. Each browser
+passed 4 novel Verilog runtime probes, 72 Verilog lesson/UI cases, 30 VHDL
+runtime contracts, 72 VHDL lesson/UI cases and 23 GHDL synthesis cases. Coverage
+includes all ten requested lesson families in pt/en/es, sources outside those
+examples, numeric_std, real sequential state and delta/wait behavior, 0/1/x/z,
+clocks, controls/history/checks, inspection/exports and cancellation/disposal.
+
+All **5,735 requests** were same-origin GET without bodies or query strings;
+there were zero page errors. All **32 HDL files** were hash-frozen throughout
+the ten sequential runs. No execution backend, CDN, COOP/COEP or cross-origin
+isolation was used. The VHDL counter screenshot was visually inspected.
+No browser/HDL run overlapped a package distribution rebuild. Generated evidence
+is under `.hdl-research/pinned-ghdl-final/` and `test-results/hdl-browser/`.
+
+Lint, typecheck, 588 unit tests, 21 distribution tests, 7 release/comparison
+tests and 4 catalog-metadata tests passed. Package verification passed with
+880 files, including the compiler source/build evidence and the app test patch.
+Unit/recorded executor tests are complementary, not substitutes for the real
+browser matrix above. No package publication or deploy occurred.
+
+### Current app integration against the promoted distribution
+
+The current mathjslab-app working tree was copied into an isolated workspace,
+reusing its installed dependencies (registry mathjslab 2.9.0 and the local
+Markdown dependency). Its runtime/configuration were preserved. Sequential
+validation passed **77 cases in development Chrome, 77 in production Chrome
+and 77 in production Edge: 231 cases**, with zero page errors. Browser versions
+were the same as in the package matrix above. Both app builds copied all 32 HDL
+files byte for byte. Production served static files only; no COOP/COEP or
+cross-origin isolation was required.
+
+All 4,282 recorded app requests were GET without request bodies. External
+requests were limited to README images (84 per run); HDL assets and processing
+remained local, and no HDL sources were uploaded. The signal-free testbench
+retained its verified 1 ns endpoint and empty signal list.
+
+One obsolete assertion in the copied integration test expected that valid
+signal-free recording to fail. Only that copied test was corrected; the
+original app checkout remains unchanged. The checked patch is distributed as
+[mathjslab-app-empty-trace.patch](integration/mathjslab-app-empty-trace.patch)
+for application in the app workspace with authorization. This test-only change
+does not change the executor API or application configuration. Evidence is in
+`.hdl-research/pinned-ghdl-final/app-summary.json` and the isolated app reports.
+
+## Earlier frozen distribution validation (2026-10-20)
 
 The [current VHDL report](hdl-vhdl-progress.md#validation-of-this-candidate)
 records the completed static-browser matrix after the source-built Icarus

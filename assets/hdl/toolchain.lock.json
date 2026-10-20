@@ -94,19 +94,19 @@
     },
     "ghdl/frontend.mjs": {
       "bytes": 11475,
-      "sha256": "0c88f7556842bd2d86fe110cdc4c08e311ee6b4193d7d06cb895b9288e688561"
+      "sha256": "880a11f3428ad498893218b549aefa89778a445e99c02ee92de219ca2c65a668"
     },
     "ghdl/ghdl-synth.wasm": {
       "bytes": 1931378,
       "sha256": "245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e"
     },
     "ghdl/libraries.tar.gz": {
-      "bytes": 451833,
-      "sha256": "2cdbaa338e47ad5577549c4eb343891b9de4be1677341eda26ef34802db01da2"
+      "bytes": 443586,
+      "sha256": "e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a"
     },
     "ghdl/NOTICE.md": {
-      "bytes": 1976,
-      "sha256": "2c9365bd2bf331b8fab4f6d1500149fabdab03125d09980de099475c12ca0bd2"
+      "bytes": 2465,
+      "sha256": "c90ca04733e9f0ace48d6097a81a291e937fafc368d5174b55b4957876de967e"
     },
     "ghdl/resources.mjs": {
       "bytes": 2692,
@@ -146,8 +146,8 @@
     }
   },
   "ghdl": {
-    "repository": "https://github.com/cachanova/synth-explorer",
-    "commit": "d4dab3def346cb9fdac5bc171d801bd091df72e1",
+    "repository": "https://github.com/ghdl/ghdl",
+    "commit": "37ad91899ea3f311423eb91e34f42c0ae1948f79",
     "upstream": "ghdl/ghdl@37ad91899ea3f311423eb91e34f42c0ae1948f79",
     "version": "5.0.1",
     "standard": "08",
@@ -155,7 +155,14 @@
       "synthesize"
     ],
     "license": "GPL-2.0-or-later (compiler); Apache-2.0 (host bindings)",
-    "reproducibleBuildVerified": false
+    "reproducibleBuildVerified": true,
+    "hostBindings": {
+      "repository": "https://github.com/cachanova/synth-explorer",
+      "commit": "d4dab3def346cb9fdac5bc171d801bd091df72e1"
+    },
+    "source": "script/hdl/ghdl-synth/sources.lock.json",
+    "reproductionEvidence": "script/hdl/ghdl-synth/reproduction.json",
+    "reproductionScope": "Two independent clean compiler/SDK caches in a reconstructed Linux amd64 container pinned by Ubuntu digest, all installed package versions and downloaded .deb SHA-256; same CI host. SDK archive is pinned, not rebuilt from source. Not cross-platform or cross-machine reproducibility."
   },
   "nvc": {
     "version": "1.22.0",

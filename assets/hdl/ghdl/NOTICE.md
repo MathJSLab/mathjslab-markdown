@@ -24,10 +24,16 @@ This recipe is for package
 developers, never a service required by visitors. The full upstream sources are
 available at the pinned repositories above.
 
-We obtained the published upstream assets and verified their SHA256SUMS. An
-independent rebuild has not been performed here: Docker is absent and WSL
-reports WSL_E_WSL_OPTIONAL_COMPONENT_REQUIRED on this Windows host. Do not
-equate the asset hashes with verified source-to-binary reproducibility.
+The packaged compiler and libraries are now reconstructed from that recipe in
+Linux/amd64 GitHub Actions. Ubuntu is pinned by OCI digest, all 236 installed
+package versions are locked, and all 145 downloaded .deb files are verified by
+SHA-256 before installation. Two independent clean compiler/SDK caches produced
+identical Wasm and library bytes. The libraries retain their original sources
+and notices; catalog timestamps are canonicalized with dependency ordering
+preserved. See script/hdl/ghdl-synth/sources.lock.json and reproduction.json.
+This verifies that executed scope on one CI host, not a cross-platform build or
+a source rebuild of the pinned AdaWebPack SDK itself. The build environment is
+developer tooling; visitors only fetch static files and execute Wasm in Workers.
 
 This frontend exposes synthesis only, VHDL-2008. It does not contain a GRT
 simulation scheduler. The separate NVC module provides VHDL simulation/replay;

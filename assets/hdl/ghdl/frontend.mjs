@@ -6,7 +6,7 @@ const workDirectory = '/work';
 const decoder = new TextDecoder('latin1');
 const encoder = new TextEncoder();
 const loadModule = async () => WebAssembly.compile(await verifiedBytes('ghdl-synth.wasm', '245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e'));
-const loadLibraries = async () => unpackLibraries(await verifiedBytes('libraries.tar.gz', '2cdbaa338e47ad5577549c4eb343891b9de4be1677341eda26ef34802db01da2'));
+const loadLibraries = async () => unpackLibraries(await verifiedBytes('libraries.tar.gz', 'e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a'));
 export async function synthesizeVHDL(request) {
   const [module, libraries] = await Promise.all([loadModule(), loadLibraries()]);
   const fs = new VirtualFileSystem();

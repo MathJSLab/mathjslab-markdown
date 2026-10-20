@@ -80,9 +80,11 @@ credencial integra os assets ou é exigida do visitante.
   cancelamento forçado ou limite do runner pode impedir a finalização do
   upload.
 
-Os dois builds usam a mesma imagem registrada. A base Ubuntu e os pacotes da
-receita ainda precisam de fixação por digest/snapshot para reconstrução futura
-equivalente. A primeira comparação detectou diferenças exclusivamente nos
+Os dois builds usam a mesma imagem registrada. A receita final fixa a base
+Ubuntu Linux/amd64 por digest, todas as 236 versões instaladas e os hashes dos
+145 arquivos `.deb` baixados, verificados antes da instalação. Não depende do
+serviço de snapshots; versões indisponíveis ou hashes diferentes fazem o build
+falhar, sem seleção automática de substitutos. A primeira comparação detectou diferenças exclusivamente nos
 timestamps internos de seis catálogos `.cf`, embora ambos os Wasm fossem
 idênticos e os doze smoke tests passassem. A receita agora normaliza esses
 timestamps preservando sua ordem por versão da linguagem e o timestamp especial
@@ -98,19 +100,40 @@ automática de runner maior. Os caches temporários de fonte/build não são
 enviados como artefatos; fontes e receita são identificadas pelos commits e
 pelo hash do arquivo AdaWebPack verificado durante o build.
 
-Mesmo uma comparação idêntica **não aprova publicação**: ainda é preciso fixar
-os insumos, investigar a semântica das bibliotecas, atualizar candidatos
-somente após revisão e repetir os testes reais de navegador e integração do
-app. O workflow não modifica `assets/hdl/`, o lock, nem a flag de reprodução.
+Mesmo uma comparação idêntica **não publica o pacote**: a promoção exige revisão
+e testes reais de navegador e integração do app. O workflow não modifica
+`assets/hdl/`, o lock, nem a flag de reprodução. A evidência promovida fica em
+`script/hdl/ghdl-synth/reproduction.json`, vinculada aos hashes de doze arquivos
+da receita, aos dois builds e aos assets. `verify:hdl:release` rejeita evidência
+desatualizada, mesmo que alguém altere isoladamente a flag de reprodução.
 
 ## Continuidade
 
 O contexto técnico permanece em `doc/hdl-vhdl-progress.md`,
 `doc/hdl-browser-results.md`, `script/hdl/ghdl-synth/README.md` e neste
 documento. Os 402 casos de navegador anteriores pertencem à distribuição então
-validada; não validam automaticamente artefatos novos. A pendência imediata é
-obter o primeiro resultado Linux, corrigir a receita com evidência e concluir a
-reconstrução independente GHDL, preservando NVC e Icarus funcionais.
+validada; não validam automaticamente artefatos novos. O build Linux final
+fixado foi comprovado e promovido; as validações da distribuição atual e da
+integração estão registradas nos relatórios acima. NVC e Icarus mantêm seus
+mesmos bytes e contratos.
+
+## Receita final fixada e promoção
+
+A execução [39482133976](https://github.com/MathJSLab/mathjslab-markdown/actions/runs/39482133976),
+commit `1d2683aeccd9f45f19452c919dd4589d3910074b`, passou com os hashes dos
+pacotes obrigatórios antes da instalação, duas reconstruções independentes,
+quatro testes de metadados, sete testes do comparador/verificador e seis smoke
+tests por candidato. A execução anterior `39480843148` já havia fixado todas
+as versões e produzido o manifesto dos `.deb`; o resultado final confirma seus
+hashes e reproduz os mesmos assets.
+
+Os candidatos exatos foram promovidos para `assets/hdl/ghdl/`, com atualização
+do host binding, integridade, avisos e evidência de origem. A flag GHDL agora
+está comprovada no escopo declarado: duas árvores/cache limpas no mesmo host CI,
+com SDK e ambiente fixados. Não afirma reconstrução do SDK a partir dos seus
+fontes nem reprodução em outras arquiteturas. A execução HDL do visitante
+continua inteiramente em Workers no navegador, com os arquivos hospedados pela
+própria aplicação.
 
 ## Diagnóstico das primeiras falhas (2026-10-20)
 
@@ -152,7 +175,8 @@ Linux têm SHA-256
 conteúdo é idêntico ao candidato normalizado localmente; a ordem de entradas e
 permissões de scripts no tar diferem entre a preparação Windows e o Linux. A
 correção da comparação Linux está confirmada; fixação dos insumos e promoção
-dos candidatos continuam pendentes.
+dos candidatos ainda estavam pendentes naquela etapa. Ambas foram concluídas
+na receita final fixada e promovida descrita acima.
 
 O par exato baixado da execução aprovada também foi validado depois, com o
 build concluído e os arquivos congelados: **23 casos no Chrome e 23 no Edge**,
@@ -166,6 +190,19 @@ A verificação de empacotamento passou com 875 arquivos, incluindo o normalizad
 e este guia, excluindo caches Python e a orquestração de CI.
 
 ## Testar candidatos sem substituir a distribuição
+
+Na integração do app, o teste antigo de VCD sem sinais ainda exigia erro. O
+pacote já produz um VCD vazio válido com o tempo final real. O patch
+`doc/integration/mathjslab-app-empty-trace.patch` atualiza somente essa expectativa
+para exigir sucesso, nenhum sinal inventado e o fim real em 1 ns (o limite
+solicitado de 3 ns não força a execução a continuar sem eventos). Foi validado
+na cópia isolada do app. A aplicação no checkout original depende da permissão
+de escrita daquele projeto. Confira antes de aplicar, a partir do app:
+
+```text
+git apply --check --ignore-space-change ../mathjslab-markdown/doc/integration/mathjslab-app-empty-trace.patch
+git apply --ignore-space-change ../mathjslab-markdown/doc/integration/mathjslab-app-empty-trace.patch
+```
 
 O servidor estático dos testes aceita `HDL_GHDL_CANDIDATE`, apontando para um
 diretório dentro do workspace com os dois arquivos candidatos. Prepare primeiro

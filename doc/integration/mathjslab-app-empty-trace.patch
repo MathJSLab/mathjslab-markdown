@@ -1,0 +1,19 @@
+--- a/script/test-hdl-browser.mjs
++++ b/script/test-hdl-browser.mjs
+@@ -418,9 +418,13 @@
+     nvcBatch = nvc.locator('[data-markdown-extension=hdl]');
+     await expect(nvcBatch.locator(':scope > .hdl-exports [data-hdl-export=json]')).toBeEnabled({ timeout: 60_000 });
+     batchResult = JSON.parse((await download(nvcBatch.locator(':scope > .hdl-exports [data-hdl-export=json]'))).text).result;
+-    expect(batchResult.status).toBe('error');
+-    await expect(nvcBatch.locator('[role=alert]')).toBeVisible();
+-    results.push({ name: 'known NVC signal-free/empty-trace limitation is reported as an error, without substitute recording', passed: true, result: batchResult });
++    expect(batchResult.status).toBe('success');
++    expect(batchResult.logs).toContain('empty app trace');
++    const emptyTrace = parseVCD(batchResult.vcd);
++    expect(emptyTrace.signals).toEqual([]);
++    expect(emptyTrace.endTime * emptyTrace.timescale.magnitude * { fs: 1e-6, ps: 1e-3, ns: 1, us: 1e3, ms: 1e6, s: 1e9 }[emptyTrace.timescale.unit]).toBeCloseTo(1);
++    await expect(nvcBatch.locator('[role=alert]')).toHaveCount(0);
++    results.push({ name: 'real NVC signal-free VCD preserves its verified 1 ns endpoint without invented signals', passed: true, result: batchResult });
+     const buffer = {
+         top: 'app_buffer',
+         standard: '08',

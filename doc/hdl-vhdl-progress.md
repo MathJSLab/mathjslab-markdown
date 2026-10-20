@@ -7,7 +7,26 @@ No synthesis-to-simulation substitution, circuit recognizer, service or native
 visitor dependency is used. Module Workers, MEMFS and ordinary static assets
 work without SharedArrayBuffer or COOP/COEP.
 
-## GHDL Linux reconstruction follow-up — 2026-10-20
+## Pinned Linux inputs and promotion — 2026-10-20
+
+Run [39482133976](https://github.com/MathJSLab/mathjslab-markdown/actions/runs/39482133976)
+passed with the Ubuntu Linux/amd64 base pinned by OCI digest, the complete
+236-package version closure, and SHA-256 verification of all 145 downloaded
+.deb files before installation. Two independent clean compiler/SDK caches
+produced the same Wasm and library bytes. Exact candidates were promoted to
+assets/hdl/ghdl/, with updated integrity bindings, notices and toolchain lock.
+The compiler remains GHDL 5.0.1; this changes provenance/metadata, not the HDL API.
+
+The distributed sources.lock.json and reproduction.json bind the receipt to
+all twelve recipe inputs and both artifacts. `verify:hdl:release` now passes
+for GHDL, NVC and Icarus; changed source, package pins or artifacts invalidate
+the GHDL receipt. The executed scope is documented without claiming a source
+rebuild of the pinned SDK or cross-platform reproduction. Lint, typecheck,
+588 unit tests, 21 distribution tests and package verification (880 files)
+passed. Post-promotion browser/app results are recorded in the browser report.
+There was no package publication or deploy.
+
+## Earlier GHDL Linux reconstruction follow-up — 2026-10-20
 
 GitHub Actions run
 [39477964053](https://github.com/MathJSLab/mathjslab-markdown/actions/runs/39477964053)
@@ -33,7 +52,7 @@ errors. The reports record the actual Linux archive SHA-256
 `e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a` and Wasm
 SHA-256 `245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`.
 
-The publication gate remains closed: pin the container and package inputs,
+At that earlier stage, the publication gate remained closed: pin the container and package inputs,
 review/promote validated candidate assets and repeat the required distribution
 and app checks. No existing packaged GHDL asset, integrity pin or release flag
 was changed for this investigation. No package publication or deploy occurred.
@@ -251,7 +270,7 @@ transformation in both development and production, then validate the app again.
 The app's existing recursive helper also copies `icarus/RUNTIME-LICENSES.txt`;
 no new executor option, policy or API is required for the source-built Icarus.
 
-## Remaining publication gate and app handoff
+## Historical publication gate and app handoff before the pinned Linux build
 
 `npm run verify:hdl:release` now fails only for GHDL's independent source-build
 reconstruction. GHDL already synthesizes the tested sources in the browser;
