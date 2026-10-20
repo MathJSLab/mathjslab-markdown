@@ -7,6 +7,37 @@ No synthesis-to-simulation substitution, circuit recognizer, service or native
 visitor dependency is used. Module Workers, MEMFS and ordinary static assets
 work without SharedArrayBuffer or COOP/COEP.
 
+## GHDL Linux reconstruction follow-up — 2026-10-20
+
+GitHub Actions run
+[39477964053](https://github.com/MathJSLab/mathjslab-markdown/actions/runs/39477964053)
+passed at commit `7d6f9e50e48b4275196da29e0c18d93a1893ae03`: two independent
+clean Linux caches, four library-metadata tests, three comparison tests, all
+six Wasm synthesis smoke tests per build, and byte identity for the Wasm and
+library archives. The first two runs had compiled and passed smoke tests but
+correctly rejected library archives with different analysis timestamps.
+`pack-libraries.py` now preserves chronological ordering/equalities per VHDL
+edition and keeps catalogs newer than GHDL's implicit std.standard timestamp.
+See [the CI report and commands](hdl-github-actions.md) for evidence and scope.
+
+The earlier CI candidates, normalized by that packer without replacing the
+production distribution, also passed the 23-case GHDL browser suite in Chrome
+155.0.8059.85 and Edge 155.0.4283.62, sequentially. All 698 recorded requests
+were same-origin GET without bodies/queries; neither run had page errors. This
+is synthesis candidate validation, not a new full simulation/app matrix.
+
+After the Linux build completed, its exact downloaded candidate was frozen and
+the same browser suites were rerun sequentially: **23 passed in Chrome and 23
+in Edge**, again 698 same-origin GET requests with no bodies, queries or page
+errors. The reports record the actual Linux archive SHA-256
+`e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a` and Wasm
+SHA-256 `245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`.
+
+The publication gate remains closed: pin the container and package inputs,
+review/promote validated candidate assets and repeat the required distribution
+and app checks. No existing packaged GHDL asset, integrity pin or release flag
+was changed for this investigation. No package publication or deploy occurred.
+
 ## Prepublication hardening — 2026-10-19/20
 
 The NVC candidate was rebuilt in two independent Windows/MSYS2 directories.

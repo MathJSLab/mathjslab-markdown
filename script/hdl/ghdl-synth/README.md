@@ -60,7 +60,7 @@ Override the cache or output directory with `GHDL_WASM_CACHE_DIR` and
 The linker exports only memory allocation, binder initialization, and the
 three synthesis API functions. Undefined host functions are a reviewed set of
 filesystem, stdio, and math imports implemented by
-`web/src/workers/ghdl.worker.ts`.
+`assets/hdl/ghdl/frontend.mjs`.
 
 ## Smoke tests
 
@@ -78,8 +78,9 @@ then checks successful synthesis and provenance for simple combinational logic,
 `ieee.numeric_std`, a generic counter, and an FSM. It also verifies stable
 syntax and semantic failure diagnostics. These Node smoke tests do not replace `test/hdl-browser/vhdl-synthesis.mjs`,
 which executes the packaged Worker in a real browser on static hosting.
-The Docker recipe has not yet been independently reconstructed here; its
-Ubuntu packages and container base are not pinned by digest/snapshot.
+The first two Linux CI executions reconstructed matching Wasm and passed all
+smoke tests, but detected library timestamp differences (see below). Ubuntu
+packages and the container base still need digest/snapshot pinning.
 
 ## Runtime contract
 
@@ -133,6 +134,9 @@ unchanged. The original build tree is not modified; a metadata report records
 the original and normalized catalog hashes beside each candidate archive.
 
 Applying this packer locally to the two actual CI candidates produced identical
-archives and passed the six Wasm smoke tests. The corrected Linux recipe still
-requires its own complete CI run, container/package input pinning, and real
-browser validation before any reproducibility flag or packaged asset changes.
+archives and passed the six Wasm smoke tests. The corrected Linux recipe then
+passed run `39477964053`: both clean caches, all smoke tests and byte comparison
+of both final artifacts. The Linux library archive SHA-256 is
+`e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a`.
+Container/package input pinning, candidate review and real browser validation
+are still required before any reproducibility flag or packaged asset changes.

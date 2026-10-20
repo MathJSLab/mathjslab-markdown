@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# CI orchestration belongs to the Git checkout, not the compiler source bundle.
+ci.sh
+compare-builds.mjs

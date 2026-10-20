@@ -4,6 +4,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 export const serveStatic = async () => {
   const root = path.resolve(fileURLToPath(new URL('../../', import.meta.url)));
+  const candidate = process.env.HDL_GHDL_CANDIDATE ? path.resolve(root, process.env.HDL_GHDL_CANDIDATE) : null;
+  if (candidate && !candidate.startsWith(root + path.sep)) throw new Error('GHDL candidate must be inside the workspace');
+  const candidateFiles = new Set(['frontend.mjs', 'ghdl-synth.wasm', 'libraries.tar.gz']);
   const requests = [];
   const server = createServer(async (request, response) => {
     requests.push({ method: request.method, url: request.url });
@@ -13,7 +16,8 @@ export const serveStatic = async () => {
     }
     try {
       const name = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-      const filename = path.resolve(root, '.' + name);
+      const candidateName = name.startsWith('/dist/browser/hdl/ghdl/') ? name.slice('/dist/browser/hdl/ghdl/'.length) : '';
+      const filename = candidate && candidateFiles.has(candidateName) ? path.join(candidate, candidateName) : path.resolve(root, '.' + name);
       if (!filename.startsWith(root + path.sep)) throw new Error('Outside root');
       const data = await readFile(filename);
       response.setHeader(

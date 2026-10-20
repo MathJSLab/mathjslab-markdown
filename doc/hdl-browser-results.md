@@ -8,8 +8,9 @@ No remote compiler, local execution service or native fallback is used.
 Complete-language support and cross-platform reproduction are not claimed.
 NVC now has byte-identical results from two independent Windows build roots;
 the source-built Icarus port now has matching artifacts across two Windows build
-roots and complete corresponding sources. GHDL's independent source-build gate
-remains unresolved. Historical
+roots and complete corresponding sources. The Linux GHDL reconstruction now
+passes byte comparison in Actions run 39477964053; its publication gate still
+requires container/package pinning and candidate promotion. Historical
 investigations and earlier results below do not validate later distributions.
 
 ## Current frozen distribution validation (2026-10-20)

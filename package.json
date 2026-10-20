@@ -66,6 +66,7 @@
     "script/hdl/icarus-browser/",
     "doc/hdl-vhdl-progress.md",
     "doc/hdl-browser-results.md",
+    "doc/hdl-github-actions.md",
     "doc/extensions/hdl-troubleshooting.md",
     "doc/integration/MarkdownHDLConfiguration.ts",
     "CHANGES.md",

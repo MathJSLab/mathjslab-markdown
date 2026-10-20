@@ -1,12 +1,26 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 import { chromium } from 'playwright-core';
 import { serveStatic } from './static-server.mjs';
 
 const server = await serveStatic();
 const executablePath = process.env.HDL_BROWSER ?? 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const browserName = path.basename(executablePath, '.exe');
+const reportTag = process.env.HDL_GHDL_CANDIDATE ? '-candidate' : '';
+const candidateHashes = process.env.HDL_GHDL_CANDIDATE
+  ? Object.fromEntries(
+      await Promise.all(
+        ['frontend.mjs', 'ghdl-synth.wasm', 'libraries.tar.gz'].map(async (name) => [
+          name,
+          createHash('sha256')
+            .update(await readFile(path.resolve(process.env.HDL_GHDL_CANDIDATE, name)))
+            .digest('hex'),
+        ]),
+      ),
+    )
+  : null;
 const browser = await chromium.launch({ executablePath, headless: true });
 const page = await browser.newPage();
 const network = [],
@@ -171,7 +185,10 @@ try {
   console.log('VHDL synthesis:', browser.version(), results.length, 'passed');
 } finally {
   await mkdir('test-results/hdl-browser', { recursive: true });
-  await writeFile(`test-results/hdl-browser/vhdl-synthesis-${browserName}.json`, JSON.stringify({ browser: browser.version(), results, errors, network }, null, 2));
+  await writeFile(
+    `test-results/hdl-browser/vhdl-synthesis-${browserName}${reportTag}.json`,
+    JSON.stringify({ browser: browser.version(), candidate: process.env.HDL_GHDL_CANDIDATE ?? null, candidateHashes, results, errors, network }, null, 2),
+  );
   await browser.close();
   await server.close();
 }
