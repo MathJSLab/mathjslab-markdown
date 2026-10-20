@@ -17,3 +17,4 @@ script/build/
 .codex/
 .hdl-research/
 .cache/
+__pycache__/

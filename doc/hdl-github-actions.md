@@ -78,9 +78,13 @@ credencial integra os assets ou é exigida do visitante.
 
 Os dois builds usam a mesma imagem registrada. A base Ubuntu e os pacotes da
 receita ainda precisam de fixação por digest/snapshot para reconstrução futura
-equivalente. Os timestamps internos dos catálogos `.cf` também podem provocar
-divergência legítima na comparação atual. O workflow falha nessa situação e
-preserva os candidatos; não transforma divergência em aprovação. Falhas antes
+equivalente. A primeira comparação detectou diferenças exclusivamente nos
+timestamps internos de seis catálogos `.cf`, embora ambos os Wasm fossem
+idênticos e os doze smoke tests passassem. A receita agora normaliza esses
+timestamps preservando sua ordem por versão da linguagem e o timestamp
+especial de `std.standard`; `library-metadata.json` registra os hashes originais
+e normalizados. Qualquer diferença restante continua fazendo o workflow falhar;
+não se transforma divergência em aprovação. Falhas antes
 de gerar ambos os candidatos também não comprovam reprodução.
 
 O primeiro job é uma investigação real da receita, não uma promessa de sucesso.

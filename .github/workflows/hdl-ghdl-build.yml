@@ -8,6 +8,7 @@ on:
     paths:
       - .github/workflows/hdl-ghdl-build.yml
       - script/hdl/ghdl-synth/**
+      - test/hdl-ci/**
 
 permissions:
   contents: read

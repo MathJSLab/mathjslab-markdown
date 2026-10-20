@@ -113,10 +113,26 @@ a package or changes the application's copy automatically.
 
 ## Remaining reproduction evidence
 
-The packaged library catalogs contain analysis timestamps inside `.cf` files,
-for example `20260719060530.979` in ieee/v08/ieee-obj08.cf. Normalizing tar entry
-mtimes alone cannot make these contents reproducible. A clean Linux rebuild
-must account for these metadata fields, pin container/package inputs and compare
-both Wasm and library bytes from independent caches before changing the
-reproducibility flag. The corrected six-case smoke suite passed against the
-packaged Wasm in Node on 2026-10-19; this is not a Docker rebuild or browser proof.
+The first two Linux CI runs on 2026-10-20 each completed both clean builds and
+all six smoke tests per candidate. The Wasm matched exactly
+(`245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`),
+but byte comparison correctly failed for the libraries archive. Inspection of
+run `39474875268` showed differences only in analysis timestamps in the six
+std/ieee catalogs; all source files and other catalog fields were identical.
+
+`pack-libraries.py` now canonicalizes timestamps by chronological rank **within
+each independent language edition**, preserving strict order and equalities
+across that edition's std/ieee catalogs. Parallel builds can interleave v87/v93
+analysis differently, so their unrelated timestamps must not affect v08 ranks.
+The canonical epoch is 2010-01-01, after the implicit `std.standard` timestamp
+`20020601000000.000` in pinned GHDL's `src/vhdl/vhdl-std_package.adb`.
+GHDL's `Vhdl.Sem_Lib.Check_Obsolete_Dependence` uses strict timestamp comparison:
+replacing every timestamp with a constant or choosing an earlier epoch would
+be incorrect. Checksums, source locations, unit dates and source bytes remain
+unchanged. The original build tree is not modified; a metadata report records
+the original and normalized catalog hashes beside each candidate archive.
+
+Applying this packer locally to the two actual CI candidates produced identical
+archives and passed the six Wasm smoke tests. The corrected Linux recipe still
+requires its own complete CI run, container/package input pinning, and real
+browser validation before any reproducibility flag or packaged asset changes.

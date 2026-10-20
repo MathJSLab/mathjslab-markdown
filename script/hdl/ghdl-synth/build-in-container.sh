@@ -227,9 +227,8 @@ clang-16 --target=wasm32 -nostdlib \
   -o "$build/ghdl-synth.unstripped.wasm"
 
 llvm-strip-16 --strip-all -o "$output/ghdl-synth.wasm" "$build/ghdl-synth.unstripped.wasm"
-tar --create --gzip --file "$output/libraries.tar.gz" \
-  --sort=name --mtime='@0' --owner=0 --group=0 --numeric-owner \
-  --directory "$ghdl_native/lib/ghdl" .
+python3 "$repo/script/hdl/ghdl-synth/pack-libraries.py" \
+  "$ghdl_native/lib/ghdl" "$output/libraries.tar.gz"
 (
   cd "$output"
   sha256sum ghdl-synth.wasm libraries.tar.gz > SHA256SUMS

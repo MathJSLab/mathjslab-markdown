@@ -17,6 +17,8 @@ trap 'status=$?; printf "%s\n" "$status" > "$evidence/exit-code.txt"; df -h > "$
 git rev-parse HEAD > "$evidence/commit.txt"
 uname -a > "$evidence/host.txt"
 node --version > "$evidence/node-version.txt"
+python3 -m unittest discover -s test/hdl-ci -p '*_test.py'
+node --test test/hdl-ci/*.test.mjs
 docker version > "$evidence/docker-version.txt"
 df -h > "$evidence/disk-initial.txt"
 image=mathjslab-ghdl-ci:local
@@ -24,7 +26,7 @@ docker build --tag "$image" "$script_dir"
 # Both builds use this exact image. Record its identity and every installed package.
 docker image inspect "$image" > "$evidence/container-image.json"
 docker run --rm "$image" dpkg-query -W > "$evidence/container-packages.txt"
-sha256sum "$script_dir/Dockerfile" "$script_dir/build-in-container.sh" > "$evidence/recipe-sha256.txt"
+sha256sum "$script_dir/Dockerfile" "$script_dir/build-in-container.sh" "$script_dir/pack-libraries.py" > "$evidence/recipe-sha256.txt"
 
 for attempt in 1 2; do
   cache="$repo_dir/.cache/ghdl-ci-$attempt"
@@ -48,6 +50,6 @@ for attempt in 1 2; do
   df -h > "$evidence/disk-after-$attempt.txt"
 done
 
-# Byte identity is evidence, not an assumption. In particular, .cf timestamps
-# may still differ. Keep both outputs and return failure when they do.
+# Byte identity is evidence, not an assumption. Preserve both outputs and fail
+# on any difference, including unexpected catalog ordering or contents.
 node "$script_dir/compare-builds.mjs" "$evidence/build-1" "$evidence/build-2" "$evidence/comparison.json"
