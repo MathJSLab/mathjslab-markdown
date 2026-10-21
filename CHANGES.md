@@ -1,5 +1,10 @@
 # Release notes
 
+## 0.7.1 — 2026-10-20
+
+- Reissue the validated 0.7.0 release following delayed registry availability.
+  No runtime, compiler asset, dependency or public API changes.
+
 ## 0.7.0 — 2026-10-20
 
 - Add a self-hosted Icarus/YoWASP Worker executor, pinned compiler assets and
