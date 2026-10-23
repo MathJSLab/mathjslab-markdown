@@ -17,6 +17,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: markdown-release-validation
@@ -42,12 +43,24 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Reuse validated candidate
+        if: ${{ inputs.candidate_run }}
+        uses: actions/download-artifact@v4
+        with:
+          name: markdown-release-linux-1
+          run-id: ${{ inputs.candidate_run }}
+          github-token: ${{ github.token }}
+          path: .
       - name: Install package dependencies and browsers
-        if: ${{ !inputs.candidate_run }}
+        if: ${{ !inputs.candidate_run || inputs.package_only }}
         working-directory: package
         run: |
           npm ci --ignore-scripts
           npx playwright-core install --with-deps chromium firefox webkit
+      - name: Restore built distribution for focused revalidation
+        if: ${{ inputs.candidate_run && inputs.package_only }}
+        working-directory: package
+        run: tar -xzf mathjslab-markdown-0.8.2.tgz --strip-components=1
       - name: Validate and build package sequentially
         if: ${{ !inputs.candidate_run }}
         working-directory: package
@@ -64,17 +77,12 @@ jobs:
           MARKDOWN_FRAGMENT_MOTION: no-preference
         run: npm run test:browser:fragments
       - name: Check molecular rendering with native and absent OffscreenCanvas
-        if: ${{ !inputs.candidate_run }}
+        if: ${{ !inputs.candidate_run || inputs.package_only }}
         working-directory: package
-        run: npm run test:browser:molecules
-      - name: Reuse validated candidate
-        if: ${{ inputs.candidate_run }}
-        uses: actions/download-artifact@v4
-        with:
-          name: markdown-release-linux-1
-          run-id: ${{ inputs.candidate_run }}
-          github-token: ${{ github.token }}
-          path: .
+        env:
+          MARKDOWN_MOLECULE_HEADED: '1'
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: xvfb-run -a npm run test:browser:molecules
       - name: Install candidate into isolated application
         if: ${{ !inputs.package_only }}
         working-directory: app
