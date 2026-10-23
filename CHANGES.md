@@ -1,6 +1,6 @@
 # Release notes
 
-## 0.8.1 (unreleased)
+## 0.8.1 — 2026-10-23
 
 - Scroll fragments after the document's ready state and navigation layout have
   settled. Prevent the disappearing loading status from shifting the final
@@ -14,8 +14,10 @@
   scroll containers and Shadow DOM, collections, and reduced motion.
 - Pin the browser test driver to Playwright 1.64.1 (WebKit 27.2, revision 2370).
 - Validate 72 production browser cases / 288 settled navigations, 618 unit
-  tests in 42 suites, and 21 distribution tests. Keep the application unchanged;
-  the unrelated Firefox image cancellation remains unproven.
+  tests in 42 suites, and 21 distribution tests. Revalidate the fragment matrix
+  on Linux plus all nine application heading-reference cases and six repeated
+  Firefox image security cases without retries. The unrelated image cancellation
+  was not reproduced; no image assertions or application sources were changed.
 
 ## 0.8.0 — 2026-10-23
 

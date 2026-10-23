@@ -1,7 +1,7 @@
-# WebKit fragment navigation: 0.8.1 candidate
+# WebKit fragment navigation: 0.8.1
 
-This is an unpublished correction to mathjslab-markdown 0.8.0. No commit, push,
-npm publication, application edit, or deployment is part of this work.
+This corrects fragment navigation in mathjslab-markdown 0.8.0. The package
+release is authorized; the application working tree remains unchanged.
 
 ## Reproduction and cause
 
@@ -126,8 +126,8 @@ Final package checks passed: lint, TypeScript, 618 unit tests in 42 suites, 21
 distribution tests, and verification of all 882 packaged files, public exports,
 declarations and relative imports. Formatting and `git diff --check` also
 passed. The application's preexisting diff (only its diagnostic report) had the
-same SHA-256 before and after this work. The package HEAD remains `68cf247`;
-the 0.8.1 source changes are deliberately uncommitted.
+same SHA-256 before and after this work. The correction is committed in
+`c5b3a8d`; the release also includes a focused Linux validation workflow.
 
 ## Application follow-up and limitations
 
@@ -140,10 +140,11 @@ final position. Keep the 24 px / trailing-space standalone reproduction as a
 useful diagnostic. No panel transform workaround or browser exclusion is
 needed. The application has not been edited in this work.
 
-The local unpublished candidate is `mathjslab-markdown-0.8.1.tgz` in the
-package root. It can be consumed for a separately authorized application
-validation before any registry publication. The 0.8.1 changelog is marked
-unreleased; no tag or release has been created.
+The release archive is `mathjslab-markdown-0.8.1.tgz`. The Linux workflow
+installs the candidate into an isolated checkout of application commit
+`a667d8a5aa63a5d065a72ba47af2237323a9b4b3`, without changing the local app or
+its dependency lockfile. Update that dependency through the app's normal
+release process after the package becomes available in npm.
 
 Local Windows engine results do not replace the application's Linux GitHub
 Actions matrix or establish native macOS Safari coverage. Firefox may require
@@ -156,3 +157,32 @@ app reports all 15 affected Firefox tests passed locally in three repeats. This
 fragment suite contains no image request scenario and establishes no cause or
 correction for that cancellation. No image assertions, request-failure
 handling, retries, or application tests have been weakened or changed.
+
+## Linux release validation (2026-10-23)
+
+The focused Ubuntu 24.04 / Node 22 release workflow passed the package build,
+HDL publication gates, package verification and the full fragment matrix: 72
+cases / 288 settled navigations in Chromium, Firefox and WebKit. Evidence:
+https://github.com/MathJSLab/mathjslab-markdown/actions/runs/39981541689
+
+The initial application build in that run failed because a clean checkout
+needed generated Eleventy/assets files before compiling its component. The
+workflow now runs those preparation steps first and supports reusing the
+validated candidate artifact, avoiding a second package matrix. An initial
+no-save installation also correctly failed the application's locked-version
+gate; the workflow now uses its supported vendor snapshot with matching
+manifest, lockfile and SHA-256 metadata. The broad application suite and
+repeated local unit/distribution tests were omitted at the user's request to
+conserve resources. Application validation is restricted to heading references
+in pt/en/es across all engines and three Firefox image security repetitions
+without retries or weaker assertions.
+
+The final isolated application run passed its production build, six Firefox
+security cases (two tests, three repetitions, zero retries), and all nine
+heading-reference cases (pt/en/es in Chromium, Firefox and WebKit):
+https://github.com/MathJSLab/mathjslab-markdown/actions/runs/39984671661
+
+The Firefox NS_BINDING_ABORTED cancellation was not reproduced. No image
+runtime patch or request-failure filtering was justified or introduced. This
+establishes the focused Linux regressions, not a newly repeated full
+application suite or native macOS Safari coverage.
