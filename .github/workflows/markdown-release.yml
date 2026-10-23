@@ -80,7 +80,7 @@ jobs:
         if: ${{ !inputs.candidate_run || inputs.package_only }}
         working-directory: package
         env:
-          MARKDOWN_MOLECULE_HEADED: '1'
+          MARKDOWN_MOLECULE_HEADED: firefox
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: xvfb-run -a npm run test:browser:molecules
       - name: Install candidate into isolated application

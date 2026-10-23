@@ -8,7 +8,8 @@ const results = [];
 try {
   // Build first; engines and cases run sequentially.
   for (const name of (process.env.MARKDOWN_MOLECULE_BROWSERS ?? 'chromium,firefox,webkit').split(',')) {
-    const browser = await { chromium, firefox, webkit }[name].launch({ headless: process.env.MARKDOWN_MOLECULE_HEADED !== '1' });
+    const headed = (process.env.MARKDOWN_MOLECULE_HEADED ?? '').split(',');
+    const browser = await { chromium, firefox, webkit }[name].launch({ headless: !headed.includes('1') && !headed.includes(name) });
     try {
       for (const mode of (process.env.MARKDOWN_MOLECULE_MODES ?? 'native,absent').split(','))
         for (const language of ['pdb', 'xyz']) {
