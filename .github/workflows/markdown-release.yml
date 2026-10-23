@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      candidate_run:
+        description: Reuse a validated candidate artifact from this workflow run
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -32,11 +37,13 @@ jobs:
         with:
           node-version: 22
       - name: Install package dependencies and browsers
+        if: ${{ !inputs.candidate_run }}
         working-directory: package
         run: |
           npm ci --ignore-scripts
           npx playwright-core install --with-deps chromium firefox webkit
       - name: Validate and build package sequentially
+        if: ${{ !inputs.candidate_run }}
         working-directory: package
         run: |
           npm run verify:hdl:release
@@ -44,16 +51,28 @@ jobs:
           npm run verify:package
           npm pack --ignore-scripts
       - name: Check settled fragment navigation in all engines
+        if: ${{ !inputs.candidate_run }}
         working-directory: package
         run: npm run test:browser:fragments
+      - name: Reuse validated candidate
+        if: ${{ inputs.candidate_run }}
+        uses: actions/download-artifact@v4
+        with:
+          name: markdown-release-linux-1
+          run-id: ${{ inputs.candidate_run }}
+          github-token: ${{ github.token }}
+          path: .
       - name: Install candidate into isolated application
         working-directory: app
         run: |
           npm ci --ignore-scripts
           npm install --ignore-scripts --no-save ../package/mathjslab-markdown-0.8.1.tgz
+          npx playwright install --with-deps chromium firefox webkit
       - name: Validate and build application sequentially
         working-directory: app
         run: |
+          npm run build:eleventy
+          npm run build:assets
           npm run build:test-browser
       - name: Repeat Firefox image security tests without retries
         working-directory: app
