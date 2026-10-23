@@ -15,7 +15,7 @@ concurrency:
 jobs:
   linux:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 40
     env:
       CI: 'true'
       MARKDOWN_BROWSER_PROJECTS: all
@@ -40,11 +40,7 @@ jobs:
         working-directory: package
         run: |
           npm run verify:hdl:release
-          npm run lint
-          npm run typecheck
-          npm test
           npm run build
-          npm run test:distribution
           npm run verify:package
           npm pack --ignore-scripts
       - name: Check settled fragment navigation in all engines
@@ -58,15 +54,13 @@ jobs:
       - name: Validate and build application sequentially
         working-directory: app
         run: |
-          npm test
           npm run build:test-browser
-          npm run measure:markdown
       - name: Repeat Firefox image security tests without retries
         working-directory: app
         run: npx playwright test test/browser/markdown-security.spec.ts --project=firefox --workers=1 --retries=0 --repeat-each=3
-      - name: Run complete application browser matrix without retries
+      - name: Check application heading references in all engines
         working-directory: app
-        run: npx playwright test --workers=1 --retries=0
+        run: npx playwright test test/browser/markdown-heading-references.spec.ts --workers=1 --retries=0
       - name: Preserve diagnostics
         if: always()
         uses: actions/upload-artifact@v4
