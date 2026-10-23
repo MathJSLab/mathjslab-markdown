@@ -3,7 +3,7 @@ const tsParser = require('@typescript-eslint/parser');
 const prettierPlugin = require('eslint-plugin-prettier');
 const prettierConfig = require('eslint-config-prettier');
 module.exports = [
-  { ignores: ['node_modules/**', 'dist/**'] },
+  { ignores: ['node_modules/**', 'dist/**', 'src/markdown/extensions/molecule-3d/vendor/3dmol.js'] },
   {
     files: ['src/**/*.ts'],
     languageOptions: { parser: tsParser, parserOptions: { project: './tsconfig.build.json', tsconfigRootDir: __dirname } },

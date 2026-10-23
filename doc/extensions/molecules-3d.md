@@ -15,3 +15,9 @@ WebGL must be available and authorized. The extension sizes its viewer within
 the document, responds to resize and releases spin, models and viewer resources
 on disposal. Browser checks should verify drawn geometry, not merely the
 presence of a canvas.
+
+OffscreenCanvas is optional. If its WebGL2/bitmap path is unavailable, the
+renderer uses the browser's HTML canvas WebGL2/WebGL1 path. The pinned 3Dmol
+runtime includes a reproducible private compatibility correction; see
+[initialization diagnosis and checks](../molecule-3d-offscreen-canvas.md).
+Consumer applications need no global shim or bundler patch.

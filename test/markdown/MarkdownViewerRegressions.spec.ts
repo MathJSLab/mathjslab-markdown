@@ -14,7 +14,7 @@ const viewer = {
   removeAllModels: jest.fn(),
   clear: jest.fn(),
 };
-jest.unstable_mockModule('3dmol', () => ({ createViewer: jest.fn(() => viewer) }));
+jest.unstable_mockModule('../../src/markdown/extensions/molecule-3d/vendor/3dmol.js', () => ({ default: { createViewer: jest.fn(() => viewer) } }));
 const result = { view: { resize: jest.fn(), runAsync: jest.fn(async () => undefined) }, finalize: jest.fn() };
 jest.unstable_mockModule('vega-embed', () => ({ default: jest.fn(async () => result) }));
 Object.assign(globalThis, { TextEncoder, cancelAnimationFrame: jest.fn(), requestAnimationFrame: jest.fn(() => 1) });

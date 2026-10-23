@@ -1,0 +1,6 @@
+{
+  "version": "2.5.5",
+  "sha256": "553ea0ab68182aafd520e598396d3903a354d22d3d02426b09cbc93ea0d28297",
+  "methodStart": "    initGL() {",
+  "nextMethod": "    isWebGL1() {"
+}

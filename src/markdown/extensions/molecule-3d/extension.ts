@@ -23,7 +23,7 @@ export const molecule3DExtension = (): MarkdownExtension => {
     let disconnect = (): void => undefined;
     try {
       assertSourceSize(source, context);
-      const mol = await import(/* webpackChunkName: "markdown-molecule-3d" */ '3dmol');
+      const { default: mol } = await import(/* webpackChunkName: "markdown-molecule-3d" */ './vendor/3dmol.js');
       if (context.signal?.aborted) return;
       dispose(container);
       const viewport = document.createElement('div');

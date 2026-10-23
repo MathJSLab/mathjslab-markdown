@@ -9,6 +9,11 @@ on:
         description: Reuse a validated candidate artifact from this workflow run
         required: false
         type: string
+      package_only:
+        description: Validate the package without rebuilding the host application
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -29,6 +34,7 @@ jobs:
         with:
           path: package
       - uses: actions/checkout@v4
+        if: ${{ !inputs.package_only }}
         with:
           repository: MathJSLab/mathjslab-app
           ref: a667d8a5aa63a5d065a72ba47af2237323a9b4b3
@@ -50,10 +56,17 @@ jobs:
           npm run build
           npm run verify:package
           npm pack --ignore-scripts
-      - name: Check settled fragment navigation in all engines
+      - name: Check focused settled fragment navigation in all engines
         if: ${{ !inputs.candidate_run }}
         working-directory: package
+        env:
+          MARKDOWN_FRAGMENT_SCENARIOS: document
+          MARKDOWN_FRAGMENT_MOTION: no-preference
         run: npm run test:browser:fragments
+      - name: Check molecular rendering with native and absent OffscreenCanvas
+        if: ${{ !inputs.candidate_run }}
+        working-directory: package
+        run: npm run test:browser:molecules
       - name: Reuse validated candidate
         if: ${{ inputs.candidate_run }}
         uses: actions/download-artifact@v4
@@ -63,24 +76,28 @@ jobs:
           github-token: ${{ github.token }}
           path: .
       - name: Install candidate into isolated application
+        if: ${{ !inputs.package_only }}
         working-directory: app
         run: |
           npm ci --ignore-scripts
           mkdir -p vendor
-          cp ../package/mathjslab-markdown-0.8.1.tgz vendor/
-          node --input-type=module -e "import fs from 'node:fs'; import crypto from 'node:crypto'; const archive='mathjslab-markdown-0.8.1.tgz'; fs.writeFileSync('vendor/markdown-local.json', JSON.stringify({archive, sha256:crypto.createHash('sha256').update(fs.readFileSync('vendor/'+archive)).digest('hex')}));"
-          npm install --ignore-scripts --save-exact ./vendor/mathjslab-markdown-0.8.1.tgz
+          cp ../package/mathjslab-markdown-0.8.2.tgz vendor/
+          node --input-type=module -e "import fs from 'node:fs'; import crypto from 'node:crypto'; const archive='mathjslab-markdown-0.8.2.tgz'; fs.writeFileSync('vendor/markdown-local.json', JSON.stringify({archive, sha256:crypto.createHash('sha256').update(fs.readFileSync('vendor/'+archive)).digest('hex')}));"
+          npm install --ignore-scripts --save-exact ./vendor/mathjslab-markdown-0.8.2.tgz
           npx playwright install --with-deps chromium firefox webkit
       - name: Validate and build application sequentially
+        if: ${{ !inputs.package_only }}
         working-directory: app
         run: |
           npm run build:eleventy
           npm run build:assets
           npm run build:test-browser
       - name: Repeat Firefox image security tests without retries
+        if: ${{ !inputs.package_only }}
         working-directory: app
         run: npx playwright test test/browser/markdown-security.spec.ts --project=firefox --workers=1 --retries=0 --repeat-each=3
       - name: Check application heading references in all engines
+        if: ${{ !inputs.package_only }}
         working-directory: app
         run: npx playwright test test/browser/markdown-heading-references.spec.ts --workers=1 --retries=0
       - name: Preserve diagnostics
@@ -90,7 +107,7 @@ jobs:
           name: markdown-release-linux-${{ github.run_attempt }}
           path: |
             package/report
-            package/mathjslab-markdown-0.8.1.tgz
+            package/mathjslab-markdown-0.8.2.tgz
             app/report
             app/playwright-report
             app/test/result/playwright

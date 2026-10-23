@@ -18,3 +18,5 @@ script/build/
 .hdl-research/
 .cache/
 __pycache__/
+src/markdown/extensions/molecule-3d/vendor/3dmol.js
+src/markdown/extensions/molecule-3d/vendor/LICENSE

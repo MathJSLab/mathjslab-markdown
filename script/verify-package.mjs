@@ -4,6 +4,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import ts from 'typescript';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
@@ -24,6 +25,16 @@ const output = JSON.parse(result.stdout);
 const packed = Array.isArray(output) ? output[0] : (output[manifest.name] ?? output);
 assert.ok(Array.isArray(packed.files), 'Unexpected npm pack result keys: ' + Object.keys(packed).join(', '));
 const files = new Set(packed.files.map((file) => file.path));
+for (const file of [
+  'script/3dmol/prepare.mjs',
+  'script/3dmol/runtime.lock.json',
+  'script/3dmol/initGL.js.txt',
+  'script/3dmol/README.md',
+  'dist/source/markdown/extensions/molecule-3d/vendor/3dmol.js',
+  'dist/source/markdown/extensions/molecule-3d/vendor/LICENSE',
+  'dist/browser/molecule-3d/licenses/3dmol-LICENSE',
+])
+  assert.ok(files.has(file), 'Missing private molecular runtime or reproduction input: ' + file);
 const hdlPrefix = 'dist/browser/hdl/';
 const hdlLock = JSON.parse(fs.readFileSync(path.join(root, hdlPrefix, 'toolchain.lock.json'), 'utf8'));
 for (const [name, entry] of Object.entries(hdlLock.files)) {
@@ -120,7 +131,11 @@ const icarusBuildInputs = new Set(
 for (const file of icarusBuildInputs) assert.ok(files.has(file), 'Missing corresponding Icarus source/build input: ' + file);
 for (const file of files)
   assert.ok(
-    ghdlBuildInputs.has(file) || nvcBuildInputs.has(file) || icarusBuildInputs.has(file) || !/^(src|test|script|repo|report|coverage|test-results|playwright-report)\//.test(file),
+    ghdlBuildInputs.has(file) ||
+      nvcBuildInputs.has(file) ||
+      icarusBuildInputs.has(file) ||
+      /^script\/3dmol\/(prepare\.mjs|runtime\.lock\.json|initGL\.js\.txt|README\.md)$/.test(file) ||
+      !/^(src|test|script|repo|report|coverage|test-results|playwright-report)\//.test(file),
     'Development artifact in package: ' + file,
   );
 const walk = (directory) => {
@@ -129,6 +144,21 @@ const walk = (directory) => {
     if (entry.isDirectory()) walk(filename);
     else if (/\.(js|ts)$/.test(entry.name)) {
       const content = fs.readFileSync(filename, 'utf8');
+      if (filename === path.join(root, 'dist/source/markdown/extensions/molecule-3d/vendor/3dmol.js')) {
+        // Upstream bundle comments quote original TypeScript imports. Check
+        // actual syntax instead of treating those comments as relative imports.
+        const parsed = ts.createSourceFile(filename, content, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+        assert.equal(parsed.parseDiagnostics.length, 0, 'Invalid private molecular ES module');
+        const imports = [];
+        const visit = (node) => {
+          if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier) imports.push(node.moduleSpecifier.getText(parsed));
+          if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) imports.push(node.arguments[0]?.getText(parsed));
+          ts.forEachChild(node, visit);
+        };
+        visit(parsed);
+        assert.deepEqual(imports, [], 'Private molecular runtime must be self-contained');
+        continue;
+      }
       for (const match of content.matchAll(/(?:from\s*|import\s*\(\s*)['"](\.\.?\/[^'"]+)['"]/g)) {
         const imported = path.resolve(path.dirname(filename), match[1]);
         assert.ok(

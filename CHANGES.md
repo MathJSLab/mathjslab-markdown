@@ -1,5 +1,14 @@
 # Release notes
 
+## 0.8.2 — 2026-10-23
+
+- Fix 3Dmol initialization when OffscreenCanvas is absent or its WebGL2 output
+  path is unusable. Preserve native HTML WebGL fallback without browser globals
+  or user-agent checks. Build a private, version/hash-checked compatibility
+  runtime from the pinned dependency; ship its recipe and license.
+- Add standalone PDB/XYZ browser regressions for native and absent capabilities,
+  real molecular pixels, resize and session disposal.
+
 ## 0.8.1 — 2026-10-23
 
 - Scroll fragments after the document's ready state and navigation layout have

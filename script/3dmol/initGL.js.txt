@@ -1,0 +1,63 @@
+    initGL() {
+        try {
+            //safari and firefox do not seem to respect alpha in transferFromImageBitmap
+            //and so can't use offscreen canvas with grids
+            //I tried using drawImage with a 2d canvas and it worked but was noticeably laggy
+            if (typeof OffscreenCanvas === "function" && !(this.rows != undefined &&
+                this.cols != undefined && this.row != undefined &&
+                this.col != undefined)) {
+                // OffscreenCanvas is optional; its presence does not guarantee WebGL2.
+                try {
+                    if (_gl_singleton == null || _gl_singleton.isContextLost()) {
+                        _offscreen_singleton = new OffscreenCanvas(this._canvas.width, this._canvas.height);
+                        _gl_singleton = _offscreen_singleton.getContext("webgl2", {
+                            alpha: true,
+                            premultipliedAlpha: this._premultipliedAlpha,
+                            antialias: this._antialias,
+                            preserveDrawingBuffer: this._preserveDrawingBuffer,
+                        });
+                    }
+                    // Do not lock the HTML canvas to bitmaprenderer without a GL context.
+                    if (_gl_singleton) {
+                        const bitmap = this._canvas.getContext("bitmaprenderer", { alpha: true });
+                        if (bitmap) {
+                            this._offscreen = _offscreen_singleton;
+                            this._gl = _gl_singleton;
+                            this._bitmap = bitmap;
+                        }
+                    }
+                } catch {
+                    // An unavailable optional path must not bypass native HTML WebGL.
+                }
+            }
+            if (!this._gl) {
+                if (!(this._gl = this._canvas.getContext("webgl2", {
+                    alpha: this._alpha,
+                    premultipliedAlpha: this._premultipliedAlpha,
+                    antialias: this._antialias,
+                    preserveDrawingBuffer: this._preserveDrawingBuffer,
+                }))) {
+                    if (!(this._gl = this._canvas.getContext("experimental-webgl", {
+                        alpha: this._alpha,
+                        premultipliedAlpha: this._premultipliedAlpha,
+                        antialias: this._antialias,
+                        preserveDrawingBuffer: this._preserveDrawingBuffer,
+                    }))) {
+                        if (!(this._gl = this._canvas.getContext("webgl", {
+                            alpha: this._alpha,
+                            premultipliedAlpha: this._premultipliedAlpha,
+                            antialias: this._antialias,
+                            preserveDrawingBuffer: this._preserveDrawingBuffer,
+                        }))) {
+                            throw "Error creating WebGL context.";
+                        }
+                    }
+                }
+            }
+            var vers = this._gl.getParameter(this._gl.VERSION);
+            this._webglversion = parseInt(vers[6]);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }

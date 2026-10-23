@@ -76,6 +76,7 @@ export default (_environment: unknown, arguments_: { mode?: 'development' | 'pro
             };
             copyHDL(hdl, 'hdl/');
             for (const asset of collectTikZAssets()) compilation.emitAsset(asset.name, new webpack.sources.RawSource(fs.readFileSync(asset.file)));
+            compilation.emitAsset('molecule-3d/licenses/3dmol-LICENSE', new webpack.sources.RawSource(fs.readFileSync(path.join(directory, 'node_modules/3dmol/LICENSE'))));
             for (const [packageName, license] of [
               ['citeproc', 'LICENSE'],
               ['@citation-js/core', 'LICENSE.md'],
