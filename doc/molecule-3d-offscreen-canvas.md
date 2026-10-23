@@ -124,3 +124,29 @@ record the earlier no-commit/no-publication scope; release preparation now
 includes commit, GitHub release and npm publication. The app remains unchanged.
 The focused Linux workflow reuses prior local validation and omits rebuilding
 the app: nine fragment cases and twelve molecular cases run sequentially.
+
+## Consolidated 0.8.2 release validation
+
+After resuming from the forced shutdown, the repository and the saved tarball
+were intact; no v0.8.2 GitHub release/tag or npm version had yet been
+published. The original Linux run passed the package build, publication gates,
+package verification and all nine reference cases / 36 settled navigations:
+https://github.com/MathJSLab/mathjslab-markdown/actions/runs/40022796935
+
+Its molecular test exposed a runner limitation: Firefox headless supplied no
+WebGL context at all, including HTML WebGL1. Xvfb with Mesa software rendering
+made all four Firefox cases render correctly. Forcing every engine to headed
+mode also exposed a first-frame timeout in Chromium. The final launch settings
+retain headless Chromium/WebKit and use a virtual display only for Firefox. The
+fixture explicitly supplies its favicon rather than requesting a missing server
+asset. Pixel, geometry, error and disposal assertions remain unchanged; no
+retries or browser exclusions were introduced.
+
+The final Linux run passed all 12 molecular cases using the earlier built
+candidate, without repeating its successful build/reference matrix:
+https://github.com/MathJSLab/mathjslab-markdown/actions/runs/40029341760
+
+Together with the Windows checks above, this validates the 0.8.2 correction on
+both platforms. The remaining release actions are the annotated v0.8.2 tag,
+GitHub release and npm publication followed by public-registry integrity
+verification. The app's local changes remain untouched.

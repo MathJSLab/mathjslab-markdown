@@ -29,3 +29,8 @@ When updating 3Dmol, inspect upstream `src/WebGL/Renderer.ts` and the
 distributed bundle, re-evaluate the guard, update the audited lock, and repeat
 the browser regression. Remove this recipe once an adopted upstream release
 fixes it.
+
+On a Linux runner where Firefox headless exposes no WebGL contexts, use
+`LIBGL_ALWAYS_SOFTWARE=1 MARKDOWN_MOLECULE_HEADED=firefox xvfb-run -a npm run test:browser:molecules`.
+This changes the test display configuration only. Chromium and WebKit retain
+headless mode; every engine still must draw real molecular pixels.

@@ -8,6 +8,10 @@
   runtime from the pinned dependency; ship its recipe and license.
 - Add standalone PDB/XYZ browser regressions for native and absent capabilities,
   real molecular pixels, resize and session disposal.
+- Validate 12 molecular cases and nine focused standalone reference cases in
+  Chromium, Firefox and WebKit on Windows and Linux. Use Xvfb/Mesa for Firefox
+  on the Linux runner to provide an actual WebGL context; preserve all pixel
+  and lifecycle assertions.
 
 ## 0.8.1 — 2026-10-23
 
