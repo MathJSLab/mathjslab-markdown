@@ -119,6 +119,16 @@ announces the change; a fragment change preserves focus. An
 `IntersectionObserver` tracks visible sections. Reduced-motion preference
 selects instant scrolling and reduces transitions.
 
+Fragment scrolling in the component runs on the next animation frame, after
+navigation has published its ready state and updated the controls. This keeps
+the destination stable when loading UI disappears, including in WebKit. New
+scroll requests replace pending ones; releasing the component cancels them. The
+active outline uses current heading geometry after scrolling, and section
+announcements remain available for repeated fragment navigation.
+
+For the reproduction, browser matrix, and application integration follow-up,
+see [WebKit fragment navigation](fragment-navigation-webkit.md).
+
 ## Diagnostics
 
 Diagnostics include extension, message, severity and cause, plus source URL,

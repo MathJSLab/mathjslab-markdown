@@ -1,5 +1,22 @@
 # Release notes
 
+## 0.8.1 (unreleased)
+
+- Scroll fragments after the document's ready state and navigation layout have
+  settled. Prevent the disappearing loading status from shifting the final
+  scroll destination above the viewport, notably in WebKit. Preserve smooth
+  scrolling and reduced-motion preferences; cancel queued scrolls on disposal.
+- Use current heading geometry for the active outline section, rather than
+  stale intersection rectangles captured during scrolling. Announce fragment
+  targets on repeated navigation within a collection.
+- Add sequential Chromium/Firefox/WebKit fragment regressions in Portuguese,
+  English and Spanish, including final geometry, large fonts/margins, nested
+  scroll containers and Shadow DOM, collections, and reduced motion.
+- Pin the browser test driver to Playwright 1.64.1 (WebKit 27.2, revision 2370).
+- Validate 72 production browser cases / 288 settled navigations, 618 unit
+  tests in 42 suites, and 21 distribution tests. Keep the application unchanged;
+  the unrelated Firefox image cancellation remains unproven.
+
 ## 0.8.0 — 2026-10-23
 
 - Support explicit `{#label}` anchors and `{@ref label}` references for

@@ -457,6 +457,19 @@ describe('<markdown-document>', () => {
       await Promise.resolve();
       expect(element.shadowRoot?.querySelector('[aria-current="location"]')?.textContent).toBe('Second');
       expect(element.shadowRoot?.querySelector('[part="announcer"]')?.textContent).toBe('Section Second');
+      const first = element.shadowRoot!.querySelector<HTMLElement>('#first')!;
+      first.getBoundingClientRect = () => ({ top: 4 }) as DOMRect;
+      heading.getBoundingClientRect = () => ({ top: 80 }) as DOMRect;
+      callback?.(
+        [
+          { target: first, isIntersecting: true, boundingClientRect: { top: 200 } },
+          { target: heading, isIntersecting: true, boundingClientRect: { top: 1 } },
+        ] as unknown as IntersectionObserverEntry[],
+        {} as IntersectionObserver,
+      );
+      await Promise.resolve();
+      expect(element.shadowRoot?.querySelector('[aria-current="location"]')?.textContent).toBe('First');
+      expect(element.shadowRoot?.querySelector('[part="announcer"]')?.textContent).toBe('Section First');
       await element.dispose();
       await element.engine.dispose();
     } finally {
@@ -480,11 +493,67 @@ describe('<markdown-document>', () => {
         if (typeof options === 'object') calls.push(options);
       };
       element.shadowRoot?.querySelector<HTMLElement>('[data-fragment="target"]')?.click();
+      await new Promise(requestAnimationFrame);
       expect(calls).toContainEqual({ block: 'start', behavior: 'auto' });
       await element.dispose();
       await element.engine.dispose();
     } finally {
       Object.assign(globalThis, { matchMedia: original });
     }
+  });
+
+  it('scrolls URL fragments after ready state and navigation controls have settled', async () => {
+    const element = new MarkdownDocumentElement();
+    element.engine = new MarkdownEngine();
+    element.context = {
+      fetchResource: async () => ({ ok: true, status: 200, headers: new Headers(), text: async () => '# Lesson\n\n[Target](#target)\n\n## Target' }) as Response,
+    };
+    element.src = 'https://course.test/chapter.md';
+    const completed = ready(element);
+    document.body.append(element);
+    await completed;
+    const heading = element.shadowRoot!.querySelector<HTMLElement>('#target')!;
+    const states: string[] = [];
+    heading.scrollIntoView = () => states.push(element.state);
+    element.shadowRoot!.querySelector('article a')!.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true, cancelable: true }));
+    expect(states).toEqual([]);
+    await new Promise(requestAnimationFrame);
+    expect(states).toEqual(['ready']);
+    expect(element.shadowRoot!.querySelector('[part="back-button"]')?.hasAttribute('disabled')).toBe(false);
+    const back = element.shadowRoot!.querySelector<HTMLElement>('[part="back-button"]')!;
+    const returned = new Promise((resolve) => element.addEventListener('markdown-navigate', resolve, { once: true }));
+    back.click();
+    await returned;
+    states.length = 0;
+    const next = new Promise((resolve) => element.addEventListener('markdown-navigate', resolve, { once: true }));
+    element.shadowRoot!.querySelector('article a')!.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true, cancelable: true }));
+    await next;
+    const canceled = new Promise((resolve) => element.addEventListener('markdown-navigate', resolve, { once: true }));
+    back.click();
+    await canceled;
+    await new Promise(requestAnimationFrame);
+    expect(states).toEqual([]);
+    await element.dispose();
+    await element.engine.dispose();
+  });
+
+  it('coalesces fragment scrolls and cancels queued scrolling on disposal', async () => {
+    const element = new MarkdownDocumentElement();
+    element.engine = new MarkdownEngine();
+    element.markdown = '# Lesson\n\n## First\n\n## Second';
+    const completed = ready(element);
+    document.body.append(element);
+    await completed;
+    const calls: string[] = [];
+    for (const heading of element.shadowRoot!.querySelectorAll<HTMLElement>('h2[id]')) heading.scrollIntoView = () => calls.push(heading.id);
+    element.shadowRoot!.querySelector<HTMLElement>('[data-fragment="first"]')!.click();
+    element.shadowRoot!.querySelector<HTMLElement>('[data-fragment="second"]')!.click();
+    await new Promise(requestAnimationFrame);
+    expect(calls).toEqual(['second']);
+    element.shadowRoot!.querySelector<HTMLElement>('[data-fragment="first"]')!.click();
+    await element.dispose();
+    await new Promise(requestAnimationFrame);
+    expect(calls).toEqual(['second']);
+    await element.engine.dispose();
   });
 });

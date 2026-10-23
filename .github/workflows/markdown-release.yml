@@ -1,0 +1,81 @@
+name: Markdown release validation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: markdown-release-validation
+  cancel-in-progress: false
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      CI: 'true'
+      MARKDOWN_BROWSER_PROJECTS: all
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: package
+      - uses: actions/checkout@v4
+        with:
+          repository: MathJSLab/mathjslab-app
+          ref: a667d8a5aa63a5d065a72ba47af2237323a9b4b3
+          path: app
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install package dependencies and browsers
+        working-directory: package
+        run: |
+          npm ci --ignore-scripts
+          npx playwright-core install --with-deps chromium firefox webkit
+      - name: Validate and build package sequentially
+        working-directory: package
+        run: |
+          npm run verify:hdl:release
+          npm run lint
+          npm run typecheck
+          npm test
+          npm run build
+          npm run test:distribution
+          npm run verify:package
+          npm pack --ignore-scripts
+      - name: Check settled fragment navigation in all engines
+        working-directory: package
+        run: npm run test:browser:fragments
+      - name: Install candidate into isolated application
+        working-directory: app
+        run: |
+          npm ci --ignore-scripts
+          npm install --ignore-scripts --no-save ../package/mathjslab-markdown-0.8.1.tgz
+      - name: Validate and build application sequentially
+        working-directory: app
+        run: |
+          npm test
+          npm run build:test-browser
+          npm run measure:markdown
+      - name: Repeat Firefox image security tests without retries
+        working-directory: app
+        run: npx playwright test test/browser/markdown-security.spec.ts --project=firefox --workers=1 --retries=0 --repeat-each=3
+      - name: Run complete application browser matrix without retries
+        working-directory: app
+        run: npx playwright test --workers=1 --retries=0
+      - name: Preserve diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: markdown-release-linux-${{ github.run_attempt }}
+          path: |
+            package/report
+            package/mathjslab-markdown-0.8.1.tgz
+            app/report
+            app/playwright-report
+            app/test/result/playwright
+          retention-days: 7

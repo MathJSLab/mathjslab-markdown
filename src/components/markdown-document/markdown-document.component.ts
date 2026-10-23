@@ -205,6 +205,7 @@ export class MarkdownDocumentElement extends HTMLElement {
   private readonly sectionEntries = new Map<Element, IntersectionObserverEntry>();
   private lastNavigationUrl: URL | undefined;
   private sectionObservationPausedUntil = 0;
+  private scrollFrame: number | undefined;
   private readonly navigationDiagnosticCauses = new WeakSet<object>();
 
   public constructor() {
@@ -537,13 +538,12 @@ export class MarkdownDocumentElement extends HTMLElement {
     } else if (snapshot.state === 'idle') {
       const previous = this.lastSnapshot;
       const changedPage = previous !== undefined && previous.page?.id !== snapshot.page?.id;
-      const changedFragment = previous !== undefined && this.fragment(previous.url) !== this.fragment(snapshot.url);
       this.lastSnapshot = snapshot;
       if (previous === undefined || changedPage) this.pauseSectionObservation();
       this.renderControllerNavigation(snapshot);
       this.setState('ready');
       if (changedPage) this.focusDocument();
-      if (changedFragment && !changedPage && this.activeFragment) this.announceSection(this.activeFragment);
+      if (!changedPage && this.activeFragment) this.announceSection(this.activeFragment);
       else this.announce(this.dictionary.loaded(snapshot.page?.title ?? this.contentElement.querySelector('h1')?.textContent?.trim() ?? 'Markdown'));
       if (snapshot.url) this.dispatchNavigation(snapshot.url, snapshot);
     }
@@ -560,6 +560,7 @@ export class MarkdownDocumentElement extends HTMLElement {
   }
 
   private async release(revision: number, clear = true): Promise<void> {
+    this.cancelScroll();
     const controller = this.activeController;
     const navigator = this.activeNavigator;
     const documentSession = this.activeDocument;
@@ -579,6 +580,7 @@ export class MarkdownDocumentElement extends HTMLElement {
   }
 
   private setState(state: MarkdownDocumentElementState, error?: unknown): void {
+    if (state !== 'ready') this.cancelScroll();
     this.currentState = state;
     this.setAttribute('state', state);
     this.setAttribute('aria-busy', state === 'loading' ? 'true' : 'false');
@@ -830,13 +832,28 @@ export class MarkdownDocumentElement extends HTMLElement {
   }
 
   private scrollTarget(target: Element | null | undefined): void {
+    this.cancelScroll();
     if (!(target instanceof HTMLElement) && !(target instanceof SVGElement)) return;
     this.pauseSectionObservation();
-    const reduceMotion = typeof globalThis.matchMedia === 'function' && globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    target.scrollIntoView?.({
-      block: 'start',
-      behavior: reduceMotion ? 'auto' : 'smooth',
+    // Navigation publishes ready state and rebuilds its controls after this
+    // callback. Wait for that layout before computing the scroll destination:
+    // hiding the loading status otherwise moves the target during the scroll.
+    this.scrollFrame = requestAnimationFrame(() => {
+      this.scrollFrame = undefined;
+      if (!this.isConnected || !target.isConnected || !this.contentElement.contains(target)) return;
+      this.pauseSectionObservation();
+      const reduceMotion = typeof globalThis.matchMedia === 'function' && globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView?.({
+        block: 'start',
+        behavior: reduceMotion ? 'auto' : 'smooth',
+      });
     });
+  }
+
+  private cancelScroll(): void {
+    if (this.scrollFrame === undefined) return;
+    cancelAnimationFrame(this.scrollFrame);
+    this.scrollFrame = undefined;
   }
 
   private pauseSectionObservation(): void {
@@ -881,7 +898,9 @@ export class MarkdownDocumentElement extends HTMLElement {
   private updateVisibleSection(): void {
     const visible = Array.from(this.sectionEntries.values())
       .filter((entry) => entry.isIntersecting)
-      .sort((left, right) => Math.abs(left.boundingClientRect?.top ?? 0) - Math.abs(right.boundingClientRect?.top ?? 0))[0];
+      // Observer rectangles describe threshold crossings during animation,
+      // not necessarily the final layout of headings that remain visible.
+      .sort((left, right) => Math.abs(left.target.getBoundingClientRect().top) - Math.abs(right.target.getBoundingClientRect().top))[0];
     const fragment = visible?.target.id;
     if (!fragment || fragment === this.activeFragment) return;
     this.activeFragment = fragment;
