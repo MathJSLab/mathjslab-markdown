@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -130,6 +130,7 @@
     "prepare:hdl:tools": "node script/prepare-hdl-tools.mjs",
     "verify:hdl:assets": "node script/verify-hdl-assets.mjs",
     "test:hdl:browser": "node test/hdl-browser/run.mjs",
+    "test:hdl:browser:presentation": "node test/hdl-browser/presentation.mjs",
     "test:hdl:browser:vhdl": "node test/hdl-browser/vhdl-synthesis.mjs",
     "test:hdl:browser:vhdl:runtime": "node test/hdl-browser/vhdl-runtime.mjs",
     "test:hdl:browser:verilog:runtime": "node test/hdl-browser/verilog-runtime.mjs",

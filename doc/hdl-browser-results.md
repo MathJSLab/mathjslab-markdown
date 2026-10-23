@@ -1,5 +1,82 @@
 # Browser HDL implementation and remaining work
 
+## HDL result presentation — 2026-10-22
+
+This change addresses presentation, not a compiler, lesson or hosting failure.
+The cached npm 0.7.1 tarball was checked against its registry integrity receipt;
+its extracted browser extension then synthesized the actual pt multiplexor
+with the unchanged GHDL/YoWASP assets. The schematic was valid, but raw ANSI
+output preceded it. The new browser test reproduces that baseline explicitly.
+
+Batch results now show localized success/error/cancellation status and place
+the schematic or waveform before native collapsible logs/diagnostics. Success
+starts closed, error/cancelled results open. Interactive logs follow the
+waveform and retain the user's open/closed choice between steps; reset clears
+and closes them. Native summary controls preserve keyboard access. Log text
+wraps within a bounded scrolling area, including at 360 px viewport width.
+
+TXT and the UI's result/session JSON contain normalized logs; diagnostic
+messages in batch JSON are normalized too. Raw executor results and update
+callbacks remain unchanged. CSI/OSC/terminal strings and inappropriate control
+characters are removed, retaining useful text, Unicode, tabs and line breaks;
+CRLF/CR become LF. The final log replaces accumulated updates, avoiding a
+duplicate transcript, with streamed text used only if final logs are absent.
+No compiler output is inserted using HTML. See the
+[presentation contract](extensions/hdl-troubleshooting.md#hdl-result-presentation).
+
+The dedicated real-browser suite passed **15 checks in Chrome 155.0.8059.85**
+(including the published baseline) and **14 in Edge 155.0.4283.62**. It covers
+VHDL/Verilog multiplexors in pt/en/es, novel three-bit XNOR sources, real VHDL
+and Verilog compiler errors with original file/line diagnostics, normalized
+TXT/JSON, schematic SVG exports, summary keyboard activation, batch simulation
+and interactive Step/Reset/disposal. Desktop and mobile screenshots were
+visually inspected. All 313 recorded requests were same-origin GET without
+bodies; zero page errors. All 32 HDL files matched before/after each run and
+the copied distribution bytes matched the source assets. No backend, external
+compiler, credentials, storage configuration, COOP/COEP or isolated context.
+
+The existing complete Chrome browser regression also passed **72 Verilog and
+72 VHDL cases**, covering the ten lesson families in pt/en/es, batch diagrams,
+interactive Run/Pause/Step/Reset, clocks/state/history/checks, x/z, VCD/CSV/SVG/
+JSON/TXT exports, limits, responsiveness, actual Worker cancellation,
+replacement and navigation disposal. Together these four sequential browser
+runs passed **173 checks and 2,309 same-origin GET requests**, with no page
+errors or source uploads. Reports: `chrome.json` and `vhdl-chrome.json` beside
+the dedicated presentation evidence. No distribution rebuild overlapped these
+accepted browser runs.
+
+TypeScript production build passed with the four existing vendor/size warnings.
+The 110 targeted HDL unit tests and 21 distribution tests passed; the latter
+include recorded host-contract fixtures and are not the real-compiler proof
+above. Changed-source lint passed. The configured global lint reports 891
+pre-existing CRLF formatting errors in untouched files; no unrelated mass
+line-ending rewrite was made. A second global lint run with a transient
+`endOfLine: auto` override passed without changing configuration or source
+files. Package verification passed with 882 files, and the HDL source and
+reproduction release gates passed. All 32 source/distributed HDL files were
+checked again after the complete browser regression and remained identical.
+
+Release 0.7.2 preparation rebuilt production and passed all **596 unit tests
+in 41 suites**, all 21 distribution tests, the release/source gates and package
+verification (882 files). The dedicated browser suite was then repeated
+sequentially on that completed build: 15 checks in Chrome and 14 in Edge, with
+313 same-origin GETs, no request bodies or page errors, and the same 32 HDL
+asset hashes. No application configuration or compiler asset changes were made.
+
+Evidence: `test-results/hdl-browser/presentation-{chrome,msedge}.json` and
+`presentation-*-{desktop,mobile}.png`. Reproduce after a completed production
+build with `npm run test:hdl:browser:presentation`; `HDL_BROWSER` selects Edge.
+The optional `HDL_PUBLISHED_BASELINE` is a same-origin URL to the extracted
+0.7.1 `dist/browser/extensions.js`. Run builds and browser suites sequentially.
+
+No mathjslab-app files were changed. The app needs only the corrected Markdown
+library/bundle in its normal build; authorization, static asset copying and
+compiler integrity pins stay unchanged. Custom direct-child log CSS may need
+the new `.hdl-log-details` wrapper selector. During this presentation validation,
+no commit, publication or deploy occurred.
+
+## Earlier runtime and release validation (2026-10-20)
+
 Date: 2026-10-20. Real VHDL-2008 simulation/replay now uses NVC Wasm,
 while synthesis uses GHDL followed by YoWASP. Verilog retains Icarus/YoWASP.
 See the [current VHDL report](hdl-vhdl-progress.md) for the exact tested profile,

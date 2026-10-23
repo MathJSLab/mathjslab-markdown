@@ -2,6 +2,7 @@ import { assertHDLAvailable, hdlSetupMessage } from '../../hdl/availability.js';
 import { createHDLExports, serializeHDLSVG } from '../../hdl/artifacts.js';
 import { createHDLPreview } from '../../hdl/preview.js';
 import { createHDLUpdateReceiver, hdlProgressLabel } from '../../hdl/updates.js';
+import { createHDLLogDetails, hdlPresentationLabel, normalizeHDLText } from '../../hdl/presentation.js';
 import { ManagedExecutionSession } from '../../execution/session.js';
 import { MarkdownExecutionError } from '../../execution/scheduler.js';
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
@@ -49,7 +50,12 @@ export const hdlExtension = (executor?: HDLExecutor): MarkdownExtension => {
   const report = (container: Element, source: string, context: MarkdownDocumentContext, code: string, message: string, category: 'policy' | 'execution'): void => {
     const alert = document.createElement('pre');
     alert.setAttribute('role', 'alert');
-    alert.textContent = `HDL: ${message}`;
+    alert.className = 'hdl-result-status';
+    alert.dataset.hdlStatus = code === 'hdl-execution-cancelled' ? 'cancelled' : 'error';
+    if (alert.dataset.hdlStatus === 'cancelled') alert.setAttribute('role', 'status');
+    const label = hdlPresentationLabel(alert.dataset.hdlStatus === 'cancelled' ? 'cancelled' : 'error', context.locale);
+    const cleanMessage = normalizeHDLText(message);
+    alert.textContent = cleanMessage === label ? label : `${label}: ${cleanMessage}`;
     const fallback = document.createElement('pre');
     fallback.className = 'markdown-extension-fallback';
     fallback.textContent = source;
@@ -86,15 +92,15 @@ export const hdlExtension = (executor?: HDLExecutor): MarkdownExtension => {
     const progress = document.createElement('div');
     progress.setAttribute('role', 'status');
     progress.className = 'hdl-progress';
-    const incrementalLogs = document.createElement('pre');
-    incrementalLogs.className = 'hdl-logs';
+    progress.textContent = hdlPresentationLabel('running', context.locale);
+    const { details: incrementalDetails, logs: incrementalLogs } = createHDLLogDetails(context.locale);
     const previewNode = document.createElement('div');
     previewNode.className = 'hdl-incremental-vcd vcd-viewer';
-    container.replaceChildren(progress, incrementalLogs, previewNode);
+    container.replaceChildren(progress, previewNode, incrementalDetails);
     const preview = createHDLPreview(previewNode, active);
     const updates = createHDLUpdateReceiver((update, state) => {
       if (update.type === 'progress') progress.textContent = hdlProgressLabel(update.phase, context.locale);
-      if (update.type === 'log') incrementalLogs.textContent = state.logs;
+      if (update.type === 'log') incrementalLogs.textContent = normalizeHDLText(state.logs);
       if (update.type === 'vcd') preview.update(state.vcd);
       context.onHDLUpdate?.(update);
     }, controller.signal);
@@ -121,7 +127,7 @@ export const hdlExtension = (executor?: HDLExecutor): MarkdownExtension => {
       if (!response || !['success', 'error', 'cancelled'].includes(response.status)) throw new Error('Invalid HDL execution result');
       const encoded = JSON.stringify(response);
       if (new TextEncoder().encode(encoded).byteLength > 512 * 1024) throw new Error('HDL result exceeds 512 KiB');
-      const result: HDLExecutionResult = JSON.parse(encoded);
+      let result: HDLExecutionResult = JSON.parse(encoded);
       if (!result || !['success', 'error', 'cancelled'].includes(result.status)) throw new Error('Invalid HDL execution result');
       if (result.logs !== undefined && (typeof result.logs !== 'string' || result.logs.length > 65536)) throw new Error('HDL logs exceed the text limit');
       if (result.diagnostics !== undefined && (!Array.isArray(result.diagnostics) || result.diagnostics.length > 128)) throw new Error('HDL diagnostic limit exceeded');
@@ -136,32 +142,40 @@ export const hdlExtension = (executor?: HDLExecutor): MarkdownExtension => {
         )
           throw new Error('Invalid HDL compiler diagnostic');
         const location = d.file ? `${d.file}${d.line ? ':' + d.line : ''}${d.column ? ':' + d.column : ''}: ` : '';
-        context.onDiagnostic?.({ extension: 'hdl', code: 'hdl-compiler-diagnostic', category: 'execution', severity: d.severity, message: location + d.message });
+        context.onDiagnostic?.({ extension: 'hdl', code: 'hdl-compiler-diagnostic', category: 'execution', severity: d.severity, message: location + normalizeHDLText(d.message) });
       }
+      result = {
+        ...result,
+        logs: normalizeHDLText(result.logs ?? updates.snapshot.logs),
+        ...(result.diagnostics ? { diagnostics: result.diagnostics.map((diagnostic) => ({ ...diagnostic, message: normalizeHDLText(diagnostic.message) })) } : {}),
+      };
       if (result.status !== 'success') {
         report(
           container,
           source,
           context,
           result.status === 'cancelled' ? 'hdl-execution-cancelled' : 'hdl-execution-error',
-          result.status === 'cancelled' ? 'Executor cancelled the job' : 'Executor reported a compilation or execution error',
+          hdlPresentationLabel(result.status, context.locale),
           'execution',
         );
       } else {
-        container.replaceChildren();
+        progress.className = 'hdl-result-status';
+        progress.dataset.hdlStatus = 'success';
+        progress.textContent = hdlPresentationLabel('success', context.locale);
+        container.replaceChildren(progress);
       }
+      const { details, logs } = createHDLLogDetails(context.locale);
+      details.open = result.status !== 'success';
       for (const d of result.diagnostics ?? []) {
         const message = document.createElement('pre');
         message.textContent = `${d.severity}: ${d.file ?? ''}${d.line ? ':' + d.line : ''} ${d.message}`;
-        container.append(message);
+        message.style.whiteSpace = 'pre-wrap';
+        message.style.overflowWrap = 'anywhere';
+        details.insertBefore(message, logs);
       }
-      if (result.logs) {
-        const log = document.createElement('pre');
-        log.className = 'hdl-logs';
-        log.textContent = result.logs;
-        container.append(log);
-      }
+      logs.textContent = result.logs ?? '';
       if (result.status !== 'success') {
+        container.append(details);
         const word = ['pt', 'es'].includes(context.locale?.slice(0, 2) ?? '') ? 'Exportar' : 'Export';
         exportCleanup.set(
           container,
@@ -198,6 +212,7 @@ export const hdlExtension = (executor?: HDLExecutor): MarkdownExtension => {
         if (className === 'vcd') preview.restore(visual);
       }
       if (!controller.signal.aborted) {
+        container.append(details);
         const word = ['pt', 'es'].includes(context.locale?.slice(0, 2) ?? '') ? 'Exportar' : 'Export';
         exportCleanup.set(
           container,
@@ -248,6 +263,12 @@ export const hdlExtension = (executor?: HDLExecutor): MarkdownExtension => {
           timedOut ? 'HDL execution timed out' : error instanceof Error ? error.message : String(error),
           'execution',
         );
+      if ((timedOut || !controller.signal.aborted) && updates.snapshot.logs) {
+        const { details, logs } = createHDLLogDetails(context.locale);
+        details.open = true;
+        logs.textContent = normalizeHDLText(updates.snapshot.logs);
+        container.append(details);
+      }
     } finally {
       updates.close();
       await preview.dispose();

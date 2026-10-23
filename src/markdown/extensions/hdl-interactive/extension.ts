@@ -2,6 +2,7 @@ import { assertHDLAvailable, hdlSetupMessage } from '../../hdl/availability.js';
 import { createHDLExports } from '../../hdl/artifacts.js';
 import { createHDLPreview } from '../../hdl/preview.js';
 import { createHDLUpdateReceiver, hdlProgressLabel } from '../../hdl/updates.js';
+import { createHDLLogDetails, normalizeHDLText } from '../../hdl/presentation.js';
 import { ManagedExecutionSession } from '../../execution/session.js';
 import { MarkdownExecutionError } from '../../execution/scheduler.js';
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
@@ -92,7 +93,7 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
       status.setAttribute('aria-live', 'polite');
       const table = document.createElement('table');
       table.setAttribute('aria-label', text[10]!);
-      const logs = document.createElement('pre');
+      const { details: logDetails, logs } = createHDLLogDetails(context.locale);
       logs.className = 'hdl-interactive-logs';
       const plot = document.createElement('div');
       plot.className = 'vcd-viewer';
@@ -134,7 +135,7 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
         }
       };
       resetChecks();
-      container.append(controls, inputs, status, table, ...(request.checks?.length ? [checks] : []), logs, plot);
+      container.append(controls, inputs, status, table, ...(request.checks?.length ? [checks] : []), plot, logDetails);
       const buttons = text.slice(0, 4).map((label, index) => {
         const button = document.createElement('button');
         button.type = 'button';
@@ -248,6 +249,7 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
           if (value.length !== signal.width || !/^[01xz]+$/.test(value)) {
             playing = false;
             logs.textContent = `Invalid input: ${signal.name} (${signal.width} bits; 0/1/x/z)`;
+            logDetails.open = true;
             show();
             return;
           }
@@ -270,7 +272,7 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
         const updates = createHDLUpdateReceiver((update, state) => {
           if (disposed || run !== current) return;
           if (update.type === 'progress') status.textContent = hdlProgressLabel(update.phase, context.locale);
-          if (update.type === 'log') logs.textContent = state.logs;
+          if (update.type === 'log') logs.textContent = normalizeHDLText(state.logs);
           if (update.type === 'vcd') preview.update(state.vcd);
           context.onHDLUpdate?.(update);
         }, current.controller.signal);
@@ -307,7 +309,7 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
             parseVCD(result.vcd);
           }
           history.push({ startNs: time, endNs: result.timeNs, inputs: { ...values } });
-          confirmed = { ...result, values: { ...result.values } };
+          confirmed = { ...result, values: { ...result.values }, logs: normalizeHDLText(result.logs ?? updates.snapshot.logs) };
           time = result.timeNs;
           for (const check of request.checks ?? []) {
             const row = checkRows.get(check.id)!;
@@ -332,7 +334,7 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
           request.outputs.forEach((signal, index) => {
             table.rows[index + 1]!.cells[1]!.textContent = result.values[signal.name]!;
           });
-          logs.textContent = result.logs ?? '';
+          logs.textContent = confirmed.logs ?? '';
           await viewer.disposeContainer?.(plot);
           plot.replaceChildren();
           if (result.vcd !== undefined) {
@@ -352,7 +354,8 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
             playing = false;
             failed = true;
             markUnreached();
-            logs.textContent = timedOut ? 'Interactive simulation timed out' : String(error);
+            logs.textContent = normalizeHDLText(timedOut ? 'Interactive simulation timed out' : String(error));
+            logDetails.open = true;
             diagnostic(timedOut ? 'hdl-interactive-timeout' : error instanceof MarkdownExecutionError ? error.code : 'hdl-interactive-error', logs.textContent);
             await cleanRun(current);
           }
@@ -401,6 +404,7 @@ export const hdlInteractiveExtension = (executor: Pick<HDLExecutor, 'createInter
           busy = false;
           for (const signal of request.inputs) fields.get(signal.name)!.value = request.stimuli?.find((entry) => entry.timeNs === 0)?.inputs[signal.name] ?? signal.initial;
           logs.textContent = '';
+          logDetails.open = false;
           resetChecks();
           empty();
           resetting = false;

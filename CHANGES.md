@@ -1,5 +1,18 @@
 # Release notes
 
+## 0.7.2 — 2026-10-22
+
+- Prioritize HDL schematics/waveforms and show localized execution status.
+  Place compiler logs and diagnostics in accessible collapsible details;
+  successful results start collapsed and errors/cancelled results start open.
+- Normalize terminal escape/control sequences for HDL log display and TXT/JSON
+  UI exports, without changing raw executor results or update callbacks.
+  Preserve incremental/final log replacement and interactive reset behavior.
+- Verify the published 0.7.1 presentation against the correction in real static
+  browsers: 173 checks across Chrome/Edge, including pt/en/es multiplexors,
+  new HDL sources, compiler errors, responsive details and exports. Preserve
+  compiler asset integrity and existing application authorization/configuration.
+
 ## 0.7.1 — 2026-10-20
 
 - Reissue the validated 0.7.0 release following delayed registry availability.

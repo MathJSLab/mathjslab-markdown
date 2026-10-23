@@ -130,3 +130,32 @@ check verifies the source recipe, package pins, both builds and asset hashes;
 matching binaries alone cannot bypass these checks. See the browser report for
 the tested profile and integrated-app validation status.
 No publication is claimed by this work.
+## HDL result presentation
+
+Batch execution shows a localized success/error/cancellation status. The
+schematic or waveform precedes a native, keyboard-operable `details` section
+for logs and compiler diagnostics. Successful jobs start with details closed;
+error and cancelled results start with details open. Interactive waveforms also
+precede their collapsible logs; reset clears and closes that section.
+
+The UI treats compiler output as plain text, never HTML. ANSI CSI/OSC/string
+commands, remaining C0/C1 controls (except tab/newline) and bidirectional format
+controls are removed. CRLF and CR become LF. This is text normalization, not
+terminal emulation: useful messages, Unicode, file/line locations, tabs and
+line breaks remain. Split escape sequences are normalized from the accumulated
+raw update snapshot. A final log replaces that snapshot, rather than appending
+it again; the snapshot is used only when the final result omits logs.
+
+**TXT exports contain the normalized log shown in the UI.** The extension's
+JSON exports also contain normalized logs/diagnostic messages. Interactive TXT
+and session JSON use the normalized log of the last confirmed step. Structured
+diagnostic locations and HDL source files retain their original values. The
+executor's returned result and `onHDLUpdate` payloads remain original compiler
+data for host applications; consumers displaying those callbacks must treat
+them as untrusted text and may need their own normalization.
+
+No mathjslab-app configuration or compiler asset changes are needed. Upgrade
+the Markdown library/bundle through the usual application build; keep explicit
+execution authorization and the existing static asset-copy configuration.
+Custom CSS that assumes logs are direct child `pre` elements should instead
+target `.hdl-log-details .hdl-logs` (or `.hdl-interactive-logs`).
