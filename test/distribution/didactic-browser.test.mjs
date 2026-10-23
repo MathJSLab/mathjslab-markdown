@@ -39,6 +39,17 @@ test('production didactic containers balance equal delimiters, references and re
     assert.equal(exercise.querySelector('.mathjax-error, mjx-merror'), null);
     assert.equal(container.querySelector('a').getAttribute('href'), '#' + exercise.querySelector('.markdown-solution').id);
     assert.equal(exercise.textContent.includes('Outside:'), false);
+    await engine.renderDocument('See {@ref sec-energy}.\n\n## Energy\n\n## 1.4. Energy $E$ {#sec-energy}\n\n::: equation {#energy}\n$$E=mc^2$$\n:::\n\n{@ref energy}', container, {
+      locale: 'pt-BR',
+      onDiagnostic: (value) => diagnostics.push(value),
+    });
+    assert.deepEqual(diagnostics, []);
+    assert.equal(container.querySelector('#sec-energy').textContent.includes('{#'), false);
+    assert.equal(container.querySelector('[data-markdown-reference] a').textContent, 'Seção 1.4');
+    assert.equal(container.querySelector('[data-markdown-reference] a').getAttribute('href'), '#sec-energy');
+    assert.ok(container.querySelector('#sec-energy mjx-container'));
+    await engine.typeset(container, { locale: 'es' });
+    assert.equal(container.querySelector('[data-markdown-reference] a').textContent, 'Sección 1.4');
     container.innerHTML = engine.parse(':::: exercise Unclosed\nText\n:::');
     assert.equal(container.querySelector('.markdown-exercise'), null);
     assert.ok(container.textContent.includes(':::: exercise Unclosed'));

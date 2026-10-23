@@ -1,5 +1,21 @@
 # Release notes
 
+## 0.8.0 — 2026-10-23
+
+- Support explicit `{#label}` anchors and `{@ref label}` references for
+  Markdown headings. Reuse manual decimal numbering in localized section
+  references; unnumbered headings use their title. No automatic section
+  numbering is added.
+- Explicit heading anchors take precedence over automatic slugs. When
+  `cross-references` is enabled, previously literal trailing heading labels
+  become metadata and replace the old text-derived anchors. Existing block
+  numbering and generated block IDs remain unchanged.
+- Preserve extension token walkers in strict security mode so explicit heading
+  metadata is processed consistently without disabling HTML escaping.
+- Add heading, anchor-conflict and navigation tests, distribution coverage with
+  real MathJax, and integrated examples in Portuguese, English and Spanish.
+  Validate 616 unit tests across 42 suites and 21 production distribution tests.
+
 ## 0.7.2 — 2026-10-22
 
 - Prioritize HDL schematics/waveforms and show localized execution status.

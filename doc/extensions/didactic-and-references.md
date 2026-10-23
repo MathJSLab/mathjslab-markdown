@@ -172,9 +172,95 @@ Missing references remain visible as source text and emit
 `cross-reference-duplicate` warnings and references to them remain unresolved.
 Diagnostics use the existing document `onDiagnostic` callback.
 
-Generated target IDs are scoped to the container; documents sharing an engine
-can reuse labels. Update and repeated typesetting recompute numbering and
-links. Generated IDs are implementation details: author links with
+Generated block target IDs are scoped to the container; documents sharing an
+engine can reuse labels. Update and repeated typesetting recompute numbering
+and links. Generated IDs are implementation details: author links with
 `{@ref label}` rather than hard-coding generated fragment IDs. Parsing alone
 creates placeholders; `renderDocument` or `typeset` applies localization and
 resolves references.
+
+## Headings and section references
+
+With `cross-references` enabled, put a trailing `{#label}` after any Markdown
+heading (`#` through `######`, or Setext headings). The declaration is removed
+from the visible title and becomes its exact HTML `id`. Labels use the same
+grammar as block labels. A closing ATX `#` sequence may follow the declaration.
+Code spans, escaped braces and declarations inside emphasis or links remain
+literal. Titles retain their inline Markdown formatting.
+
+Português brasileiro (`locale: "pt-BR"`):
+
+```markdown
+Consulte a {@ref sec-logic-levels} e {@ref sec-summary}.
+
+## 1.4. Níveis lógicos {#sec-logic-levels}
+
+### Síntese {#sec-summary}
+```
+
+The links display `Seção 1.4` and `Síntese`.
+
+English (`locale: "en-US"`):
+
+```markdown
+See {@ref sec-logic-levels} and {@ref sec-summary}.
+
+## 1.4. Logic levels {#sec-logic-levels}
+
+### Summary {#sec-summary}
+```
+
+The links display `Section 1.4` and `Summary`.
+
+Español (`locale: "es"`):
+
+```markdown
+Consulte la {@ref sec-logic-levels} y {@ref sec-summary}.
+
+## 1.4. Niveles lógicos {#sec-logic-levels}
+
+### Síntesis {#sec-summary}
+```
+
+The links display `Sección 1.4` and `Síntesis`. All heading levels use the same
+localized section label. Other locales fall back to `Section`.
+
+No heading numbers are inserted or inferred from document structure. A leading
+decimal number (`1`, `1.4`, `1.4.2`, optionally followed by a final dot)
+followed by whitespace supplies the reference number. Otherwise the reference
+uses the heading's plain text, with inline formatting converted to text. Roman
+numerals and appendix letters are treated as title text. The visible title is
+unchanged.
+
+Explicit labels remain stable when titles or translations change. Unlike block
+IDs, heading IDs have no generated document prefix:
+`[details](#sec-logic-levels)` and
+`[another chapter](chapter.md#sec-logic-levels)` can use them directly.
+Integrators placing several documents in the same DOM scope must avoid repeated
+heading IDs, as with existing automatic heading anchors. `{@ref label}` still
+resolves only within its current document; it does not load other chapters.
+
+Heading and block labels share one registry. Duplicate labels, including a
+heading and a figure with the same label, emit `cross-reference-duplicate` and
+remain ambiguous. Missing references emit `cross-reference-missing`. Existing
+HTML anchors are preserved; an explicit target conflicting with one is
+diagnosed and left unresolved. Automatic heading anchors yield to reserved
+explicit IDs and receive a free numeric suffix, regardless of source order.
+Unconflicted automatic anchors keep the existing GitHub slugging behavior.
+
+Parsing emits heading anchors and reference placeholders; `renderDocument` or
+`typeset` finalizes collisions and resolves links. Repeated typesetting and
+updates are supported, including locale changes. The feature works in both
+`core` and `gfm` profiles and does not require `didactic`.
+
+Compatibility: enabling `cross-references` now interprets valid trailing
+heading labels that previously appeared literally. Their previous automatic
+slugs (which included the label text) are replaced by the explicit IDs. Without
+`cross-references`, this syntax keeps its previous literal behavior. Existing
+block counters and block target IDs are unchanged.
+
+See the complete examples in
+[Portuguese](../../example/pt/blocos-didaticos.md),
+[English](../../example/en/blocos-didaticos.md) and
+[Spanish](../../example/es/blocos-didaticos.md), combining sections, a figure,
+a table, an equation and teaching blocks.

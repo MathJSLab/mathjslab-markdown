@@ -2,7 +2,9 @@
 
 **Extensions:** `didactic`, `cross-references`, `mathjax`.
 
-## Key ideas
+See {@ref sec-foundations} before {@ref sec-practice}.
+
+## 1. Key ideas {#sec-foundations}
 
 Apply {@ref pitagoras} to the values in {@ref resultados}. Hints and solutions
 stay collapsed until you open them.
@@ -11,7 +13,11 @@ stay collapsed until you open them.
 
 In a right triangle, the legs $a$, $b$ and hypotenuse $c$ satisfy:
 
+::: equation {#eq-pythagoras}
+
 $$a^2+b^2=c^2.$$
+
+:::
 
 ::: hint Geometric interpretation
 
@@ -20,6 +26,15 @@ Compare the areas of the squares built on the sides.
 :::
 
 ::::
+
+The relation in {@ref eq-pythagoras} is illustrated in {@ref fig-areas}.
+
+<!-- prettier-ignore -->
+::: figure Relationship between areas {#fig-areas}
+
+**a² + b² → c²**
+
+:::
 
 ::: table Right triangles {#resultados}
 
@@ -37,7 +52,7 @@ its length.
 
 :::
 
-## Practice
+## 2. Practice {#sec-practice}
 
 Solve {@ref aplicacao} using {@ref pitagoras}.
 

@@ -396,7 +396,10 @@ export class MarkdownEngine {
       mode === 'strict'
         ? {
             walkTokens: (token) => {
-              if (token.type !== 'html') return;
+              // Per-call options replace Marked's extension walkers. Preserve
+              // them while adding strict-mode HTML escaping.
+              const extensionResults = this.parser.defaults.walkTokens?.(token);
+              if (token.type !== 'html') return extensionResults;
               const html = token as typeof token & {
                 raw: string;
                 text: string;
@@ -405,6 +408,7 @@ export class MarkdownEngine {
               html.type = 'text';
               html.text = escapeHTML(html.text);
               html.raw = html.text;
+              return extensionResults;
             },
           }
         : undefined;

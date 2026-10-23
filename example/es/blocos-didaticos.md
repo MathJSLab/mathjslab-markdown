@@ -2,7 +2,9 @@
 
 **Extensiones:** `didactic`, `cross-references`, `mathjax`.
 
-## Ideas principales
+Consulte la {@ref sec-foundations} antes de la {@ref sec-practice}.
+
+## 1. Ideas principales {#sec-foundations}
 
 Aplique {@ref pitagoras} a los valores de la {@ref resultados}. Las pistas y
 soluciones permanecen cerradas hasta que las abra.
@@ -12,7 +14,11 @@ soluciones permanecen cerradas hasta que las abra.
 En un triángulo rectángulo, los catetos $a$, $b$ y la hipotenusa $c$
 satisfacen:
 
+::: equation {#eq-pythagoras}
+
 $$a^2+b^2=c^2.$$
+
+:::
 
 ::: hint Interpretación geométrica
 
@@ -21,6 +27,15 @@ Compare las áreas de los cuadrados construidos sobre los lados.
 :::
 
 ::::
+
+La relación de la {@ref eq-pythagoras} se ilustra en la {@ref fig-areas}.
+
+<!-- prettier-ignore -->
+::: figure Relación entre las áreas {#fig-areas}
+
+**a² + b² → c²**
+
+:::
 
 ::: table Triángulos rectángulos {#resultados}
 
@@ -38,7 +53,7 @@ suelo. Determine su longitud.
 
 :::
 
-## Práctica
+## 2. Práctica {#sec-practice}
 
 Resuelva {@ref aplicacao} usando {@ref pitagoras}.
 
