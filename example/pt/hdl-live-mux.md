@@ -2,8 +2,8 @@
 
 Execução no cliente: o aplicativo deve autorizar createBrowserHDLExecutor e
 hospedar seus assets WebAssembly/Worker. Verilog usa Icarus e YoWASP no
-navegador, sem serviço, token ou sessionStorage. Síntese VHDL-2008 usa GHDL e YoWASP
-no navegador; simulação e interatividade VHDL-2008 usam o runtime NVC. O
+navegador, sem serviço, token ou sessionStorage. Síntese VHDL-2008 usa GHDL e
+YoWASP no navegador; simulação e interatividade VHDL-2008 usam o runtime NVC. O
 Markdown não pode autorizar execução. Consulte
 doc/extensions/hdl-troubleshooting.md e doc/hdl-browser-results.md.
 

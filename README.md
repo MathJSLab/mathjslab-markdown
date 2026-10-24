@@ -114,16 +114,17 @@ executors, Workers and renderers from the host; the core engine has no
 dependency on `mathjslab-app` or Plotly. Standalone bundles share a runtime:
 deploy the entire `dist/browser` tree, including its chunks and assets.
 
-The [browser HDL executor](doc/extensions/hdl-troubleshooting.md) runs real Icarus
-simulation and YoWASP synthesis in isolated Workers with self-hosted Wasm assets.
-Application authorization is explicit in development and static production.
-GHDL now provides real VHDL-2008 synthesis, including tested IEEE.NUMERIC_STD
-sources. NVC now provides VHDL-2008 simulation and interactive replay in Workers.
-NVC and the source-built Icarus port include complete sources and verified matching
-artifacts across independent Windows build roots. GHDL has matching clean Linux
-reconstructions with an immutable Ubuntu base, a complete package-version lock
-and verified package hashes. See the [browser report](doc/hdl-browser-results.md)
-and [reconstruction workflow](doc/hdl-github-actions.md) for evidence and scope.
+The [browser HDL executor](doc/extensions/hdl-troubleshooting.md) runs real
+Icarus simulation and YoWASP synthesis in isolated Workers with self-hosted
+Wasm assets. Application authorization is explicit in development and static
+production. GHDL now provides real VHDL-2008 synthesis, including tested
+IEEE.NUMERIC_STD sources. NVC now provides VHDL-2008 simulation and interactive
+replay in Workers. NVC and the source-built Icarus port include complete
+sources and verified matching artifacts across independent Windows build roots.
+GHDL has matching clean Linux reconstructions with an immutable Ubuntu base, a
+complete package-version lock and verified package hashes. See the
+[browser report](doc/hdl-browser-results.md) and
+[reconstruction workflow](doc/hdl-github-actions.md) for evidence and scope.
 
 HDL and MathJSLab use shared
 [execution sessions and scheduling](doc/execution-scheduling.md), with
@@ -179,8 +180,9 @@ WaveDrom diagrams, dynamic geometry, TikZ/CircuiTikZ and CSL bibliographies.
 Each note identifies the extensions it uses. View the examples with those
 extensions enabled in a host application; ordinary Markdown viewers may display
 rich fences as source code. The collections include local resources and are
-available in the repository; `doc/` and `example/` are excluded from the npm
-distribution. Additional languages can be added under `example/`.
+available in the repository and in the npm package under `example/`, together
+with their local resources. General documentation remains in the repository.
+Additional languages can be added under `example/`.
 
 ## Development
 
@@ -234,8 +236,8 @@ contents, then commits, pushes and publishes the package to npm. Run it only
 when deliberately releasing. `prepack` rebuilds and validates the emitted
 distribution; `prepublishOnly` checks lint, types and unit tests. The package
 includes the production distribution, package metadata, README, release notes,
-contributor resources and license. Documentation and teaching examples remain
-available in the repository.
+contributor resources, license and the complete teaching example catalogue.
+Documentation remains available in the repository.
 
 Publish the compatible `mathjslab` version before consumers enable its
 integration. Commit, push and publication scripts are also available as

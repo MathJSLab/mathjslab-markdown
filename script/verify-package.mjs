@@ -25,6 +25,14 @@ const output = JSON.parse(result.stdout);
 const packed = Array.isArray(output) ? output[0] : (output[manifest.name] ?? output);
 assert.ok(Array.isArray(packed.files), 'Unexpected npm pack result keys: ' + Object.keys(packed).join(', '));
 const files = new Set(packed.files.map((file) => file.path));
+const verifyExamples = (directory) => {
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const filename = path.join(directory, entry.name);
+    if (entry.isDirectory()) verifyExamples(filename);
+    else assert.ok(files.has(path.relative(root, filename).replaceAll(path.sep, '/')), 'Missing packaged example/resource: ' + filename);
+  }
+};
+verifyExamples(path.join(root, 'example'));
 for (const file of [
   'script/3dmol/prepare.mjs',
   'script/3dmol/runtime.lock.json',

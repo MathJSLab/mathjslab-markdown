@@ -1,13 +1,25 @@
 # Release notes
 
+## 0.8.3 — 2026-10-24
+
+- Repair six figure openings and one exercise opening in the Portuguese digital
+  electronics introduction. Keep titles/labels on one line with formatter
+  protection; preserve the documented grammar and missing-reference
+  diagnostics.
+- Audit the complete example catalogue before/after formatting and add real
+  URL-loaded document browser checks for cross-references and settled
+  navigation.
+- Include `example/` and its local resources in npm packages and verify their
+  presence. General documentation continues to live in the repository.
+
 ## 0.8.2 — 2026-10-23
 
 - Fix 3Dmol initialization when OffscreenCanvas is absent or its WebGL2 output
   path is unusable. Preserve native HTML WebGL fallback without browser globals
   or user-agent checks. Build a private, version/hash-checked compatibility
   runtime from the pinned dependency; ship its recipe and license.
-- Add standalone PDB/XYZ browser regressions for native and absent capabilities,
-  real molecular pixels, resize and session disposal.
+- Add standalone PDB/XYZ browser regressions for native and absent
+  capabilities, real molecular pixels, resize and session disposal.
 - Validate 12 molecular cases and nine focused standalone reference cases in
   Chromium, Firefox and WebKit on Windows and Linux. Use Xvfb/Mesa for Firefox
   on the Linux runner to provide an actual WebGL context; preserve all pixel
@@ -25,12 +37,14 @@
 - Add sequential Chromium/Firefox/WebKit fragment regressions in Portuguese,
   English and Spanish, including final geometry, large fonts/margins, nested
   scroll containers and Shadow DOM, collections, and reduced motion.
-- Pin the browser test driver to Playwright 1.64.1 (WebKit 27.2, revision 2370).
+- Pin the browser test driver to Playwright 1.64.1 (WebKit 27.2, revision
+  2370).
 - Validate 72 production browser cases / 288 settled navigations, 618 unit
   tests in 42 suites, and 21 distribution tests. Revalidate the fragment matrix
   on Linux plus all nine application heading-reference cases and six repeated
-  Firefox image security cases without retries. The unrelated image cancellation
-  was not reproduced; no image assertions or application sources were changed.
+  Firefox image security cases without retries. The unrelated image
+  cancellation was not reproduced; no image assertions or application sources
+  were changed.
 
 ## 0.8.0 — 2026-10-23
 
@@ -46,7 +60,8 @@
   metadata is processed consistently without disabling HTML escaping.
 - Add heading, anchor-conflict and navigation tests, distribution coverage with
   real MathJax, and integrated examples in Portuguese, English and Spanish.
-  Validate 616 unit tests across 42 suites and 21 production distribution tests.
+  Validate 616 unit tests across 42 suites and 21 production distribution
+  tests.
 
 ## 0.7.2 — 2026-10-22
 
@@ -57,9 +72,10 @@
   UI exports, without changing raw executor results or update callbacks.
   Preserve incremental/final log replacement and interactive reset behavior.
 - Verify the published 0.7.1 presentation against the correction in real static
-  browsers: 173 checks across Chrome/Edge, including pt/en/es multiplexors,
-  new HDL sources, compiler errors, responsive details and exports. Preserve
-  compiler asset integrity and existing application authorization/configuration.
+  browsers: 173 checks across Chrome/Edge, including pt/en/es multiplexors, new
+  HDL sources, compiler errors, responsive details and exports. Preserve
+  compiler asset integrity and existing application
+  authorization/configuration.
 
 ## 0.7.1 — 2026-10-20
 
@@ -70,30 +86,32 @@
 
 - Add a self-hosted Icarus/YoWASP Worker executor, pinned compiler assets and
   static application integration, with real browser tests and shared replay.
-- Add self-hosted GHDL WebAssembly VHDL-2008 synthesis, original source diagnostics,
-  IEEE.NUMERIC_STD coverage and archived upstream build inputs.
-- Add real NVC VHDL-2008 simulation and interactive replay, Wasm32 runtime fixes,
-  temporal/VCD regression fixtures, complete source archives and a pinned build recipe.
-- Verify byte-identical NVC JS/Wasm/libraries across independent Windows build roots,
-  and preserve real elapsed VCD/CSV time for testbenches without signals.
-- Replace the downloaded VeriSim binaries with a source-built Icarus static-Wasm port;
-  distribute complete corresponding sources, dated patches, bootstrap inputs,
-  Emscripten pins and runtime licenses. Verify matching six-artifact builds in
-  two Windows/MSYS2 roots and cap each module's Wasm heap at 512 MiB.
+- Add self-hosted GHDL WebAssembly VHDL-2008 synthesis, original source
+  diagnostics, IEEE.NUMERIC_STD coverage and archived upstream build inputs.
+- Add real NVC VHDL-2008 simulation and interactive replay, Wasm32 runtime
+  fixes, temporal/VCD regression fixtures, complete source archives and a
+  pinned build recipe.
+- Verify byte-identical NVC JS/Wasm/libraries across independent Windows build
+  roots, and preserve real elapsed VCD/CSV time for testbenches without
+  signals.
+- Replace the downloaded VeriSim binaries with a source-built Icarus
+  static-Wasm port; distribute complete corresponding sources, dated patches,
+  bootstrap inputs, Emscripten pins and runtime licenses. Verify matching
+  six-artifact builds in two Windows/MSYS2 roots and cap each module's Wasm
+  heap at 512 MiB.
 - Correct packaged GHDL build paths and complete its six-source smoke suite.
 - Guard normal publication against unresolved HDL source/build gates.
 - Reconstruct GHDL from pinned Linux inputs: immutable Ubuntu digest, all 236
   installed package versions and hashes of all 145 downloaded .deb files.
   Promote the matching Wasm/libraries and bind their reproduction evidence to
-  the exact source recipe; reject stale proof before publication.
-  The exact browser/language profile and app revalidation requirements are in
+  the exact source recipe; reject stale proof before publication. The exact
+  browser/language profile and app revalidation requirements are in
   doc/hdl-browser-results.md; complete-language compatibility is not claimed.
 
 - Validate the promoted static distribution in Chrome and Edge: 402 package
   browser cases and 231 application integration cases, including all ten HDL
   lesson families in Portuguese, English and Spanish. Preserve explicit host
   authorization, local-only HDL processing and ordinary static hosting.
-
 
 ## 0.6.1
 

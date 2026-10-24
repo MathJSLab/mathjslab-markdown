@@ -57,8 +57,8 @@ analógica admite uma amplitude continuamente variável; a representação digit
 mantém estados interpretados como 0 e 1 durante intervalos de tempo. O gráfico
 não implica que as transições elétricas reais sejam instantâneas.
 
-::: figure Comparação conceitual entre um sinal analógico e uma representação
-digital binária {#fig-analog-digital}
+<!-- prettier-ignore -->
+::: figure Comparação conceitual entre um sinal analógico e uma representação digital binária {#fig-analog-digital}
 
 ```vega-lite
 {
@@ -139,8 +139,8 @@ A {@ref fig-digitization-flow} organiza as operações envolvidas. Um circuito
 eletrônico não precisa realizar todas elas: uma porta lógica recebe e fornece
 estados binários sem necessariamente amostrar uma grandeza analógica.
 
-::: figure Etapas conceituais de aquisição e representação digital de uma
-grandeza analógica {#fig-digitization-flow}
+<!-- prettier-ignore -->
+::: figure Etapas conceituais de aquisição e representação digital de uma grandeza analógica {#fig-digitization-flow}
 
 ```mermaid
 flowchart LR
@@ -257,8 +257,8 @@ especificação de saída pertence ao dispositivo transmissor; a de entrada, ao
 receptor. Essa distinção é essencial ao conectar circuitos de famílias
 diferentes.
 
-::: figure Relação entre níveis garantidos na saída e limites reconhecidos na
-entrada {#fig-logic-interface}
+<!-- prettier-ignore -->
+::: figure Relação entre níveis garantidos na saída e limites reconhecidos na entrada {#fig-logic-interface}
 
 ```mermaid
 flowchart LR
@@ -313,8 +313,8 @@ bordas de um relógio. Registradores, contadores e controladores baseados em
 máquinas de estados são exemplos sequenciais. Nos modelos de Moore, a saída
 depende somente do estado; nos de Mealy, pode depender do estado e da entrada.
 
-::: figure Organização funcional de um circuito sequencial síncrono
-{#fig-sequential-system}
+<!-- prettier-ignore -->
+::: figure Organização funcional de um circuito sequencial síncrono {#fig-sequential-system}
 
 ```mermaid
 flowchart LR
@@ -362,8 +362,8 @@ A {@ref fig-abstraction-levels} representa essa hierarquia. O sentido
 ascendente oculta detalhes de implementação; o descendente exige refinamento
 até chegar a componentes e conexões realizáveis.
 
-::: figure Níveis de abstração empregados no projeto de sistemas digitais
-{#fig-abstraction-levels}
+<!-- prettier-ignore -->
+::: figure Níveis de abstração empregados no projeto de sistemas digitais {#fig-abstraction-levels}
 
 ```mermaid
 flowchart BT
@@ -435,8 +435,8 @@ analógico-digital, processamento e estágio de acionamento. Os limites distinto
 de acionamento e desligamento introduzem histerese, reduzindo comutações
 repetidas quando a temperatura oscila próxima ao ponto de decisão.
 
-::: figure Exemplo de arquitetura de um controlador digital de temperatura
-{#fig-temperature-controller}
+<!-- prettier-ignore -->
+::: figure Exemplo de arquitetura de um controlador digital de temperatura {#fig-temperature-controller}
 
 ```mermaid
 flowchart LR
@@ -566,8 +566,8 @@ de entrada e saída, carga, velocidade de comutação e condições ambientais.
 
 ::::
 
-:::: exercise Questão 4 — comportamento combinacional ou sequencial
-{#ex-combinational-or-sequential}
+<!-- prettier-ignore -->
+:::: exercise Questão 4 — comportamento combinacional ou sequencial {#ex-combinational-or-sequential}
 
 Classifique e justifique: (a) um comparador de duas palavras binárias; (b) um
 contador de pulsos; (c) um detector que informa se a sequência `101` ocorreu

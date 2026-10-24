@@ -1,6 +1,6 @@
 {
   "name": "mathjslab-markdown",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Reusable Markdown engine, educational extensions and document Web Component.",
   "type": "module",
   "license": "MIT",
@@ -61,6 +61,7 @@
   "types": "./dist/types/markdown-core.d.ts",
   "files": [
     "dist/",
+    "example/",
     "script/hdl/ghdl-synth/",
     "script/hdl/nvc-browser/",
     "script/hdl/icarus-browser/",
@@ -117,6 +118,7 @@
     "test:distribution": "node --test test/distribution/*.test.mjs",
     "test:browser:fragments": "node test/browser/fragments.mjs",
     "test:browser:molecules": "node test/browser/molecules.mjs",
+    "test:browser:example-references": "node test/browser/example-references.mjs",
     "verify:package": "node script/verify-package.mjs",
     "pack:dry-run": "npm pack --dry-run --ignore-scripts",
     "prepack": "npm run build && npm run test:distribution && npm run verify:package",

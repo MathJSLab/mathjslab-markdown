@@ -112,10 +112,34 @@ the didactic syntax. Apply it to nested openings and caption containers too
 when their titles might be wrapped. A label on the following line is body text,
 not the identifier of the container.
 
+This also applies when only `{#label}` is pushed onto the next line: it does
+not attach retroactively to the opening. Protect the complete opening,
+including the identifier, rather than the label alone. For example:
+
+```markdown
+<!-- prettier-ignore -->
+::: figure Etapas conceituais de aquisição e representação digital de uma grandeza analógica {#fig-digitization-flow}
+
+Figure content.
+
+:::
+```
+
 Prettier may also split an inline `{@ref label}` token across lines. Keep that
 token intact and use the same ignore comment before its containing paragraph
 when automatic wrapping would split it. A line break inside the reference is
 not accepted reference syntax.
+
+The repository audits every Markdown file under `example/` with the real
+registry before and after Prettier formatting. Run the catalogue regression
+with
+`npm run test:unit -- --runTestsByPath test/markdown/ExampleReferences.spec.ts`.
+The browser check `npm run test:browser:example-references` loads the complete
+digital-electronics introduction and the pt/en/es teaching lessons by URL into
+the distributed `markdown-document` component. It checks numbered captions,
+resolved links, settled navigation, document isolation and literal code. The
+npm package includes the examples and local resources; package verification
+rejects any omitted catalogue file.
 
 - Enable `didactic` explicitly or select `features: "all"`. Creating the core
   `MarkdownEngine` or omitting `features` does not enable teaching blocks.
