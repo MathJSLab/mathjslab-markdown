@@ -43,6 +43,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Determine package archive
+        working-directory: package
+        run: >-
+          node --input-type=module -e "import fs from 'node:fs';
+          const {version}=JSON.parse(fs.readFileSync('package.json','utf8'));
+          fs.appendFileSync(process.env.GITHUB_ENV, 'MARKDOWN_ARCHIVE=mathjslab-markdown-'+version+'.tgz\n');"
       - name: Reuse validated candidate
         if: ${{ inputs.candidate_run }}
         uses: actions/download-artifact@v4
@@ -60,7 +66,7 @@ jobs:
       - name: Restore built distribution for focused revalidation
         if: ${{ inputs.candidate_run && inputs.package_only }}
         working-directory: package
-        run: tar -xzf mathjslab-markdown-0.8.3.tgz --strip-components=1
+        run: tar -xzf "$MARKDOWN_ARCHIVE" --strip-components=1
       - name: Validate and build package sequentially
         if: ${{ !inputs.candidate_run }}
         working-directory: package
@@ -94,9 +100,9 @@ jobs:
         run: |
           npm ci --ignore-scripts
           mkdir -p vendor
-          cp ../package/mathjslab-markdown-0.8.3.tgz vendor/
-          node --input-type=module -e "import fs from 'node:fs'; import crypto from 'node:crypto'; const archive='mathjslab-markdown-0.8.3.tgz'; fs.writeFileSync('vendor/markdown-local.json', JSON.stringify({archive, sha256:crypto.createHash('sha256').update(fs.readFileSync('vendor/'+archive)).digest('hex')}));"
-          npm install --ignore-scripts --save-exact ./vendor/mathjslab-markdown-0.8.3.tgz
+          cp "../package/$MARKDOWN_ARCHIVE" vendor/
+          node --input-type=module -e "import fs from 'node:fs'; import crypto from 'node:crypto'; const archive=process.env.MARKDOWN_ARCHIVE; fs.writeFileSync('vendor/markdown-local.json', JSON.stringify({archive, sha256:crypto.createHash('sha256').update(fs.readFileSync('vendor/'+archive)).digest('hex')}));"
+          npm install --ignore-scripts --save-exact "./vendor/$MARKDOWN_ARCHIVE"
           npx playwright install --with-deps chromium firefox webkit
       - name: Validate and build application sequentially
         if: ${{ !inputs.package_only }}
@@ -120,7 +126,7 @@ jobs:
           name: markdown-release-linux-${{ github.run_attempt }}
           path: |
             package/report
-            package/mathjslab-markdown-0.8.3.tgz
+            package/mathjslab-markdown-*.tgz
             app/report
             app/playwright-report
             app/test/result/playwright
