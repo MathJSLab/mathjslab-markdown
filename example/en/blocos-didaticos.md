@@ -62,6 +62,14 @@ $c=\sqrt{6^2+8^2}=10$ m. The length is the hypotenuse.
 
 :::
 
+::: warning Check assumptions {#warning-assumptions}
+
+Apply a mathematical model only while its **assumptions** remain valid.
+
+:::
+
+Review {@ref warning-assumptions} before using the result.
+
 [Collection index](README.md)
 
 [Português brasileiro](../pt/blocos-didaticos.md) ·

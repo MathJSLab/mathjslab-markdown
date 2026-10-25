@@ -62,6 +62,14 @@ $c=\sqrt{6^2+8^2}=10$ m. O comprimento é a hipotenusa.
 
 :::
 
+::: warning Verifique as hipóteses {#warning-assumptions}
+
+Aplique um modelo matemático apenas enquanto suas **hipóteses** forem válidas.
+
+:::
+
+Revise {@ref warning-assumptions} antes de usar o resultado.
+
 [Índice da coleção](README.md)
 
 [English](../en/blocos-didaticos.md) · [Español](../es/blocos-didaticos.md)

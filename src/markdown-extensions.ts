@@ -6,6 +6,7 @@ export { geometryExtension } from './markdown/extensions/geometry/extension.js';
 export { geometryManifest } from './markdown/extensions/geometry/manifest.js';
 export type { GeometrySpec, GeometryElementSpec, GeometryElementType, GeometryAttributes } from './markdown/extensions/geometry/spec.js';
 export { didacticExtension } from './markdown/extensions/didactic/extension.js';
+export type { StructuredBlockOptions } from './markdown/extensions/didactic/blocks.js';
 export { didacticManifest } from './markdown/extensions/didactic/manifest.js';
 export { crossReferencesExtension } from './markdown/extensions/cross-references/extension.js';
 export { crossReferencesManifest } from './markdown/extensions/cross-references/manifest.js';

@@ -1,5 +1,27 @@
 # Release notes
 
+## 0.9.0 — 2026-10-25
+
+- Process structured block titles as inline Markdown, including enabled
+  MathJax, MathJSLab and cross-references, while keeping authored HTML literal.
+  Set `structuredBlockOptions.titleMode` to `"plain"` for legacy titles.
+- Support opt-in `{#id .full-width}` and `{.full-width}` table presentation
+  with scoped CSS, preserving GFM column alignment and natural-width defaults.
+- Preserve HTML escaping in titles, including custom inline child tokens and
+  strict-mode walkers. Keep supported TeX and MathJSLab delimiters independent;
+  no special recognition of `\(...\)` is introduced.
+- Add a generic structured-block example and browser regressions for full-width
+  tables, nested tables, references, mathematics and Shadow DOM.
+
+## 0.8.4 — 2026-10-24
+
+- Recognize generic `warning` teaching blocks with localized headings, labels,
+  independent numbering and cross-references through the existing didactic
+  container grammar. Previously literal valid warnings now render when
+  `didactic` is enabled; fenced examples remain literal.
+- Add Boolean TeX/SVG regression coverage and document mathematical
+  typesetting, text extraction and strict-mode capability requirements.
+
 ## 0.8.3 — 2026-10-24
 
 - Repair six figure openings and one exercise opening in the Portuguese digital

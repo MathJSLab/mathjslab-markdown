@@ -19,12 +19,39 @@ remain unchanged. The core engine does not enable them automatically.
 ## Teaching blocks
 
 The `didactic` extension recognizes `definition`, `theorem`, `proof`,
-`example`, `exercise`, `hint` and `solution`. A title and a trailing `{#label}`
-are optional. Use lowercase English kind names, a space after at least three
-colons, and an opening line followed by a newline. Put the identifier after the
-title on the same line. Titles are plain text; bodies support Markdown and
-other enabled extensions. `exercise` renders a semantic `<section>`; `hint` and
-`solution` render collapsible `<details>` with a `<summary>`.
+`example`, `exercise`, `hint`, `solution` and `warning`. A title and a trailing
+`{#label}` are optional. Use lowercase English kind names, a space after at
+least three colons, and an opening line followed by a newline. Put the
+identifier after the title on the same line. Titles support inline Markdown,
+including emphasis, code spans, links, enabled mathematics and
+cross-references; bodies support block Markdown and other enabled extensions.
+`exercise` renders a semantic `<section>`; `hint` and `solution` render
+collapsible `<details>` with a `<summary>`.
+
+`warning` renders a static
+`<section class="markdown-didactic markdown-warning">` with a heading and a
+Markdown body, using the existing teaching-block styles. It does not announce a
+live alert. With `cross-references`, warnings have their own counter and
+document-scoped targets, just like other teaching blocks. Labels are `Warning`,
+`Advertência` and `Advertencia` for English, Portuguese and Spanish; other
+locales fall back to English. The directive remains `warning` in every
+language.
+
+```markdown
+See {@ref assumptions}.
+
+::: warning Check assumptions {#assumptions}
+
+Use **verified** assumptions before simplifying a model.
+
+:::
+```
+
+Without `cross-references`, the identifier remains metadata and the heading is
+unnumbered. Without `didactic`, the directive remains ordinary Markdown.
+Compatibility: enabling `didactic` now interprets valid `::: warning`
+containers that previously appeared literally. Put literal syntax examples in
+code fences.
 
 ```markdown
 :::: theorem Pythagorean theorem {#pythagoras}
@@ -288,3 +315,91 @@ See the complete examples in
 [English](../../example/en/blocos-didaticos.md) and
 [Spanish](../../example/es/blocos-didaticos.md), combining sections, a figure,
 a table, an equation and teaching blocks.
+
+## Inline titles and compatibility
+
+All recognized teaching blocks and caption containers share the same inline
+processing. MathJax titles accept `$...$` and the protected form ``$`...`$``;
+MathJSLab titles accept `%...%` and ``%`...`%`` when its executor-backed
+extension is registered. These are separate languages: TeX is passed to
+MathJax, and MathJSLab source is passed unchanged to `toMathML()`. Inline
+expressions do not execute MathJSLab command sessions. There is no special
+recognition of `\(...\)`; use the supported dollar delimiters or a `math` fence
+for TeX, including TeX commands for parentheses when needed.
+
+```markdown
+::: figure A **model** of $F=AB+C$, related to {@ref values} {#model}
+
+Figure content.
+
+:::
+
+::: example Expression %`F=A*B+C`% {#expression}
+
+Example content.
+
+:::
+```
+
+Raw HTML authored inside titles is always displayed as text, including inside
+emphasis or link text and even in `trusted` mode. Markdown links and markup
+produced by registered extensions still follow the engine's existing security
+and resource policies. `renderHTML()` and `renderDocument()` apply those
+policies; `parse()` alone does not sanitize generated HTML. Strict-mode MathJax
+still requires the existing `interactive` capability grant.
+
+To retain literal legacy titles, configure both extensions consistently:
+
+```ts
+const engine = createEducationalMarkdownEngine({
+    features: ["didactic", "cross-references"],
+    structuredBlockOptions: { titleMode: "plain" },
+});
+```
+
+Standalone factories accept the same exported `StructuredBlockOptions` type:
+`didacticExtension({ titleMode: "plain" })` and
+`crossReferencesExtension({ titleMode: "plain" })`. The default is `"inline"`.
+Literal titles retain numbering, labels and table presentation metadata. Escape
+Markdown punctuation or use code spans for individual literal pieces in inline
+mode. Trailing metadata inside code, emphasis, links, mathematics or escaped
+braces remains title content rather than becoming a block identifier.
+
+## Opt-in full-width tables
+
+`table` is a caption container supplied by `cross-references`, not a separate
+extension. Pipe tables require the `gfm` profile. Ordinary Markdown tables and
+captioned tables keep their natural width unless explicitly marked:
+
+```markdown
+::: table **Values** of $F$ {#values .full-width}
+
+|  A  |  B  |   F |
+| :-: | :-: | --: |
+|  0  |  0  |   0 |
+|  0  |  1  |   1 |
+
+:::
+```
+
+The supported suffixes are `{#id}`, `{#id .full-width}` and `{.full-width}`.
+Presentation classes are currently restricted to `.full-width` on `table`
+containers; arbitrary classes, `width="100%"`, `style` and other attributes are
+not supported. Unsupported metadata remains visible and does not declare an
+identifier. Identifiers retain their existing grammar and document scope.
+
+The extension emits `markdown-table-full-width` and supplies a minimal rule for
+its direct child tables: `width: 100%; table-layout: auto`. It installs styles
+in the document's rendering scope, including Shadow DOM. Consumers using only
+parsed HTML must install equivalent CSS themselves. Applications can override
+the class in the same rendering scope.
+
+Column alignment continues to use standard GFM `:---`, `:---:` and `---:`.
+Automatic layout accommodates unequal content; full width does not force equal
+column widths. Nested caption blocks and tables outside the marked container do
+not inherit the rule. No inline style or arbitrary HTML attribute is copied
+from the Markdown suffix. `note` remains an unsupported container.
+
+Regression checks: `test/markdown/StructuredBlockInline.spec.ts`,
+`test/markdown/MathJax.spec.ts`, and (after building the browser bundle)
+`node test/browser/structured-blocks.mjs`.

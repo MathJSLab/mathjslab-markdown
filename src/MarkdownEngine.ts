@@ -398,7 +398,7 @@ export class MarkdownEngine {
             walkTokens: (token) => {
               // Per-call options replace Marked's extension walkers. Preserve
               // them while adding strict-mode HTML escaping.
-              const extensionResults = this.parser.defaults.walkTokens?.(token);
+              const extensionResults = this.parser.defaults.walkTokens?.call(this.parser, token);
               if (token.type !== 'html') return extensionResults;
               const html = token as typeof token & {
                 raw: string;

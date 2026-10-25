@@ -63,6 +63,14 @@ $c=\sqrt{6^2+8^2}=10$ m. La longitud es la hipotenusa.
 
 :::
 
+::: warning Verifique las hipótesis {#warning-assumptions}
+
+Aplique un modelo matemático solo mientras sus **hipótesis** sean válidas.
+
+:::
+
+Revise {@ref warning-assumptions} antes de usar el resultado.
+
 [Índice de la colección](README.md)
 
 [Português brasileiro](../pt/blocos-didaticos.md) ·

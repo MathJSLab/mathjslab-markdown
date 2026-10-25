@@ -1,19 +1,20 @@
 import type { MarkdownExtension } from '../../../MarkdownEngine.js';
-import type { Tokens } from 'marked';
-import { blockSyntax, blockLabels, localizeBlocks, type BlockKind } from '../didactic/blocks.js';
+import type { Marked, Tokens } from 'marked';
+import { blockSyntax, blockLabels, localizeBlocks, type BlockKind, type StructuredBlockOptions } from '../didactic/blocks.js';
 import { crossReferencesManifest } from './manifest.js';
 import { markdownDiagnosticCodes } from '../../diagnostics.js';
 
 let nextDocument = 0;
 
-export const crossReferencesExtension = (): MarkdownExtension => {
+export const crossReferencesExtension = (options: StructuredBlockOptions = {}): MarkdownExtension => {
   const prefixes = new WeakMap<ParentNode, string>();
-  const blocks = blockSyntax('caption-block', ['figure', 'table', 'equation']);
+  const blocks = blockSyntax('caption-block', ['figure', 'table', 'equation'], options);
   return {
     name: crossReferencesManifest.name,
     manifest: crossReferencesManifest,
     marked: {
-      walkTokens(token) {
+      walkTokens(this: Marked, token) {
+        blocks.walkTokens?.call(this, token);
         if (token.type !== 'heading') return;
         const heading = token as Tokens.Heading & { markdownHeading?: string };
         const last = heading.tokens.at(-1);

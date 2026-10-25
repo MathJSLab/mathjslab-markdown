@@ -9,6 +9,9 @@ distinct notes for every extension in each of three languages. Browse the
 [Citations and bibliography](citations.md) format citation keys and embedded
 BibTeX/CSL JSON with configurable CSL styles.
 
+[Mathematical expressions](mathjax.md) covers TeX delimiters, SVG output and
+troubleshooting differences between rendered formulas and extracted text.
+
 [TikZ and CircuiTikZ](tikz.md) compile technical drawings and electrical
 circuit diagrams locally in a TeX/WebAssembly Worker.
 

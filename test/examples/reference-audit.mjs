@@ -11,7 +11,7 @@ export const exampleFiles = (root) =>
     })
     .sort();
 
-const kinds = 'figure|table|equation|definition|theorem|proof|example|exercise|hint|solution';
+const kinds = 'figure|table|equation|definition|theorem|proof|example|exercise|hint|solution|warning';
 const label = /\{#[^}]*\}/g;
 const reference = /\{@ref\b[^}]*\}/g;
 const marked = new Marked();
@@ -19,7 +19,15 @@ const marked = new Marked();
 export const referenceSyntaxIssues = (source, declarations = []) => {
   const tokens = marked.lexer(source);
   const headings = new Set();
+  const prefixes = new WeakMap();
   marked.walkTokens(tokens, (token) => {
+    if (token.type === 'paragraph') {
+      let offset = 0;
+      for (const child of token.tokens ?? []) {
+        prefixes.set(child, token.raw.slice(0, offset));
+        offset += child.raw.length;
+      }
+    }
     if (token.type === 'heading' && /\{#[A-Za-z][\w:.-]*\}$/.test(token.text)) headings.add(token.tokens?.at(-1));
   });
   const issues = [];
@@ -29,14 +37,15 @@ export const referenceSyntaxIssues = (source, declarations = []) => {
       if (!/^\{@ref [A-Za-z][\w:.-]*\}$/.test(match[0])) issues.push(`Split or invalid reference: ${JSON.stringify(match[0])}`);
     }
     for (const match of token.raw.matchAll(label)) {
-      if (!/^\{#[A-Za-z][\w:.-]*\}$/.test(match[0])) {
+      const line = ((prefixes.get(token) ?? '') + token.raw.slice(0, match.index)).split('\n').at(-1);
+      const kind = /^:{3,}[ \t]+(\w+)(?:[ \t]|$)/.exec(line)?.[1];
+      const metadata = /^\{#([A-Za-z][\w:.-]*)([ \t]+\.full-width)?\}$/.exec(match[0]);
+      if (!metadata || (metadata[2] && kind !== 'table')) {
         issues.push(`Split or invalid label: ${JSON.stringify(match[0])}`);
         continue;
       }
-      const line = token.raw.slice(0, match.index).split('\n').at(-1);
-      const kind = /^:{3,}[ \t]+(\w+)(?:[ \t]|$)/.exec(line)?.[1];
       if (!headings.has(token) && !kinds.split('|').includes(kind)) issues.push(`Displaced label: ${match[0]}`);
-      else declarations.push(match[0].slice(2, -1));
+      else declarations.push(metadata[1]);
     }
   });
   return issues;

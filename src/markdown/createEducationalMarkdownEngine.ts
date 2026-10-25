@@ -1,3 +1,6 @@
+import { didacticExtension } from './extensions/didactic/extension.js';
+import { crossReferencesExtension } from './extensions/cross-references/extension.js';
+import type { StructuredBlockOptions } from './extensions/didactic/blocks.js';
 import { hdlExtension } from './extensions/hdl/extension.js';
 import { hdlInteractiveExtension } from './extensions/hdl-interactive/extension.js';
 import { MarkdownEngine, type MarkdownEngineOptions, type MarkdownExtension } from '../MarkdownEngine.js';
@@ -11,6 +14,7 @@ export { educationalMarkdownFeatures } from './extensionCatalog.js';
 export type { EducationalMarkdownFeature } from './extensionCatalog.js';
 
 export type EducationalMarkdownEngineOptions = Omit<MarkdownEngineOptions, 'extensions'> & {
+  structuredBlockOptions?: StructuredBlockOptions;
   mapOptions?: MarkdownMapOptions;
   tikzOptions?: TikZOptions;
   citationsOptions?: CitationsOptions;
@@ -22,7 +26,7 @@ export type EducationalMarkdownEngineOptions = Omit<MarkdownEngineOptions, 'exte
 
 /** Create the reusable engine without importing MathJSLab application state. */
 export const createEducationalMarkdownEngine = (options: EducationalMarkdownEngineOptions = {}): MarkdownEngine => {
-  const { features = [], extensions = [], mapOptions, tikzOptions, citationsOptions, ...engineOptions } = options;
+  const { features = [], extensions = [], structuredBlockOptions, mapOptions, tikzOptions, citationsOptions, ...engineOptions } = options;
   const selected = features === 'all' ? educationalMarkdownFeatures : features;
   const unique = Array.from(new Set(selected));
   const complete = educationalMarkdownFeatures.every((feature) => unique.includes(feature));
@@ -32,13 +36,17 @@ export const createEducationalMarkdownEngine = (options: EducationalMarkdownEngi
     ...engineOptions,
     extensions: [
       ...unique.map((feature) =>
-        feature === 'maps'
-          ? mapsExtension(mapOptions)
-          : feature === 'tikz'
-            ? tikzExtension(tikzOptions)
-            : feature === 'citations'
-              ? citationsExtension(citationsOptions)
-              : createEducationalMarkdownExtension(feature),
+        feature === 'didactic'
+          ? didacticExtension(structuredBlockOptions)
+          : feature === 'cross-references'
+            ? crossReferencesExtension(structuredBlockOptions)
+            : feature === 'maps'
+              ? mapsExtension(mapOptions)
+              : feature === 'tikz'
+                ? tikzExtension(tikzOptions)
+                : feature === 'citations'
+                  ? citationsExtension(citationsOptions)
+                  : createEducationalMarkdownExtension(feature),
       ),
       ...(complete && !supplied('hdl', ['vhdl-run', 'verilog-run']) ? [hdlExtension()] : []),
       ...(complete && !supplied('hdl-interactive', ['vhdl-live', 'verilog-live']) ? [hdlInteractiveExtension()] : []),

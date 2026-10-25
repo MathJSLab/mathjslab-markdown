@@ -1,4 +1,4 @@
-import type { MarkedExtension, Token, Tokens } from 'marked';
+import type { Marked, MarkedExtension, Token, Tokens } from 'marked';
 
 export const blockLabels = {
   en: {
@@ -9,6 +9,7 @@ export const blockLabels = {
     exercise: 'Exercise',
     hint: 'Hint',
     solution: 'Solution',
+    warning: 'Warning',
     figure: 'Figure',
     table: 'Table',
     equation: 'Equation',
@@ -21,6 +22,7 @@ export const blockLabels = {
     exercise: 'Exercício',
     hint: 'Dica',
     solution: 'Solução',
+    warning: 'Advertência',
     figure: 'Figura',
     table: 'Tabela',
     equation: 'Equação',
@@ -33,17 +35,44 @@ export const blockLabels = {
     exercise: 'Ejercicio',
     hint: 'Pista',
     solution: 'Solución',
+    warning: 'Advertencia',
     figure: 'Figura',
     table: 'Tabla',
     equation: 'Ecuación',
   },
 } as const;
 export type BlockKind = keyof typeof blockLabels.en;
-type BlockToken = Tokens.Generic & { kind: BlockKind; title: string; label: string; tokens: Token[] };
+/** Shared title behavior for teaching blocks and caption containers. */
+export type StructuredBlockOptions = {
+  /** Inline Markdown by default; use plain text for legacy literal titles. */
+  titleMode?: 'inline' | 'plain';
+};
+
+type BlockToken = Tokens.Generic & { kind: BlockKind; title: string; titleTokens: Token[]; label: string; fullWidth: boolean; tokens: Token[] };
 const escape = (text: string): string => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 /** Balance recognized colon containers, including equally sized delimiters. */
-export const blockSyntax = (name: string, kinds: readonly BlockKind[]): MarkedExtension => ({
+export const blockSyntax = (name: string, kinds: readonly BlockKind[], options: StructuredBlockOptions = {}): MarkedExtension => ({
+  walkTokens(this: Marked, token) {
+    if (token.type !== name) return;
+    const block = token as BlockToken;
+    const metadata = /(?:^|\s)\{(?:(?:#([A-Za-z][\w:.-]*))(?:[ \t]+(\.full-width))?|(\.full-width))\}[ \t]*$/.exec(block.title);
+    const last = block.titleTokens.at(-1);
+    // Metadata must be a literal suffix, outside code, escapes, links and emphasis.
+    if (metadata && (!(metadata[2] || metadata[3]) || block.kind === 'table') && last?.type === 'text' && last.raw.endsWith(metadata[0])) {
+      last.raw = last.raw.slice(0, -metadata[0].length);
+      last.text = last.text.slice(0, -metadata[0].length);
+      block.title = block.title.slice(0, metadata.index).trimEnd();
+      block.label = metadata[1] ?? '';
+      block.fullWidth = Boolean(metadata[2] || metadata[3]);
+    }
+    // Authored HTML in titles stays literal even in trusted mode. Generated
+    // extension markup is rendered later and still follows the engine policy.
+    this.walkTokens(block.titleTokens, (child) => {
+      if (child.type !== 'html') return;
+      Object.assign(child, { type: 'text', text: escape(child.text), escaped: true });
+    });
+  },
   extensions: [
     {
       name,
@@ -89,15 +118,15 @@ export const blockSyntax = (name: string, kinds: readonly BlockKind[]): MarkedEx
           offset += line.length;
         }
         if (!end) return;
-        const metadata = opening[3] ?? '';
-        const label = /(?:^|\s)\{#([A-Za-z][\w:.-]*)\}[ \t]*$/.exec(metadata);
-        const title = (label ? metadata.slice(0, label.index) : metadata).trim();
+        const title = (opening[3] ?? '').trim();
         return {
           type: name,
           raw: src.slice(0, opening[0].length + offset + end),
           kind: opening[2],
           title,
-          label: label?.[1] ?? '',
+          titleTokens: this.lexer.inline(title),
+          label: '',
+          fullWidth: false,
           tokens: this.lexer.blockTokens(rest.slice(0, offset)),
         };
       },
@@ -106,9 +135,9 @@ export const blockSyntax = (name: string, kinds: readonly BlockKind[]): MarkedEx
         const collapsible = block.kind === 'hint' || block.kind === 'solution';
         const tag = collapsible ? 'details' : 'section';
         const heading = collapsible ? 'summary' : 'p';
-        return `<${tag} class="markdown-didactic markdown-${block.kind}" data-markdown-block="${block.kind}"${block.label ? ` data-markdown-label="${escape(block.label)}"` : ''}><${heading} class="markdown-block-heading"><span data-markdown-block-label>${blockLabels.en[block.kind]}</span>${block.title ? `: ${escape(block.title)}` : ''}</${heading}>${this.parser.parse(block.tokens)}</${tag}>\n`;
+        return `<${tag} class="markdown-didactic markdown-${block.kind}${block.fullWidth ? ' markdown-table-full-width' : ''}" data-markdown-block="${block.kind}"${block.label ? ` data-markdown-label="${escape(block.label)}"` : ''}><${heading} class="markdown-block-heading"><span data-markdown-block-label>${blockLabels.en[block.kind]}</span>${block.title ? `: ${options.titleMode === 'plain' ? escape(block.title) : this.parser.parseInline(block.titleTokens)}` : ''}</${heading}>${this.parser.parse(block.tokens)}</${tag}>\n`;
       },
-      childTokens: ['tokens'],
+      childTokens: ['titleTokens', 'tokens'],
     },
   ],
 });
