@@ -1,7 +1,7 @@
 # Eletrônica Digital
 
-> **Sumário de desenvolvimento — versão 1.5.** Estrutura sujeita a revisão
-> durante a redação dos capítulos.
+> **Sumário de desenvolvimento — versão 1.16.** Estrutura sujeita a revisão durante a
+> redação dos capítulos.
 
 Obra de referência para cursos superiores de Engenharia Elétrica, Ciência da
 Computação e áreas afins. O desenvolvimento parte da representação binária e da
@@ -94,7 +94,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 6. Projeto de circuitos combinacionais {#chapter-06}
 
-**Arquivo previsto:** `combinational-circuit-design.md`
+**Capítulo disponível:**
+[Ler o Capítulo 6 — Projeto de circuitos combinacionais](combinational-circuit-design.md)
 
 - 6.1. Especificação funcional
 - 6.2. Modelagem por tabelas-verdade
@@ -107,7 +108,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 7. Codificadores, decodificadores e seleção de dados {#chapter-07}
 
-**Arquivo previsto:** `encoders-decoders-and-data-selection.md`
+**Capítulo disponível:**
+[Ler o Capítulo 7 — Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md)
 
 - 7.1. Codificadores binários
 - 7.2. Codificadores com prioridade
@@ -121,7 +123,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 8. Circuitos aritméticos digitais {#chapter-08}
 
-**Arquivo previsto:** `digital-arithmetic-circuits.md`
+**Capítulo disponível:**
+[Ler o Capítulo 8 — Circuitos aritméticos digitais](digital-arithmetic-circuits.md)
 
 - 8.1. Meio somador e somador completo
 - 8.2. Somadores de múltiplos bits
@@ -138,7 +141,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 9. Fundamentos dos circuitos sequenciais {#chapter-09}
 
-**Arquivo previsto:** `sequential-circuit-fundamentals.md`
+**Capítulo disponível:**
+[Ler o Capítulo 9 — Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md)
 
 - 9.1. Estado e memória
 - 9.2. Realimentação lógica
@@ -152,7 +156,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 10. Temporização e confiabilidade de circuitos sequenciais {#chapter-10}
 
-**Arquivo previsto:** `sequential-timing-and-reliability.md`
+**Capítulo disponível:**
+[Ler o Capítulo 10 — Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md)
 
 - 10.1. Atrasos de propagação
 - 10.2. Tempos de estabelecimento (_setup_) e retenção (_hold_)
@@ -165,7 +170,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 11. Registradores e contadores {#chapter-11}
 
-**Arquivo previsto:** `registers-and-counters.md`
+**Capítulo disponível:**
+[Ler o Capítulo 11 — Registradores e contadores](registers-and-counters.md)
 
 - 11.1. Registradores paralelos
 - 11.2. Registradores de deslocamento
@@ -180,7 +186,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 12. Máquinas de estados finitos {#chapter-12}
 
-**Arquivo previsto:** `finite-state-machines.md`
+**Capítulo disponível:**
+[Ler o Capítulo 12 — Máquinas de estados finitos](finite-state-machines.md)
 
 - 12.1. Conceito de máquina de estados
 - 12.2. Modelos de Moore e Mealy
@@ -197,7 +204,8 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 13. Dispositivos semicondutores e chaveamento digital {#chapter-13}
 
-**Arquivo previsto:** `semiconductor-devices-and-digital-switching.md`
+**Capítulo disponível:**
+[Ler o Capítulo 13 — Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md)
 
 - 13.1. Fundamentos de semicondutores aplicados à lógica digital
 - 13.2. Diodos e transistores como chaves
@@ -210,7 +218,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 14. Famílias lógicas e circuitos integrados digitais {#chapter-14}
 
-**Arquivo previsto:** `logic-families-and-digital-integrated-circuits.md`
+**Arquivo:** `logic-families-and-digital-integrated-circuits.md`
 
 - 14.1. Parâmetros elétricos das famílias lógicas
 - 14.2. Níveis de tensão e margens de ruído
@@ -227,7 +235,9 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 15. Integridade de sinais e implementação física {#chapter-15}
 
-**Arquivo previsto:** `signal-integrity-and-physical-implementation.md`
+**Arquivo:** `signal-integrity-and-physical-implementation.md`
+
+[Ler o Capítulo 15 — Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md)
 
 - 15.1. Modelos reais de entradas e saídas digitais
 - 15.2. Capacitâncias parasitas e cargas
@@ -244,7 +254,9 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 16. Memórias semicondutoras {#chapter-16}
 
-**Arquivo previsto:** `semiconductor-memories.md`
+**Arquivo:** `semiconductor-memories.md`
+
+[Ler o Capítulo 16 — Memórias semicondutoras](semiconductor-memories.md)
 
 - 16.1. Organização e endereçamento
 - 16.2. Células de memória
@@ -439,6 +451,5 @@ A tradução integral para inglês e espanhol ocorrerá depois da consolidação
 texto em português, mantendo os mesmos nomes de arquivo e identificadores
 técnicos.
 
-> **Revisão ilustrada (versão 1.5):** os capítulos 1 a 4 receberam novas
-> figuras com Mermaid, Graphviz, WaveDrom e Vega-Lite. A apresentação final
-> depende da habilitação dessas extensões no aplicativo hospedeiro.
+
+> **Revisão ilustrada (versão 1.5):** os capítulos 1 a 4 receberam novas figuras com Mermaid, Graphviz, WaveDrom e Vega-Lite. A apresentação final depende da habilitação dessas extensões no aplicativo hospedeiro.
