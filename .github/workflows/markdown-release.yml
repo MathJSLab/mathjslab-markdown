@@ -87,6 +87,10 @@ jobs:
         if: ${{ !inputs.candidate_run }}
         working-directory: package
         run: npm run test:browser:example-references
+      - name: Check structured inline titles and table layout
+        if: ${{ !inputs.candidate_run }}
+        working-directory: package
+        run: node test/browser/structured-blocks.mjs
       - name: Check molecular rendering with native and absent OffscreenCanvas
         if: ${{ !inputs.candidate_run || inputs.package_only }}
         working-directory: package

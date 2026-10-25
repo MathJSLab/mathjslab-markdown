@@ -65,13 +65,13 @@ try {
           assert.ok(links.every((link) => link.href?.startsWith('#') && link.label === link.targetLabel && !link.text.includes('{@ref')));
           if (source !== chapter) {
             assert.ok(links.some((link) => link.before) && links.some((link) => link.before === false), 'Exercise both forward and backward references');
-            assert.deepEqual([...new Set(links.map((link) => link.kind))].sort(), ['equation', 'exercise', 'figure', 'heading', 'table', 'theorem']);
+            assert.deepEqual([...new Set(links.map((link) => link.kind))].sort(), ['equation', 'exercise', 'figure', 'heading', 'table', 'theorem', 'warning']);
             const labels = {
-              pt: ['Equação', 'Exercício', 'Figura', 'Seção', 'Tabela', 'Teorema'],
-              en: ['Equation', 'Exercise', 'Figure', 'Section', 'Table', 'Theorem'],
-              es: ['Ecuación', 'Ejercicio', 'Figura', 'Sección', 'Tabla', 'Teorema'],
+              pt: ['Equação', 'Exercício', 'Figura', 'Seção', 'Tabela', 'Teorema', 'Advertência'],
+              en: ['Equation', 'Exercise', 'Figure', 'Section', 'Table', 'Theorem', 'Warning'],
+              es: ['Ecuación', 'Ejercicio', 'Figura', 'Sección', 'Tabla', 'Teorema', 'Advertencia'],
             };
-            const kinds = ['equation', 'exercise', 'figure', 'heading', 'table', 'theorem'];
+            const kinds = ['equation', 'exercise', 'figure', 'heading', 'table', 'theorem', 'warning'];
             for (const link of links) assert.equal(link.text, `${labels[locale][kinds.indexOf(link.kind)]} ${link.label === 'sec-practice' ? 2 : 1}`);
           }
           result.references = links;
