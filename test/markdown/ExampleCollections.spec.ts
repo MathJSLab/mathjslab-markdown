@@ -41,7 +41,7 @@ const featuresIn = (container: HTMLElement): Set<string> => {
   if (container.querySelector('[data-markdown-reference], [data-markdown-block="figure"], [data-markdown-block="table"], [data-markdown-block="equation"]')) features.add('cross-references');
   if (
     Array.from(container.querySelectorAll<HTMLElement>('[data-markdown-block]')).some((node) =>
-      ['definition', 'theorem', 'proof', 'example', 'exercise', 'hint', 'solution', 'warning'].includes(node.dataset.markdownBlock!),
+      ['definition', 'theorem', 'proof', 'example', 'exercise', 'hint', 'solution', 'warning', 'note'].includes(node.dataset.markdownBlock!),
     )
   )
     features.add('didactic');
@@ -153,7 +153,7 @@ describe('three-language teaching collections', () => {
           const diagnostics: unknown[] = [];
           const session = await references.renderDocument(source, container, { locale: locales[lang], onDiagnostic: (diagnostic) => diagnostics.push(diagnostic) });
           expect({ file, lang, diagnostics }).toEqual({ file, lang, diagnostics: [] });
-          const openers = source.match(/^:{3,}\s+(?:definition|theorem|proof|example|exercise|hint|solution|warning|figure|table|equation)\b/gm) ?? [];
+          const openers = source.match(/^:{3,}\s+(?:definition|theorem|proof|example|exercise|hint|solution|warning|note|figure|table|equation)\b/gm) ?? [];
           expect({ file, blocks: container.querySelectorAll('[data-markdown-block]').length }).toEqual({ file, blocks: openers.length });
           expect(container.querySelectorAll('[data-markdown-reference] a')).toHaveLength(container.querySelectorAll('[data-markdown-reference]').length);
           await session.dispose();

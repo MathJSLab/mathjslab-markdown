@@ -19,9 +19,9 @@ remain unchanged. The core engine does not enable them automatically.
 ## Teaching blocks
 
 The `didactic` extension recognizes `definition`, `theorem`, `proof`,
-`example`, `exercise`, `hint`, `solution` and `warning`. A title and a trailing
-`{#label}` are optional. Use lowercase English kind names, a space after at
-least three colons, and an opening line followed by a newline. Put the
+`example`, `exercise`, `hint`, `solution`, `warning` and `note`. A title and a
+trailing `{#label}` are optional. Use lowercase English kind names, a space
+after at least three colons, and an opening line followed by a newline. Put the
 identifier after the title on the same line. Titles support inline Markdown,
 including emphasis, code spans, links, enabled mathematics and
 cross-references; bodies support block Markdown and other enabled extensions.
@@ -184,6 +184,29 @@ rejects any omitted catalogue file.
   localizes headings, resolves enabled references and typesets mathematical
   content. Literal opening lines indicate a disabled extension, a code example
   or unmatched syntax rather than a CSS or component styling issue.
+
+## Notes
+
+`note` renders a static `<section class="markdown-didactic markdown-note">`
+with an inline Markdown title and a Markdown body. Enable `didactic` to
+recognize it and `cross-references` for independent numbering, document-scoped
+identifiers and references. Labels are `Note` in English and `Nota` in
+Portuguese and Spanish; other locales fall back to English. Notes have no alert
+role and are not collapsible. They share the existing title escaping,
+mathematics, nesting and security policies.
+
+```markdown
+::: note **Equivalence** and implementation {#equivalence}
+
+Equivalent expressions can lead to different implementations.
+
+:::
+
+See {@ref equivalence}.
+```
+
+Previously literal valid `::: note` containers now render with `didactic`
+enabled. Code fences and unknown or unclosed containers remain literal.
 
 ## Captions and references
 
@@ -398,7 +421,8 @@ Column alignment continues to use standard GFM `:---`, `:---:` and `---:`.
 Automatic layout accommodates unequal content; full width does not force equal
 column widths. Nested caption blocks and tables outside the marked container do
 not inherit the rule. No inline style or arbitrary HTML attribute is copied
-from the Markdown suffix. `note` remains an unsupported container.
+from the Markdown suffix. `note` uses the same static teaching-block rendering
+as `warning`.
 
 Regression checks: `test/markdown/StructuredBlockInline.spec.ts`,
 `test/markdown/MathJax.spec.ts`, and (after building the browser bundle)

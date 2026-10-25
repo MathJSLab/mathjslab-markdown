@@ -11,7 +11,7 @@ export const exampleFiles = (root) =>
     })
     .sort();
 
-const kinds = 'figure|table|equation|definition|theorem|proof|example|exercise|hint|solution|warning';
+const kinds = 'figure|table|equation|definition|theorem|proof|example|exercise|hint|solution|warning|note';
 const label = /\{#[^}]*\}/g;
 const reference = /\{@ref\b[^}]*\}/g;
 const marked = new Marked();

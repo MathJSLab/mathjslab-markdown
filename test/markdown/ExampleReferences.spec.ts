@@ -37,10 +37,10 @@ test('the real distributed catalogue has valid document-scoped references before
   fs.writeFileSync(path.join(root, 'report/example-reference-catalog.json'), JSON.stringify({ files: inventory, failures }, null, 2));
 }, 120_000);
 
-test('the chapter registers all six figures and the previously wrapped exercise', () => {
+test('the chapter registers all current figures and the previously wrapped exercise', () => {
   const result = audit(fs.readFileSync(chapter, 'utf8'));
   expect(result.issues).toEqual([]);
-  expect(result.metadata.targets.filter((target) => target.kind === 'figure')).toHaveLength(6);
+  expect(result.metadata.targets.filter((target) => target.kind === 'figure')).toHaveLength(10);
   expect(result.metadata.targets.some((target) => target.label === 'ex-combinational-or-sequential')).toBe(true);
 });
 

@@ -20,7 +20,7 @@ da obra. A representação numérica, a álgebra booleana, a implementação com
 transistores e as técnicas de síntese serão desenvolvidas nos capítulos
 seguintes.
 
-## Objetivos de aprendizagem
+## Objetivos de aprendizagem {#sec-learning-objectives}
 
 Ao concluir o capítulo, espera-se que o leitor seja capaz de distinguir
 grandezas e sinais analógicos e digitais; explicar amostragem, quantização e
@@ -52,9 +52,10 @@ eletromagnetismo. Uma tensão de saída digital varia continuamente durante a
 transição entre dois estados, ainda que o modelo lógico a represente como uma
 mudança instantânea.
 
-A {@ref fig-analog-digital} apresenta uma comparação conceitual. A forma
-analógica admite uma amplitude continuamente variável; a representação digital
-mantém estados interpretados como 0 e 1 durante intervalos de tempo. O gráfico
+<!-- prettier-ignore -->
+A {@ref fig-analog-digital} apresenta uma comparação conceitual. A curva analógica é representada por uma interpolação ilustrativa de valores; a
+representação binária é uma sequência de estados interpretados como 0 e 1.
+O gráfico não representa um processo real de conversão analógico-digital. O gráfico
 não implica que as transições elétricas reais sejam instantâneas.
 
 <!-- prettier-ignore -->
@@ -76,7 +77,7 @@ não implica que as transições elétricas reais sejam instantâneas.
     {"t":16,"analog":0.50,"digital":1}
   ]},
   "transform": [{"fold":["analog","digital"],"as":["tipo","amplitude"]}],
-  "mark":{"type":"line","point":true},
+  "mark":{"type":"line","point":false},
   "encoding": {
     "x":{"field":"t","type":"quantitative","title":"Tempo (unidades arbitrárias)"},
     "y":{"field":"amplitude","type":"quantitative","title":"Amplitude normalizada","scale":{"domain":[0,1.05]}},
@@ -98,7 +99,8 @@ sistema.
 
 ## 1.2. Sinais contínuos, discretos e binários {#sec-continuous-discrete-binary-signals}
 
-É necessário distinguir duas propriedades independentes: **o domínio temporal**
+<!-- prettier-ignore -->
+Como antecipado na {@ref sec-analog-and-digital-quantities}, é necessário distinguir duas propriedades independentes: **o domínio temporal**
 e **o conjunto de amplitudes possíveis**. Um sinal pode ser contínuo no tempo e
 discreto em amplitude, ou discreto no tempo e contínuo em amplitude. Assim, a
 expressão “sinal discreto” não especifica, isoladamente, qual dessas
@@ -135,6 +137,57 @@ saturação, vale $|e_q[n]|\leq\Delta/2$. Essa desigualdade deixa de descrever
 adequadamente amostras fora da faixa admitida, nas quais ocorre saturação ou
 outro tratamento de sobrecarga.
 
+<!-- prettier-ignore -->
+A {@ref fig-sampling-quantization} complementa essa descrição: os pontos
+marcam valores obtidos em instantes discretos, enquanto a curva contínua
+representa o sinal antes da amostragem. Os pontos quantizados foram
+aproximados aos níveis de amplitude indicados. A figura é esquemática: não
+representa o comportamento de um conversor específico nem implica que a
+quantização ocorra antes da amostragem.
+
+<!-- prettier-ignore -->
+::: figure Comparação ilustrativa entre sinal contínuo, amostras e valores quantizados {#fig-sampling-quantization}
+
+```vega-lite
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Curva contínua de referência, amostras em instantes discretos e valores quantizados em cinco níveis.",
+  "data": {"values": [
+    {"t":0,"x":0.50,"sample":0.50,"quantized":0.50,"isSample":true},
+    {"t":1,"x":0.75,"sample":null,"quantized":null,"isSample":false},
+    {"t":2,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true},
+    {"t":3,"x":1.00,"sample":null,"quantized":null,"isSample":false},
+    {"t":4,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true},
+    {"t":5,"x":0.75,"sample":null,"quantized":null,"isSample":false},
+    {"t":6,"x":0.50,"sample":0.50,"quantized":0.50,"isSample":true},
+    {"t":7,"x":0.25,"sample":null,"quantized":null,"isSample":false},
+    {"t":8,"x":0.07,"sample":0.07,"quantized":0.00,"isSample":true},
+    {"t":9,"x":0.00,"sample":null,"quantized":null,"isSample":false},
+    {"t":10,"x":0.07,"sample":0.07,"quantized":0.00,"isSample":true},
+    {"t":11,"x":0.25,"sample":null,"quantized":null,"isSample":false},
+    {"t":12,"x":0.50,"sample":0.50,"quantized":0.50,"isSample":true},
+    {"t":13,"x":0.75,"sample":null,"quantized":null,"isSample":false},
+    {"t":14,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true},
+    {"t":15,"x":1.00,"sample":null,"quantized":null,"isSample":false},
+    {"t":16,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true}
+  ]},
+  "layer": [
+    {"mark":{"type":"line","strokeWidth":2},"encoding":{"x":{"field":"t","type":"quantitative","title":"Tempo (unidades arbitrárias)"},"y":{"field":"x","type":"quantitative","title":"Amplitude normalizada","scale":{"domain":[-0.1,1.1]}},"color":{"value":"#2563eb"}}},
+    {"transform":[{"filter":"datum.isSample"}],"mark":{"type":"point","filled":true,"size":70},"encoding":{"x":{"field":"t","type":"quantitative"},"y":{"field":"sample","type":"quantitative"},"color":{"value":"#2563eb"}}},
+    {"transform":[{"filter":"datum.isSample"}],"mark":{"type":"point","filled":true,"shape":"square","size":95},"encoding":{"x":{"field":"t","type":"quantitative"},"y":{"field":"quantized","type":"quantitative"},"color":{"value":"#dc2626"}}}
+  ],
+  "width":600,"height":250
+}
+```
+
+A curva e os círculos azuis representam, respectivamente, o sinal de referência
+e suas amostras; os quadrados vermelhos indicam os valores quantizados. As
+cores são auxiliares: a distinção também é indicada pelas formas dos
+marcadores.
+
+:::
+
+<!-- prettier-ignore -->
 A {@ref fig-digitization-flow} organiza as operações envolvidas. Um circuito
 eletrônico não precisa realizar todas elas: uma porta lógica recebe e fornece
 estados binários sem necessariamente amostrar uma grandeza analógica.
@@ -208,7 +261,8 @@ temporais e a complexidade de integração.
 
 ## 1.4. Níveis lógicos e sinais elétricos {#sec-logic-levels-electrical-signals}
 
-Os símbolos 0 e 1 não são tensões elétricas. Um circuito lógico implementa
+<!-- prettier-ignore -->
+Os símbolos 0 e 1 não são tensões elétricas. Essa distinção, introduzida na {@ref sec-analog-and-digital-quantities}, é fundamental para a interpretação das especificações. Um circuito lógico implementa
 esses símbolos por **faixas de valores elétricos aceitos**. Em lógica positiva,
 valores de tensão mais elevados são associados ao nível lógico 1 e valores mais
 baixos ao nível lógico 0. Em lógica negativa, a associação é invertida. A
@@ -216,12 +270,21 @@ escolha da convenção lógica não altera as leis físicas dos dispositivos.
 
 Para uma interface digital convencional, os parâmetros fundamentais são:
 
+<!-- prettier-ignore -->
+A {@ref tab-logic-thresholds} reúne os quatro limites mais utilizados para
+avaliar a compatibilidade estática entre circuitos digitais.
+
+<!-- prettier-ignore -->
+::: table Parâmetros de tensão de entrada e saída de uma interface digital {#tab-logic-thresholds .full-width}
+
 | Parâmetro      | Significado                                                              |
 | -------------- | ------------------------------------------------------------------------ |
 | $V_{IL(\max)}$ | Maior tensão de entrada garantidamente reconhecida como nível baixo      |
 | $V_{IH(\min)}$ | Menor tensão de entrada garantidamente reconhecida como nível alto       |
 | $V_{OL(\max)}$ | Maior tensão de saída garantida quando o dispositivo fornece nível baixo |
 | $V_{OH(\min)}$ | Menor tensão de saída garantida quando o dispositivo fornece nível alto  |
+
+:::
 
 Em condições usuais de compatibilidade, espera-se que
 $V_{OL(\max)}<V_{IL(\max)}$ e $V_{OH(\min)}>V_{IH(\min)}$. A região entre os
@@ -240,6 +303,7 @@ Essas relações quantificam a tolerância estática às perturbações de tens�
 não substituem a análise de pulsos rápidos, integridade de sinal, reflexões ou
 temporização.
 
+<!-- prettier-ignore -->
 ::: example Exemplo — margens de ruído de uma interface {#ex-noise-margins}
 
 Considere, **apenas como especificação hipotética**,
@@ -252,6 +316,52 @@ a carga e as condições de operação.
 
 :::
 
+<!-- prettier-ignore -->
+A {@ref fig-noise-margin-bands} apresenta geometricamente as duas
+margens de ruído para a especificação hipotética do exemplo. As faixas
+ilustradas correspondem aos valores garantidos de saída e aos limites de
+reconhecimento de entrada, e não a uma curva de transferência real.
+
+<!-- prettier-ignore -->
+::: figure Margens estáticas de ruído entre os limites de saída e de entrada {#fig-noise-margin-bands}
+
+```tikz
+\begin{tikzpicture}[x=1.7cm,y=1.05cm,>=stealth]
+  \draw[->,thick] (0,0) -- (0,4.05) node[above] {$V$ (V)};
+  \foreach \y/\lab in {0.4/{0{,}4},0.8/{0{,}8},2.0/{2{,}0},2.4/{2{,}4}} {
+    \draw (-0.08,\y) -- (0.08,\y);
+    \node[left] at (-0.12,\y) {$\lab$};
+    \draw[densely dotted,gray] (0.1,\y) -- (5.25,\y);
+  }
+  \node[above] at (1.35,3.65) {Saída};
+  \node[above] at (3.75,3.65) {Entrada};
+  \fill[blue!20] (0.75,0) rectangle (1.95,0.4);
+  \fill[blue!20] (0.75,2.4) rectangle (1.95,3.35);
+  \fill[green!20] (3.15,0) rectangle (4.35,0.8);
+  \fill[green!20] (3.15,2.0) rectangle (4.35,3.35);
+  \draw (0.75,0) rectangle (1.95,0.4);
+  \draw (0.75,2.4) rectangle (1.95,3.35);
+  \draw (3.15,0) rectangle (4.35,0.8);
+  \draw (3.15,2.0) rectangle (4.35,3.35);
+  \node[font=\scriptsize] at (1.35,0.2) {baixo};
+  \node[font=\scriptsize] at (1.35,2.85) {alto};
+  \node[font=\scriptsize] at (3.75,0.4) {baixo};
+  \node[font=\scriptsize] at (3.75,2.7) {alto};
+  \draw[<->,thick] (2.55,0.4) -- (2.55,0.8);
+  \node[right,font=\scriptsize] at (2.58,0.6) {$NM_L$};
+  \draw[<->,thick] (2.55,2.0) -- (2.55,2.4);
+  \node[right,font=\scriptsize] at (2.58,2.2) {$NM_H$};
+  \node[align=center,font=\scriptsize] at (3.75,1.35) {região não\\garantida};
+\end{tikzpicture}
+```
+
+No exemplo, ambas as distâncias verticais são iguais a $0{,}4\,\mathrm{V}$. A
+região entre $V_{IL(\max)}$ e $V_{IH(\min)}$ não constitui um terceiro estado
+lógico garantido.
+
+:::
+
+<!-- prettier-ignore -->
 A {@ref fig-logic-interface} ilustra os parâmetros de uma ligação lógica. A
 especificação de saída pertence ao dispositivo transmissor; a de entrada, ao
 receptor. Essa distinção é essencial ao conectar circuitos de famílias
@@ -267,6 +377,34 @@ flowchart LR
 ```
 
 :::
+
+<!-- prettier-ignore -->
+A {@ref fig-digital-timing} apresenta uma sequência de estados binários e um
+sinal de relógio idealizado. O diagrama representa estados lógicos, não níveis
+de tensão absolutos nem a forma física das transições.
+
+<!-- prettier-ignore -->
+::: figure Diagrama temporal de sinais binários e relógio idealizados {#fig-digital-timing}
+
+```wavedrom
+{
+  signal: [
+    { name: 'clk', wave: 'p.......' },
+    { name: 'A',   wave: '0.1.0.1.' },
+    { name: 'B',   wave: '01..01..' },
+    { name: 'A AND B', wave: '0.1.0.1.' }
+  ],
+  head: { text: 'Estados lógicos idealizados' },
+  config: { hscale: 1 }
+}
+```
+
+:::
+
+**Nota:** a última linha deve ser interpretada apenas como ilustração
+esquemática de estados lógicos, e não como uma verificação temporal exaustiva
+da função E. Atrasos de propagação e transições elétricas reais não estão
+representados.
 
 Além da amplitude, os sinais digitais possuem propriedades temporais. O **tempo
 de subida** e o **tempo de descida** medem a duração das transições segundo
@@ -358,6 +496,7 @@ adequado a uma classe de problemas:
 5. **Comportamento especificado:** requisitos funcionais e temporais
    observáveis pelo usuário ou por outros sistemas.
 
+<!-- prettier-ignore -->
 A {@ref fig-abstraction-levels} representa essa hierarquia. O sentido
 ascendente oculta detalhes de implementação; o descendente exige refinamento
 até chegar a componentes e conexões realizáveis.
@@ -481,7 +620,11 @@ $L\in\{0,1\}$ o comando de iluminação. A especificação lógica é
 
 $$L=P\land E.\tag{1.13}$$
 
-A tabela-verdade correspondente é:
+<!-- prettier-ignore -->
+A {@ref tab-illumination-truth} apresenta a tabela-verdade correspondente.
+
+<!-- prettier-ignore -->
+::: table Tabela-verdade do controlador de iluminação {#tab-illumination-truth .full-width}
 
 | $P$ | $E$ | $L$ |
 | :-: | :-: | :-: |
@@ -489,6 +632,25 @@ A tabela-verdade correspondente é:
 |  0  |  1  |  0  |
 |  1  |  0  |  0  |
 |  1  |  1  |  1  |
+
+:::
+
+<!-- prettier-ignore -->
+A função pode ser visualizada por uma porta E de duas entradas. A
+{@ref fig-illumination-logic} representa somente a parte lógica do controle,
+sem o circuito de potência necessário para acionar uma lâmpada.
+
+<!-- prettier-ignore -->
+::: figure Função lógica E do controlador de iluminação {#fig-illumination-logic}
+
+```mermaid
+flowchart LR
+    P["P: presença"] --> AND{{"E (AND)"}}
+    E["E: ambiente escuro"] --> AND
+    AND --> L["L: comando da lâmpada"]
+```
+
+:::
 
 Essa tabela descreve **o comportamento desejado**, não uma implementação
 elétrica completa. Ainda será necessário determinar como o sensor de
@@ -501,7 +663,7 @@ O exemplo antecipa um princípio metodológico que acompanhará toda a obra:
 separar a especificação funcional da escolha da tecnologia de implementação,
 sem esquecer que ambas precisam ser compatíveis.
 
-## Síntese do capítulo
+## Síntese do capítulo {#sec-chapter-summary}
 
 A Eletrônica Digital organiza informações por estados discretos, geralmente
 binários, mas utiliza circuitos físicos cujos sinais são grandezas elétricas
@@ -512,8 +674,9 @@ sequenciais incorporam memória e evolução de estados. O projeto deve consider
 simultaneamente correção lógica, níveis elétricos, margens de ruído, atrasos,
 potência e condições reais de funcionamento.
 
-## Exercícios e questões para discussão
+## Exercícios e questões para discussão {#sec-exercises}
 
+<!-- prettier-ignore -->
 :::: exercise Questão 1 — classificação de sinais {#ex-signal-classification}
 
 Um sensor produz uma tensão contínua $v(t)$, medida por um conversor que
@@ -521,6 +684,7 @@ fornece 12 bits a cada milissegundo. Identifique quais grandezas são contínuas
 ou discretas no tempo e na amplitude antes e depois da conversão. Explique por
 que os 12 bits não tornam a tensão original discreta.
 
+<!-- prettier-ignore -->
 ::: hint
 
 Separe as operações de amostragem, quantização e codificação. Diferencie o
@@ -530,13 +694,16 @@ fenômeno físico de sua representação numérica.
 
 ::::
 
+<!-- prettier-ignore -->
 :::: exercise Questão 2 — resolução e quantização {#ex-quantization}
 
 Um quantizador uniforme ideal utiliza $N=10$ bits para codificar uma faixa de
-entrada de $0$ a $5\,\mathrm{V}$, dividida em $2^{10}$ intervalos iguais.
-Determine o passo de quantização e o maior módulo do erro de arredondamento,
-supondo operação dentro da faixa, sem saturação.
+entrada de $0$ a $5\,\mathrm{V}$, dividida em $2^{10}$ intervalos iguais, com
+representação pelo ponto médio de cada intervalo. Determine o passo de
+quantização e o maior módulo do erro de arredondamento, supondo operação dentro
+da faixa, sem saturação.
 
+<!-- prettier-ignore -->
 ::: solution
 
 O número de intervalos é $2^{10}=1024$. Logo,
@@ -548,6 +715,7 @@ depende da convenção de quantização explicitada no enunciado.
 
 ::::
 
+<!-- prettier-ignore -->
 :::: exercise Questão 3 — compatibilidade lógica {#ex-logic-compatibility}
 
 Um transmissor garante $V_{OL(\max)}=0{,}3\,\mathrm{V}$ e
@@ -556,6 +724,7 @@ $0{,}8\,\mathrm{V}$ e nível alto a partir de $2{,}0\,\mathrm{V}$. Calcule as
 margens estáticas de ruído e discuta quais outras informações seriam
 necessárias antes de aprovar a conexão.
 
+<!-- prettier-ignore -->
 ::: solution
 
 $NM_L=0{,}8-0{,}3=0{,}5\,\mathrm{V}$ e $NM_H=2{,}7-2{,}0=0{,}7\,\mathrm{V}$.
@@ -574,6 +743,7 @@ contador de pulsos; (c) um detector que informa se a sequência `101` ocorreu
 nas três últimas amostras; (d) um circuito que apresenta o complemento de cada
 bit de entrada.
 
+<!-- prettier-ignore -->
 ::: hint
 
 Pergunte se é possível determinar a saída conhecendo apenas a entrada atual,
@@ -583,6 +753,7 @@ sem informação sobre entradas anteriores.
 
 ::::
 
+<!-- prettier-ignore -->
 :::: exercise Questão 5 — especificação de sistema {#ex-system-specification}
 
 Proponha os requisitos funcionais e elétricos iniciais de um controlador de
@@ -592,7 +763,7 @@ utilidade da histerese.
 
 ::::
 
-## Referências bibliográficas
+## Referências bibliográficas {#sec-bibliography}
 
 As obras a seguir fundamentam a apresentação introdutória, complementada por
 literatura de projeto digital e documentação didática sobre interfaces lógicas.

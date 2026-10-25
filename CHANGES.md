@@ -1,5 +1,14 @@
 # Release notes
 
+## 0.9.1 — 2026-10-25
+
+- Render `note` teaching blocks with inline titles, localized labels,
+  independent numbering and document-scoped cross-references. Preserve existing
+  nesting, title escaping and security behavior; no alert role or collapsible
+  state.
+- Include the current digital-electronics drafts and expanded introduction in
+  the repository and npm examples, including chapters still in development.
+
 ## 0.9.0 — 2026-10-25
 
 - Process structured block titles as inline Markdown, including enabled

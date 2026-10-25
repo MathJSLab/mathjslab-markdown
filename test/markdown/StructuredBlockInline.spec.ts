@@ -14,7 +14,7 @@ const engineFor = (titleMode: StructuredBlockOptions['titleMode'] = 'inline') =>
   createEducationalMarkdownEngine({ features: ['didactic', 'cross-references'], structuredBlockOptions: { titleMode } });
 
 describe('structured block inline titles', () => {
-  test.each(['definition', 'theorem', 'proof', 'example', 'exercise', 'hint', 'solution', 'warning', 'figure', 'table', 'equation'])(
+  test.each(['definition', 'theorem', 'proof', 'example', 'exercise', 'hint', 'solution', 'warning', 'note', 'figure', 'table', 'equation'])(
     'renders formatting and forward references in %s without replacing the title on updates',
     async (kind) => {
       const engine = engineFor();
@@ -215,13 +215,13 @@ describe('structured block inline titles', () => {
     }
   });
 
-  test('keeps unsupported note containers literal and requires ordinary inline math delimiters', () => {
+  test('keeps unsupported containers literal and requires ordinary inline math delimiters', () => {
     const engine = engineFor();
     try {
-      const html = engine.parse(block('example', String.raw`\(x\) $\left(x\right)$ {#id}`) + block('note', 'Unsupported'));
+      const html = engine.parse(block('example', String.raw`\(x\) $\left(x\right)$ {#id}`) + block('unknown', 'Unsupported'));
       expect(html).toContain('data-markdown-label="id"');
       expect(html.match(/mathjax-pending/g)).toHaveLength(1);
-      expect(html).toContain('::: note Unsupported');
+      expect(html).toContain('::: unknown Unsupported');
     } finally {
       void engine.dispose();
     }

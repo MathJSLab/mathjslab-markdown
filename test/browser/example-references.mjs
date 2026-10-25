@@ -41,9 +41,9 @@ try {
           if (source === chapter) {
             assert.deepEqual(
               await viewer.locator('[data-markdown-block="figure"] [data-markdown-block-label]').allTextContents(),
-              Array.from({ length: 6 }, (_, i) => `Figura ${i + 1}`),
+              Array.from({ length: 10 }, (_, i) => `Figura ${i + 1}`),
             );
-            assert.equal(await viewer.locator('[data-markdown-extension="mermaid"] svg').count(), 5);
+            assert.equal(await viewer.locator('[data-markdown-extension="mermaid"] svg').count(), 6);
             assert.equal(await viewer.locator('[data-markdown-extension="vega-lite"] svg').count(), 1);
             assert.ok((await viewer.locator('mjx-container').count()) > 0);
           }

@@ -5,7 +5,7 @@ import { didacticManifest } from './manifest.js';
 export const didacticExtension = (options: StructuredBlockOptions = {}): MarkdownExtension => ({
   name: didacticManifest.name,
   manifest: didacticManifest,
-  marked: blockSyntax('didactic-block', ['definition', 'theorem', 'proof', 'example', 'exercise', 'hint', 'solution', 'warning'], options),
+  marked: blockSyntax('didactic-block', ['definition', 'theorem', 'proof', 'example', 'exercise', 'hint', 'solution', 'warning', 'note'], options),
   prepare(container, context) {
     localizeBlocks(container, context.locale);
   },
