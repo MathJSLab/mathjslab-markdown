@@ -1,26 +1,16 @@
 # Eletrônica Digital
 
-> **Sumário de desenvolvimento — versão 1.16.** Estrutura sujeita a revisão durante a
-> redação dos capítulos.
-
 Obra de referência para cursos superiores de Engenharia Elétrica, Ciência da
-Computação e áreas afins. O desenvolvimento parte da representação binária e da
+Computação e áreas afins. A exposição parte da representação binária e da
 lógica booleana, avança pela análise e síntese de circuitos digitais e alcança
 a implementação eletrônica, as tecnologias programáveis e a integração de
 sistemas.
-
-**Organização:** um arquivo Markdown por capítulo; nomes dos arquivos em
-inglês, com letras minúsculas e hífens. Os títulos e o conteúdo permanecem em
-português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
-
-[Voltar à seleção de idiomas](../README.md)
 
 ## Parte I — Fundamentos dos sistemas digitais
 
 ### 1. Introdução à Eletrônica Digital {#chapter-01}
 
-**Capítulo disponível:**
-[Ler o Capítulo 1 — Introdução à Eletrônica Digital](introduction-to-digital-electronics.md)
+[Ler o Capítulo 1 — Introdução à Eletrônica Digital](introduction-to-digital-electronics-revisao-1.md)
 
 - 1.1. Grandezas analógicas e digitais
 - 1.2. Sinais contínuos, discretos e binários
@@ -33,8 +23,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 2. Sistemas de numeração e representação da informação {#chapter-02}
 
-**Capítulo disponível:**
-[Ler o Capítulo 2 — Sistemas de numeração e representação da informação](number-systems-and-information-representation.md)
+[Ler o Capítulo 2 — Sistemas de numeração e representação da informação](number-systems-and-information-representation-revisao-1.md)
 
 - 2.1. Sistemas posicionais e bases numéricas
 - 2.2. Sistemas decimal, binário, octal e hexadecimal
@@ -48,8 +37,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 3. Álgebra booleana e funções lógicas {#chapter-03}
 
-**Capítulo disponível:**
-[Ler o Capítulo 3 — Álgebra booleana e funções lógicas](boolean-algebra-and-logic-functions.md)
+[Ler o Capítulo 3 — Álgebra booleana e funções lógicas](boolean-algebra-and-logic-functions-revisao-1.md)
 
 - 3.1. Variáveis e funções booleanas
 - 3.2. Operações lógicas fundamentais
@@ -63,7 +51,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 4. Portas lógicas e representação de circuitos {#chapter-04}
 
-**Capítulo disponível:**
 [Ler o Capítulo 4 — Portas lógicas e representação de circuitos](logic-gates-and-circuit-representation.md)
 
 - 4.1. Portas NOT, AND e OR
@@ -79,7 +66,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 5. Simplificação e minimização de funções lógicas {#chapter-05}
 
-**Capítulo disponível:**
 [Ler o Capítulo 5 — Simplificação e minimização de funções lógicas](logic-function-simplification-and-minimization.md)
 
 - 5.1. Simplificação algébrica
@@ -94,7 +80,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 6. Projeto de circuitos combinacionais {#chapter-06}
 
-**Capítulo disponível:**
 [Ler o Capítulo 6 — Projeto de circuitos combinacionais](combinational-circuit-design.md)
 
 - 6.1. Especificação funcional
@@ -108,7 +93,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 7. Codificadores, decodificadores e seleção de dados {#chapter-07}
 
-**Capítulo disponível:**
 [Ler o Capítulo 7 — Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md)
 
 - 7.1. Codificadores binários
@@ -123,7 +107,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 8. Circuitos aritméticos digitais {#chapter-08}
 
-**Capítulo disponível:**
 [Ler o Capítulo 8 — Circuitos aritméticos digitais](digital-arithmetic-circuits.md)
 
 - 8.1. Meio somador e somador completo
@@ -141,7 +124,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 9. Fundamentos dos circuitos sequenciais {#chapter-09}
 
-**Capítulo disponível:**
 [Ler o Capítulo 9 — Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md)
 
 - 9.1. Estado e memória
@@ -156,7 +138,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 10. Temporização e confiabilidade de circuitos sequenciais {#chapter-10}
 
-**Capítulo disponível:**
 [Ler o Capítulo 10 — Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md)
 
 - 10.1. Atrasos de propagação
@@ -170,7 +151,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 11. Registradores e contadores {#chapter-11}
 
-**Capítulo disponível:**
 [Ler o Capítulo 11 — Registradores e contadores](registers-and-counters.md)
 
 - 11.1. Registradores paralelos
@@ -186,7 +166,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 12. Máquinas de estados finitos {#chapter-12}
 
-**Capítulo disponível:**
 [Ler o Capítulo 12 — Máquinas de estados finitos](finite-state-machines.md)
 
 - 12.1. Conceito de máquina de estados
@@ -204,7 +183,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 13. Dispositivos semicondutores e chaveamento digital {#chapter-13}
 
-**Capítulo disponível:**
 [Ler o Capítulo 13 — Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md)
 
 - 13.1. Fundamentos de semicondutores aplicados à lógica digital
@@ -218,7 +196,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 14. Famílias lógicas e circuitos integrados digitais {#chapter-14}
 
-**Arquivo:** `logic-families-and-digital-integrated-circuits.md`
+[Ler o Capítulo 14 — Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md)
 
 - 14.1. Parâmetros elétricos das famílias lógicas
 - 14.2. Níveis de tensão e margens de ruído
@@ -234,8 +212,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 - 14.12. Seleção de componentes por folhas de dados
 
 ### 15. Integridade de sinais e implementação física {#chapter-15}
-
-**Arquivo:** `signal-integrity-and-physical-implementation.md`
 
 [Ler o Capítulo 15 — Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md)
 
@@ -254,8 +230,6 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 16. Memórias semicondutoras {#chapter-16}
 
-**Arquivo:** `semiconductor-memories.md`
-
 [Ler o Capítulo 16 — Memórias semicondutoras](semiconductor-memories.md)
 
 - 16.1. Organização e endereçamento
@@ -272,7 +246,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 17. Circuitos de temporização e geração de pulsos {#chapter-17}
 
-**Arquivo previsto:** `timing-and-pulse-generation-circuits.md`
+[Ler o Capítulo 17 — Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md)
 
 - 17.1. Redes RC de temporização
 - 17.2. Comparadores com histerese e disparadores Schmitt
@@ -287,7 +261,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 18. Conversores digital-analógico (DAC) {#chapter-18}
 
-**Arquivo previsto:** `digital-to-analog-converters.md`
+[Ler o Capítulo 18 — Conversores digital-analógico (DAC)](digital-to-analog-converters.md)
 
 - 18.1. Princípios da conversão digital-analógica
 - 18.2. Resolução, faixa e quantização
@@ -301,7 +275,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 19. Conversores analógico-digitais (ADC) {#chapter-19}
 
-**Arquivo previsto:** `analog-to-digital-converters.md`
+[Ler o Capítulo 19 — Conversores analógico-digitais (ADC)](analog-to-digital-converters.md)
 
 - 19.1. Amostragem e quantização
 - 19.2. Teorema da amostragem
@@ -319,7 +293,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 20. Dispositivos lógicos programáveis {#chapter-20}
 
-**Arquivo previsto:** `programmable-logic-devices.md`
+[Ler o Capítulo 20 — Dispositivos lógicos programáveis](programmable-logic-devices.md)
 
 - 20.1. Conceito de lógica programável
 - 20.2. ROM como implementação de funções lógicas
@@ -334,7 +308,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 21. Linguagens de descrição de hardware {#chapter-21}
 
-**Arquivo previsto:** `hardware-description-languages.md`
+[Ler o Capítulo 21 — Linguagens de descrição de hardware](hardware-description-languages.md)
 
 - 21.1. Descrição estrutural e comportamental
 - 21.2. Conceitos de VHDL e Verilog
@@ -348,7 +322,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 22. Metodologia de projeto e verificação digital {#chapter-22}
 
-**Arquivo previsto:** `digital-design-and-verification-methodology.md`
+[Ler o Capítulo 22 — Metodologia de projeto e verificação digital](digital-design-and-verification-methodology.md)
 
 - 22.1. Especificação de requisitos
 - 22.2. Decomposição funcional e arquitetura
@@ -365,20 +339,27 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 23. Interfaces e comunicação entre sistemas digitais {#chapter-23}
 
-**Arquivo previsto:** `digital-system-interfaces-and-communication.md`
+[Ler o Capítulo 23 — Interfaces e comunicação entre sistemas digitais](digital-system-interfaces-and-communication-revisao-2.md)
 
 - 23.1. Barramentos e sinais de controle
 - 23.2. Comunicação paralela e serial
 - 23.3. Interfaces síncronas e assíncronas
 - 23.4. Princípios de UART, SPI e I²C
-- 23.5. Adaptação de níveis lógicos
-- 23.6. Buffers e isolamento
-- 23.7. Interface com sensores e atuadores
-- 23.8. Integração com conversores e memórias
+- 23.5. UART e camadas físicas: RS-232
+- 23.6. Barramento 1-Wire e identificação de dispositivos
+- 23.7. Sinalização diferencial: RS-422 e RS-485
+- 23.8. PROFIBUS e redes industriais
+- 23.9. JTAG: teste, depuração e programação
+- 23.10. Integridade do sinal e dimensionamento das interconexões
+- 23.11. Adaptação de níveis lógicos
+- 23.12. Buffers e isolamento
+- 23.13. Interface com sensores e atuadores
+- 23.14. Integração com conversores e memórias
+- 23.15. Comparação e critérios de escolha
 
 ### 24. Sistemas digitais integrados {#chapter-24}
 
-**Arquivo previsto:** `integrated-digital-systems.md`
+[Ler o Capítulo 24 — Sistemas digitais integrados](integrated-digital-systems.md)
 
 - 24.1. Organização em caminho de dados e controle
 - 24.2. Interligação de blocos combinacionais e sequenciais
@@ -391,7 +372,7 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### 25. Projetos integradores {#chapter-25}
 
-**Arquivo previsto:** `integrative-projects.md`
+[Ler o Capítulo 25 — Projetos integradores](integrative-projects.md)
 
 - 25.1. Sistema de votação digital
 - 25.2. Controlador de semáforo
@@ -406,50 +387,138 @@ português brasileiro. Os capítulos serão vinculados conforme forem redigidos.
 
 ### Apêndice A. Fundamentos matemáticos complementares {#appendix-a}
 
-**Arquivo previsto:** `supplementary-mathematical-foundations.md`
+[Ler o Apêndice A — Fundamentos matemáticos complementares](supplementary-mathematical-foundations.md)
+
+- A.1. Potências, bases e representação posicional
+- A.2. Aritmética modular e transbordamento
+- A.3. Conjuntos, relações e funções
+- A.4. Álgebra booleana e identidades úteis
+- A.5. Análise combinatória e probabilidade elementar
+- A.6. Sequências, somatórios e crescimento
+- A.7. Logaritmos, decibéis e escalas
+- A.8. Tempo, frequência e temporização digital
+- A.9. Funções exponenciais e redes RC
+- A.10. Amostragem, quantização e erro
+- A.11. Impedância, reflexões e sinais diferenciais
+- A.12. Exercícios de consolidação
+- A.13. Leituras complementares
 
 ### Apêndice B. Convenções de representação e simbologia {#appendix-b}
 
-**Arquivo previsto:** `representation-conventions-and-symbols.md`
+[Ler o Apêndice B — Convenções de representação e simbologia](representation-conventions-and-symbols.md)
+
+- B.1. Grandezas, unidades e prefixos
+- B.2. Variáveis booleanas e operações lógicas
+- B.3. Níveis lógicos, polaridade e estados especiais
+- B.4. Símbolos de portas lógicas
+- B.5. Diagramas elétricos, conexões e barramentos
+- B.6. Símbolos de elementos sequenciais
+- B.7. Diagramas de estados e fluxogramas
+- B.8. Diagramas temporais e bordas de relógio
+- B.9. Tabelas-verdade, tabelas de estados e condições indiferentes
+- B.10. Numeração, representação de dados e convenções de código
+- B.11. Diagramas de blocos, hierarquia e interfaces
+- B.12. Convenções para figuras, equações e referências cruzadas
+- B.13. Checklist de leitura e documentação
+- B.14. Leituras complementares
 
 ### Apêndice C. Tabelas de referência {#appendix-c}
 
-**Arquivo previsto:** `reference-tables.md`
+[Ler o Apêndice C — Tabelas de referência](reference-tables.md)
+
+- C.1. Potências de dois, capacidades e faixas numéricas
+- C.2. Conversão entre decimal, binário, octal e hexadecimal
+- C.3. Códigos binários usuais
+- C.4. Portas lógicas: tabelas-verdade
+- C.5. Identidades de álgebra booleana
+- C.6. Blocos combinacionais e equações características
+- C.7. Latches, flip-flops e registradores
+- C.8. Temporização digital e restrições de relógio
+- C.9. Memórias e endereçamento
+- C.10. Conversão analógico-digital e aquisição
+- C.11. Interfaces e comunicação digital
+- C.12. Grandezas elétricas, potência e sinais
+- C.13. Parâmetros de folhas de dados e verificação de compatibilidade
+- C.14. Lista rápida de conferência de projeto
+- C.15. Leituras e fontes de referência
 
 ### Apêndice D. Introdução às ferramentas de simulação {#appendix-d}
 
-**Arquivo previsto:** `introduction-to-simulation-tools.md`
+[Ler o Apêndice D — Introdução às ferramentas de simulação](introduction-to-simulation-tools.md)
+
+- D.1. Objetivos, modelos e níveis de abstração
+- D.2. Panorama de ferramentas e critérios de escolha
+- D.3. Um fluxo de trabalho de simulação reproduzível
+- D.4. Simulação funcional de circuitos combinacionais
+- D.5. Simulação de circuitos sequenciais e máquinas de estados
+- D.6. Testbenches em Verilog: estímulos e autoverificação
+- D.7. Formas de onda, VCD e interpretação temporal
+- D.8. Simulação elétrica com SPICE
+- D.9. Simulação, síntese e análise temporal de FPGA
+- D.10. Erros comuns e estratégias de diagnóstico
+- D.11. Atividades práticas orientadas
+- D.12. Modelo de relatório de simulação
+- D.13. Exercícios de consolidação
+- D.14. Leituras complementares e documentação
 
 ### Apêndice E. Experimentos de laboratório {#appendix-e}
 
-**Arquivo previsto:** `laboratory-experiments.md`
+[Ler o Apêndice E — Experimentos de laboratório](laboratory-experiments.md)
+
+- E.1. Organização, segurança e registro experimental
+- E.2. Experimento 1 — Portas lógicas e tabelas-verdade
+- E.3. Experimento 2 — Álgebra booleana e equivalência de circuitos
+- E.4. Experimento 3 — Circuitos combinacionais: multiplexador e somador
+- E.5. Experimento 4 — Latches, flip-flops e antirrepique
+- E.6. Experimento 5 — Contadores, divisores e decodificação
+- E.7. Experimento 6 — Máquina de estados: controlador de semáforo
+- E.8. Experimento 7 — Conversão analógico-digital e quantização
+- E.9. Experimento 8 — Comunicação serial UART
+- E.10. Experimento 9 — Integridade de sinais e redes RC
+- E.11. Experimento 10 — Projeto integrado de aquisição e registro
+- E.12. Planejamento de medidas e análise de resultados
+- E.13. Avaliação e critérios de qualidade
+- E.14. Exercícios e propostas de investigação
+- E.15. Referências e documentação de apoio
 
 ### Apêndice F. Respostas e soluções selecionadas {#appendix-f}
 
-**Arquivo previsto:** `selected-answers-and-solutions.md`
+[Ler o Apêndice F — Respostas e soluções selecionadas](selected-answers-and-solutions.md)
+
+- F.1. Convenções para a leitura das soluções
+- F.2. Apêndice A — Fundamentos matemáticos complementares
+- F.3. Apêndice D — Introdução às ferramentas de simulação
+- F.4. Apêndice E — Experimentos de laboratório
+- F.5. Capítulo 25 — Projetos integradores
+- F.6. Limites e critérios de validação
 
 ### Apêndice G. Glossário técnico {#appendix-g}
 
-**Arquivo previsto:** `technical-glossary.md`
+[Ler o Apêndice G — Glossário técnico](technical-glossary.md)
 
-## Diretrizes de desenvolvimento
-
-Cada capítulo deverá combinar fundamentação conceitual, desenvolvimento
-matemático, análise de circuitos, exemplos resolvidos e exercícios. Quando
-pertinentes, serão utilizados diagramas elétricos, tabelas-verdade, formas de
-onda, descrições HDL e simulações. O conteúdo acadêmico determina a escolha das
-extensões, e não o contrário.
-
-As extensões disponíveis no `mathjslab-markdown` incluem `mathjax`, `tikz`,
-`mermaid`, `graphviz`, `wavedrom`, `vcd`, `netlist`, `hdl`, `hdl-interactive`,
-`vega-lite`, `mathjslab`, `didactic`, `cross-references`, `citations`,
-`syntax-highlight`, `heading-ids` e `relative-urls`, entre outras. O uso de
-execução e de recursos interativos depende das capacidades e permissões do
-aplicativo hospedeiro.
-
-A tradução integral para inglês e espanhol ocorrerá depois da consolidação do
-texto em português, mantendo os mesmos nomes de arquivo e identificadores
-técnicos.
-
-
-> **Revisão ilustrada (versão 1.5):** os capítulos 1 a 4 receberam novas figuras com Mermaid, Graphviz, WaveDrom e Vega-Lite. A apresentação final depende da habilitação dessas extensões no aplicativo hospedeiro.
+- G.1. Organização e critérios de consulta
+- G.2. A
+- G.3. B
+- G.4. C
+- G.5. D
+- G.6. E
+- G.7. F
+- G.8. G
+- G.9. H
+- G.10. I
+- G.11. J
+- G.12. L
+- G.13. M
+- G.14. N
+- G.15. O
+- G.16. P
+- G.17. Q
+- G.18. R
+- G.19. S
+- G.20. T
+- G.21. U
+- G.22. V
+- G.23. X
+- G.24. Siglas e unidades de uso recorrente
+- G.25. Termos próximos que não devem ser confundidos
+- G.26. Referências de consulta
