@@ -8,9 +8,7 @@ sistemas.
 
 ## Parte I — Fundamentos dos sistemas digitais
 
-### 1. Introdução à Eletrônica Digital {#chapter-01}
-
-[Ler o Capítulo 1 — Introdução à Eletrônica Digital](introduction-to-digital-electronics-revisao-1.md)
+### 1. [Introdução à Eletrônica Digital](introduction-to-digital-electronics.md) {#chapter-01}
 
 - 1.1. Grandezas analógicas e digitais
 - 1.2. Sinais contínuos, discretos e binários
@@ -21,9 +19,7 @@ sistemas.
 - 1.7. Evolução dos circuitos e das tecnologias digitais
 - 1.8. Aplicações e metodologias de projeto
 
-### 2. Sistemas de numeração e representação da informação {#chapter-02}
-
-[Ler o Capítulo 2 — Sistemas de numeração e representação da informação](number-systems-and-information-representation-revisao-1.md)
+### 2. [Sistemas de numeração e representação da informação](number-systems-and-information-representation.md) {#chapter-02}
 
 - 2.1. Sistemas posicionais e bases numéricas
 - 2.2. Sistemas decimal, binário, octal e hexadecimal
@@ -35,9 +31,7 @@ sistemas.
 - 2.8. Códigos BCD, Gray e códigos alfanuméricos
 - 2.9. Códigos de detecção de erros e paridade
 
-### 3. Álgebra booleana e funções lógicas {#chapter-03}
-
-[Ler o Capítulo 3 — Álgebra booleana e funções lógicas](boolean-algebra-and-logic-functions-revisao-1.md)
+### 3. [Álgebra booleana e funções lógicas](boolean-algebra-and-logic-functions.md) {#chapter-03}
 
 - 3.1. Variáveis e funções booleanas
 - 3.2. Operações lógicas fundamentais
@@ -49,9 +43,7 @@ sistemas.
 - 3.8. Soma de produtos e produto de somas
 - 3.9. Funções completamente e incompletamente especificadas
 
-### 4. Portas lógicas e representação de circuitos {#chapter-04}
-
-[Ler o Capítulo 4 — Portas lógicas e representação de circuitos](logic-gates-and-circuit-representation.md)
+### 4. [Portas lógicas e representação de circuitos](logic-gates-and-circuit-representation.md) {#chapter-04}
 
 - 4.1. Portas NOT, AND e OR
 - 4.2. Portas NAND e NOR
@@ -64,9 +56,7 @@ sistemas.
 
 ## Parte II — Análise e síntese de circuitos combinacionais
 
-### 5. Simplificação e minimização de funções lógicas {#chapter-05}
-
-[Ler o Capítulo 5 — Simplificação e minimização de funções lógicas](logic-function-simplification-and-minimization.md)
+### 5. [Simplificação e minimização de funções lógicas](logic-function-simplification-and-minimization.md) {#chapter-05}
 
 - 5.1. Simplificação algébrica
 - 5.2. Mapas de Karnaugh
@@ -78,9 +68,7 @@ sistemas.
 - 5.8. Compromissos entre área, atraso e consumo
 - 5.9. Riscos lógicos (_hazards_) e condições transitórias
 
-### 6. Projeto de circuitos combinacionais {#chapter-06}
-
-[Ler o Capítulo 6 — Projeto de circuitos combinacionais](combinational-circuit-design.md)
+### 6. [Projeto de circuitos combinacionais](combinational-circuit-design.md) {#chapter-06}
 
 - 6.1. Especificação funcional
 - 6.2. Modelagem por tabelas-verdade
@@ -91,9 +79,7 @@ sistemas.
 - 6.7. Circuitos de comparação
 - 6.8. Validação e testes funcionais
 
-### 7. Codificadores, decodificadores e seleção de dados {#chapter-07}
-
-[Ler o Capítulo 7 — Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md)
+### 7. [Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md) {#chapter-07}
 
 - 7.1. Codificadores binários
 - 7.2. Codificadores com prioridade
@@ -105,9 +91,7 @@ sistemas.
 - 7.8. Implementação de funções com multiplexadores
 - 7.9. Estruturas de seleção e roteamento de sinais
 
-### 8. Circuitos aritméticos digitais {#chapter-08}
-
-[Ler o Capítulo 8 — Circuitos aritméticos digitais](digital-arithmetic-circuits.md)
+### 8. [Circuitos aritméticos digitais](digital-arithmetic-circuits.md) {#chapter-08}
 
 - 8.1. Meio somador e somador completo
 - 8.2. Somadores de múltiplos bits
@@ -122,9 +106,7 @@ sistemas.
 
 ## Parte III — Circuitos sequenciais e sistemas síncronos
 
-### 9. Fundamentos dos circuitos sequenciais {#chapter-09}
-
-[Ler o Capítulo 9 — Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md)
+### 9. [Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md) {#chapter-09}
 
 - 9.1. Estado e memória
 - 9.2. Realimentação lógica
@@ -136,9 +118,7 @@ sistemas.
 - 9.8. Entradas assíncronas de controle
 - 9.9. Equações características e tabelas de excitação
 
-### 10. Temporização e confiabilidade de circuitos sequenciais {#chapter-10}
-
-[Ler o Capítulo 10 — Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md)
+### 10. [Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md) {#chapter-10}
 
 - 10.1. Atrasos de propagação
 - 10.2. Tempos de estabelecimento (_setup_) e retenção (_hold_)
@@ -149,9 +129,7 @@ sistemas.
 - 10.7. Domínios de relógio e transferência de sinais
 - 10.8. Condições de corrida e riscos temporais
 
-### 11. Registradores e contadores {#chapter-11}
-
-[Ler o Capítulo 11 — Registradores e contadores](registers-and-counters.md)
+### 11. [Registradores e contadores](registers-and-counters.md) {#chapter-11}
 
 - 11.1. Registradores paralelos
 - 11.2. Registradores de deslocamento
@@ -164,9 +142,7 @@ sistemas.
 - 11.9. Divisores de frequência
 - 11.10. Aplicações de contadores e registradores
 
-### 12. Máquinas de estados finitos {#chapter-12}
-
-[Ler o Capítulo 12 — Máquinas de estados finitos](finite-state-machines.md)
+### 12. [Máquinas de estados finitos](finite-state-machines.md) {#chapter-12}
 
 - 12.1. Conceito de máquina de estados
 - 12.2. Modelos de Moore e Mealy
@@ -181,9 +157,7 @@ sistemas.
 
 ## Parte IV — Implementação eletrônica dos circuitos digitais
 
-### 13. Dispositivos semicondutores e chaveamento digital {#chapter-13}
-
-[Ler o Capítulo 13 — Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md)
+### 13. [Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md) {#chapter-13}
 
 - 13.1. Fundamentos de semicondutores aplicados à lógica digital
 - 13.2. Diodos e transistores como chaves
@@ -194,9 +168,7 @@ sistemas.
 - 13.7. Inversores implementados com transistores
 - 13.8. Dissipação de potência e limitações físicas
 
-### 14. Famílias lógicas e circuitos integrados digitais {#chapter-14}
-
-[Ler o Capítulo 14 — Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md)
+### 14. [Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md) {#chapter-14}
 
 - 14.1. Parâmetros elétricos das famílias lógicas
 - 14.2. Níveis de tensão e margens de ruído
@@ -211,9 +183,7 @@ sistemas.
 - 14.11. Potência estática, dinâmica e produto potência-atraso
 - 14.12. Seleção de componentes por folhas de dados
 
-### 15. Integridade de sinais e implementação física {#chapter-15}
-
-[Ler o Capítulo 15 — Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md)
+### 15. [Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md) {#chapter-15}
 
 - 15.1. Modelos reais de entradas e saídas digitais
 - 15.2. Capacitâncias parasitas e cargas
@@ -228,9 +198,7 @@ sistemas.
 
 ## Parte V — Memórias, temporização e conversão de sinais
 
-### 16. Memórias semicondutoras {#chapter-16}
-
-[Ler o Capítulo 16 — Memórias semicondutoras](semiconductor-memories.md)
+### 16. [Memórias semicondutoras](semiconductor-memories.md) {#chapter-16}
 
 - 16.1. Organização e endereçamento
 - 16.2. Células de memória
@@ -244,9 +212,7 @@ sistemas.
 - 16.10. Memórias síncronas e assíncronas
 - 16.11. Seleção e expansão de memórias
 
-### 17. Circuitos de temporização e geração de pulsos {#chapter-17}
-
-[Ler o Capítulo 17 — Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md)
+### 17. [Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md) {#chapter-17}
 
 - 17.1. Redes RC de temporização
 - 17.2. Comparadores com histerese e disparadores Schmitt
@@ -259,9 +225,7 @@ sistemas.
 - 17.9. Introdução aos PLLs
 - 17.10. Aplicações de temporização
 
-### 18. Conversores digital-analógico (DAC) {#chapter-18}
-
-[Ler o Capítulo 18 — Conversores digital-analógico (DAC)](digital-to-analog-converters.md)
+### 18. [Conversores digital-analógico (DAC)](digital-to-analog-converters.md) {#chapter-18}
 
 - 18.1. Princípios da conversão digital-analógica
 - 18.2. Resolução, faixa e quantização
@@ -273,9 +237,7 @@ sistemas.
 - 18.8. Conversão por modulação de largura de pulso
 - 18.9. Aplicações e critérios de seleção
 
-### 19. Conversores analógico-digitais (ADC) {#chapter-19}
-
-[Ler o Capítulo 19 — Conversores analógico-digitais (ADC)](analog-to-digital-converters.md)
+### 19. [Conversores analógico-digitais (ADC)](analog-to-digital-converters.md) {#chapter-19}
 
 - 19.1. Amostragem e quantização
 - 19.2. Teorema da amostragem
@@ -291,9 +253,7 @@ sistemas.
 
 ## Parte VI — Dispositivos programáveis e projeto digital
 
-### 20. Dispositivos lógicos programáveis {#chapter-20}
-
-[Ler o Capítulo 20 — Dispositivos lógicos programáveis](programmable-logic-devices.md)
+### 20. [Dispositivos lógicos programáveis](programmable-logic-devices.md) {#chapter-20}
 
 - 20.1. Conceito de lógica programável
 - 20.2. ROM como implementação de funções lógicas
@@ -306,9 +266,7 @@ sistemas.
 - 20.9. Comparação entre lógica discreta, CPLDs e FPGAs
 - 20.10. Aplicações de dispositivos programáveis
 
-### 21. Linguagens de descrição de hardware {#chapter-21}
-
-[Ler o Capítulo 21 — Linguagens de descrição de hardware](hardware-description-languages.md)
+### 21. [Linguagens de descrição de hardware](hardware-description-languages.md) {#chapter-21}
 
 - 21.1. Descrição estrutural e comportamental
 - 21.2. Conceitos de VHDL e Verilog
@@ -320,9 +278,7 @@ sistemas.
 - 21.8. Restrições de temporização
 - 21.9. Correspondência entre HDL e hardware implementado
 
-### 22. Metodologia de projeto e verificação digital {#chapter-22}
-
-[Ler o Capítulo 22 — Metodologia de projeto e verificação digital](digital-design-and-verification-methodology.md)
+### 22. [Metodologia de projeto e verificação digital](digital-design-and-verification-methodology.md) {#chapter-22}
 
 - 22.1. Especificação de requisitos
 - 22.2. Decomposição funcional e arquitetura
@@ -337,9 +293,7 @@ sistemas.
 
 ## Parte VII — Integração e aplicações
 
-### 23. Interfaces e comunicação entre sistemas digitais {#chapter-23}
-
-[Ler o Capítulo 23 — Interfaces e comunicação entre sistemas digitais](digital-system-interfaces-and-communication-revisao-2.md)
+### 23. [Interfaces e comunicação entre sistemas digitais](digital-system-interfaces-and-communication.md) {#chapter-23}
 
 - 23.1. Barramentos e sinais de controle
 - 23.2. Comunicação paralela e serial
@@ -357,9 +311,7 @@ sistemas.
 - 23.14. Integração com conversores e memórias
 - 23.15. Comparação e critérios de escolha
 
-### 24. Sistemas digitais integrados {#chapter-24}
-
-[Ler o Capítulo 24 — Sistemas digitais integrados](integrated-digital-systems.md)
+### 24. [Sistemas digitais integrados](integrated-digital-systems.md) {#chapter-24}
 
 - 24.1. Organização em caminho de dados e controle
 - 24.2. Interligação de blocos combinacionais e sequenciais
@@ -370,9 +322,7 @@ sistemas.
 - 24.7. Compromissos entre desempenho, consumo e custo
 - 24.8. Exemplos de sistemas digitais completos
 
-### 25. Projetos integradores {#chapter-25}
-
-[Ler o Capítulo 25 — Projetos integradores](integrative-projects.md)
+### 25. [Projetos integradores](integrative-projects.md) {#chapter-25}
 
 - 25.1. Sistema de votação digital
 - 25.2. Controlador de semáforo
