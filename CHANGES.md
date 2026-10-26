@@ -1,5 +1,16 @@
 # Release notes
 
+## 0.9.2 — 2026-10-26
+
+- Update Markdown, diagram and build dependencies to their latest stable npm
+  releases and refresh the dependency lockfile.
+- Separate dependency maintenance, repository synchronization, validation,
+  archive preparation and publication scripts. Keep production build and
+  package checks in npm lifecycle hooks; deprecate `do:all` as a
+  preparation-only alias.
+- Format the digital-electronics catalogue while preserving custom block labels
+  and cross-references, and repair glossary links to the interfaces chapter.
+
 ## 0.9.1 — 2026-10-25
 
 - Render `note` teaching blocks with inline titles, localized labels,

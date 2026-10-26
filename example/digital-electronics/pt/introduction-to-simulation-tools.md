@@ -1,53 +1,91 @@
 # Apêndice D. Introdução às ferramentas de simulação {#appendix-d}
 
-A simulação permite investigar o comportamento de um circuito antes de sua montagem física ou implementação em um dispositivo programável. Seu principal valor não está em produzir uma forma de onda visualmente convincente, mas em **confrontar uma especificação com um modelo**, identificar inconsistências e documentar evidências de funcionamento. Este apêndice apresenta procedimentos reproduzíveis de simulação lógica, temporal, elétrica e em linguagens de descrição de hardware (HDL), com exemplos associados aos capítulos de *Eletrônica Digital*.
+A simulação permite investigar o comportamento de um circuito antes de sua
+montagem física ou implementação em um dispositivo programável. Seu principal
+valor não está em produzir uma forma de onda visualmente convincente, mas em
+**confrontar uma especificação com um modelo**, identificar inconsistências e
+documentar evidências de funcionamento. Este apêndice apresenta procedimentos
+reproduzíveis de simulação lógica, temporal, elétrica e em linguagens de
+descrição de hardware (HDL), com exemplos associados aos capítulos de
+_Eletrônica Digital_.
 
-Uma simulação não substitui a análise teórica, a inspeção do circuito nem a validação experimental. Seus resultados são válidos dentro das hipóteses do modelo: uma porta lógica ideal não reproduz automaticamente atrasos, ruído, consumo, metastabilidade ou limites elétricos de um circuito integrado real.
+Uma simulação não substitui a análise teórica, a inspeção do circuito nem a
+validação experimental. Seus resultados são válidos dentro das hipóteses do
+modelo: uma porta lógica ideal não reproduz automaticamente atrasos, ruído,
+consumo, metastabilidade ou limites elétricos de um circuito integrado real.
 
 ## D.1. Objetivos, modelos e níveis de abstração
 
 Em projetos digitais, convém distinguir quatro níveis de investigação:
 
-| Nível | Modelo | Perguntas principais | Limitações típicas |
-|---|---|---|---|
-| Funcional | Expressões booleanas, tabelas-verdade, FSM | A lógica implementa a função desejada? | Não inclui atrasos físicos por padrão |
-| Temporal lógico | Eventos, atrasos, bordas de relógio | A sequência de sinais e estados é coerente? | Depende dos atrasos e das verificações modelados |
-| RTL/HDL | Registradores, operadores, processos e testbench | A descrição sintetizável atende ao protocolo e à especificação? | Simulação RTL não representa automaticamente a implementação física |
-| Elétrico | Componentes e redes com parâmetros elétricos | Tensões, correntes, transientes e margens são aceitáveis? | Fidelidade limitada pelos modelos de dispositivos |
+| Nível           | Modelo                                           | Perguntas principais                                            | Limitações típicas                                                  |
+| --------------- | ------------------------------------------------ | --------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Funcional       | Expressões booleanas, tabelas-verdade, FSM       | A lógica implementa a função desejada?                          | Não inclui atrasos físicos por padrão                               |
+| Temporal lógico | Eventos, atrasos, bordas de relógio              | A sequência de sinais e estados é coerente?                     | Depende dos atrasos e das verificações modelados                    |
+| RTL/HDL         | Registradores, operadores, processos e testbench | A descrição sintetizável atende ao protocolo e à especificação? | Simulação RTL não representa automaticamente a implementação física |
+| Elétrico        | Componentes e redes com parâmetros elétricos     | Tensões, correntes, transientes e margens são aceitáveis?       | Fidelidade limitada pelos modelos de dispositivos                   |
 
-A seleção da ferramenta deve partir da pergunta a responder. Para verificar a tabela-verdade de um multiplexador, um simulador lógico é suficiente. Para avaliar a subida de uma linha com resistor de pull-up e capacitância distribuída, é necessário um modelo elétrico, como uma análise transitória SPICE.
+A seleção da ferramenta deve partir da pergunta a responder. Para verificar a
+tabela-verdade de um multiplexador, um simulador lógico é suficiente. Para
+avaliar a subida de uma linha com resistor de pull-up e capacitância
+distribuída, é necessário um modelo elétrico, como uma análise transitória
+SPICE.
 
-**Terminologia:** *simulação* executa um modelo; *síntese* transforma uma descrição lógica em uma implementação; *verificação* compara o comportamento com requisitos; *validação* investiga se o sistema atende à necessidade real de uso. Esses processos são relacionados, mas não equivalentes.
+**Terminologia:** _simulação_ executa um modelo; _síntese_ transforma uma
+descrição lógica em uma implementação; _verificação_ compara o comportamento
+com requisitos; _validação_ investiga se o sistema atende à necessidade real de
+uso. Esses processos são relacionados, mas não equivalentes.
 
 ## D.2. Panorama de ferramentas e critérios de escolha
 
-Existem ferramentas gráficas de circuitos lógicos, simuladores de eventos para HDL, simuladores elétricos e ambientes de projeto de FPGA. A tabela apresenta exemplos, sem pressupor que todos tenham as mesmas licenças, recursos ou formatos de arquivo.
+Existem ferramentas gráficas de circuitos lógicos, simuladores de eventos para
+HDL, simuladores elétricos e ambientes de projeto de FPGA. A tabela apresenta
+exemplos, sem pressupor que todos tenham as mesmas licenças, recursos ou
+formatos de arquivo.
 
-| Categoria | Exemplos | Uso principal |
-|---|---|---|
-| Simulação lógica didática | Logisim-evolution e ambientes equivalentes | Montagem de portas, registradores e circuitos por blocos |
-| Simulação de Verilog/SystemVerilog | Icarus Verilog, Verilator e simuladores de fabricantes | Testbenches, eventos, rastreamento de sinais e verificação RTL |
-| Visualização de formas de onda | GTKWave e visualizadores integrados | Inspeção de arquivos VCD e de transições digitais |
-| Simulação elétrica | ngspice, LTspice e equivalentes | Análise DC, transitória e de redes analógicas ou mistas |
-| Projeto de FPGA | Vivado, Quartus e ferramentas compatíveis com o dispositivo | Síntese, implementação, análise temporal e programação |
+| Categoria                          | Exemplos                                                    | Uso principal                                                  |
+| ---------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------------- |
+| Simulação lógica didática          | Logisim-evolution e ambientes equivalentes                  | Montagem de portas, registradores e circuitos por blocos       |
+| Simulação de Verilog/SystemVerilog | Icarus Verilog, Verilator e simuladores de fabricantes      | Testbenches, eventos, rastreamento de sinais e verificação RTL |
+| Visualização de formas de onda     | GTKWave e visualizadores integrados                         | Inspeção de arquivos VCD e de transições digitais              |
+| Simulação elétrica                 | ngspice, LTspice e equivalentes                             | Análise DC, transitória e de redes analógicas ou mistas        |
+| Projeto de FPGA                    | Vivado, Quartus e ferramentas compatíveis com o dispositivo | Síntese, implementação, análise temporal e programação         |
 
-A escolha deve considerar: sistema operacional, formato de entrada, suporte à linguagem utilizada, possibilidade de automação, rastreabilidade dos resultados, disponibilidade de modelos, restrições de licença e compatibilidade com o dispositivo-alvo. Recursos e comandos variam conforme a versão; consulte a documentação da ferramenta instalada.
+A escolha deve considerar: sistema operacional, formato de entrada, suporte à
+linguagem utilizada, possibilidade de automação, rastreabilidade dos
+resultados, disponibilidade de modelos, restrições de licença e compatibilidade
+com o dispositivo-alvo. Recursos e comandos variam conforme a versão; consulte
+a documentação da ferramenta instalada.
 
-No **MathJSLab**, blocos Markdown e extensões como `tikz`, `wavedrom`, `vcd`, `netlist`, `hdl` e `hdl-interactive` podem auxiliar a apresentação de exemplos. A disponibilidade de execução, interpretação ou visualização depende das extensões habilitadas e do aplicativo hospedeiro. Um bloco de código exibido corretamente não comprova que o circuito foi efetivamente simulado.
+No **MathJSLab**, blocos Markdown e extensões como `tikz`, `wavedrom`, `vcd`,
+`netlist`, `hdl` e `hdl-interactive` podem auxiliar a apresentação de exemplos.
+A disponibilidade de execução, interpretação ou visualização depende das
+extensões habilitadas e do aplicativo hospedeiro. Um bloco de código exibido
+corretamente não comprova que o circuito foi efetivamente simulado.
 
 ## D.3. Um fluxo de trabalho de simulação reproduzível
 
 Recomenda-se organizar cada experimento nas seguintes etapas:
 
-1. **Especificar:** definir entradas, saídas, estados, relógio, reset e comportamento esperado.
-2. **Modelar:** escolher o nível de abstração e explicitar as hipóteses adotadas.
-3. **Estimular:** produzir entradas normais, casos extremos e situações inválidas relevantes.
-4. **Observar:** registrar sinais internos e externos, mensagens de erro e parâmetros da execução.
-5. **Conferir:** comparar resultados com tabela-verdade, equações, invariantes ou modelo de referência.
-6. **Documentar:** guardar versão do código, parâmetros, ferramenta, casos de teste e conclusão.
+1. **Especificar:** definir entradas, saídas, estados, relógio, reset e
+   comportamento esperado.
+2. **Modelar:** escolher o nível de abstração e explicitar as hipóteses
+   adotadas.
+3. **Estimular:** produzir entradas normais, casos extremos e situações
+   inválidas relevantes.
+4. **Observar:** registrar sinais internos e externos, mensagens de erro e
+   parâmetros da execução.
+5. **Conferir:** comparar resultados com tabela-verdade, equações, invariantes
+   ou modelo de referência.
+6. **Documentar:** guardar versão do código, parâmetros, ferramenta, casos de
+   teste e conclusão.
 
-Um teste que apenas mostra sinais alternando não é suficiente. É importante estabelecer um **oráculo de verificação**: um procedimento independente que determine o resultado esperado. Para um somador, por exemplo, o oráculo pode ser a operação aritmética aplicada às entradas com a largura correta.
+Um teste que apenas mostra sinais alternando não é suficiente. É importante
+estabelecer um **oráculo de verificação**: um procedimento independente que
+determine o resultado esperado. Para um somador, por exemplo, o oráculo pode
+ser a operação aritmética aplicada às entradas com a largura correta.
 
+<!-- prettier-ignore -->
 ::: figure Fluxo básico de verificação por simulação {#fig-appendix-d-verification-flow}
 
 ```tikz
@@ -70,28 +108,34 @@ Um teste que apenas mostra sinais alternando não é suficiente. É importante e
 
 :::
 
-A seta de retorno indica que uma divergência pode revelar erro na especificação, no modelo, nos estímulos ou na própria verificação; não se deve assumir de imediato que o circuito está incorreto.
+A seta de retorno indica que uma divergência pode revelar erro na
+especificação, no modelo, nos estímulos ou na própria verificação; não se deve
+assumir de imediato que o circuito está incorreto.
 
 ## D.4. Simulação funcional de circuitos combinacionais
 
-Considere um multiplexador de duas entradas, com dados $A$ e $B$, seletor $S$ e saída $Y$:
+Considere um multiplexador de duas entradas, com dados $A$ e $B$, seletor $S$ e
+saída $Y$:
 
 $$Y=\overline{S}A+SB.$$
 
 A tabela-verdade é:
 
 | $S$ | $A$ | $B$ | $Y$ |
-|---:|---:|---:|---:|
-| 0 | 0 | 0 | 0 |
-| 0 | 0 | 1 | 0 |
-| 0 | 1 | 0 | 1 |
-| 0 | 1 | 1 | 1 |
-| 1 | 0 | 0 | 0 |
-| 1 | 0 | 1 | 1 |
-| 1 | 1 | 0 | 0 |
-| 1 | 1 | 1 | 1 |
+| --: | --: | --: | --: |
+|   0 |   0 |   0 |   0 |
+|   0 |   0 |   1 |   0 |
+|   0 |   1 |   0 |   1 |
+|   0 |   1 |   1 |   1 |
+|   1 |   0 |   0 |   0 |
+|   1 |   0 |   1 |   1 |
+|   1 |   1 |   0 |   0 |
+|   1 |   1 |   1 |   1 |
 
-Em um simulador gráfico, monte duas portas AND, uma inversora e uma porta OR, ou utilize o componente multiplexador equivalente. Percorra as oito combinações e registre a saída. A verificação é **exaustiva** para esse exemplo, pois todas as combinações de entrada são avaliadas.
+Em um simulador gráfico, monte duas portas AND, uma inversora e uma porta OR,
+ou utilize o componente multiplexador equivalente. Percorra as oito combinações
+e registre a saída. A verificação é **exaustiva** para esse exemplo, pois todas
+as combinações de entrada são avaliadas.
 
 A mesma função pode ser descrita em Verilog:
 
@@ -106,13 +150,20 @@ module mux2 (
 endmodule
 ```
 
-O operador condicional expressa a função do multiplexador, mas não determina sozinho a tecnologia de implementação nem o atraso físico. Em projetos maiores, os testes exaustivos tornam-se rapidamente inviáveis: um bloco com $n$ entradas binárias possui $2^n$ combinações. Nesses casos, utilizam-se testes dirigidos, aleatórios, propriedades e técnicas formais complementares.
+O operador condicional expressa a função do multiplexador, mas não determina
+sozinho a tecnologia de implementação nem o atraso físico. Em projetos maiores,
+os testes exaustivos tornam-se rapidamente inviáveis: um bloco com $n$ entradas
+binárias possui $2^n$ combinações. Nesses casos, utilizam-se testes dirigidos,
+aleatórios, propriedades e técnicas formais complementares.
 
 ## D.5. Simulação de circuitos sequenciais e máquinas de estados
 
-Um circuito sequencial depende tanto das entradas atuais quanto do estado armazenado. A simulação precisa, portanto, especificar **condições iniciais**, bordas ativas, reset e sequência temporal dos estímulos.
+Um circuito sequencial depende tanto das entradas atuais quanto do estado
+armazenado. A simulação precisa, portanto, especificar **condições iniciais**,
+bordas ativas, reset e sequência temporal dos estímulos.
 
-Considere um contador binário síncrono de quatro bits, com reset ativo em nível alto e habilitação `en`:
+Considere um contador binário síncrono de quatro bits, com reset ativo em nível
+alto e habilitação `en`:
 
 ```verilog
 module counter4 (
@@ -130,10 +181,18 @@ module counter4 (
 endmodule
 ```
 
-A atribuição não bloqueante `<=` é adequada à atualização de registradores em processos acionados por borda. O contador avança módulo $16$, isto é, após `1111` retorna a `0000`. Se `en=0`, conserva seu valor. Como o reset está dentro de `always @(posedge clk)`, ele é **síncrono**: sua ativação só altera `q` na próxima borda de subida.
+A atribuição não bloqueante `<=` é adequada à atualização de registradores em
+processos acionados por borda. O contador avança módulo $16$, isto é, após
+`1111` retorna a `0000`. Se `en=0`, conserva seu valor. Como o reset está
+dentro de `always @(posedge clk)`, ele é **síncrono**: sua ativação só altera
+`q` na próxima borda de subida.
 
-Um roteiro de teste deve contemplar: reset inicial, contagem habilitada, pausa com `en=0`, retomada, transbordamento e reset durante a operação. Também deve verificar que mudanças em `en` fora da borda ativa não modificam imediatamente o registrador.
+Um roteiro de teste deve contemplar: reset inicial, contagem habilitada, pausa
+com `en=0`, retomada, transbordamento e reset durante a operação. Também deve
+verificar que mudanças em `en` fora da borda ativa não modificam imediatamente
+o registrador.
 
+<!-- prettier-ignore -->
 ::: figure Sequência conceitual de um contador síncrono habilitado {#fig-appendix-d-counter-timing}
 
 ```wavedrom
@@ -147,11 +206,15 @@ Um roteiro de teste deve contemplar: reset inicial, contagem habilitada, pausa c
 
 :::
 
-A figura é esquemática: para validar instantes e valores específicos, utilize uma simulação com estímulos e registros de eventos explicitamente definidos.
+A figura é esquemática: para validar instantes e valores específicos, utilize
+uma simulação com estímulos e registros de eventos explicitamente definidos.
 
 ## D.6. Testbenches em Verilog: estímulos e autoverificação
 
-Um *testbench* é um módulo de verificação que instancia o circuito sob teste (*design under test*, DUT), aplica estímulos e avalia as saídas. O exemplo seguinte verifica o multiplexador da Seção D.4, percorrendo todas as combinações de entradas.
+Um _testbench_ é um módulo de verificação que instancia o circuito sob teste
+(_design under test_, DUT), aplica estímulos e avalia as saídas. O exemplo
+seguinte verifica o multiplexador da Seção D.4, percorrendo todas as
+combinações de entradas.
 
 ```verilog
 `timescale 1ns/1ps
@@ -185,28 +248,39 @@ module tb_mux2;
 endmodule
 ```
 
-O operador `!==` realiza comparação sensível a valores desconhecidos (`X`) e de alta impedância (`Z`), útil para evitar que uma saída indefinida seja aceita como correta. O atraso `#1` concede tempo para a propagação dos eventos na simulação; ele não representa, por si só, um atraso físico de um componente.
+O operador `!==` realiza comparação sensível a valores desconhecidos (`X`) e de
+alta impedância (`Z`), útil para evitar que uma saída indefinida seja aceita
+como correta. O atraso `#1` concede tempo para a propagação dos eventos na
+simulação; ele não representa, por si só, um atraso físico de um componente.
 
 ### Execução ilustrativa com Icarus Verilog
 
-Salve o circuito em `mux2.v` e o teste em `tb_mux2.v`. Em uma instalação que disponibilize os comandos correspondentes:
+Salve o circuito em `mux2.v` e o teste em `tb_mux2.v`. Em uma instalação que
+disponibilize os comandos correspondentes:
 
 ```bash
 iverilog -g2012 -s tb_mux2 -o mux2_sim mux2.v tb_mux2.v
 vvp mux2_sim
 ```
 
-O teste cria `mux2.vcd` quando executado em um ambiente que permita a gravação do arquivo. A inspeção visual pode ser feita em um visualizador VCD, como o GTKWave:
+O teste cria `mux2.vcd` quando executado em um ambiente que permita a gravação
+do arquivo. A inspeção visual pode ser feita em um visualizador VCD, como o
+GTKWave:
 
 ```bash
 gtkwave mux2.vcd
 ```
 
-A mensagem de sucesso deve ser interpretada em conjunto com a cobertura dos testes. Oito combinações cobrem completamente a função combinacional de três entradas, mas não comprovam aspectos elétricos ou temporais da implementação final.
+A mensagem de sucesso deve ser interpretada em conjunto com a cobertura dos
+testes. Oito combinações cobrem completamente a função combinacional de três
+entradas, mas não comprovam aspectos elétricos ou temporais da implementação
+final.
 
 ## D.7. Formas de onda, VCD e interpretação temporal
 
-O formato **VCD** (*Value Change Dump*) registra mudanças de valor de sinais ao longo do tempo de simulação. Sua utilidade é permitir observar relações entre relógio, entradas, estados e saídas.
+O formato **VCD** (_Value Change Dump_) registra mudanças de valor de sinais ao
+longo do tempo de simulação. Sua utilidade é permitir observar relações entre
+relógio, entradas, estados e saídas.
 
 Ao interpretar uma forma de onda, verifique:
 
@@ -214,16 +288,21 @@ Ao interpretar uma forma de onda, verifique:
 - a borda de relógio à qual cada mudança está associada;
 - se um sinal é binário, vetorial ou assume `X`/`Z`;
 - se o reset é síncrono ou assíncrono;
-- se os estímulos são aplicados suficientemente afastados das bordas para evitar ambiguidades de teste;
-- se a saída observada corresponde à especificação, e não apenas a uma sequência aparentemente plausível.
+- se os estímulos são aplicados suficientemente afastados das bordas para
+  evitar ambiguidades de teste;
+- se a saída observada corresponde à especificação, e não apenas a uma
+  sequência aparentemente plausível.
 
-Uma transição que aparece no mesmo instante nominal de outra pode pertencer a uma etapa diferente da fila de eventos do simulador. Por isso, a ordem de avaliação e o uso de atribuições bloqueantes ou não bloqueantes são relevantes para a modelagem RTL.
+Uma transição que aparece no mesmo instante nominal de outra pode pertencer a
+uma etapa diferente da fila de eventos do simulador. Por isso, a ordem de
+avaliação e o uso de atribuições bloqueantes ou não bloqueantes são relevantes
+para a modelagem RTL.
 
 ### Exemplo de verificação temporal
 
 Para um contador de quatro bits, o teste pode conferir a propriedade:
 
-$$q_{k+1}=\begin{cases}
+$$ q_{k+1}=\begin{cases}
 0, & \text{se }rst_k=1,\\
 (q_k+1)\bmod 16, & \text{se }rst_k=0\text{ e }en_k=1,\\
 q_k, & \text{se }rst_k=0\text{ e }en_k=0.
@@ -377,3 +456,4 @@ As referências a seguir são pontos de partida para consultar sintaxe, comandos
 - **Documentação dos fabricantes de FPGA:** guias de síntese, restrições, implementação e análise temporal relativos à família de dispositivos utilizada.
 
 **Síntese:** uma simulação confiável resulta da combinação de especificação explícita, modelo apropriado, estímulos representativos, comparação automática e registro reproduzível. O objetivo não é apenas observar que um circuito funciona em determinada execução, mas reunir evidências suficientes para identificar **em quais condições** ele satisfaz os requisitos estabelecidos.
+$$

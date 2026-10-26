@@ -6,9 +6,11 @@ Report defects and propose changes in the
 
 Clone mathjslab and this project into sibling directories, build the local
 core, and install this project's dependencies. Use the supported Node/npm
-versions listed in [README.md](README.md). Run `npm run do:all` before
-submitting a change. Browser integration tests belong to the host application's
-test suite.
+versions listed in [README.md](README.md). Run `npm run check` and
+`npm run release:prepare` before submitting a change. Run
+`npm run release:validate` for browser integration changes; the release
+workflow also tests integration with the host application. See the release
+preparation instructions in README.md for dependency updates and publication.
 
 Preserve the public entry points and their isolation: core imports must not
 register a component or import application state. Keep third-party renderers

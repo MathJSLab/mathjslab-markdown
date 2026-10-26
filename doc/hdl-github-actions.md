@@ -31,8 +31,8 @@ npm run hdl:ci:status
 O push de um commit novo que altere a receita GHDL ou o próprio workflow nessa
 branch inicia o workflow `HDL GHDL Linux build`. O script exige árvore limpa,
 branch dedicada e o repositório `MathJSLab/mathjslab-markdown` como destino.
-Não usa force push e não altera `main`. Não use `git:all:npm:publish` ou
-`do:all` para esse trabalho.
+Não usa force push e não altera `main`. A publicação npm é uma etapa separada,
+feita com `release:publish`; não é necessária para esse trabalho.
 
 Se o push informar que tudo já estava atualizado, não surge outra execução.
 Abra a execução anterior e use **Re-run jobs**. O workflow também declara

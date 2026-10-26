@@ -191,6 +191,8 @@ checks use the published `mathjslab` 2.9.0 package. For joint development,
 clone and build `mathjslab` in a sibling directory, then run
 `npm install --no-save --package-lock=false ../mathjslab` to test local
 changes. Restore the published dependency with `npm ci` before release checks.
+Dependency maintenance with the current `npm-check-updates` requires Node.js
+`^22.22.2 || ^24.15.0 || >=26.0.0`.
 
 ```shell
 npm install
@@ -231,17 +233,69 @@ package.
 
 ## Release preparation
 
-`npm run do:all` checks lint, types, tests, production build and package
-contents, then commits, pushes and publishes the package to npm. Run it only
-when deliberately releasing. `prepack` rebuilds and validates the emitted
-distribution; `prepublishOnly` checks lint, types and unit tests. The package
-includes the production distribution, package metadata, README, release notes,
-contributor resources, license and the complete teaching example catalogue.
-Documentation remains available in the repository.
+Use separate maintenance, validation and publication steps:
+
+```shell
+npm run deps:check
+npm run deps:update
+npm run release:prepare
+```
+
+`deps:check` checks all dependency groups against the npm `latest` tags,
+including the optional peer and the TypeScript package alias. `deps:update`
+updates the manifest, installs dependencies and refreshes transitive
+dependencies within their declared ranges. Keep and review `package-lock.json`;
+use `npm ci` to reproduce the resolved installation. The 3Dmol compatibility
+recipe and HDL toolchains remain separately pinned and require their own
+compatibility and reproduction review when upgraded. `repo:sync` explicitly
+synchronizes shared organization files and is independent of dependency
+updates.
+
+`check` runs lint, type checking, unit tests and HDL CI helper tests.
+`release:prepare` first checks HDL release evidence and runs `check`, then
+creates the npm archive. Its `prepack` hook performs one clean production
+build, distribution tests and package verification. `pack:dry-run` only
+inspects an existing build. `format:check` checks formatting; `format`
+explicitly rewrites it.
+
+For browser validation, install Playwright engines with
+`npx playwright-core install chromium firefox webkit`, then run
+`npm run release:validate`. This prepares the archive and runs the Markdown
+browser suites and HDL browser integration. HDL uses local Chrome by default;
+set `HDL_BROWSER` to another Chromium executable when needed. Browser tests run
+sequentially; Linux molecular tests may require the display setup used in
+`.github/workflows/markdown-release.yml`. Real native HDL tools and the
+remaining specialized HDL suites are available through the individual
+`test:hdl:*` scripts. The workflow also validates the archive in the host
+application.
+
+After validation, choose an unused package version and update the release
+notes:
+
+```shell
+npm version patch --no-git-tag-version
+npm run release:validate
+npm run release:publish
+```
+
+`release:publish` runs `npm publish`. Its `prepublishOnly` hook runs
+`release:check`, followed by `prepack` to rebuild and verify the distribution.
+Direct `npm publish` uses the same hooks. To publish the exact archive produced
+by a successful `release:validate`, pass its filename:
+`npm run release:publish -- ./mathjslab-markdown-VERSION.tgz` (replace
+`VERSION` with the validated version). npm does not run lifecycle hooks when
+publishing an archive; use this form only after validation and preserve the
+tested archive. Registry authentication and any required OTP must be available.
+Review, commit, push and tag the release separately. `do:all` is a deprecated
+alias for `release:prepare`; it no longer changes dependencies, formats files,
+commits, pushes or publishes. `update` aliases `deps:update`. The combined
+`git:all:npm:publish` command has been removed. The package includes the
+production distribution, package metadata, README, release notes, contributor
+resources, license and the complete teaching example catalogue. Documentation
+remains available in the repository.
 
 Publish the compatible `mathjslab` version before consumers enable its
-integration. Commit, push and publication scripts are also available as
-separate maintainer commands; run them only when deliberately releasing.
+integration. Run publication commands only when deliberately releasing.
 
 ## License
 

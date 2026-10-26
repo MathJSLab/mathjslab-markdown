@@ -44,7 +44,7 @@ try {
               Array.from({ length: 10 }, (_, i) => `Figura ${i + 1}`),
             );
             assert.equal(await viewer.locator('[data-markdown-extension="mermaid"] svg').count(), 6);
-            assert.equal(await viewer.locator('[data-markdown-extension="vega-lite"] svg').count(), 1);
+            assert.equal(await viewer.locator('[data-markdown-extension="vega-lite"] svg').count(), 2);
             assert.ok((await viewer.locator('mjx-container').count()) > 0);
           }
           const links = await viewer.evaluate((host) =>
