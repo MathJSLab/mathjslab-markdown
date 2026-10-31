@@ -615,12 +615,15 @@ de tensão absolutos nem a forma física das transições.
 {
   signal: [
     { name: 'CLK', wave: 'p.......' },
-    { name: 'A',   wave: '0.1.0.1.' },
-    { name: 'B',   wave: '01..01..' },
+    {},
+    { name: 'A', wave: '0.1.0.1.' },
+    {},
+    { name: 'B', wave: '01..01..' },
+    {},
     { name: 'A AND B', wave: '0.1.0.1.' }
   ],
   head: { text: 'Estados lógicos idealizados' },
-  config: { hscale: 3, vscale: 1.5 }
+  config: { hscale: 3 }
 }
 ```
 
@@ -1023,43 +1026,65 @@ utilidade da histerese.
 
 ## Referências bibliográficas {#sec-bibliography}
 
-As obras a seguir fundamentam a apresentação introdutória, complementada por
-literatura de projeto digital e documentação didática sobre interfaces lógicas.
-As fontes de divulgação são úteis para contextualização e aplicações, mas não
-substituem especificações de componentes ou bibliografia técnica especializada.
+As obras a seguir fornecem os fundamentos teóricos e práticos para o estudo da
+eletrônica digital, abrangendo sistemas de numeração, álgebra booleana, portas
+lógicas, circuitos combinacionais e sequenciais, projeto de sistemas digitais,
+linguagens de descrição de hardware e tecnologias de circuitos integrados.
 
-1. BRAGA, Newton C. **Curso de Eletrônica Digital**. _Saber Eletrônica
-   Especial_, n. 8, 2002. Material em PDF fornecido para este capítulo.
-2. CAMPOS, Frederico Oioli de. **Elementos Básicos da Eletrônica Digital**.
-   Apostila didática, São Paulo, 2001.
-3. TOKHEIM, Roger L. **Fundamentos de Eletrônica Digital**, v. 1: _Sistemas
-   Combinacionais_. Capítulo 1, “Eletrônica digital”.
-4. CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE SANTA CATARINA, Unidade São José.
-   **Eletrônica Digital 1 — Capítulo 2: Funções e Portas Lógicas**.
-5. MIT OPENCOURSEWARE. **Computation Structures — Annotated Slides, 2.1**.
-   Disponível em:
-   https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c2/c2s1/.
-   Acesso em: 18 out. 2026.
-6. UNIVERSITY OF WISCONSIN–MADISON. **ECE353: Device Electrical
-   Characteristics**. Disponível em:
-   https://ece353.engr.wisc.edu/gpio-pins/device-electrical-characteristics/.
-   Acesso em: 18 out. 2026.
-7. VICTOR VISION. **Eletrônica Digital: Fundamentos e Componentes**. Disponível
-   em: https://victorvision.com.br/blog/eletronica-digital/. Acesso em: 18
-   out. 2026.
-8. BASICÃO DA ELETRÔNICA. **O que é Eletrônica Digital?** Disponível em:
-   https://basicaodaeletronica.com.br/eletronica-digital/o-que-e-eletronica-digital/.
-   Acesso em: 18 out. 2026.
-9. MAKERHERO. **Fundamentos da Eletrônica Digital e Suas Aplicações**.
-   Disponível em:
-   https://www.makerhero.com/blog/fundamentos-da-eletronica-digital-e-suas-aplicacoes/.
-   Acesso em: 18 out. 2026.
-10. MANUAL DA AUTOMAÇÃO. **O que é Eletrônica Digital?** Disponível em:
-    https://manualdaautomacao.com/o-que-e-eletronica-digital/. Acesso em: 18
-    out. 2026.
-11. REDEWEB. **Eletrônica Digital: O que é, Elementos e Características**.
-    Disponível em:
-    https://www.redeweb.com/pt/apresentar/eletr%C3%B4nica-digital/. Acesso em:
-    18 out. 2026.
-12. WIKIPEDIA CONTRIBUTORS. **Digital electronics**. Disponível em:
-    https://en.wikipedia.org/wiki/Digital_electronics. Acesso em: 18 out. 2026.
+Livros-texto clássicos estabelecem os princípios fundamentais da lógica
+digital, enquanto referências modernas apresentam metodologias de projeto
+contemporâneas, dispositivos de lógica programável, tecnologias CMOS e
+arquitetura de computadores. Em conjunto, essas fontes dão suporte ao estudo de
+sistemas digitais, desde sua representação lógica até sua implementação física.
+
+1. MANO, M. Morris. **Digital Logic and Computer Design**. Prentice-Hall, 1979.
+
+2. MANO, M. Morris; CILETTI, Michael D. **Digital Design: With an Introduction
+   to the Verilog HDL, VHDL, and SystemVerilog**. 6th ed. Pearson, 2018.
+   Available at:
+   https://www.pearson.com/en-gb/subject-catalog/p/Mano-Digital-Design-Global-Edition-6th-Edition/P200000004916.
+   Accessed: October 31, 2026.
+
+3. TOCCI, Ronald J.; WIDMER, Neal S.; MOSS, Gregory L. **Digital Systems:
+   Principles and Applications**. 12th ed. Pearson, 2017.
+
+4. FLOYD, Thomas L. **Digital Fundamentals**. 11th ed. Pearson, 2015.
+
+5. TOKHEIM, Roger L.; HOPPE, Patrick E. **Digital Electronics: Principles and
+   Applications**. McGraw Hill, 2026 Release. Available at:
+   https://www.mheducation.co.uk/engineering/electrical-engineering/digital-electronics.
+   Accessed: October 31, 2026.
+
+6. BROWN, Stephen; VRANESIC, Zvonko. **Fundamentals of Digital Logic with
+   Verilog Design**. 3rd ed. McGraw-Hill, 2014.
+
+7. KOHAVI, Zvi; JHA, Niraj K. **Switching and Finite Automata Theory**. 3rd ed.
+   Cambridge University Press, 2010. Available at:
+   https://doi.org/10.1017/CBO9780511816239. Accessed: October 31, 2026.
+
+8. HARRIS, Sarah L.; HARRIS, David Money. **Digital Design and Computer
+   Architecture: RISC-V Edition**. 1st ed. Morgan Kaufmann, 2021. Available at:
+   https://shop.elsevier.com/books/digital-design-and-computer-architecture-risc-v-edition/harris/978-0-12-820064-3.
+   Accessed: October 31, 2026.
+
+9. WESTE, Neil H. E.; HARRIS, David Money. **CMOS VLSI Design: A Circuits and
+   Systems Perspective**. 4th ed. Addison-Wesley, 2011. Available at:
+   https://www.pearson.com/en-us/subject-catalog/p/cmos-vlsi-design-a-circuits-and-systems-perspective/P200000003427.
+   Accessed: October 31, 2026.
+
+10. RABAEY, Jan M.; CHANDRAKASAN, Anantha; NIKOLIĆ, Borivoje. **Digital
+    Integrated Circuits: A Design Perspective**. 2nd ed. Prentice Hall, 2003.
+
+11. HOROWITZ, Paul; HILL, Winfield. **The Art of Electronics**. 3rd ed.
+    Cambridge University Press, 2015.
+
+12. WAKERLY, John F. **Digital Design: Principles and Practices**. 4th ed.
+    Prentice Hall, 2005.
+
+13. ROTH, Charles H.; KINNEY, Larry L. **Fundamentals of Logic Design**. 7th
+    ed. Cengage Learning, 2014.
+
+14. MIT OPENCOURSEWARE. **Computation Structures**. Massachusetts Institute of
+    Technology, Spring 2017. Available at:
+    https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/.
+    Accessed: October 31, 2026.
