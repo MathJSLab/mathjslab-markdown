@@ -1,33 +1,35 @@
 # 1. Introdução à Eletrônica Digital
 
-A Eletrônica Digital estuda a representação, o processamento, o armazenamento e
-a transmissão de informações por circuitos eletrônicos que operam com um
-conjunto discreto de estados. Embora a implementação dominante seja binária, a
-noção de sistema digital é mais geral: o aspecto decisivo é que a informação
-seja associada a símbolos distinguíveis, e não à reprodução exata de cada valor
-instantâneo de uma grandeza física.
+A Eletrônica Digital investiga como informações podem ser representadas,
+transformadas, armazenadas e transmitidas por circuitos eletrônicos que
+distinguem estados discretos. Embora o sistema binário, baseado nos símbolos 0
+e 1, seja predominante, a ideia de representação digital não se limita a dois
+estados: ela pressupõe um conjunto definido de símbolos e regras para
+interpretá-los. Uma mesma palavra binária pode representar uma quantidade, um
+caractere, uma instrução ou uma condição de controle, dependendo do código
+adotado.
 
-A presença de circuitos digitais em instrumentos de medição, equipamentos
-industriais, sistemas de comunicação, automóveis e computadores torna
-indispensável compreender tanto sua organização lógica quanto suas limitações
-elétricas. Uma expressão booleana descreve o comportamento funcional de uma
-porta; entretanto, a porta construída com transistores possui tensões,
-correntes, atrasos, capacitâncias e dissipação de energia. **O projeto digital
-exige conciliar esses dois níveis de descrição.**
+A distinção entre o fenômeno físico e sua representação é essencial.
+Temperatura, pressão, posição e tensão elétrica podem variar continuamente,
+enquanto os circuitos digitais atribuem significado a faixas de valores e
+processam símbolos. Essa abstração facilita a construção de sistemas
+reprodutíveis e programáveis, mas não elimina as propriedades elétricas dos
+dispositivos: transistores e interconexões apresentam atrasos, capacitâncias,
+ruído, consumo de energia e limites de operação.
 
-Este capítulo estabelece os conceitos e a terminologia utilizados no restante
-da obra. A representação numérica, a álgebra booleana, a implementação com
-transistores e as técnicas de síntese serão desenvolvidas nos capítulos
-seguintes.
+Em aplicações como instrumentação, automação, telecomunicações, veículos e
+computadores, o projeto precisa articular diferentes perspectivas. Na interface
+com o mundo físico, interessa compreender amostragem, quantização e
+codificação; na organização funcional, importam as operações booleanas e a
+distinção entre circuitos combinacionais e sequenciais; na implementação, são
+indispensáveis níveis de tensão, margens de ruído, temporização e potência
+dissipada. **Uma descrição logicamente correta não é suficiente se o circuito
+não puder realizá-la de modo confiável nas condições de operação previstas.**
 
-## Objetivos de aprendizagem {#sec-learning-objectives}
-
-Ao concluir o capítulo, espera-se que o leitor seja capaz de distinguir
-grandezas e sinais analógicos e digitais; explicar amostragem, quantização e
-codificação sem confundir esses processos; interpretar níveis lógicos e margens
-de ruído; diferenciar circuitos combinacionais de sequenciais; identificar
-níveis de abstração do projeto eletrônico; e formular requisitos elementares
-para um sistema digital.
+Este capítulo desenvolve essas relações e apresenta os níveis de abstração
+empregados na análise e no projeto de sistemas digitais. Os fundamentos
+matemáticos, as técnicas de síntese, as famílias lógicas e a implementação
+física serão aprofundados nos capítulos seguintes.
 
 ## 1.1. Grandezas analógicas e digitais {#sec-analog-and-digital-quantities}
 
@@ -53,38 +55,251 @@ transição entre dois estados, ainda que o modelo lógico a represente como uma
 mudança instantânea.
 
 <!-- prettier-ignore -->
-A {@ref fig-analog-digital} apresenta uma comparação conceitual. A curva analógica é representada por uma interpolação ilustrativa de valores; a
-representação binária é uma sequência de estados interpretados como 0 e 1.
-O gráfico não representa um processo real de conversão analógico-digital. O gráfico
-não implica que as transições elétricas reais sejam instantâneas.
+A {@ref fig-signal-types} distingue três formas de representação de sinais. A primeira apresenta uma amplitude contínua; a segunda utiliza um conjunto finito de níveis de amplitude; a terceira admite apenas dois níveis, associados aos símbolos binários. As formas de onda são esquemáticas e não representam necessariamente etapas sucessivas de um mesmo conversor.
 
 <!-- prettier-ignore -->
-::: figure Comparação conceitual entre um sinal analógico e uma representação digital binária {#fig-analog-digital}
+::: figure Tipos de sinais {#fig-signal-types}
+
+```tikz
+\begin{tikzpicture}[
+    scale=1.8,
+    transform shape,
+    line width=1.5pt,
+    line cap=rect,
+    line join=miter
+]
+\draw[smooth, samples=200, domain=0:8, variable=\x]
+    plot ({\x},{8.0 + 0.8*sin(90*\x)});
+
+\node[anchor=west, font=\large]
+    at (9.0,8.0) {Sinal analógico};
+\draw
+    (0,4.7) -- (0.4,4.7)
+    -- (0.4,5.1) -- (0.8,5.1)
+    -- (0.8,5.5) -- (1.2,5.5)
+    -- (1.2,5.9) -- (1.6,5.9)
+    -- (1.6,6.3) -- (2.0,6.3)
+    -- (2.0,5.9) -- (2.4,5.9)
+    -- (2.4,5.5) -- (2.8,5.5)
+    -- (2.8,5.1) -- (3.2,5.1)
+    -- (3.2,4.7) -- (3.6,4.7)
+    -- (3.6,4.3) -- (4.0,4.3)
+    -- (4.0,3.9) -- (4.4,3.9)
+    -- (4.4,3.5) -- (4.8,3.5)
+    -- (4.8,3.9) -- (5.2,3.9)
+    -- (5.2,4.3) -- (5.6,4.3)
+    -- (5.6,4.7) -- (6.0,4.7)
+    -- (6.0,5.1) -- (6.4,5.1)
+    -- (6.4,5.5) -- (6.8,5.5)
+    -- (6.8,5.9) -- (7.2,5.9)
+    -- (7.2,5.5) -- (7.6,5.5)
+    -- (7.6,5.1) -- (8.0,5.1);
+\node[anchor=west, align=left, font=\large]
+    at (9.0,5.0)
+    {Sinal digital com\\
+     múltiplos níveis\\
+     de quantização\\
+     (discreto)};
+\draw
+    (0,0.5) -- (0.5,0.5)
+    -- (0.5,1.7) -- (1.5,1.7)
+    -- (1.5,0.5) -- (2.0,0.5)
+    -- (2.0,1.7) -- (2.5,1.7)
+    -- (2.5,0.5) -- (4.0,0.5)
+    -- (4.0,1.7) -- (5.0,1.7)
+    -- (5.0,0.5) -- (5.5,0.5)
+    -- (5.5,1.7) -- (6.0,1.7)
+    -- (6.0,0.5) -- (7.0,0.5)
+    -- (7.0,1.7) -- (7.5,1.7)
+    -- (7.5,0.5) -- (8.0,0.5);
+\node[anchor=west, font=\large]
+    at (9.0,1.1) {Sinal digital binário};
+\end{tikzpicture}
+```
+
+:::
+
+<!-- prettier-ignore -->
+A {@ref fig-analog-digital} compara, no mesmo sistema de eixos, uma senoide contínua, uma aproximação em degraus obtida por quantização e uma representação binária por limiar. As três curvas compartilham a mesma referência temporal, mas **não contêm a mesma quantidade de informação sobre a amplitude**: o sinal binário indica apenas de que lado do limiar está a grandeza, enquanto a aproximação multinível preserva mais distinções. A curva em degraus ilustra uma retenção entre instantes de atualização; não deve ser confundida com a forma física instantânea de todas as saídas digitais.
+
+<!-- prettier-ignore -->
+::: figure Comparação entre sinais analógico, discreto e binário {#fig-analog-digital}
 
 ```vega-lite
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Comparação conceitual entre uma forma de onda analógica e sua representação digital binária.",
-  "data": {"values": [
-    {"t":0,"analog":0.50,"digital":1},{"t":1,"analog":0.85,"digital":1},
-    {"t":2,"analog":1.00,"digital":1},{"t":3,"analog":0.85,"digital":1},
-    {"t":4,"analog":0.50,"digital":1},{"t":5,"analog":0.15,"digital":0},
-    {"t":6,"analog":0.00,"digital":0},{"t":7,"analog":0.15,"digital":0},
-    {"t":8,"analog":0.50,"digital":1},{"t":9,"analog":0.85,"digital":1},
-    {"t":10,"analog":1.00,"digital":1},{"t":11,"analog":0.85,"digital":1},
-    {"t":12,"analog":0.50,"digital":1},{"t":13,"analog":0.15,"digital":0},
-    {"t":14,"analog":0.00,"digital":0},{"t":15,"analog":0.15,"digital":0},
-    {"t":16,"analog":0.50,"digital":1}
-  ]},
-  "transform": [{"fold":["analog","digital"],"as":["tipo","amplitude"]}],
-  "mark":{"type":"line","point":false},
-  "encoding": {
-    "x":{"field":"t","type":"quantitative","title":"Tempo (unidades arbitrárias)"},
-    "y":{"field":"amplitude","type":"quantitative","title":"Amplitude normalizada","scale":{"domain":[0,1.05]}},
-    "color":{"field":"tipo","type":"nominal","title":"Representação","scale":{"domain":["analog","digital"],"range":["#2563eb","#dc2626"]}},
-    "strokeDash":{"field":"tipo","type":"nominal"}
+  "description": "Superposição de uma senoide contínua, sua aproximação discreta quantizada e um sinal binário.",
+  "config": {
+    "view": {"stroke": null},
+    "axis": {
+      "labelFontSize": 13,
+      "titleFontSize": 14,
+      "gridColor": "#e5e7eb",
+      "gridWidth": 0.8
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 14
+    }
   },
-  "width":600,"height":220
+  "layer": [
+    {
+      "data": {
+        "sequence": {
+          "start": 0,
+          "stop": 16.001,
+          "step": 0.025,
+          "as": "t"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "0.5 + 0.5*sin(PI*datum.t/4)",
+          "as": "amplitude"
+        },
+        {
+          "calculate": "'Analógico'",
+          "as": "tipo"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "t",
+          "type": "quantitative",
+          "title": "Tempo (unidades arbitrárias)",
+          "scale": {
+            "domain": [0,16],
+            "nice": false
+          },
+          "axis": {
+            "values": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+          }
+        },
+        "y": {
+          "field": "amplitude",
+          "type": "quantitative",
+          "title": "Amplitude normalizada",
+          "scale": {
+            "domain": [0,1],
+            "nice": false
+          },
+          "axis": {
+            "values": [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1],
+            "format": ".1f"
+          }
+        },
+        "color": {
+          "field": "tipo",
+          "type": "nominal",
+          "title": "Tipos de sinais",
+          "scale": {
+            "domain": ["Analógico","Discreto","Binário"],
+            "range": ["#2563eb","#16a34a","#dc2626"]
+          }
+        }
+      }
+    },
+    {
+      "data": {
+        "sequence": {
+          "start": 0,
+          "stop": 16.25,
+          "step": 0.25,
+          "as": "t"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "0.5 + 0.5*sin(PI*datum.t/4)",
+          "as": "analog"
+        },
+        {
+          "calculate": "round(datum.analog*10)/10",
+          "as": "nivel"
+        },
+        {
+          "calculate": "'Discreto'",
+          "as": "tipo"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "interpolate": "step-after",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "t",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "nivel",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "tipo",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "sequence": {
+          "start": 0,
+          "stop": 16.025,
+          "step": 0.025,
+          "as": "t"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "0.5 + 0.5*sin(PI*datum.t/4)",
+          "as": "analog"
+        },
+        {
+          "calculate": "datum.analog >= 0.5 ? 1 : 0",
+          "as": "bit"
+        },
+        {
+          "calculate": "'Binário'",
+          "as": "tipo"
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "interpolate": "step-after",
+        "strokeWidth": 2.5,
+        "strokeDash": [6,3]
+      },
+      "encoding": {
+        "x": {
+          "field": "t",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "bit",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "tipo",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "width": 960,
+  "height": 600,
+  "resolve": {
+    "scale": {
+      "x": "shared",
+      "y": "shared",
+      "color": "shared"
+    }
+  }
 }
 ```
 
@@ -114,6 +329,13 @@ em que $T_s$ é o período de amostragem e $f_s=1/T_s$ é a frequência de
 amostragem. A sequência $x[n]$ possui **tempo discreto**, mas suas amplitudes
 ainda podem pertencer a um conjunto contínuo.
 
+É importante distinguir **tempo discreto** de **amplitude discreta**. Uma
+sequência de amostras pode manter valores reais arbitrários; inversamente, um
+sinal pode assumir níveis quantizados e ainda ser representado por uma função
+definida para todo instante. O termo _digital_ é frequentemente empregado
+quando os valores discretos são codificados e manipulados simbolicamente, não
+apenas quando a curva é desenhada em degraus.
+
 A **quantização** associa cada amostra a um entre $L$ níveis de representação:
 
 $$x_q[n]=Q\bigl(x[n]\bigr),\qquad x_q[n]\in\{q_0,q_1,\ldots,q_{L-1}\}.\tag{1.2}$$
@@ -128,6 +350,13 @@ significa que qualquer conversor de oito bits tenha exatamente 256 níveis
 analógicos igualmente espaçados em qualquer faixa: a relação depende de sua
 arquitetura e especificação.
 
+Quanto maior o número de níveis dentro de uma faixa fixa, menor tende a ser a
+distância entre níveis adjacentes, embora isso aumente a quantidade de códigos
+necessária. Em um quantizador uniforme, a escolha do passo e dos limites da
+faixa determina o compromisso entre resolução e saturação. A **codificação** é
+uma operação conceitualmente distinta: ela associa uma palavra binária ao
+índice do nível quantizado.
+
 O erro de quantização é definido por
 
 $$e_q[n]=x_q[n]-x[n].\tag{1.4}$$
@@ -138,54 +367,7 @@ adequadamente amostras fora da faixa admitida, nas quais ocorre saturação ou
 outro tratamento de sobrecarga.
 
 <!-- prettier-ignore -->
-A {@ref fig-sampling-quantization} complementa essa descrição: os pontos
-marcam valores obtidos em instantes discretos, enquanto a curva contínua
-representa o sinal antes da amostragem. Os pontos quantizados foram
-aproximados aos níveis de amplitude indicados. A figura é esquemática: não
-representa o comportamento de um conversor específico nem implica que a
-quantização ocorra antes da amostragem.
-
-<!-- prettier-ignore -->
-::: figure Comparação ilustrativa entre sinal contínuo, amostras e valores quantizados {#fig-sampling-quantization}
-
-```vega-lite
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Curva contínua de referência, amostras em instantes discretos e valores quantizados em cinco níveis.",
-  "data": {"values": [
-    {"t":0,"x":0.50,"sample":0.50,"quantized":0.50,"isSample":true},
-    {"t":1,"x":0.75,"sample":null,"quantized":null,"isSample":false},
-    {"t":2,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true},
-    {"t":3,"x":1.00,"sample":null,"quantized":null,"isSample":false},
-    {"t":4,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true},
-    {"t":5,"x":0.75,"sample":null,"quantized":null,"isSample":false},
-    {"t":6,"x":0.50,"sample":0.50,"quantized":0.50,"isSample":true},
-    {"t":7,"x":0.25,"sample":null,"quantized":null,"isSample":false},
-    {"t":8,"x":0.07,"sample":0.07,"quantized":0.00,"isSample":true},
-    {"t":9,"x":0.00,"sample":null,"quantized":null,"isSample":false},
-    {"t":10,"x":0.07,"sample":0.07,"quantized":0.00,"isSample":true},
-    {"t":11,"x":0.25,"sample":null,"quantized":null,"isSample":false},
-    {"t":12,"x":0.50,"sample":0.50,"quantized":0.50,"isSample":true},
-    {"t":13,"x":0.75,"sample":null,"quantized":null,"isSample":false},
-    {"t":14,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true},
-    {"t":15,"x":1.00,"sample":null,"quantized":null,"isSample":false},
-    {"t":16,"x":0.93,"sample":0.93,"quantized":1.00,"isSample":true}
-  ]},
-  "layer": [
-    {"mark":{"type":"line","strokeWidth":2},"encoding":{"x":{"field":"t","type":"quantitative","title":"Tempo (unidades arbitrárias)"},"y":{"field":"x","type":"quantitative","title":"Amplitude normalizada","scale":{"domain":[-0.1,1.1]}},"color":{"value":"#2563eb"}}},
-    {"transform":[{"filter":"datum.isSample"}],"mark":{"type":"point","filled":true,"size":70},"encoding":{"x":{"field":"t","type":"quantitative"},"y":{"field":"sample","type":"quantitative"},"color":{"value":"#2563eb"}}},
-    {"transform":[{"filter":"datum.isSample"}],"mark":{"type":"point","filled":true,"shape":"square","size":95},"encoding":{"x":{"field":"t","type":"quantitative"},"y":{"field":"quantized","type":"quantitative"},"color":{"value":"#dc2626"}}}
-  ],
-  "width":600,"height":250
-}
-```
-
-A curva e os círculos azuis representam, respectivamente, o sinal de referência
-e suas amostras; os quadrados vermelhos indicam os valores quantizados. As
-cores são auxiliares: a distinção também é indicada pelas formas dos
-marcadores.
-
-:::
+A {@ref fig-analog-digital} permite relacionar visualmente os três conceitos discutidos. A curva azul descreve um sinal harmônico contínuo; a representação verde, em degraus, aproxima suas amplitudes por valores quantizados em intervalos sucessivos; e o traçado vermelho mostra uma decisão binária obtida por comparação com um limiar. Os degraus constituem uma representação esquemática dos valores discretizados, e não a forma de onda elétrica necessariamente produzida por um conversor. A diferença entre a curva e os níveis representados evidencia a perda de resolução em amplitude; já a sequência binária conserva apenas a distinção entre dois estados, não os diversos valores de amplitude. Assim, a figura ilustra conceitos relacionados, mas não deve ser interpretada como o diagrama temporal de um único conversor analógico-digital real.
 
 <!-- prettier-ignore -->
 A {@ref fig-digitization-flow} organiza as operações envolvidas. Um circuito
@@ -196,13 +378,23 @@ estados binários sem necessariamente amostrar uma grandeza analógica.
 ::: figure Etapas conceituais de aquisição e representação digital de uma grandeza analógica {#fig-digitization-flow}
 
 ```mermaid
+%%{init: {'themeVariables': {'fontSize': '14px'}, 'flowchart': {'nodeSpacing': 55, 'rankSpacing': 70, 'padding': 30, 'htmlLabels': false}}}%%
 flowchart LR
-    A["Grandeza física"] --> S["Sensor e condicionamento"]
-    S --> F["Filtragem antialiasing"]
+    A["`Grandeza
+    física`"] --> S["`Sensor e
+    condicionamento`"]
+
+    S --> F["`Filtragem
+    antialiasing`"]
+
     F --> H["Amostragem"]
     H --> Q["Quantização"]
-    Q --> C["Codificação binária"]
-    C --> P["Processamento e armazenamento"]
+
+    Q --> C["`Codificação
+    binária`"]
+
+    C --> P["`Processamento
+    e armazenamento`"]
 ```
 
 :::
@@ -326,32 +518,53 @@ reconhecimento de entrada, e não a uma curva de transferência real.
 ::: figure Margens estáticas de ruído entre os limites de saída e de entrada {#fig-noise-margin-bands}
 
 ```tikz
-\begin{tikzpicture}[x=1.7cm,y=1.05cm,>=stealth]
+\begin{tikzpicture}[x=1.7cm,y=1.05cm,scale=2,transform shape,>=stealth]
   \draw[->,thick] (0,0) -- (0,4.05) node[above] {$V$ (V)};
+
   \foreach \y/\lab in {0.4/{0{,}4},0.8/{0{,}8},2.0/{2{,}0},2.4/{2{,}4}} {
     \draw (-0.08,\y) -- (0.08,\y);
     \node[left] at (-0.12,\y) {$\lab$};
     \draw[densely dotted,gray] (0.1,\y) -- (5.25,\y);
   }
-  \node[above] at (1.35,3.65) {Saída};
-  \node[above] at (3.75,3.65) {Entrada};
-  \fill[blue!20] (0.75,0) rectangle (1.95,0.4);
-  \fill[blue!20] (0.75,2.4) rectangle (1.95,3.35);
-  \fill[green!20] (3.15,0) rectangle (4.35,0.8);
-  \fill[green!20] (3.15,2.0) rectangle (4.35,3.35);
-  \draw (0.75,0) rectangle (1.95,0.4);
-  \draw (0.75,2.4) rectangle (1.95,3.35);
-  \draw (3.15,0) rectangle (4.35,0.8);
-  \draw (3.15,2.0) rectangle (4.35,3.35);
-  \node[font=\scriptsize] at (1.35,0.2) {baixo};
-  \node[font=\scriptsize] at (1.35,2.85) {alto};
-  \node[font=\scriptsize] at (3.75,0.4) {baixo};
-  \node[font=\scriptsize] at (3.75,2.7) {alto};
+
+  % Títulos das colunas
+  \node[above] at (1.35,3.65) {Entrada};
+  \node[above] at (3.75,3.65) {Saída};
+
+  % Regiões de entrada
+  \fill[green!20] (0.75,0) rectangle (1.95,0.8);
+  \fill[green!20] (0.75,2.0) rectangle (1.95,3.35);
+
+  % Regiões de saída
+  \fill[blue!20] (3.15,0) rectangle (4.35,0.4);
+  \fill[blue!20] (3.15,2.4) rectangle (4.35,3.35);
+
+  % Contornos
+  \draw (0.75,0) rectangle (1.95,0.8);
+  \draw (0.75,2.0) rectangle (1.95,3.35);
+  \draw (3.15,0) rectangle (4.35,0.4);
+  \draw (3.15,2.4) rectangle (4.35,3.35);
+
+  % Rótulos centralizados nos retângulos
+  % Entrada
+  \node[font=\scriptsize] at (1.35,0.40) {baixo};
+  \node[font=\scriptsize] at (1.35,2.675) {alto};
+
+  % Saída
+  \node[font=\scriptsize] at (3.75,0.20) {baixo};
+  \node[font=\scriptsize] at (3.75,2.875) {alto};
+
+  % Margens de ruído
   \draw[<->,thick] (2.55,0.4) -- (2.55,0.8);
   \node[right,font=\scriptsize] at (2.58,0.6) {$NM_L$};
+
   \draw[<->,thick] (2.55,2.0) -- (2.55,2.4);
   \node[right,font=\scriptsize] at (2.58,2.2) {$NM_H$};
-  \node[align=center,font=\scriptsize] at (3.75,1.35) {região não\\garantida};
+
+  % Região não garantida
+  \node[align=center,font=\scriptsize] at (3.75,1.35)
+    {região não\\garantida};
+
 \end{tikzpicture}
 ```
 
@@ -371,9 +584,21 @@ diferentes.
 ::: figure Relação entre níveis garantidos na saída e limites reconhecidos na entrada {#fig-logic-interface}
 
 ```mermaid
+%%{init: {'themeVariables': {'fontSize': '18px'}, 'flowchart': {'nodeSpacing': 65, 'rankSpacing': 90, 'padding': 45, 'htmlLabels': false}}}%%
 flowchart LR
-    T["Porta transmissora<br/>Saída: VOL(max), VOH(min)"] -->|"Sinal elétrico"| R["Porta receptora<br/>Entrada: VIL(max), VIH(min)"]
-    R --> L["Interpretação lógica<br/>0 ou 1"]
+    T["`Porta
+    transmissora
+    Saída:
+    VOL(max)
+    VOH(min)`"] -->|"Sinal elétrico"| R["`Porta
+    receptora
+    Entrada:
+    VIL(max)
+    VIH(min)`"]
+
+    R --> L["`Interpretação
+    lógica:
+    0 ou 1`"]
 ```
 
 :::
@@ -389,13 +614,13 @@ de tensão absolutos nem a forma física das transições.
 ```wavedrom
 {
   signal: [
-    { name: 'clk', wave: 'p.......' },
+    { name: 'CLK', wave: 'p.......' },
     { name: 'A',   wave: '0.1.0.1.' },
     { name: 'B',   wave: '01..01..' },
     { name: 'A AND B', wave: '0.1.0.1.' }
   ],
   head: { text: 'Estados lógicos idealizados' },
-  config: { hscale: 1 }
+  config: { hscale: 3, vscale: 1.5 }
 }
 ```
 
@@ -427,17 +652,31 @@ dispositivos e famílias lógicas.
 
 ## 1.5. Sistemas combinacionais e sequenciais {#sec-combinational-sequential-systems}
 
-A classificação funcional mais importante distingue circuitos
-**combinacionais** e **sequenciais**.
+A classificação funcional dos sistemas digitais distingue **subsistemas
+combinacionais** e **subsistemas sequenciais**. A diferença está na dependência
+de informações anteriores: nos primeiros, uma combinação de entradas determina
+a saída lógica; nos segundos, é necessário conhecer também o estado interno.
+Essa distinção descreve o comportamento funcional, não a ausência de atrasos
+físicos.
 
 Em um circuito combinacional ideal, a saída em determinado instante é função
 dos valores atuais das entradas:
 
 $$\mathbf{y}(t)=F\bigl(\mathbf{x}(t)\bigr).\tag{1.10}$$
 
-A expressão ignora o atraso físico, que precisa ser considerado na
-implementação real. Exemplos incluem codificadores, multiplexadores,
-comparadores e somadores.
+A expressão é um modelo ideal de comportamento: um circuito real leva algum
+tempo para responder às alterações das entradas. O atraso de propagação depende
+da tecnologia, da carga e das condições elétricas; em certas situações,
+diferenças entre caminhos de propagação também podem produzir transições
+transitórias indesejadas (_glitches_). Portanto, a ausência de memória
+funcional não implica propagação instantânea.
+
+Entre os exemplos combinacionais estão os **somadores binários**, que calculam
+bits de soma e transporte; os **multiplexadores**, que encaminham uma entrada
+selecionada; os **decodificadores**, que associam combinações de entrada a
+saídas específicas; e os **comparadores**, que indicam relações entre palavras
+binárias. Em todos eles, após a estabilização dos sinais, a saída é determinada
+pela combinação presente nas entradas.
 
 Em um circuito sequencial, é necessário descrever também o **estado interno**.
 Em um modelo síncrono discreto, pode-se escrever
@@ -446,26 +685,42 @@ $$\mathbf{s}[k+1]=G\bigl(\mathbf{s}[k],\mathbf{x}[k]\bigr),\tag{1.11}$$
 
 $$\mathbf{y}[k]=H\bigl(\mathbf{s}[k],\mathbf{x}[k]\bigr).\tag{1.12}$$
 
-O índice $k$ identifica etapas de atualização, frequentemente associadas a
-bordas de um relógio. Registradores, contadores e controladores baseados em
-máquinas de estados são exemplos sequenciais. Nos modelos de Moore, a saída
-depende somente do estado; nos de Mealy, pode depender do estado e da entrada.
+O vetor $\mathbf{s}[k]$ representa as **variáveis de estado**: informações
+preservadas que resumem o histórico relevante para a operação. O índice $k$
+identifica etapas de atualização, frequentemente associadas a bordas de um
+relógio. Assim, a mesma entrada pode produzir resultados diferentes quando o
+estado armazenado é diferente. Nos modelos de **Moore**, a saída depende
+somente do estado; nos de **Mealy**, pode depender do estado e da entrada.
+
+São exemplos sequenciais os **flip-flops**, que armazenam um bit; os
+**registradores**, que conservam palavras binárias; os **contadores**, que
+evoluem entre estados em resposta a eventos; e as **máquinas de estados
+finitos**, usadas em controladores de semáforos, elevadores e processos
+industriais. Um contador, por exemplo, não determina seu próximo valor apenas
+pelo pulso recebido: precisa conhecer a contagem anterior.
 
 <!-- prettier-ignore -->
 ::: figure Organização funcional de um circuito sequencial síncrono {#fig-sequential-system}
 
 ```mermaid
+%%{init: {'themeVariables': {'fontSize': '16px'}, 'flowchart': {'nodeSpacing': 65, 'rankSpacing': 85, 'padding': 28, 'htmlLabels': true}}}%%
 flowchart LR
-    X["Entradas x[k]"] --> G["Lógica de próximo estado G"]
-    S["Registrador de estado s[k]"] --> G
+    X["Entradas<br/>x[k]"] --> G["Lógica de<br/>próximo<br/>estado G"]
+    S["Registrador<br/>de estado s[k]"] --> G
     G -->|"s[k+1]"| S
-    S --> H["Lógica de saída H"]
+    S --> H["Lógica<br/>de saída H"]
     X --> H
-    H --> Y["Saídas y[k]"]
+    H --> Y["Saídas<br/>y[k]"]
     CLK["Relógio"] -.-> S
 ```
 
 :::
+
+A memória funcional pode ser implementada por elementos de armazenamento e
+realimentação. O histórico completo das entradas não precisa ser guardado:
+basta preservar o estado necessário para determinar a evolução futura. Por
+isso, um sistema sequencial deve ser analisado tanto pela lógica de suas
+transições quanto pelas restrições temporais de seus elementos de memória.
 
 A distinção não se resume à presença de uma forma de onda periódica. Há
 circuitos sequenciais assíncronos, cujo estado pode mudar em resposta a eventos
@@ -505,11 +760,12 @@ até chegar a componentes e conexões realizáveis.
 ::: figure Níveis de abstração empregados no projeto de sistemas digitais {#fig-abstraction-levels}
 
 ```mermaid
+%%{init: {'themeVariables': {'fontSize': '16px'}, 'flowchart': {'nodeSpacing': 65, 'rankSpacing': 85, 'padding': 28, 'htmlLabels': true}}}%%
 flowchart BT
-    D["Dispositivos e interconexões"] --> P["Portas lógicas"]
-    P --> B["Blocos funcionais"]
-    B --> A["Arquitetura digital"]
-    A --> R["Comportamento e requisitos"]
+    D["Dispositivos e<br/>interconexões"] --> P["Portas<br/>lógicas"]
+    P --> B["Blocos<br/>funcionais"]
+    B --> A["Arquitetura<br/>digital"]
+    A --> R["Comportamento<br/>e requisitos"]
 ```
 
 :::
@@ -578,14 +834,15 @@ repetidas quando a temperatura oscila próxima ao ponto de decisão.
 ::: figure Exemplo de arquitetura de um controlador digital de temperatura {#fig-temperature-controller}
 
 ```mermaid
+%%{init: {'themeVariables': {'fontSize': '15px'}, 'flowchart': {'nodeSpacing': 65, 'rankSpacing': 85, 'padding': 40, 'htmlLabels': true}}}%%
 flowchart LR
     T["Temperatura"] --> S["Sensor"]
-    S --> C["Condicionamento"]
-    C --> ADC["Conversor A/D"]
-    ADC --> CTRL["Controlador digital"]
-    CTRL --> DRV["Estágio de potência"]
+    S --> C["Condicionamento<br/>do sinal"]
+    C --> ADC["Conversor<br/>A/D"]
+    ADC --> CTRL["Controlador<br/>digital"]
+    CTRL --> DRV["Estágio<br/>de potência"]
     DRV --> FAN["Ventilador"]
-    CFG["Parâmetros e limites"] --> CTRL
+    CFG["Parâmetros<br/>e limites"] --> CTRL
 ```
 
 :::
@@ -644,10 +901,11 @@ sem o circuito de potência necessário para acionar uma lâmpada.
 ::: figure Função lógica E do controlador de iluminação {#fig-illumination-logic}
 
 ```mermaid
+%%{init: {'themeVariables': {'fontSize': '16px'}, 'flowchart': {'nodeSpacing': 65, 'rankSpacing': 85, 'padding': 28, 'htmlLabels': true}}}%%
 flowchart LR
-    P["P: presença"] --> AND{{"E (AND)"}}
-    E["E: ambiente escuro"] --> AND
-    AND --> L["L: comando da lâmpada"]
+    P["P: presença<br/>detectada"] --> AND{{"E (AND)"}}
+    E["E: ambiente<br/>escuro"] --> AND
+    AND --> L["L: comando<br/>da lâmpada"]
 ```
 
 :::
@@ -773,14 +1031,11 @@ substituem especificações de componentes ou bibliografia técnica especializad
 1. BRAGA, Newton C. **Curso de Eletrônica Digital**. _Saber Eletrônica
    Especial_, n. 8, 2002. Material em PDF fornecido para este capítulo.
 2. CAMPOS, Frederico Oioli de. **Elementos Básicos da Eletrônica Digital**.
-   Apostila didática, São Paulo, 2001. Material em PDF fornecido para este
-   capítulo.
+   Apostila didática, São Paulo, 2001.
 3. TOKHEIM, Roger L. **Fundamentos de Eletrônica Digital**, v. 1: _Sistemas
-   Combinacionais_. Capítulo 1, “Eletrônica digital”. Trecho em PDF fornecido
-   para este capítulo.
+   Combinacionais_. Capítulo 1, “Eletrônica digital”.
 4. CENTRO FEDERAL DE EDUCAÇÃO TECNOLÓGICA DE SANTA CATARINA, Unidade São José.
-   **Eletrônica Digital 1 — Capítulo 2: Funções e Portas Lógicas**. Material
-   didático em PDF fornecido para este capítulo.
+   **Eletrônica Digital 1 — Capítulo 2: Funções e Portas Lógicas**.
 5. MIT OPENCOURSEWARE. **Computation Structures — Annotated Slides, 2.1**.
    Disponível em:
    https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c2/c2s1/.
