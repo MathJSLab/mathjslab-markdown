@@ -2098,25 +2098,25 @@ $48_{10}=0110000_2=30_{16}$. O caractere `0` não é o valor numérico zero.
 <!-- prettier-ignore -->
 ::: table Tabela de caracteres ASCII de 7 bits {#tab-ascii .full-width}
 
-|             |                   |     |     |     | $b_6 b_5 b_4$ |     |     |     |     |
-| :---------: | :---------------: | :-: | :-: | :-: | :-----------: | :-: | :-: | :-: | :-: |
-| **Decimal** | $b_3 b_2 b_1 b_0$ | 000 | 001 | 010 |      011      | 100 | 101 | 110 | 111 |
-|      0      |       0000        | NUL | DLE | SP  |       0       |  @  |  P  |  `  |  p  |
-|      1      |       0001        | SOH | DC1 |  !  |       1       |  A  |  Q  |  a  |  q  |
-|      2      |       0010        | STX | DC2 |  "  |       2       |  B  |  R  |  b  |  r  |
-|      3      |       0011        | ETX | DC3 |  #  |       3       |  C  |  S  |  c  |  s  |
-|      4      |       0100        | EOT | DC4 |  $  |       4       |  D  |  T  |  d  |  t  |
-|      5      |       0101        | ENQ | NAK |  %  |       5       |  E  |  U  |  e  |  u  |
-|      6      |       0110        | ACK | SYN |  &  |       6       |  F  |  V  |  f  |  v  |
-|      7      |       0111        | BEL | ETB |  '  |       7       |  G  |  W  |  g  |  w  |
-|      8      |       1000        | BS  | CAN |  (  |       8       |  H  |  X  |  h  |  x  |
-|      9      |       1001        | HT  | EM  |  )  |       9       |  I  |  Y  |  i  |  y  |
-|     10      |       1010        | LF  | SUB |  *  |       :       |  J  |  Z  |  j  |  z  |
-|     11      |       1011        | VT  | ESC |  +  |       ;       |  K  |  [  |  k  |  {  |
-|     12      |       1100        | FF  | FS  |  ,  |       <       |  L  |  \  |  l  | \|  |
-|     13      |       1101        | CR  | GS  |  -  |       =       |  M  |  ]  |  m  |  }  |
-|     14      |       1110        | SO  | RS  |  .  |       >       |  N  |  ^  |  n  |  ~  |
-|     15      |       1111        | SI  | US  |  /  |       ?       |  O  |  _  |  o  | DEL |
+|             |                   |         |         |         | $b_6 b_5 b_4$ |         |         |         |         |
+| :---------: | :---------------: | :-----: | :-----: | :-----: | :-----------: | :-----: | :-----: | :-----: | :-----: |
+| **Decimal** | $b_3 b_2 b_1 b_0$ | **000** | **001** | **010** |    **011**    | **100** | **101** | **110** | **111** |
+|      0      |     **0000**      |   NUL   |   DLE   |   SP    |       0       |    @    |    P    |    `    |    p    |
+|      1      |     **0001**      |   SOH   |   DC1   |    !    |       1       |    A    |    Q    |    a    |    q    |
+|      2      |     **0010**      |   STX   |   DC2   |    "    |       2       |    B    |    R    |    b    |    r    |
+|      3      |     **0011**      |   ETX   |   DC3   |    #    |       3       |    C    |    S    |    c    |    s    |
+|      4      |     **0100**      |   EOT   |   DC4   |    $    |       4       |    D    |    T    |    d    |    t    |
+|      5      |     **0101**      |   ENQ   |   NAK   |    %    |       5       |    E    |    U    |    e    |    u    |
+|      6      |     **0110**      |   ACK   |   SYN   |    &    |       6       |    F    |    V    |    f    |    v    |
+|      7      |     **0111**      |   BEL   |   ETB   |    '    |       7       |    G    |    W    |    g    |    w    |
+|      8      |     **1000**      |   BS    |   CAN   |    (    |       8       |    H    |    X    |    h    |    x    |
+|      9      |     **1001**      |   HT    |   EM    |    )    |       9       |    I    |    Y    |    i    |    y    |
+|     10      |     **1010**      |   LF    |   SUB   |    *    |       :       |    J    |    Z    |    j    |    z    |
+|     11      |     **1011**      |   VT    |   ESC   |    +    |       ;       |    K    |    [    |    k    |    {    |
+|     12      |     **1100**      |   FF    |   FS    |    ,    |       <       |    L    |    \    |    l    |   \|    |
+|     13      |     **1101**      |   CR    |   GS    |    -    |       =       |    M    |    ]    |    m    |    }    |
+|     14      |     **1110**      |   SO    |   RS    |    .    |       >       |    N    |    ^    |    n    |    ~    |
+|     15      |     **1111**      |   SI    |   US    |    /    |       ?       |    O    |    _    |    o    |   DEL   |
 
 :::
 
@@ -2129,41 +2129,41 @@ depende do dispositivo e do protocolo empregado.
 <!-- prettier-ignore -->
 ::: table Descrição dos caracteres de controle do código ASCII {#tab-ascii-control-characters .full-width}
 
-| Sigla | Descrição                                                        |
-| :---: | :--------------------------------------------------------------- |
-|  ACK  | Aviso de que o terminal receptor está identificado               |
-|  BEL  | Campainha                                                        |
-|  BS   | Retorno de carro de uma posição                                  |
-|  CAN  | Anulação                                                         |
-|  CR   | Retorno de carro total                                           |
-|  DC   | Comando para dispositivo auxiliar                                |
-|  DEL  | Apagamento, invalidação                                          |
-|  EM   | Fim do meio (papel, fita)                                        |
-|  ENQ  | Pergunta para saber qual o receptor                              |
-|  EOT  | Fim de transmissão                                               |
-|  ESC  | Escape                                                           |
-|  ETB  | Fim de transmissão do bloco                                      |
-|  ETX  | Fim de texto                                                     |
-|  FF   | Alimentação de formulário                                        |
-|  FS   | Separação de arquivo                                             |
-|  GS   | Separação de grupo                                               |
-|  HT   | Tabulação horizontal                                             |
-|  IS   | Separação de informação                                          |
-|  LF   | Mudança de linha                                                 |
-|  NAK  | Não reconhecimento do código de receptor enviado pelo transistor |
-|  NL   | Nova linha                                                       |
-|  NUL  | Nulo                                                             |
-|  RS   | Separação de registro                                            |
-|  SI   | No código                                                        |
-|  SO   | Fora do código                                                   |
-|  SOH  | Começo do texto, cabeçalho                                       |
-|  SP   | Espaço                                                           |
-|  STX  | Começo do texto                                                  |
-|  SUB  | Substituição                                                     |
-|  SYN  | Sincronização                                                    |
-|  TC   | Comando de transmissão                                           |
-|  US   | Separador de itens                                               |
-|  VT   | Tabulação vertical                                               |
+| Sigla | Descrição                                                         |
+| :---: | :---------------------------------------------------------------- |
+| `ACK` | Aviso de que o terminal receptor está identificado                |
+| `BEL` | Campainha                                                         |
+| `BS`  | Retorno de carro de uma posição                                   |
+| `CAN` | Anulação                                                          |
+| `CR`  | Retorno de carro total                                            |
+| `DC`  | Comando para dispositivo auxiliar                                 |
+| `DEL` | Apagamento, invalidação                                           |
+| `EM`  | Fim do meio (papel, fita)                                         |
+| `ENQ` | Pergunta para saber qual o receptor                               |
+| `EOT` | Fim de transmissão                                                |
+| `ESC` | Escape                                                            |
+| `ETB` | Fim de transmissão do bloco                                       |
+| `ETX` | Fim de texto                                                      |
+| `FF`  | Alimentação de formulário                                         |
+| `FS`  | Separação de arquivo                                              |
+| `GS`  | Separação de grupo                                                |
+| `HT`  | Tabulação horizontal                                              |
+| `IS`  | Separação de informação                                           |
+| `LF`  | Mudança de linha                                                  |
+| `NAK` | Não reconhecimento do código de receptor enviado pelo transmissor |
+| `NL`  | Nova linha                                                        |
+| `NUL` | Nulo                                                              |
+| `RS`  | Separação de registro                                             |
+| `SI`  | No código                                                         |
+| `SO`  | Fora do código                                                    |
+| `SOH` | Começo do texto, cabeçalho                                        |
+| `SP`  | Espaço                                                            |
+| `STX` | Começo do texto                                                   |
+| `SUB` | Substituição                                                      |
+| `SYN` | Sincronização                                                     |
+| `TC`  | Comando de transmissão                                            |
+| `US`  | Separador de itens                                                |
+| `VT`  | Tabulação vertical                                                |
 
 :::
 
@@ -2293,24 +2293,25 @@ demais seguem o mapeamento de caracteres CP437.
 <!-- prettier-ignore -->
 ::: table Página de código IBM CP437 de oito bits {#tab-ascii-extended .full-width}
 
-| Decimal | $b_3b_2b_1b_0$ | 0000 | 0001 | 0010 | 0011 | 0100 | 0101 | 0110 | 0111 | 1000 | 1001 | 1010 | 1011 | 1100 | 1101 | 1110 | 1111 |
-| :-----: | :------------: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
-|    0    |      0000      | NUL  | DLE  |  SP  |  0   |  @   |  P   | \\`  |  p   |  Ç   |  É   |  á   |  ░   |  └   |  ╨   |  α   |  ≡   |
-|    1    |      0001      | SOH  | DC1  |  !   |  1   |  A   |  Q   |  a   |  q   |  ü   |  æ   |  í   |  ▒   |  ┴   |  ╤   |  ß   |  ±   |
-|    2    |      0010      | STX  | DC2  |  "   |  2   |  B   |  R   |  b   |  r   |  é   |  Æ   |  ó   |  ▓   |  ┬   |  ╥   |  Γ   |  ≥   |
-|    3    |      0011      | ETX  | DC3  |  #   |  3   |  C   |  S   |  c   |  s   |  â   |  ô   |  ú   |  │   |  ├   |  ╙   |  π   |  ≤   |
-|    4    |      0100      | EOT  | DC4  |  $   |  4   |  D   |  T   |  d   |  t   |  ä   |  ö   |  ñ   |  ┤   |  ─   |  ╘   |  Σ   |  ⌠   |
-|    5    |      0101      | ENQ  | NAK  |  %   |  5   |  E   |  U   |  e   |  u   |  à   |  ò   |  Ñ   |  ╡   |  ┼   |  ╒   |  σ   |  ⌡   |
-|    6    |      0110      | ACK  | SYN  |  &   |  6   |  F   |  V   |  f   |  v   |  å   |  û   |  ª   |  ╢   |  ╞   |  ╓   |  µ   |  ÷   |
-|    7    |      0111      | BEL  | ETB  |  '   |  7   |  G   |  W   |  g   |  w   |  ç   |  ù   |  º   |  ╖   |  ╟   |  ╫   |  τ   |  ≈   |
-|    8    |      1000      |  BS  | CAN  |  (   |  8   |  H   |  X   |  h   |  x   |  ê   |  ÿ   |  ¿   |  ╕   |  ╚   |  ╪   |  Φ   |  °   |
-|    9    |      1001      |  HT  |  EM  |  )   |  9   |  I   |  Y   |  i   |  y   |  ë   |  Ö   |  ⌐   |  ╣   |  ╔   |  ┘   |  Θ   |  ∙   |
-|   10    |      1010      |  LF  | SUB  |  *   |  :   |  J   |  Z   |  j   |  z   |  è   |  Ü   |  ¬   |  ║   |  ╩   |  ┌   |  Ω   |  ·   |
-|   11    |      1011      |  VT  | ESC  |  +   |  ;   |  K   |  [   |  k   |  {   |  ï   |  ¢   |  ½   |  ╗   |  ╦   |  █   |  δ   |  √   |
-|   12    |      1100      |  FF  |  FS  |  ,   |  <   |  L   |  \\  |  l   |  \\  |      |  î   |  £   |  ¼   |  ╝   |  ╠   |  ▄   |  ∞   | ⁿ   |
-|   13    |      1101      |  CR  |  GS  |  -   |  =   |  M   |  ]   |  m   |  }   |  ì   |  ¥   |  ¡   |  ╜   |  ═   |  ▌   |  φ   |  ²   |
-|   14    |      1110      |  SO  |  RS  |  .   |  >   |  N   |  ^   |  n   |  ~   |  Ä   |  ₧   |  «   |  ╛   |  ╬   |  ▐   |  ε   |  ■   |
-|   15    |      1111      |  SI  |  US  |  /   |  ?   |  O   |  _   |  o   | DEL  |  Å   |  ƒ   |  »   |  ┐   |  ╧   |  ▀   |  ∩   | NBSP |
+|             |                |          |          |          |          |          |          |          | $b_7 b_6 b_5 b_4$ |          |          |          |          |          |          |          |          |
+| :---------: | :------------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :---------------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| **Decimal** | $b_3b_2b_1b_0$ | **0000** | **0001** | **0010** | **0011** | **0100** | **0101** | **0110** |     **0111**      | **1000** | **1001** | **1010** | **1011** | **1100** | **1101** | **1110** | **1111** |
+|      0      |    **0000**    |   NUL    |   DLE    |    SP    |    0     |    @     |    P     |   \\`    |         p         |    Ç     |    É     |    á     |    ░     |    └     |    ╨     |    α     |    ≡     |
+|      1      |    **0001**    |   SOH    |   DC1    |    !     |    1     |    A     |    Q     |    a     |         q         |    ü     |    æ     |    í     |    ▒     |    ┴     |    ╤     |    ß     |    ±     |
+|      2      |    **0010**    |   STX    |   DC2    |    "     |    2     |    B     |    R     |    b     |         r         |    é     |    Æ     |    ó     |    ▓     |    ┬     |    ╥     |    Γ     |    ≥     |
+|      3      |    **0011**    |   ETX    |   DC3    |    #     |    3     |    C     |    S     |    c     |         s         |    â     |    ô     |    ú     |    │     |    ├     |    ╙     |    π     |    ≤     |
+|      4      |    **0100**    |   EOT    |   DC4    |    $     |    4     |    D     |    T     |    d     |         t         |    ä     |    ö     |    ñ     |    ┤     |    ─     |    ╘     |    Σ     |    ⌠     |
+|      5      |    **0101**    |   ENQ    |   NAK    |    %     |    5     |    E     |    U     |    e     |         u         |    à     |    ò     |    Ñ     |    ╡     |    ┼     |    ╒     |    σ     |    ⌡     |
+|      6      |    **0110**    |   ACK    |   SYN    |    &     |    6     |    F     |    V     |    f     |         v         |    å     |    û     |    ª     |    ╢     |    ╞     |    ╓     |    µ     |    ÷     |
+|      7      |    **0111**    |   BEL    |   ETB    |    '     |    7     |    G     |    W     |    g     |         w         |    ç     |    ù     |    º     |    ╖     |    ╟     |    ╫     |    τ     |    ≈     |
+|      8      |    **1000**    |    BS    |   CAN    |    (     |    8     |    H     |    X     |    h     |         x         |    ê     |    ÿ     |    ¿     |    ╕     |    ╚     |    ╪     |    Φ     |    °     |
+|      9      |    **1001**    |    HT    |    EM    |    )     |    9     |    I     |    Y     |    i     |         y         |    ë     |    Ö     |    ⌐     |    ╣     |    ╔     |    ┘     |    Θ     |    ∙     |
+|     10      |    **1010**    |    LF    |   SUB    |    *     |    :     |    J     |    Z     |    j     |         z         |    è     |    Ü     |    ¬     |    ║     |    ╩     |    ┌     |    Ω     |    ·     |
+|     11      |    **1011**    |    VT    |   ESC    |    +     |    ;     |    K     |    [     |    k     |         {         |    ï     |    ¢     |    ½     |    ╗     |    ╦     |    █     |    δ     |    √     |
+|     12      |    **1100**    |    FF    |    FS    |    ,     |    <     |    L     |    \\    |    l     |        \\         |          |    î     |    £     |    ¼     |    ╝     |    ╠     |    ▄     |    ∞     | ⁿ   |
+|     13      |    **1101**    |    CR    |    GS    |    -     |    =     |    M     |    ]     |    m     |         }         |    ì     |    ¥     |    ¡     |    ╜     |    ═     |    ▌     |    φ     |    ²     |
+|     14      |    **1110**    |    SO    |    RS    |    .     |    >     |    N     |    ^     |    n     |         ~         |    Ä     |    ₧     |    «     |    ╛     |    ╬     |    ▐     |    ε     |    ■     |
+|     15      |    **1111**    |    SI    |    US    |    /     |    ?     |    O     |    _     |    o     |        DEL        |    Å     |    ƒ     |    »     |    ┐     |    ╧     |    ▀     |    ∩     |   NBSP   |
 
 :::
 
