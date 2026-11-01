@@ -24,12 +24,13 @@ sistemas.
 - 2.1. Sistemas posicionais e bases numéricas
 - 2.2. Sistemas decimal, binário, octal e hexadecimal
 - 2.3. Conversão entre bases
-- 2.4. Aritmética binária
-- 2.5. Complemento de um e complemento de dois
-- 2.6. Números com e sem sinal
-- 2.7. Ponto fixo e introdução à representação em ponto flutuante
-- 2.8. Códigos BCD, Gray e códigos alfanuméricos
-- 2.9. Códigos de detecção de erros e paridade
+- 2.4. Bits, palavras e significância posicional
+- 2.5. Aritmética binária
+- 2.6. Complemento de um e complemento de dois
+- 2.7. Números com e sem sinal
+- 2.8. Ponto fixo e introdução à representação em ponto flutuante
+- 2.9. Códigos BCD, Gray e códigos alfanuméricos
+- 2.10. Códigos de detecção de erros e paridade
 
 ### 3. [Álgebra booleana e funções lógicas](boolean-algebra-and-logic-functions.md) {#chapter-03}
 

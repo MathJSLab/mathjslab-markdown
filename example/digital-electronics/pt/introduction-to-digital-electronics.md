@@ -871,7 +871,7 @@ projeto corresponde à especificação; a segunda investiga se a solução satis
 os requisitos de uso. Um circuito pode estar corretamente implementado e, ainda
 assim, não resolver adequadamente o problema para o qual foi concebido.
 
-### Estudo de caso — controlador de iluminação
+### 1.8.1. Estudo de caso — controlador de iluminação
 
 Um sistema deve acender uma lâmpada quando houver presença detectada e a
 iluminação ambiente estiver abaixo de um limiar. Sejam $P\in\{0,1\}$ a
@@ -1043,7 +1043,6 @@ sistemas digitais, desde sua representação lógica até sua implementação f�
    to the Verilog HDL, VHDL, and SystemVerilog**. 6th ed. Pearson, 2018.
    Available at:
    https://www.pearson.com/en-gb/subject-catalog/p/Mano-Digital-Design-Global-Edition-6th-Edition/P200000004916.
-   Accessed: October 31, 2026.
 
 3. TOCCI, Ronald J.; WIDMER, Neal S.; MOSS, Gregory L. **Digital Systems:
    Principles and Applications**. 12th ed. Pearson, 2017.
@@ -1053,24 +1052,21 @@ sistemas digitais, desde sua representação lógica até sua implementação f�
 5. TOKHEIM, Roger L.; HOPPE, Patrick E. **Digital Electronics: Principles and
    Applications**. McGraw Hill, 2026 Release. Available at:
    https://www.mheducation.co.uk/engineering/electrical-engineering/digital-electronics.
-   Accessed: October 31, 2026.
 
 6. BROWN, Stephen; VRANESIC, Zvonko. **Fundamentals of Digital Logic with
    Verilog Design**. 3rd ed. McGraw-Hill, 2014.
 
 7. KOHAVI, Zvi; JHA, Niraj K. **Switching and Finite Automata Theory**. 3rd ed.
    Cambridge University Press, 2010. Available at:
-   https://doi.org/10.1017/CBO9780511816239. Accessed: October 31, 2026.
+   https://doi.org/10.1017/CBO9780511816239.
 
 8. HARRIS, Sarah L.; HARRIS, David Money. **Digital Design and Computer
    Architecture: RISC-V Edition**. 1st ed. Morgan Kaufmann, 2021. Available at:
    https://shop.elsevier.com/books/digital-design-and-computer-architecture-risc-v-edition/harris/978-0-12-820064-3.
-   Accessed: October 31, 2026.
 
 9. WESTE, Neil H. E.; HARRIS, David Money. **CMOS VLSI Design: A Circuits and
    Systems Perspective**. 4th ed. Addison-Wesley, 2011. Available at:
    https://www.pearson.com/en-us/subject-catalog/p/cmos-vlsi-design-a-circuits-and-systems-perspective/P200000003427.
-   Accessed: October 31, 2026.
 
 10. RABAEY, Jan M.; CHANDRAKASAN, Anantha; NIKOLIĆ, Borivoje. **Digital
     Integrated Circuits: A Design Perspective**. 2nd ed. Prentice Hall, 2003.
@@ -1087,4 +1083,3 @@ sistemas digitais, desde sua representação lógica até sua implementação f�
 14. MIT OPENCOURSEWARE. **Computation Structures**. Massachusetts Institute of
     Technology, Spring 2017. Available at:
     https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/.
-    Accessed: October 31, 2026.
