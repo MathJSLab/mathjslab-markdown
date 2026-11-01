@@ -2287,6 +2287,21 @@ diferentes aos valores de $128$ a $255$. A **IBM Code Page 437 (CP437)**, usada
 em computadores pessoais históricos, inclui caracteres acentuados, símbolos
 matemáticos e elementos gráficos para desenho de caixas.
 
+Além da CP437, existem outras codificações de oito bits frequentemente
+identificadas, de maneira informal, como variantes de **ASCII estendido**. A
+**CP850**, utilizada em ambientes DOS, ampliou a cobertura de caracteres de
+idiomas da Europa Ocidental; a **ISO/IEC 8859-1 (Latin-1)** estabeleceu outra
+correspondência para caracteres latinos; e a **Windows-1252 (CP1252)**,
+difundida em sistemas Windows, atribuiu caracteres imprimíveis a várias
+posições entre `80` e `9F` (hexadecimal) que, na ISO-8859-1, são reservadas a
+controles. Por exemplo, o byte `80` corresponde a `Ç` na CP437 e ao símbolo `€`
+na Windows-1252. Portanto, **não basta conhecer o valor de um byte para
+identificar o caractere**: é necessário conhecer a página de código adotada. As
+tabelas disponíveis em [ASCII Code](https://www.ascii-code.com/) permitem
+consultar essas diferenças, incluindo a
+[CP437](https://www.ascii-code.com/CP437) e a
+[Windows-1252](https://www.ascii-code.com/pt).
+
 A tabela seguinte representa a CP437, organizada por nibbles. Os valores de
 controle $0$ a $31$ e $127$ são mostrados pelas respectivas siglas ASCII; os
 demais seguem o mapeamento de caracteres CP437.
@@ -2571,3 +2586,11 @@ detecção de erros.
    https://www.unicode.org/standard/standard.html.
 7. RFC EDITOR. **RFC 3629: UTF-8, a transformation format of ISO 10646**. 2003.
    Disponível em: https://www.rfc-editor.org/rfc/rfc3629.
+8. ASCII CODE. **ASCII Table: Windows-1252**. Disponível em:
+   https://www.ascii-code.com/.
+9. ASCII CODE. **ASCII Table for Code Page 437 (CP437)**. Disponível em:
+   https://www.ascii-code.com/CP437.
+10. MICROSOFT. **Code Page Identifiers**. Disponível em:
+    https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers.
+11. IANA. **Character Sets**. Disponível em:
+    https://www.iana.org/assignments/character-sets/character-sets.xhtml.
