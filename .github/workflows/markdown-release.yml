@@ -38,7 +38,9 @@ jobs:
         if: ${{ !inputs.package_only }}
         with:
           repository: MathJSLab/mathjslab-app
-          ref: a667d8a5aa63a5d065a72ba47af2237323a9b4b3
+          # Includes the Firefox image lifecycle regression fix while retaining
+          # strict decoding, successful-response and request-type assertions.
+          ref: 16da3bc020003e1a254e61e0504278631661abf6
           path: app
       - uses: actions/setup-node@v4
         with:
