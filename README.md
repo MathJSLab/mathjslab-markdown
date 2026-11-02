@@ -109,10 +109,15 @@ choose to enable. Source ESM uses a bundler CSS inline query for maps.
 | `mathjslab-markdown/bundles/*`          | Standalone browser bundles and assets          |
 | `mathjslab-markdown/compat/*`           | Compatibility modules for application adapters |
 
-MathJSLab is an optional peer dependency (`^2.9.0`). Its integration receives
+MathJSLab is an optional peer dependency (`^2.10.0`). Its integration receives
 executors, Workers and renderers from the host; the core engine has no
 dependency on `mathjslab-app` or Plotly. Standalone bundles share a runtime:
 deploy the entire `dist/browser` tree, including its chunks and assets.
+
+Hosts enabling the MathJSLab adapter install `mathjslab@^2.10.0` explicitly.
+The
+[integration guide](doc/integration.md#numeric-sessions-in-the-browser-worker-adapter)
+documents numeric defaults, live backend conversion, reset and Worker recovery.
 
 The [browser HDL executor](doc/extensions/hdl-troubleshooting.md) runs real
 Icarus simulation and YoWASP synthesis in isolated Workers with self-hosted
@@ -187,12 +192,12 @@ Additional languages can be added under `example/`.
 ## Development
 
 Use Node.js `^22.13.0 || >=24` and npm 10 or newer. Development and release
-checks use the published `mathjslab` 2.9.0 package. For joint development,
-clone and build `mathjslab` in a sibling directory, then run
-`npm install --no-save --package-lock=false ../mathjslab` to test local
-changes. Restore the published dependency with `npm ci` before release checks.
-Dependency maintenance with the current `npm-check-updates` requires Node.js
-`^22.22.2 || ^24.15.0 || >=26.0.0`.
+validation use the published `mathjslab@^2.10.0` development dependency and
+matching optional peer range. Install with `npm ci` to reproduce the lockfile.
+Joint development may temporarily use `file:../mathjslab` after building the
+sibling core; restore registry dependencies and regenerate the lockfile before
+release validation. Dependency maintenance with the current `npm-check-updates`
+requires Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`.
 
 ```shell
 npm install
@@ -251,6 +256,11 @@ compatibility and reproduction review when upgraded. `repo:sync` explicitly
 synchronizes shared organization files and is independent of dependency
 updates.
 
+The
+[dependency audit](https://github.com/MathJSLab/mathjslab-markdown/blob/main/doc/dependency-audit.md)
+records the release's production and development findings. Review these rather
+than applying `npm audit fix --force` across incompatible toolchain versions.
+
 `check` runs lint, type checking, unit tests and HDL CI helper tests.
 `release:prepare` first checks HDL release evidence and runs `check`, then
 creates the npm archive. Its `prepack` hook performs one clean production
@@ -296,6 +306,15 @@ remains available in the repository.
 
 Publish the compatible `mathjslab` version before consumers enable its
 integration. Run publication commands only when deliberately releasing.
+
+`npm run test:candidate` runs the complete package, browser, MathJSLab Worker
+and HDL browser gates, then packs the verified distribution without rebuilding
+it. The command fingerprints tracked and untracked source files, reports any
+changes, and never formats or fixes them. Reports and the archive are saved in
+`test-results/candidate-*`. Use a matching installed core distribution and set
+`MATHJSLAB_BROWSER_EXECUTABLE`, `HDL_BROWSER` and `PLAYWRIGHT_BROWSERS_PATH`
+when browsers are outside the default paths. Validate the resulting archive in
+an isolated consumer before publishing that exact archive.
 
 ## License
 

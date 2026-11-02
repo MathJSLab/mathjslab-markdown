@@ -10,6 +10,8 @@ module.exports = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   testMatch: ['<rootDir>/test/markdown/**/*.spec.ts'],
+  // Archived HDL consumer installations are not part of this package's tests.
+  modulePathIgnorePatterns: ['<rootDir>/.hdl-research/', '<rootDir>/repo/'],
   transform: {
     '^.+\\.[cm]?ts$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.jest.json', useESM: true }],
   },

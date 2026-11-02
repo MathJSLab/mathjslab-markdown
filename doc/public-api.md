@@ -87,6 +87,17 @@ executor. `createBrowserMathJSLabWorkerExecutor` requires a host-owned Worker
 factory and synchronous `toMathML`; its optional renderer materializes plots.
 Neither the Worker nor the numerical runtime depends on Plotly or DOM.
 
+`BrowserMathJSLabWorkerExecutorOptions.numeric` accepts the published core's
+`SessionOptions['numeric']`. It is copied when the executor is created and
+again for each document. The browser session implements optional `reset()`:
+await it to clear workspace/storage and restore initial numeric settings. With
+MathJSLab 2.10.0, user `configure('real', backend)` calls can switch a live
+session while retaining its workspace; number conversion can lose precision.
+The initial snapshot still controls reset and recovery after Worker
+termination. See the
+[numeric integration contract](integration.md#numeric-sessions-in-the-browser-worker-adapter)
+for diagnostics, defaults and host responsibilities.
+
 `materializePlotlyOutput` adapts a serializable request to rich-output
 lifecycle through the injected renderer. The application composes its own
 renderer and Worker outside this package's public import graph.

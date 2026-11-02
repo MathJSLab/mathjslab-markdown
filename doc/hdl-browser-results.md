@@ -3,10 +3,11 @@
 ## HDL result presentation — 2026-10-22
 
 This change addresses presentation, not a compiler, lesson or hosting failure.
-The cached npm 0.7.1 tarball was checked against its registry integrity receipt;
-its extracted browser extension then synthesized the actual pt multiplexor
-with the unchanged GHDL/YoWASP assets. The schematic was valid, but raw ANSI
-output preceded it. The new browser test reproduces that baseline explicitly.
+The cached npm 0.7.1 tarball was checked against its registry integrity
+receipt; its extracted browser extension then synthesized the actual pt
+multiplexor with the unchanged GHDL/YoWASP assets. The schematic was valid, but
+raw ANSI output preceded it. The new browser test reproduces that baseline
+explicitly.
 
 Batch results now show localized success/error/cancellation status and place
 the schematic or waveform before native collapsible logs/diagnostics. Success
@@ -20,8 +21,8 @@ messages in batch JSON are normalized too. Raw executor results and update
 callbacks remain unchanged. CSI/OSC/terminal strings and inappropriate control
 characters are removed, retaining useful text, Unicode, tabs and line breaks;
 CRLF/CR become LF. The final log replaces accumulated updates, avoiding a
-duplicate transcript, with streamed text used only if final logs are absent.
-No compiler output is inserted using HTML. See the
+duplicate transcript, with streamed text used only if final logs are absent. No
+compiler output is inserted using HTML. See the
 [presentation contract](extensions/hdl-troubleshooting.md#hdl-result-presentation).
 
 The dedicated real-browser suite passed **15 checks in Chrome 155.0.8059.85**
@@ -35,15 +36,15 @@ bodies; zero page errors. All 32 HDL files matched before/after each run and
 the copied distribution bytes matched the source assets. No backend, external
 compiler, credentials, storage configuration, COOP/COEP or isolated context.
 
-The existing complete Chrome browser regression also passed **72 Verilog and
-72 VHDL cases**, covering the ten lesson families in pt/en/es, batch diagrams,
-interactive Run/Pause/Step/Reset, clocks/state/history/checks, x/z, VCD/CSV/SVG/
-JSON/TXT exports, limits, responsiveness, actual Worker cancellation,
-replacement and navigation disposal. Together these four sequential browser
-runs passed **173 checks and 2,309 same-origin GET requests**, with no page
-errors or source uploads. Reports: `chrome.json` and `vhdl-chrome.json` beside
-the dedicated presentation evidence. No distribution rebuild overlapped these
-accepted browser runs.
+The existing complete Chrome browser regression also passed **72 Verilog and 72
+VHDL cases**, covering the ten lesson families in pt/en/es, batch diagrams,
+interactive Run/Pause/Step/Reset, clocks/state/history/checks, x/z,
+VCD/CSV/SVG/ JSON/TXT exports, limits, responsiveness, actual Worker
+cancellation, replacement and navigation disposal. Together these four
+sequential browser runs passed **173 checks and 2,309 same-origin GET
+requests**, with no page errors or source uploads. Reports: `chrome.json` and
+`vhdl-chrome.json` beside the dedicated presentation evidence. No distribution
+rebuild overlapped these accepted browser runs.
 
 TypeScript production build passed with the four existing vendor/size warnings.
 The 110 targeted HDL unit tests and 21 distribution tests passed; the latter
@@ -56,8 +57,8 @@ files. Package verification passed with 882 files, and the HDL source and
 reproduction release gates passed. All 32 source/distributed HDL files were
 checked again after the complete browser regression and remained identical.
 
-Release 0.7.2 preparation rebuilt production and passed all **596 unit tests
-in 41 suites**, all 21 distribution tests, the release/source gates and package
+Release 0.7.2 preparation rebuilt production and passed all **596 unit tests in
+41 suites**, all 21 distribution tests, the release/source gates and package
 verification (882 files). The dedicated browser suite was then repeated
 sequentially on that completed build: 15 checks in Chrome and 14 in Edge, with
 313 same-origin GETs, no request bodies or page errors, and the same 32 HDL
@@ -72,52 +73,55 @@ The optional `HDL_PUBLISHED_BASELINE` is a same-origin URL to the extracted
 No mathjslab-app files were changed. The app needs only the corrected Markdown
 library/bundle in its normal build; authorization, static asset copying and
 compiler integrity pins stay unchanged. Custom direct-child log CSS may need
-the new `.hdl-log-details` wrapper selector. During this presentation validation,
-no commit, publication or deploy occurred.
+the new `.hdl-log-details` wrapper selector. During this presentation
+validation, no commit, publication or deploy occurred.
 
 ## Earlier runtime and release validation (2026-10-20)
 
-Date: 2026-10-20. Real VHDL-2008 simulation/replay now uses NVC Wasm,
-while synthesis uses GHDL followed by YoWASP. Verilog retains Icarus/YoWASP.
-See the [current VHDL report](hdl-vhdl-progress.md) for the exact tested profile,
-source fixes, browser evidence, integration candidate and remaining limits.
-No remote compiler, local execution service or native fallback is used.
-Complete-language support and cross-platform reproduction are not claimed.
-NVC now has byte-identical results from two independent Windows build roots;
-the source-built Icarus port now has matching artifacts across two Windows build
+Date: 2026-10-20. Real VHDL-2008 simulation/replay now uses NVC Wasm, while
+synthesis uses GHDL followed by YoWASP. Verilog retains Icarus/YoWASP. See the
+[current VHDL report](hdl-vhdl-progress.md) for the exact tested profile,
+source fixes, browser evidence, integration candidate and remaining limits. No
+remote compiler, local execution service or native fallback is used.
+Complete-language support and cross-platform reproduction are not claimed. NVC
+now has byte-identical results from two independent Windows build roots; the
+source-built Icarus port now has matching artifacts across two Windows build
 roots and complete corresponding sources. The Linux GHDL reconstruction now
 passes byte comparison with pinned inputs in Actions run 39482133976; its
-validated assets are promoted and source/reproduction release gates pass. Historical
-investigations and earlier results below do not validate later distributions.
+validated assets are promoted and source/reproduction release gates pass.
+Historical investigations and earlier results below do not validate later
+distributions.
 
 ## Promoted pinned GHDL distribution validation (2026-10-20)
 
 The exact GHDL candidates from pinned Linux run `39482133976` are now promoted.
 The source/reproduction release gate passes for GHDL, NVC and Icarus. The GHDL
-Wasm remains `245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`;
-the canonical library archive is
-`e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a`.
-The complete deployed HDL lock SHA-256 is
+Wasm remains
+`245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`; the
+canonical library archive is
+`e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a`. The
+complete deployed HDL lock SHA-256 is
 `5084bd775a957873e9177ec2ddc52cd54ce8c01bc0210629627b85776dd23b9e`.
 
-After rebuilding production, the full real-browser matrix passed again:
-**201 cases in Chrome 155.0.8059.85 and 201 in Edge 155.0.4283.62**. Each browser
+After rebuilding production, the full real-browser matrix passed again: **201
+cases in Chrome 155.0.8059.85 and 201 in Edge 155.0.4283.62**. Each browser
 passed 4 novel Verilog runtime probes, 72 Verilog lesson/UI cases, 30 VHDL
-runtime contracts, 72 VHDL lesson/UI cases and 23 GHDL synthesis cases. Coverage
-includes all ten requested lesson families in pt/en/es, sources outside those
-examples, numeric_std, real sequential state and delta/wait behavior, 0/1/x/z,
-clocks, controls/history/checks, inspection/exports and cancellation/disposal.
+runtime contracts, 72 VHDL lesson/UI cases and 23 GHDL synthesis cases.
+Coverage includes all ten requested lesson families in pt/en/es, sources
+outside those examples, numeric_std, real sequential state and delta/wait
+behavior, 0/1/x/z, clocks, controls/history/checks, inspection/exports and
+cancellation/disposal.
 
 All **5,735 requests** were same-origin GET without bodies or query strings;
 there were zero page errors. All **32 HDL files** were hash-frozen throughout
 the ten sequential runs. No execution backend, CDN, COOP/COEP or cross-origin
-isolation was used. The VHDL counter screenshot was visually inspected.
-No browser/HDL run overlapped a package distribution rebuild. Generated evidence
+isolation was used. The VHDL counter screenshot was visually inspected. No
+browser/HDL run overlapped a package distribution rebuild. Generated evidence
 is under `.hdl-research/pinned-ghdl-final/` and `test-results/hdl-browser/`.
 
 Lint, typecheck, 588 unit tests, 21 distribution tests, 7 release/comparison
-tests and 4 catalog-metadata tests passed. Package verification passed with
-880 files, including the compiler source/build evidence and the app test patch.
+tests and 4 catalog-metadata tests passed. Package verification passed with 880
+files, including the compiler source/build evidence and the app test patch.
 Unit/recorded executor tests are complementary, not substitutes for the real
 browser matrix above. No package publication or deploy occurred.
 
@@ -126,8 +130,8 @@ browser matrix above. No package publication or deploy occurred.
 The current mathjslab-app working tree was copied into an isolated workspace,
 reusing its installed dependencies (registry mathjslab 2.9.0 and the local
 Markdown dependency). Its runtime/configuration were preserved. Sequential
-validation passed **77 cases in development Chrome, 77 in production Chrome
-and 77 in production Edge: 231 cases**, with zero page errors. Browser versions
+validation passed **77 cases in development Chrome, 77 in production Chrome and
+77 in production Edge: 231 cases**, with zero page errors. Browser versions
 were the same as in the package matrix above. Both app builds copied all 32 HDL
 files byte for byte. Production served static files only; no COOP/COEP or
 cross-origin isolation was required.
@@ -143,21 +147,22 @@ original app checkout remains unchanged. The checked patch is distributed as
 [mathjslab-app-empty-trace.patch](integration/mathjslab-app-empty-trace.patch)
 for application in the app workspace with authorization. This test-only change
 does not change the executor API or application configuration. Evidence is in
-`.hdl-research/pinned-ghdl-final/app-summary.json` and the isolated app reports.
+`.hdl-research/pinned-ghdl-final/app-summary.json` and the isolated app
+reports.
 
 ## Earlier frozen distribution validation (2026-10-20)
 
 The [current VHDL report](hdl-vhdl-progress.md#validation-of-this-candidate)
 records the completed static-browser matrix after the source-built Icarus
-replacement: **402 checks**, comprising 30 NVC runtime/contract, 72 VHDL lesson/UI,
-72 Verilog regression, four new Verilog runtime and 23 GHDL synthesis
-checks in each of Chrome 155.0.8059.85 and Edge 155.0.4283.62. Zero page errors;
-all 5,736 recorded requests were same-origin GETs without bodies or query strings.
-All 32 static HDL files match their source bytes and stayed frozen throughout
-the matrix. The signal-free testbench and its exports
-pass in pt/en/es; 588 unit and 21 distribution checks plus package inspection
-(873 files) also passed. The older result sections below are
-historical and are not additional current runs.
+replacement: **402 checks**, comprising 30 NVC runtime/contract, 72 VHDL
+lesson/UI, 72 Verilog regression, four new Verilog runtime and 23 GHDL
+synthesis checks in each of Chrome 155.0.8059.85 and Edge 155.0.4283.62. Zero
+page errors; all 5,736 recorded requests were same-origin GETs without bodies
+or query strings. All 32 static HDL files match their source bytes and stayed
+frozen throughout the matrix. The signal-free testbench and its exports pass in
+pt/en/es; 588 unit and 21 distribution checks plus package inspection (873
+files) also passed. The older result sections below are historical and are not
+additional current runs.
 
 ## Implementation
 
@@ -180,15 +185,15 @@ Workers terminate after each job, on AbortSignal, timeout or disposal. Defaults
 are 30 seconds and four logical sessions (configurable, maximum 300 seconds and
 16 sessions). Interactive internal jobs count against their owning session.
 Limits: 256 KiB serialized request, 64 KiB logs, 512 KiB compiled output or
-VCD/netlist, 1 MiB worker message, 1,000 confirmed replay intervals. Icarus
-and NVC MEMFS growth is checked during writes: 512 KiB per file and 4 MiB accounted
-allocation per module. NVC additionally has a 512 MiB maximum Wasm heap; this is not a cap on total
-process memory. The new source-built Icarus modules each have the same 512 MiB
-maximum heap. YoWASP's virtual filesystem and compiler heap are governed
-by its build and the browser; output size is checked after synthesis. Stronger
-heap quotas require rebuilding these toolchains. Browser termination/GC
-controls physical memory reclamation; it is not synchronous JavaScript
-deallocation.
+VCD/netlist, 1 MiB worker message, 1,000 confirmed replay intervals. Icarus and
+NVC MEMFS growth is checked during writes: 512 KiB per file and 4 MiB accounted
+allocation per module. NVC additionally has a 512 MiB maximum Wasm heap; this
+is not a cap on total process memory. The new source-built Icarus modules each
+have the same 512 MiB maximum heap. YoWASP's virtual filesystem and compiler
+heap are governed by its build and the browser; output size is checked after
+synthesis. Stronger heap quotas require rebuilding these toolchains. Browser
+termination/GC controls physical memory reclamation; it is not synchronous
+JavaScript deallocation.
 
 ## Fixed toolchain and provenance
 
@@ -199,27 +204,27 @@ npm `dist/` inclusion packages it. Tool JS and Wasm are separate assets, loaded
 only when a job needs the corresponding tool. Yosys is about 78 MB unpacked in
 this particular distribution, substantially larger than older YoWASP releases.
 
-| Project                                                                                                    | Inspected revision / API                                                                                           | Status and license                                                                                                                                                                                                        |
-| ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [YoWASP website](https://yowasp.org/)                                                                      | npm `@yowasp/yosys@0.70.62-dev.1236`; `runYosys(args, files, {stdout,stderr})` returns a virtual file tree         | Real browser synthesis, ISC; npm tarball integrity and individual file hashes fixed. The old [GitHub documentation repo](https://github.com/YoWASP/yowasp.github.io) is archived and the current site points to Codeberg. |
-| [Icarus](https://github.com/steveicarus/iverilog/tree/c7530dbcc186de2f21eacde14fd28061b885924c) | Official commit `c7530dbcc186de2f21eacde14fd28061b885924c`, Emscripten 6.0.12; factories `ivlpp`, `ivl`, `vvp`, `FS` and `callMain` | Real source-built compiler/runtime with MathJSLab static target/VPI adaptation; GPL-2.0-or-later. Complete sources/recipe and two-root evidence under `script/hdl/icarus-browser/`; runtime notices retained. |
-| [ghdl-browser](https://github.com/UnsignedChad/ghdl-browser/tree/e98e5a6c6fd6c48a789705ae9900c6b34b3cb414) | commit `e98e5a6c6fd6c48a789705ae9900c6b34b3cb414`; libghdl analyze/compile API                                     | Experimental browser-host compiler, GPL-2.0; not integrated.                                                                                                                                                              |
-| [ghdl-wasm](https://github.com/UnsignedChad/ghdl-wasm/tree/aebafd2f848a94bd63f30e5adc7a30a00a1ea109)       | commit `aebafd2f848a94bd63f30e5adc7a30a00a1ea109`; ortho Wasm/WAT backend                                          | GPL-2.0; emitting Wasm from a native compiler is insufficient to make the compiler run in a browser.                                                                                                                      |
+| Project                                                                                                    | Inspected revision / API                                                                                                            | Status and license                                                                                                                                                                                                        |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [YoWASP website](https://yowasp.org/)                                                                      | npm `@yowasp/yosys@0.70.62-dev.1236`; `runYosys(args, files, {stdout,stderr})` returns a virtual file tree                          | Real browser synthesis, ISC; npm tarball integrity and individual file hashes fixed. The old [GitHub documentation repo](https://github.com/YoWASP/yowasp.github.io) is archived and the current site points to Codeberg. |
+| [Icarus](https://github.com/steveicarus/iverilog/tree/c7530dbcc186de2f21eacde14fd28061b885924c)            | Official commit `c7530dbcc186de2f21eacde14fd28061b885924c`, Emscripten 6.0.12; factories `ivlpp`, `ivl`, `vvp`, `FS` and `callMain` | Real source-built compiler/runtime with MathJSLab static target/VPI adaptation; GPL-2.0-or-later. Complete sources/recipe and two-root evidence under `script/hdl/icarus-browser/`; runtime notices retained.             |
+| [ghdl-browser](https://github.com/UnsignedChad/ghdl-browser/tree/e98e5a6c6fd6c48a789705ae9900c6b34b3cb414) | commit `e98e5a6c6fd6c48a789705ae9900c6b34b3cb414`; libghdl analyze/compile API                                                      | Experimental browser-host compiler, GPL-2.0; not integrated.                                                                                                                                                              |
+| [ghdl-wasm](https://github.com/UnsignedChad/ghdl-wasm/tree/aebafd2f848a94bd63f30e5adc7a30a00a1ea109)       | commit `aebafd2f848a94bd63f30e5adc7a30a00a1ea109`; ortho Wasm/WAT backend                                                           | GPL-2.0; emitting Wasm from a native compiler is insufficient to make the compiler run in a browser.                                                                                                                      |
 
-**Historical VeriSim blocker:** downloading and hashing binaries is reproducible asset
-acquisition, not a verified reproducible source build. VeriSim's inspected tree
-contains uploaded binaries but no build recipe or port patches, despite its
-README describing loader/code-generator modifications. A pointer to the
-unmodified upstream Icarus commit does not establish corresponding source for
-those modifications. Those downloaded modules have been replaced by a port
-actually built from the supplied official archive and MathJSLab patch. All six
-artifacts match across two Windows/MSYS2 roots using the same pinned SDK/cache;
-the exact scope is recorded, without cross-platform or cross-machine claims.
-GHDL's independent reconstruction remains a publication blocker.
-The package MIT license does not relicense the bundled GPL assets;
-the separate license notices are retained. YoWASP publishes packaging recipes
-and a versioned npm archive; its source-to-binary reproducibility was not
-independently rebuilt here either.
+**Historical VeriSim blocker:** downloading and hashing binaries is
+reproducible asset acquisition, not a verified reproducible source build.
+VeriSim's inspected tree contains uploaded binaries but no build recipe or port
+patches, despite its README describing loader/code-generator modifications. A
+pointer to the unmodified upstream Icarus commit does not establish
+corresponding source for those modifications. Those downloaded modules have
+been replaced by a port actually built from the supplied official archive and
+MathJSLab patch. All six artifacts match across two Windows/MSYS2 roots using
+the same pinned SDK/cache; the exact scope is recorded, without cross-platform
+or cross-machine claims. GHDL's independent reconstruction remains a
+publication blocker. The package MIT license does not relicense the bundled GPL
+assets; the separate license notices are retained. YoWASP publishes packaging
+recipes and a versioned npm archive; its source-to-binary reproducibility was
+not independently rebuilt here either.
 
 ## Earlier VHDL investigation (superseded for synthesis)
 
@@ -239,11 +244,10 @@ GRT signal/delta-cycle/process scheduler with persistent state and four-state
 VCD output, and exposing a real synthesis path (GHDL Verilog output into
 YoWASP). The latter is now implemented and browser-tested using the separate
 frontend documented in the continuation report. Simulation still requires the
-runtime work above. An
-artificial JS circuit model or compiling user sources on a server would not
-resolve these requirements. The earlier snapshot excluded all 39 VHDL
-source/batch/interactive fences; that statement is historical, not the current
-synthesis capability.
+runtime work above. An artificial JS circuit model or compiling user sources on
+a server would not resolve these requirements. The earlier snapshot excluded
+all 39 VHDL source/batch/interactive fences; that statement is historical, not
+the current synthesis capability.
 
 ## Browser validation
 
@@ -356,12 +360,12 @@ The complete subsequent Chrome round with the build stopped passed all 72
 cases. This occurrence does not establish a general network/memory reliability
 guarantee for the large YoWASP assets.
 
-Historical acceptance gaps at the previous snapshot were browser VHDL simulation/interactivity, complete
-corresponding Icarus port sources/reproducible builds, and app validation of the
-new synthesis increment. The app has separately reported successful Verilog
-integration; see its current validation report. Firefox, Safari and mobile browsers
-were not tested. Exports were inspected through the supported application
-callback; OS download/save dialogs were not exercised. Arbitrary HDL standard
-coverage, heap quotas and every optional renderer feature are not established
-by this suite. **Full acceptance remains unmet.** No commit, push or
-publication was performed.
+Historical acceptance gaps at the previous snapshot were browser VHDL
+simulation/interactivity, complete corresponding Icarus port
+sources/reproducible builds, and app validation of the new synthesis increment.
+The app has separately reported successful Verilog integration; see its current
+validation report. Firefox, Safari and mobile browsers were not tested. Exports
+were inspected through the supported application callback; OS download/save
+dialogs were not exercised. Arbitrary HDL standard coverage, heap quotas and
+every optional renderer feature are not established by this suite. **Full
+acceptance remains unmet.** No commit, push or publication was performed.

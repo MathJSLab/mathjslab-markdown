@@ -257,7 +257,20 @@ try {
     }
   }
   const safety = await page.evaluate(async (language) => {
-    const base = language === 'vhdl' ? { language, operation: 'simulate', top: 'hang', files: [{ name: 'hang.vhd', source: 'entity hang is end;architecture test of hang is begin process variable n:natural:=0;begin loop if n=10 then n:=0;else n:=n+1;end if;end loop;wait;end process;end;' }] } : { language: 'verilog', operation: 'simulate', top: 'hang', files: [{ name: 'hang.v', source: 'module hang; initial forever begin end endmodule' }] };
+    const base =
+      language === 'vhdl'
+        ? {
+            language,
+            operation: 'simulate',
+            top: 'hang',
+            files: [
+              {
+                name: 'hang.vhd',
+                source: 'entity hang is end;architecture test of hang is begin process variable n:natural:=0;begin loop if n=10 then n:=0;else n:=n+1;end if;end loop;wait;end process;end;',
+              },
+            ],
+          }
+        : { language: 'verilog', operation: 'simulate', top: 'hang', files: [{ name: 'hang.v', source: 'module hang; initial forever begin end endmodule' }] };
     const executor = hdl.createBrowserHDLExecutor({ allowBrowserExecution: true, assetsURL: new URL('/dist/browser/hdl/', location.href), timeoutMs: 1000, maxSessions: 1 });
     let ticks = 0;
     const timer = setInterval(() => ticks++, 10);
@@ -299,34 +312,51 @@ try {
   assert.equal(safety.workers, 0);
   results.push({ name: 'limits, actual Worker cancellation, responsiveness', ...safety, passed: true });
   results.push({ name: 'four-state buffers, stable recording duration, located diagnostics', ...semantics, passed: true });
-  await page.evaluate((language) =>
-    hdl.mount(
-      {
-        language,
-        top: 'busy',
-        files: [language === 'vhdl' ? { name: 'busy.vhd', source: 'library ieee;use ieee.std_logic_1164.all;entity busy is port(a:in std_logic;y:out std_logic);end;architecture test of busy is begin y<=a;process variable n:natural:=0;begin loop if n=10 then n:=0;else n:=n+1;end if;end loop;wait;end process;end;' } : { name: 'busy.sv', source: 'module busy(input a,output y);assign y=a;initial forever begin end endmodule' }],
-        inputs: [{ name: 'a', width: 1, initial: '0' }],
-        outputs: [{ name: 'y', width: 1 }],
-        stepNs: 10,
-      },
-      'pt',
-    ),
+  await page.evaluate(
+    (language) =>
+      hdl.mount(
+        {
+          language,
+          top: 'busy',
+          files: [
+            language === 'vhdl'
+              ? {
+                  name: 'busy.vhd',
+                  source:
+                    'library ieee;use ieee.std_logic_1164.all;entity busy is port(a:in std_logic;y:out std_logic);end;architecture test of busy is begin y<=a;process variable n:natural:=0;begin loop if n=10 then n:=0;else n:=n+1;end if;end loop;wait;end process;end;',
+                }
+              : { name: 'busy.sv', source: 'module busy(input a,output y);assign y=a;initial forever begin end endmodule' },
+          ],
+          inputs: [{ name: 'a', width: 1, initial: '0' }],
+          outputs: [{ name: 'y', width: 1 }],
+          stepNs: 10,
+        },
+        'pt',
+      ),
     language,
   );
   await page.locator('[data-hdl-action=step]').click();
   await page.waitForFunction(() => hdl.workers() > 0);
-  await page.evaluate((language) =>
-    hdl.mount(
-      {
-        language,
-        top: 'replacement',
-        files: [language === 'vhdl' ? { name: 'replacement.vhd', source: 'library ieee;use ieee.std_logic_1164.all;entity replacement is port(a:in std_logic;y:out std_logic);end;architecture rtl of replacement is begin y<=not a;end;' } : { name: 'replacement.v', source: 'module replacement(input a,output y);assign y=~a;endmodule' }],
-        inputs: [{ name: 'a', width: 1, initial: '0' }],
-        outputs: [{ name: 'y', width: 1 }],
-        stepNs: 10,
-      },
-      'pt',
-    ),
+  await page.evaluate(
+    (language) =>
+      hdl.mount(
+        {
+          language,
+          top: 'replacement',
+          files: [
+            language === 'vhdl'
+              ? {
+                  name: 'replacement.vhd',
+                  source: 'library ieee;use ieee.std_logic_1164.all;entity replacement is port(a:in std_logic;y:out std_logic);end;architecture rtl of replacement is begin y<=not a;end;',
+                }
+              : { name: 'replacement.v', source: 'module replacement(input a,output y);assign y=~a;endmodule' },
+          ],
+          inputs: [{ name: 'a', width: 1, initial: '0' }],
+          outputs: [{ name: 'y', width: 1 }],
+          stepNs: 10,
+        },
+        'pt',
+      ),
     language,
   );
   assert.equal(await page.evaluate(() => hdl.workers()), 0);
@@ -365,7 +395,23 @@ try {
     window.pendingJob = executor
       .createSession({})
       .then((session) =>
-        session.execute({ language, operation: 'simulate', top: 'hang', files: [language === 'vhdl' ? { name: 'hang.vhd', source: 'entity hang is end;architecture test of hang is begin process variable n:natural:=0;begin loop if n=10 then n:=0;else n:=n+1;end if;end loop;wait;end process;end;' } : { name: 'hang.v', source: 'module hang; initial forever begin end endmodule' }] }, {}),
+        session.execute(
+          {
+            language,
+            operation: 'simulate',
+            top: 'hang',
+            files: [
+              language === 'vhdl'
+                ? {
+                    name: 'hang.vhd',
+                    source:
+                      'entity hang is end;architecture test of hang is begin process variable n:natural:=0;begin loop if n=10 then n:=0;else n:=n+1;end if;end loop;wait;end process;end;',
+                  }
+                : { name: 'hang.v', source: 'module hang; initial forever begin end endmodule' },
+            ],
+          },
+          {},
+        ),
       )
       .catch(() => {});
   }, language);

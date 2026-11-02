@@ -5,12 +5,18 @@ import type { MarkdownDocumentContext } from '../../src/MarkdownEngine';
 
 // Exercise the canonical runtime protocol and interpreter, without browser timing.
 class RuntimeWorker {
-  public constructor(private readonly textEffects = false) {}
+  public constructor(
+    private readonly textEffects = false,
+    private readonly legacy = false,
+  ) {}
   private listeners = new Set<(event: MessageEvent<RuntimeOutboundMessage>) => void>();
   private receive?: (event: MessageEvent<RuntimeInboundMessage>) => void;
   private readonly server = new RuntimeWorkerServer(
     {
-      postMessage: (data) => queueMicrotask(() => this.listeners.forEach((listener) => listener({ data } as MessageEvent<RuntimeOutboundMessage>))),
+      postMessage: (data) => {
+        if (this.legacy && 'result' in data && data.result.type === 'created') data = { ...data, result: { type: 'created' } };
+        queueMicrotask(() => this.listeners.forEach((listener) => listener({ data } as MessageEvent<RuntimeOutboundMessage>)));
+      },
       addEventListener: (_type, listener) => {
         this.receive = listener;
       },
@@ -56,7 +62,21 @@ const setup = (textEffects = false) => {
 const context: MarkdownDocumentContext = {};
 const statementContext = { ...context, blockIndex: 0, statementIndex: 0 };
 
-describe('MathJSLab 2.9.0 browser adapter', () => {
+describe('MathJSLab 2.10.0 browser adapter', () => {
+  test('rejects a stale Worker without numeric acknowledgement and terminates it', async () => {
+    const worker = new RuntimeWorker(false, true);
+    const executor = createBrowserMathJSLabWorkerExecutor({
+      toMathML: String,
+      workerFactory: () => worker as unknown as Worker,
+      numeric: { engine: 'number' },
+    });
+    try {
+      await expect(executor.createSession(context)).rejects.toMatchObject({ code: 'MATHJSLAB_NUMERIC_CONFIGURATION_UNSUPPORTED' });
+      expect(worker.terminated).toBe(true);
+    } finally {
+      await executor.dispose?.();
+    }
+  });
   test('retains independent text effects alongside the MathML value', async () => {
     const { executor } = setup(true);
     try {
@@ -65,6 +85,8 @@ describe('MathJSLab 2.9.0 browser adapter', () => {
       expect(result.status).toBe('success');
       expect(result.outputs).toContainEqual({ type: 'text', text: 'Independent output' });
       expect(result.outputs?.filter((output) => output.type === 'mathml')).toHaveLength(1);
+      const suppressed = await session.execute('1+1;', statementContext);
+      expect(suppressed.outputs).toEqual(result.outputs?.filter((output) => output.type === 'text'));
     } finally {
       await executor.dispose?.();
     }
@@ -75,6 +97,9 @@ describe('MathJSLab 2.9.0 browser adapter', () => {
       const session = await executor.createSession(context);
       expect((await session.parse('a=1; b=2;', context)).statements).toEqual(['a=1;', 'b=2;']);
       expect((await session.parse('a=1, b=2', context)).statements).toEqual(['a=1', 'b=2']);
+      const suppressed = await session.parse('a=1; b=2; % keep comment', context);
+      expect(suppressed.statements).toEqual(['a=1;', 'b=2;']);
+      for (const statement of suppressed.statements) expect((await session.execute(statement, statementContext)).outputs).toEqual([]);
       expect((await session.parse('', context)).statements).toEqual([]);
       expect((await session.parse('% comment', context)).statements).toEqual([]);
       const source = 'for k=1:2\n a=k;\nend; b=a';
@@ -117,7 +142,7 @@ describe('MathJSLab 2.9.0 browser adapter', () => {
     } as MarkdownDocumentContext;
     try {
       const session = await executor.createSession(activeContext);
-      const result = await session.execute("load('lesson.m')", { ...activeContext, blockIndex: 0, statementIndex: 0 });
+      const result = await session.execute("load('lesson.m');", { ...activeContext, blockIndex: 0, statementIndex: 0 });
       expect(result.status).toBe('success');
       expect(references).toEqual(['lesson.m']);
       expect(result.outputs).toContainEqual({ type: 'text', text: 'Loaded script from lesson.m' });

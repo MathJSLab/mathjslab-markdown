@@ -21,7 +21,9 @@ self.onmessage = async ({ data }) => {
       locateFile: (name) => new URL(name, base).href,
       print: log,
       printErr: log,
-      onExit: (code) => { exit = code; },
+      onExit: (code) => {
+        exit = code;
+      },
     });
     const fs = module.FS;
     for (const [name, contents] of libraries) {
@@ -33,18 +35,30 @@ self.onmessage = async ({ data }) => {
     fs.chdir('/work');
     for (const file of data.files) fs.writeFile(file.name, file.source);
     try {
-      exit = module.callMain([
-        '--std=08', '--messages=compact', '-L', '/nvc/lib',
-        '-a', ...data.files.map((file) => file.name),
-        '-e', data.top, '-r', '--format=vcd', '--wave=trace.vcd',
-        '--stop-time=1000ns', '--exit-severity=error',
-      ]) ?? exit;
+      exit =
+        module.callMain([
+          '--std=08',
+          '--messages=compact',
+          '-L',
+          '/nvc/lib',
+          '-a',
+          ...data.files.map((file) => file.name),
+          '-e',
+          data.top,
+          '-r',
+          '--format=vcd',
+          '--wave=trace.vcd',
+          '--stop-time=1000ns',
+          '--exit-severity=error',
+        ]) ?? exit;
     } catch (error) {
       if (error?.name !== 'ExitStatus') throw error;
       exit = error.status;
     }
     let vcd;
-    try { vcd = fs.readFile('/work/trace.vcd', { encoding: 'utf8' }); } catch {}
+    try {
+      vcd = fs.readFile('/work/trace.vcd', { encoding: 'utf8' });
+    } catch {}
     if (vcd?.length > 512 * 1024) throw new Error('Probe VCD limit exceeded');
     self.postMessage({ exit, logs, vcd, isolated: self.crossOriginIsolated });
   } catch (error) {

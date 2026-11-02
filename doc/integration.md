@@ -75,3 +75,67 @@ MathJSLab execution is an explicit optional integration. Supply
 conversion; supply a plot renderer if plots need to be materialized. No preset
 creates an application-specific Worker or interpreter automatically. See
 [public-api.md](public-api.md) and [rendering.md](rendering.md).
+
+## Numeric sessions in the browser Worker adapter
+
+```ts
+import {
+    createBrowserMathJSLabWorkerExecutor,
+    type BrowserMathJSLabWorkerExecutorOptions,
+} from "mathjslab-markdown/mathjslab";
+
+const numeric: BrowserMathJSLabWorkerExecutorOptions["numeric"] = {
+    engine: "decimal",
+    complex: { precision: 40, precisionCompare: 7 },
+};
+const executor = createBrowserMathJSLabWorkerExecutor({
+    toMathML: hostToMathML,
+    workerFactory: () => new Worker(hostWorkerUrl, { type: "module" }),
+    numeric,
+    plotRenderer: hostPlotRenderer,
+});
+```
+
+`numeric` is the core's `SessionOptions['numeric']` type. Omit it to retain
+core defaults. This contract targets the published `mathjslab@^2.10.0` optional
+peer. The adapter deep-copies it when the executor is constructed and copies
+that snapshot for every document session. Mutating the original object later
+changes neither existing nor future sessions of this executor. Different
+creation defaults require a new executor and new document sessions; initialize
+the replacement successfully before disposing the previous document. No
+workspace replay or conversion is performed. Separate executors can run number
+and decimal sessions simultaneously. Each document owns its workspace and
+storage.
+
+Browser sessions expose optional `reset()` through `MathJSLabExecutionSession`;
+other custom executors need not implement it. Await reset before further work.
+It clears the workspace and adapter storage and restores the copied initial
+numeric settings. Remote cancellation/timeout can terminate a Worker and lose
+its workspace; the next execution recreates it with the same numeric snapshot.
+Session disposal is idempotent and affects only that document. Executor
+disposal releases all its sessions. Disposed sessions/executors cannot be
+reused.
+
+User code can switch the live backend through `configure("real", backend)`
+while retaining workspace and aliases. Conversion to number uses native
+floating-point precision; switching back cannot restore lost digits. A backend
+switch affects only that document session. A Worker that fails to acknowledge
+numeric options rejects session creation with
+`MATHJSLAB_NUMERIC_CONFIGURATION_UNSUPPORTED`. The adapter preserves these
+codes, rather than retrying with defaults. Deploy matching core, runtime and
+Worker distributions together and refresh cached Worker assets. Number
+precision is fixed at 15; validate decimal precision and precisionCompare
+together.
+
+Runtime success maps to `success`/`good`; error and cancelled map to their
+same-named statuses with state `bad` and diagnostic code on Error. Timeout
+throws `TimeoutError` with `MATHJSLAB_TIMEOUT` and is outside the result union.
+Semicolon-terminated statements suppress their final value representation;
+independent text effects such as load completion and plot outputs are retained.
+Plots remain host-owned nodes: the document calls mount after insertion, resize
+on layout changes and dispose when releasing outputs. Session reset alone does
+not dispose already-materialized DOM outputs.
+
+This is the contract offered to mathjslab-app; it does not assume its
+preference UI, session replacement or Worker asset deployment has been
+implemented.

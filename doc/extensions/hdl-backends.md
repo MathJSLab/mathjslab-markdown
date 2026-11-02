@@ -1,8 +1,9 @@
 > Legacy native/HTTP adapter reference. Static applications must use
-> [the browser executor](hdl-troubleshooting.md). Browser VHDL-2008 now uses NVC simulation/replay and GHDL synthesis;
-> services are not a fallback for that requirement. The npm distribution now
-> also contains browser Wasm assets; the no-toolchain statement below describes
-> the earlier native-only distribution.
+> [the browser executor](hdl-troubleshooting.md). Browser VHDL-2008 now uses
+> NVC simulation/replay and GHDL synthesis; services are not a fallback for
+> that requirement. The npm distribution now also contains browser Wasm assets;
+> the no-toolchain statement below describes the earlier native-only
+> distribution.
 
 # Real HDL backends
 

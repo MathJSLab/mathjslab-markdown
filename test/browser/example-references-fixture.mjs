@@ -21,6 +21,11 @@ window.loadExample = async (source, locale = 'pt-BR') => {
         'https://www.makerhero.com',
         'https://www.redeweb.com',
         'https://vega.github.io',
+        // Bibliography links in the current Digital Electronics chapter.
+        'https://www.pearson.com',
+        'https://www.mheducation.co.uk',
+        'https://doi.org',
+        'https://shop.elsevier.com',
       ],
     },
     onDiagnostic: (diagnostic) => window.exampleDiagnostics.push(diagnostic),

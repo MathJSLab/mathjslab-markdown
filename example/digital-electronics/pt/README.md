@@ -34,15 +34,15 @@ sistemas.
 
 ### 3. [Álgebra booleana e funções lógicas](boolean-algebra-and-logic-functions.md) {#chapter-03}
 
-- 3.1. Variáveis e funções booleanas
-- 3.2. Operações lógicas fundamentais
-- 3.3. Postulados, propriedades e teoremas
-- 3.4. Princípio da dualidade
-- 3.5. Teoremas de De Morgan
-- 3.6. Tabelas-verdade e expressões lógicas
-- 3.7. Formas canônicas: mintermos e maxtermos
-- 3.8. Soma de produtos e produto de somas
-- 3.9. Funções completamente e incompletamente especificadas
+- 3.1. Conjuntos, universo e operações
+- 3.2. Lógica proposicional
+- 3.3. Definição formal da álgebra de Boole
+- 3.4. Funções booleanas e tabelas-verdade
+- 3.5. Formas canônicas e síntese a partir de tabelas
+- 3.6. Circuitos lógicos com interruptores
+- 3.7. Portas lógicas e representação de circuitos
+- 3.8. Equivalência das representações
+- 3.9. Síntese conceitual e fronteiras do modelo
 
 ### 4. [Portas lógicas e representação de circuitos](logic-gates-and-circuit-representation.md) {#chapter-04}
 

@@ -1,4 +1,7 @@
-> Historical native-tool audit. For current static-browser work, actual browser results and pending VHDL/release blockers, see [browser HDL results](hdl-browser-results.md). Native success is not browser compatibility.
+> Historical native-tool audit. For current static-browser work, actual browser
+> results and pending VHDL/release blockers, see
+> [browser HDL results](hdl-browser-results.md). Native success is not browser
+> compatibility.
 
 # HDL example audit results
 

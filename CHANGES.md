@@ -1,5 +1,29 @@
 # Release notes
 
+## 0.10.0 — 2026-11-02
+
+- Align the optional MathJSLab peer and development dependency with published
+  2.10.0. Add typed, copied numeric creation options and optional session reset
+  to the browser Worker executor. Preserve diagnostic/status mapping, document
+  isolation and host ownership of plot lifecycle.
+- Preserve exact statement terminators from the updated parser and suppress
+  semicolon-terminated values while retaining independent load/plot effects.
+- Distribute the Leaflet declaration dependency referenced by public context
+  types, including installations that omit optional runtime renderers.
+- Validate live backend switches with workspace retention, reset to initial
+  precision, cancellation/timeout recovery and retained loads, validations,
+  classes, protocols and indexed multiple-output assignments in real Workers.
+- Refresh marked, ESLint/globals, Webpack CLI/minimizer, Verovio and Three.js
+  dependencies and matching type declarations. Document development-only npm
+  audit findings without forcing incompatible toolchain downgrades.
+- Protect pinned HDL assets and source reproduction inputs from formatting;
+  validate independent reconstruction evidence and expand VHDL browser checks.
+- Repair teaching catalogue links, bibliography origins and custom reference
+  formatting; retain the expanded digital-electronics lessons.
+- Add candidate validation with source fingerprints and package/browser/HDL
+  gates. Exclude archived consumer checkouts from Jest discovery and document
+  registry-based development and the released integration contract.
+
 ## 0.9.2 — 2026-10-26
 
 - Update Markdown, diagram and build dependencies to their latest stable npm

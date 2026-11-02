@@ -6,10 +6,10 @@ only; an HTTP/native execution service is not a solution or fallback.
 
 **Current implementation is partial:** real Icarus simulation and YoWASP
 synthesis support the Verilog examples. GHDL WebAssembly supports VHDL-2008
-synthesis, including tested IEEE.NUMERIC_STD arithmetic and sequential netlists.
-NVC Wasm supports real VHDL-2008 simulation and interactive replay within the
-precise library/port profile documented in the current report. See the
-[VHDL progress report](../hdl-vhdl-progress.md) and the
+synthesis, including tested IEEE.NUMERIC_STD arithmetic and sequential
+netlists. NVC Wasm supports real VHDL-2008 simulation and interactive replay
+within the precise library/port profile documented in the current report. See
+the [VHDL progress report](../hdl-vhdl-progress.md) and the
 [research, evidence and validation report](../hdl-browser-results.md). The
 historical [native audit](../hdl-audit-results.md) is not browser validation.
 
@@ -37,12 +37,12 @@ build. Keep this step in both app development and production asset pipelines.
 For an app deployed under a subpath, pass its public HDL directory URL
 explicitly rather than assuming `/hdl/`.
 
-Copy one complete toolchain snapshot at a time. With immutable HTTP caches,
-use a fresh versioned directory (for example `hdl/<toolchain-lock-sha256>/`)
-and pass that URL to the executor. All Worker imports stay relative to it.
-Mixing an old cached loader/Wasm with new files can fail integrity checks;
-cache versioning uses ordinary static paths and requires no execution service
-or COOP/COEP headers. The app's previous validation does not cover later copies.
+Copy one complete toolchain snapshot at a time. With immutable HTTP caches, use
+a fresh versioned directory (for example `hdl/<toolchain-lock-sha256>/`) and
+pass that URL to the executor. All Worker imports stay relative to it. Mixing
+an old cached loader/Wasm with new files can fail integrity checks; cache
+versioning uses ordinary static paths and requires no execution service or
+COOP/COEP headers. The app's previous validation does not cover later copies.
 
 ```ts
 import { createBrowserHDLExecutor } from "mathjslab-markdown/hdl";
@@ -118,18 +118,19 @@ Verify pinned assets with `npm run verify:hdl:assets`. Build with
 `npm run build:types` and `npm run build:browser`, then run
 `npm run test:hdl:browser`. The browser test records network requests and uses
 a file-only static server. Native tests and JSDOM are complementary, never a
-substitute for browser evidence. `npm run test:hdl:browser:verilog:runtime` adds
-fresh counter/state/math/diagnostic sources and checks their actual VCD values.
-The source-built Icarus modules include complete sources, SDK pins and two-root
-Windows reconstruction evidence under `script/hdl/icarus-browser/`. Each module
-has a 512 MiB Wasm heap ceiling. Real-valued VCD variables remain unsupported by
-the digital importer, although real mathematical functions can execute.
-GHDL's pinned Linux build and promoted assets now have independent clean-cache
-reconstruction evidence in `script/hdl/ghdl-synth/reproduction.json`. The release
-check verifies the source recipe, package pins, both builds and asset hashes;
-matching binaries alone cannot bypass these checks. See the browser report for
-the tested profile and integrated-app validation status.
-No publication is claimed by this work.
+substitute for browser evidence. `npm run test:hdl:browser:verilog:runtime`
+adds fresh counter/state/math/diagnostic sources and checks their actual VCD
+values. The source-built Icarus modules include complete sources, SDK pins and
+two-root Windows reconstruction evidence under `script/hdl/icarus-browser/`.
+Each module has a 512 MiB Wasm heap ceiling. Real-valued VCD variables remain
+unsupported by the digital importer, although real mathematical functions can
+execute. GHDL's pinned Linux build and promoted assets now have independent
+clean-cache reconstruction evidence in
+`script/hdl/ghdl-synth/reproduction.json`. The release check verifies the
+source recipe, package pins, both builds and asset hashes; matching binaries
+alone cannot bypass these checks. See the browser report for the tested profile
+and integrated-app validation status. No publication is claimed by this work.
+
 ## HDL result presentation
 
 Batch execution shows a localized success/error/cancellation status. The
@@ -139,9 +140,9 @@ error and cancelled results start with details open. Interactive waveforms also
 precede their collapsible logs; reset clears and closes that section.
 
 The UI treats compiler output as plain text, never HTML. ANSI CSI/OSC/string
-commands, remaining C0/C1 controls (except tab/newline) and bidirectional format
-controls are removed. CRLF and CR become LF. This is text normalization, not
-terminal emulation: useful messages, Unicode, file/line locations, tabs and
+commands, remaining C0/C1 controls (except tab/newline) and bidirectional
+format controls are removed. CRLF and CR become LF. This is text normalization,
+not terminal emulation: useful messages, Unicode, file/line locations, tabs and
 line breaks remain. Split escape sequences are normalized from the accumulated
 raw update snapshot. A final log replaces that snapshot, rather than appending
 it again; the snapshot is used only when the final result omits logs.

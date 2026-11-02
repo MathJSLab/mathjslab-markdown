@@ -13,6 +13,12 @@ try {
     try {
       for (const [source, locale] of sources) {
         const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+        // Match the chapter readiness budget during cold bundle loading and
+        // locator evaluation while the real renderers occupy the main thread.
+        if (source === chapter) {
+          page.setDefaultNavigationTimeout(120_000);
+          page.setDefaultTimeout(120_000);
+        }
         const errors = [];
         const result = { browser: name, version: browser.version(), source, locale, navigations: [] };
         page.on('pageerror', (error) => errors.push(error.message));
@@ -35,7 +41,9 @@ try {
           await page.evaluate(({ source, locale }) => window.loadExample(source, locale), { source, locale });
           const viewer = page.locator('markdown-document').first();
           await viewer.waitFor({ state: 'attached' });
-          await page.waitForFunction(() => window.exampleViewer.state === 'ready', null, { timeout: 60_000 });
+          // The real chapter cold-loads Mermaid, Vega and MathJax. Match the
+          // application's chapter budget while keeping readiness explicit.
+          await page.waitForFunction(() => window.exampleViewer.state === 'ready', null, { timeout: 120_000 });
           assert.equal(await viewer.locator('[role="alert"]').count(), 0);
           assert.deepEqual(await page.evaluate(() => window.exampleDiagnostics), []);
           if (source === chapter) {
@@ -44,7 +52,10 @@ try {
               Array.from({ length: 10 }, (_, i) => `Figura ${i + 1}`),
             );
             assert.equal(await viewer.locator('[data-markdown-extension="mermaid"] svg').count(), 6);
-            assert.equal(await viewer.locator('[data-markdown-extension="vega-lite"] svg').count(), 2);
+            assert.equal(await viewer.locator('[data-markdown-extension="vega-lite"]').count(), 1);
+            assert.equal(await viewer.locator('[data-markdown-extension="vega-lite"] svg').count(), 1);
+            assert.equal(await viewer.locator('[data-markdown-extension="tikz"] svg').count(), 2);
+            assert.equal(await viewer.locator('[data-markdown-extension="wavedrom"] svg').count(), 1);
             assert.ok((await viewer.locator('mjx-container').count()) > 0);
           }
           const links = await viewer.evaluate((host) =>
@@ -131,6 +142,11 @@ try {
           assert.deepEqual(errors, []);
         } catch (error) {
           result.error = String(error);
+          result.state = await page.evaluate(() => ({
+            state: window.exampleViewer?.state,
+            diagnostics: window.exampleDiagnostics,
+            alerts: Array.from(window.exampleViewer?.shadowRoot?.querySelectorAll('[role="alert"]') ?? [], (node) => node.textContent),
+          }));
         } finally {
           result.errors = errors;
           results.push(result);

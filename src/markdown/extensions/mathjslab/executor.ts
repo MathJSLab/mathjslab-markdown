@@ -53,8 +53,13 @@ export type MathJSLabStatementContext = MarkdownDocumentContext & {
 };
 
 export interface MathJSLabExecutionSession {
+  /** Clears workspace and restores initial options; await before issuing more work. */
+  reset?(): void | Promise<void>;
+  /** Parses without executing; parse diagnostics are returned through error. */
   parse(source: string, context: MarkdownDocumentContext): MathJSLabParseResult | Promise<MathJSLabParseResult>;
+  /** Executes in this document's workspace; timeout may reject with TimeoutError. */
   execute(statement: string, context: MathJSLabStatementContext): MathJSLabExecutionResult | Promise<MathJSLabExecutionResult>;
+  /** Releases this session; callers await asynchronous cleanup before replacement. */
   dispose?(): void | Promise<void>;
 }
 

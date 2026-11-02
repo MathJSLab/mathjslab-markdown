@@ -63,13 +63,13 @@ Isso não implica que todas representem valores distintos quando se admitem
 zeros à esquerda, sinais ou formatos especiais; a afirmação pressupõe palavras
 de comprimento fixo interpretadas como sequências de algarismos.
 
+<!-- prettier-ignore -->
 O sistema de numeração empregado cotidianamente é o **decimal**, de base dez.
 Ele dispõe de dez algarismos, de $0$ a $9$, mas permite escrever quantidades
 arbitrariamente grandes por meio da combinação entre algarismos e posições. A
 posição imediatamente à esquerda da unidade vale dez vezes a anterior; cada
 deslocamento para a esquerda multiplica o peso por dez. Assim, em $1349_{10}$,
-o algarismo $3$ não representa três unidades, mas três centenas. A {@ref
-fig-decimal-place-value} explicita os pesos e a decomposição do número.
+o algarismo $3$ não representa três unidades, mas três centenas. A {@ref fig-decimal-place-value} explicita os pesos e a decomposição do número.
 
 $$
 1349_{10}=1\cdot10^3+3\cdot10^2+4\cdot10^1+9\cdot10^0.\tag{2.3}
@@ -318,13 +318,13 @@ níveis elétricos que implementam esses estados dependam da tecnologia. Isso n�
 significa que todo padrão de bits seja necessariamente um número: sua
 interpretação continua subordinada ao formato adotado.
 
+<!-- prettier-ignore -->
 As duas representações anteriores apresentam a **mesma regra posicional
 aplicada a duas bases diferentes**. Elas não representam o mesmo número; foram
 escolhidas para tornar visível a mudança dos pesos. O princípio geral pode ser
 retomado na forma $d_i b^i$, e a {@ref fig-binary-place-value} oferece um
 exemplo binário, no qual somente as posições que contêm $1$ contribuem para a
-soma. As questões de largura de palavra, MSB e LSB serão retomadas na {@ref
-sec-bits-words-significance}.
+soma. As questões de largura de palavra, MSB e LSB serão retomadas na {@ref sec-bits-words-significance}.
 
 <!-- prettier-ignore -->
 ::: figure Representação posicional do número binário 110101 {#fig-binary-place-value}

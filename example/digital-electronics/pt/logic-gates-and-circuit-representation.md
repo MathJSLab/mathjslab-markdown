@@ -194,7 +194,7 @@ integrado NAND contenha necessariamente duas portas físicas separadas. O
 comportamento pode ser implementado diretamente por uma rede de transistores.
 
 Pelos teoremas de De Morgan, estudados na
-[Seção 3.5](boolean-algebra-and-logic-functions.md#sec-demorgan-theorems),
+[Seção 3.3.5](boolean-algebra-and-logic-functions.md#sec-boolean-order-demorgan),
 temos
 
 $$

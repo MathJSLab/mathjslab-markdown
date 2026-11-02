@@ -14,6 +14,8 @@ coverage counts and links to all examples.
 
 - [Architecture and package boundaries](architecture.md)
 - [Integration and deployment](integration.md)
+- [MathJSLab integration validation](mathjslab-integration-validation.md)
+- [Dependency audit and remaining development advisories](dependency-audit.md)
 - [Public API and presets](public-api.md)
 - [Rendering, navigation and diagnostics](rendering.md)
 - [Lifecycle and resource ownership](lifecycle.md)

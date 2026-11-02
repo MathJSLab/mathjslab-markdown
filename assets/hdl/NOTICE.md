@@ -2,19 +2,20 @@
 
 These tool assets are separate from the package's MIT TypeScript integration.
 Icarus modules are GPL-2.0-or-later; retain icarus/COPYING and
-icarus/RUNTIME-LICENSES.txt. Yosys and
-YoWASP package metadata identify ISC; retain yosys/COPYING. The checked-in
-lockfile records exact versions, byte counts and SHA-256 hashes.
+icarus/RUNTIME-LICENSES.txt. Yosys and YoWASP package metadata identify ISC;
+retain yosys/COPYING. The checked-in lockfile records exact versions, byte
+counts and SHA-256 hashes.
 
 Icarus is now built from official commit
-c7530dbcc186de2f21eacde14fd28061b885924c with Emscripten 6.0.12 and the MathJSLab
-static target/VPI adaptation. Complete sources, dated patches, generated
-bootstrap inputs, runtime notices and recipe are distributed under
-script/hdl/icarus-browser/. All six JS/Wasm artifacts match across two independent
-Windows/MSYS2 build roots; reproduction.json records the exact method and scope,
-including the same pinned SDK/cache and final comment-only rebuilds. This is
-not a cross-platform or cross-machine claim. These files replace the VeriSim
-download whose complete port sources were unavailable. No publication occurred.
+c7530dbcc186de2f21eacde14fd28061b885924c with Emscripten 6.0.12 and the
+MathJSLab static target/VPI adaptation. Complete sources, dated patches,
+generated bootstrap inputs, runtime notices and recipe are distributed under
+script/hdl/icarus-browser/. All six JS/Wasm artifacts match across two
+independent Windows/MSYS2 build roots; reproduction.json records the exact
+method and scope, including the same pinned SDK/cache and final comment-only
+rebuilds. This is not a cross-platform or cross-machine claim. These files
+replace the VeriSim download whose complete port sources were unavailable. No
+publication occurred.
 
 GHDL VHDL-2008 synthesis is additionally shipped under ghdl/: the compiler is
 GPL-2.0-or-later, host bindings adapted from synth-explorer are Apache-2.0, and

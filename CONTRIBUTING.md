@@ -4,9 +4,11 @@ Report defects and propose changes in the
 [repository](https://github.com/MathJSLab/mathjslab-markdown). Follow the
 [code of conduct](CODE_OF_CONDUCT.md).
 
-Clone mathjslab and this project into sibling directories, build the local
-core, and install this project's dependencies. Use the supported Node/npm
-versions listed in [README.md](README.md). Run `npm run check` and
+Install this project's locked dependencies with `npm ci`; release checks use
+the published MathJSLab development dependency. For joint core development,
+build mathjslab in a sibling directory and temporarily use a local dependency,
+then restore the registry range before release validation. Use the supported
+Node/npm versions listed in [README.md](README.md). Run `npm run check` and
 `npm run release:prepare` before submitting a change. Run
 `npm run release:validate` for browser integration changes; the release
 workflow also tests integration with the host application. See the release

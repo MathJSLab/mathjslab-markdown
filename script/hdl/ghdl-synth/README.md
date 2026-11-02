@@ -39,20 +39,20 @@ the analyzed `std` and `ieee` libraries shipped beside the module.
 ## Build
 
 For a Windows development machine without Docker/WSL, use the Linux GitHub
-Actions workflow and npm commands in [the CI guide](../../../doc/hdl-github-actions.md).
-The first build can be triggered by pushing the dedicated build branch; it does
-not require merging unvalidated changes into main or publishing the package.
+Actions workflow and npm commands in
+[the CI guide](../../../doc/hdl-github-actions.md). The first build can be
+triggered by pushing the dedicated build branch; it does not require merging
+unvalidated changes into main or publishing the package.
 
-Docker and network access to the pinned upstream repositories are required.
-The container is a developer build environment, never a visitor dependency.
-Package versions cannot float: installation must exactly match the complete
-lock, and downloaded package bytes must match their integrity manifest. There
-is no fallback to newer versions. Availability of the pinned upstream downloads
-is still needed; if a historical package disappears, restore its exact bytes
-from a verified archive rather than relaxing the version or hash checks.
-Ubuntu's snapshot service is not required by this recipe (it returned 5xx in
-the development environment during setup).
-From the repository root:
+Docker and network access to the pinned upstream repositories are required. The
+container is a developer build environment, never a visitor dependency. Package
+versions cannot float: installation must exactly match the complete lock, and
+downloaded package bytes must match their integrity manifest. There is no
+fallback to newer versions. Availability of the pinned upstream downloads is
+still needed; if a historical package disappears, restore its exact bytes from
+a verified archive rather than relaxing the version or hash checks. Ubuntu's
+snapshot service is not required by this recipe (it returned 5xx in the
+development environment during setup). From the repository root:
 
 ```bash
 bash script/hdl/ghdl-synth/build.sh
@@ -68,8 +68,8 @@ reuse that cache. Outputs are written to `.hdl-research/ghdl-build-output/`:
 Override the cache or output directory with `GHDL_WASM_CACHE_DIR` and
 `GHDL_WASM_OUTPUT_DIR`. Override build parallelism with `GHDL_WASM_JOBS`.
 
-The linker exports only memory allocation, binder initialization, and the
-three synthesis API functions. Undefined host functions are a reviewed set of
+The linker exports only memory allocation, binder initialization, and the three
+synthesis API functions. Undefined host functions are a reviewed set of
 filesystem, stdio, and math imports implemented by
 `assets/hdl/ghdl/frontend.mjs`.
 
@@ -83,16 +83,17 @@ bash script/hdl/ghdl-synth/test.sh
 ```
 
 By default the suite tests the candidate build directory above. To test the
-packaged artifacts, set `GHDL_WASM_OUTPUT_DIR="$PWD/assets/hdl/ghdl"`.
-The suite extracts the selected `libraries.tar.gz` to a temporary directory,
-then checks successful synthesis and provenance for simple combinational logic,
+packaged artifacts, set `GHDL_WASM_OUTPUT_DIR="$PWD/assets/hdl/ghdl"`. The
+suite extracts the selected `libraries.tar.gz` to a temporary directory, then
+checks successful synthesis and provenance for simple combinational logic,
 `ieee.numeric_std`, a generic counter, and an FSM. It also verifies stable
-syntax and semantic failure diagnostics. These Node smoke tests do not replace `test/hdl-browser/vhdl-synthesis.mjs`,
-which executes the packaged Worker in a real browser on static hosting.
-The first two Linux CI executions reconstructed matching Wasm and passed all
-smoke tests, but detected library timestamp differences (see below). The current
-recipe pins the base digest, complete package closure and downloaded package
-hashes; see sources.lock.json and reproduction.json for the final executed scope.
+syntax and semantic failure diagnostics. These Node smoke tests do not replace
+`test/hdl-browser/vhdl-synthesis.mjs`, which executes the packaged Worker in a
+real browser on static hosting. The first two Linux CI executions reconstructed
+matching Wasm and passed all smoke tests, but detected library timestamp
+differences (see below). The current recipe pins the base digest, complete
+package closure and downloaded package hashes; see sources.lock.json and
+reproduction.json for the final executed scope.
 
 ## Runtime contract
 
@@ -104,8 +105,8 @@ hashes; see sources.lock.json and reproduction.json for the final executed scope
   elaboration is not supported by this two-module architecture.
 - GHDL diagnostics are returned before Yosys runs.
 - GHDL's `/* file:line:column */` comments are converted to Verilog `` `line ``
-  directives. Yosys then emits native `src` attributes pointing to the
-  original VHDL file and line. Generated-Verilog columns are not meaningful.
+  directives. Yosys then emits native `src` attributes pointing to the original
+  VHDL file and line. Generated-Verilog columns are not meaningful.
 
 The custom binder step is required: without it, Ada package elaboration does
 not run and synthesis tables remain zero-initialized. The `Grt.Stdio` patch
@@ -120,17 +121,17 @@ declarations, leaving the generated top with unresolved cells when Yosys runs.
 After rebuilding, compare the candidate artifacts against an independent clean
 build, then validate them with the real browser suites before replacing assets.
 Update `assets/hdl/ghdl/frontend.mjs` integrity values and
-`assets/hdl/toolchain.lock.json` only for the validated replacement.
-The default output is isolated from published assets. No build script publishes
-a package or changes the application's copy automatically.
+`assets/hdl/toolchain.lock.json` only for the validated replacement. The
+default output is isolated from published assets. No build script publishes a
+package or changes the application's copy automatically.
 
 ## Remaining reproduction evidence
 
 The first two Linux CI runs on 2026-10-20 each completed both clean builds and
 all six smoke tests per candidate. The Wasm matched exactly
-(`245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`),
-but byte comparison correctly failed for the libraries archive. Inspection of
-run `39474875268` showed differences only in analysis timestamps in the six
+(`245664fcd1cbb1200627d9b566e90da3e54188447fabb38b2c9fe469a59eb57e`), but byte
+comparison correctly failed for the libraries archive. Inspection of run
+`39474875268` showed differences only in analysis timestamps in the six
 std/ieee catalogs; all source files and other catalog fields were identical.
 
 `pack-libraries.py` now canonicalizes timestamps by chronological rank **within
@@ -138,26 +139,27 @@ each independent language edition**, preserving strict order and equalities
 across that edition's std/ieee catalogs. Parallel builds can interleave v87/v93
 analysis differently, so their unrelated timestamps must not affect v08 ranks.
 The canonical epoch is 2010-01-01, after the implicit `std.standard` timestamp
-`20020601000000.000` in pinned GHDL's `src/vhdl/vhdl-std_package.adb`.
-GHDL's `Vhdl.Sem_Lib.Check_Obsolete_Dependence` uses strict timestamp comparison:
-replacing every timestamp with a constant or choosing an earlier epoch would
-be incorrect. Checksums, source locations, unit dates and source bytes remain
+`20020601000000.000` in pinned GHDL's `src/vhdl/vhdl-std_package.adb`. GHDL's
+`Vhdl.Sem_Lib.Check_Obsolete_Dependence` uses strict timestamp comparison:
+replacing every timestamp with a constant or choosing an earlier epoch would be
+incorrect. Checksums, source locations, unit dates and source bytes remain
 unchanged. The original build tree is not modified; a metadata report records
 the original and normalized catalog hashes beside each candidate archive.
 
 Applying this packer locally to the two actual CI candidates produced identical
 archives and passed the six Wasm smoke tests. The corrected Linux recipe then
-passed run `39477964053`: both clean caches, all smoke tests and byte comparison
-of both final artifacts. The Linux library archive SHA-256 is
-`e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a`.
-The subsequent pinned runs `39480843148` and `39482133976` reproduced both
+passed run `39477964053`: both clean caches, all smoke tests and byte
+comparison of both final artifacts. The Linux library archive SHA-256 is
+`e67ca499db3ae429c382b1cc5c91775eb292918e2f7008daee29a995c6f2874a`. The
+subsequent pinned runs `39480843148` and `39482133976` reproduced both
 artifacts. The final run verifies all downloaded package hashes before install.
 Its exact candidates are promoted; reproduction.json binds both builds to the
 recipe and sources.lock.json records the compiler, SDK and Linux inputs.
 
-The scope is two clean compiler/SDK caches on the same CI host, using the pinned
-SDK archive; rebuilding that SDK from source or proving cross-platform byte
-identity is not claimed. The package release guard checks all twelve recipe
-input hashes and both artifact receipts before allowing publication checks to
-proceed. The compiler source build does not authorize visitor execution; that
-still requires the trusted application's explicit browser executor policy.
+The scope is two clean compiler/SDK caches on the same CI host, using the
+pinned SDK archive; rebuilding that SDK from source or proving cross-platform
+byte identity is not claimed. The package release guard checks all twelve
+recipe input hashes and both artifact receipts before allowing publication
+checks to proceed. The compiler source build does not authorize visitor
+execution; that still requires the trusted application's explicit browser
+executor policy.

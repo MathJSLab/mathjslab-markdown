@@ -151,9 +151,7 @@
     "upstream": "ghdl/ghdl@37ad91899ea3f311423eb91e34f42c0ae1948f79",
     "version": "5.0.1",
     "standard": "08",
-    "operations": [
-      "synthesize"
-    ],
+    "operations": ["synthesize"],
     "license": "GPL-2.0-or-later (compiler); Apache-2.0 (host bindings)",
     "reproducibleBuildVerified": true,
     "hostBindings": {
