@@ -124,7 +124,9 @@ análise de falhas, arquitetura apropriada e normas aplicáveis.
 :::
 
 <!-- prettier-ignore -->
-Os símbolos gráficos permitem reconhecer imediatamente a operação, diferentemente dos diagramas de caixas. A {@ref fig-ansi-basic-gates} emprega a convenção norte-americana (ANSI/IEEE), com a pequena circunferência indicando inversão.
+Os símbolos gráficos permitem reconhecer imediatamente a operação, diferentemente
+dos diagramas de caixas. A {@ref fig-ansi-basic-gates} emprega a convenção
+norte-americana (ANSI/IEEE), com a pequena circunferência indicando inversão.
 
 <!-- prettier-ignore -->
 ::: figure Símbolos de portas NOT, AND e OR em convenção ANSI/IEEE (estilo norte-americano) {#fig-ansi-basic-gates}
@@ -151,7 +153,10 @@ Os símbolos gráficos permitem reconhecer imediatamente a operação, diferente
 ## 4.2. Portas NAND e NOR {#sec-nand-nor-gates}
 
 <!-- prettier-ignore -->
-A {@ref fig-nand-nor-structure} destaca a inversão aplicada aos resultados das operações AND e OR. O bloco NOT é uma representação funcional, não a bolha gráfica utilizada nos símbolos normalizados.
+A {@ref fig-nand-nor-structure} destaca a inversão aplicada aos resultados
+das operações AND e OR. O bloco NOT é uma representação funcional, não a
+bolha gráfica utilizada nos símbolos normalizados.
+
 <!-- prettier-ignore -->
 ::: figure Composição funcional de NAND e NOR {#fig-nand-nor-structure}
 
@@ -232,7 +237,10 @@ A {@ref fig-ansi-derived-gates} apresenta as quatro portas derivadas. Compare as
 ## 4.3. Portas XOR e XNOR {#sec-xor-xnor-gates}
 
 <!-- prettier-ignore -->
-A {@ref fig-xor-gate-decomposition} mostra uma realização da XOR com inversores, duas portas AND e uma porta OR. Ela ilustra a expressão $A\oplus B=\overline A B+A\overline B$.
+A {@ref fig-xor-gate-decomposition} mostra uma realização da XOR com
+inversores, duas portas AND e uma porta OR. Ela ilustra a expressão
+$A\oplus B=\overline A B+A\overline B$.
+
 <!-- prettier-ignore -->
 ::: figure Decomposição de uma XOR de duas entradas em portas básicas {#fig-xor-gate-decomposition}
 
@@ -302,7 +310,10 @@ completo será estudado nos capítulos sobre circuitos combinacionais.
 ## 4.4. Portas universais {#sec-universal-gates}
 
 <!-- prettier-ignore -->
-A {@ref fig-nand-universal-inverter} mostra uma das construções fundamentais da universalidade da NAND: ligar as duas entradas da mesma porta ao sinal $A$ realiza a inversão lógica.
+A {@ref fig-nand-universal-inverter} mostra uma das construções fundamentais
+da universalidade da NAND: ligar as duas entradas da mesma porta ao sinal
+$A$ realiza a inversão lógica.
+
 <!-- prettier-ignore -->
 ::: figure Inversor lógico implementado com uma porta NAND {#fig-nand-universal-inverter}
 
@@ -383,7 +394,9 @@ flowchart LR
 :::
 
 <!-- prettier-ignore -->
-O diagrama da {@ref fig-nand-only-network} descreve a conectividade funcional; a indicação `C,C` significa que ambas as entradas de $N_2$ recebem o mesmo sinal.
+O diagrama da {@ref fig-nand-only-network} descreve a conectividade funcional;
+a indicação `C,C` significa que ambas as entradas de $N_2$ recebem o mesmo
+sinal.
 
 :::
 
@@ -393,7 +406,10 @@ maior atraso ou exigir mais conexões que outra que utilize uma biblioteca
 variada. A escolha depende das células e restrições disponíveis.
 
 <!-- prettier-ignore -->
-A {@ref fig-ansi-and-or-network} mostra a realização direta de $F=AB+C$; a {@ref fig-ansi-nand-network} apresenta a mesma função exclusivamente com NAND. A identidade $F=\overline{\overline{AB}\cdot\overline C}$ fundamenta a segunda rede.
+A {@ref fig-ansi-and-or-network} mostra a realização direta de $F=AB+C$;
+a {@ref fig-ansi-nand-network} apresenta a mesma função exclusivamente com
+NAND. A identidade $F=\overline{\overline{AB}\cdot\overline C}$ fundamenta
+a segunda rede.
 
 <!-- prettier-ignore -->
 ::: figure Implementação de %`F=A*B+C`% com portas AND e OR {#fig-ansi-and-or-network}
@@ -510,12 +526,18 @@ flowchart TD
 :::
 
 <!-- prettier-ignore -->
-A {@ref fig-representation-levels} enfatiza que um símbolo lógico não equivale a um esquema de transistores. Para circuitos reais, os níveis elétricos e as condições de carga estudados na [Seção 1.4](introduction-to-digital-electronics.md#sec-logic-levels-electrical-signals) continuam relevantes.
+A {@ref fig-representation-levels} enfatiza que um símbolo lógico não equivale
+a um esquema de transistores. Para circuitos reais, os níveis elétricos e as
+condições de carga estudados na [Seção 1.4](introduction-to-digital-electronics.md#sec-logic-levels-electrical-signals)
+continuam relevantes.
 
 ## 4.6. Implementação de funções por portas lógicas {#sec-implementing-boolean-functions}
 
 <!-- prettier-ignore -->
-A {@ref fig-three-input-majority} apresenta um circuito de votação de três entradas: a saída é 1 quando pelo menos duas entradas são 1, conforme $M=AB+AC+BC$.
+A {@ref fig-three-input-majority} apresenta um circuito de votação de três
+entradas: a saída é 1 quando pelo menos duas entradas são 1,
+conforme $M=AB+AC+BC$.
+
 <!-- prettier-ignore -->
 ::: figure Rede lógica de votação por maioria de três entradas {#fig-three-input-majority}
 
@@ -602,10 +624,16 @@ temporização.
 :::
 
 <!-- prettier-ignore -->
-O uso de portas de duas entradas para realizar operações com muitos operandos requer uma estrutura de associação. Para quatro entradas, uma AND em cadeia e uma árvore equilibrada realizam a mesma função booleana, mas têm diferentes profundidades de portas. O efeito temporal será retomado na {@ref sec-multilevel-circuits}.
+O uso de portas de duas entradas para realizar operações com muitos operandos
+requer uma estrutura de associação. Para quatro entradas, uma AND em cadeia e
+uma árvore equilibrada realizam a mesma função booleana, mas têm diferentes
+profundidades de portas. O efeito temporal será retomado na {@ref sec-multilevel-circuits}.
 
 <!-- prettier-ignore -->
-A {@ref fig-ansi-majority-network} realiza $M=AB+AC+BC$, função que produz 1 quando pelo menos duas das três entradas são 1. A {@ref fig-ansi-mux-network} representa a função $F=\overline A B+AC$, equivalente a um multiplexador 2:1 controlado por $A$.
+A {@ref fig-ansi-majority-network} realiza $M=AB+AC+BC$, função que produz 1
+quando pelo menos duas das três entradas são 1. A {@ref fig-ansi-mux-network}
+representa a função $F=\overline A B+AC$, equivalente a um multiplexador 2:1
+controlado por $A$.
 
 <!-- prettier-ignore -->
 ::: figure Rede de três portas AND e uma OR para votação por maioria {#fig-ansi-majority-network}
@@ -771,7 +799,9 @@ endmodule
 ```
 
 <!-- prettier-ignore -->
-A {@ref fig-ideal-gate-waveforms} é um diagrama ideal obtido diretamente das tabelas-verdade. Não representa atrasos de propagação nem substitui um arquivo VCD produzido por simulação.
+A {@ref fig-ideal-gate-waveforms} é um diagrama ideal obtido diretamente das
+tabelas-verdade. Não representa atrasos de propagação nem substitui um arquivo
+VCD produzido por simulação.
 
 <!-- prettier-ignore -->
 ::: figure Formas de onda ideais de AND, OR e XOR para sequências de entradas {#fig-ideal-gate-waveforms}
@@ -822,7 +852,10 @@ da instalação.
 ## 4.8. Introdução ao atraso de propagação e aos diagramas temporais {#sec-propagation-delay-and-timing-diagrams}
 
 <!-- prettier-ignore -->
-A {@ref fig-combinational-propagation} representa um exemplo didático de atraso em uma porta inversora. Os sinais são idealizados e o deslocamento temporal não está em escala de um componente específico.
+A {@ref fig-combinational-propagation} representa um exemplo didático de
+atraso em uma porta inversora. Os sinais são idealizados e o deslocamento
+temporal não está em escala de um componente específico.
+
 <!-- prettier-ignore -->
 ::: figure Exemplo de propagação temporal através de uma porta inversora {#fig-combinational-propagation}
 
@@ -865,7 +898,9 @@ um substituto das formas de onda analógicas medidas em osciloscópio.
 :::
 
 <!-- prettier-ignore -->
-A {@ref fig-timing-not} ilustra a inversão de um sinal. O desenho representa a relação lógica ideal; em uma medição, as bordas da saída apareceriam deslocadas e com duração finita.
+A {@ref fig-timing-not} ilustra a inversão de um sinal. O desenho representa a
+relação lógica ideal; em uma medição, as bordas da saída apareceriam deslocadas
+e com duração finita.
 
 <!-- prettier-ignore -->
 ::: figure Diagrama temporal lógico de uma porta NOT {#fig-timing-not}
@@ -900,10 +935,12 @@ $$
 F=AB+\overline A C.\tag{4.21}
 $$
 
+<!-- prettier-ignore -->
 Com $B=C=1$, a função ideal é $F=A+\overline A=1$ para qualquer valor de $A$.
-Contudo, se $A$ passar de 1 para 0, o termo $AB$ pode cair antes de $\overline
-A C$ subir, produzindo brevemente $F=0$. Trata-se de um **risco estático de
-nível alto** em uma implementação específica de soma de produtos.
+Contudo, se $A$ passar de 1 para 0, o termo $AB$ pode cair antes de
+$\overline A C$ subir, produzindo brevemente $F=0$. Trata-se de um
+**risco estático de nível alto** em uma implementação específica de soma de
+produtos.
 
 O termo de consenso $BC$ permite escrever uma realização logicamente
 equivalente:
@@ -940,7 +977,12 @@ elementos de memória e do relógio.
 ## Laboratório de leitura de circuitos
 
 <!-- prettier-ignore -->
-Compare as {@ref fig-ansi-and-or-network} e {@ref fig-ansi-nand-network}: ambas implementam a mesma função, mas usam famílias de portas diferentes. Em seguida, percorra as quatro combinações de $A$ e $B$ no módulo Verilog e confira os resultados com as tabelas-verdade. Por fim, use a {@ref fig-ideal-gate-waveforms} para distinguir o valor lógico ideal de um possível atraso físico na saída.
+Compare as {@ref fig-ansi-and-or-network} e {@ref fig-ansi-nand-network}:
+ambas implementam a mesma função, mas usam famílias de portas diferentes.
+Em seguida, percorra as quatro combinações de $A$ e $B$ no módulo Verilog
+e confira os resultados com as tabelas-verdade. Por fim, use a
+{@ref fig-ideal-gate-waveforms} para distinguir o valor lógico ideal de
+um possível atraso físico na saída.
 
 ## Síntese do capítulo
 

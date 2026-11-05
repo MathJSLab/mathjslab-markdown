@@ -54,8 +54,11 @@ eletromagnetismo. Uma tensão de saída digital varia continuamente durante a
 transição entre dois estados, ainda que o modelo lógico a represente como uma
 mudança instantânea.
 
-<!-- prettier-ignore -->
-A {@ref fig-signal-types} distingue três formas de representação de sinais. A primeira apresenta uma amplitude contínua; a segunda utiliza um conjunto finito de níveis de amplitude; a terceira admite apenas dois níveis, associados aos símbolos binários. As formas de onda são esquemáticas e não representam necessariamente etapas sucessivas de um mesmo conversor.
+A {@ref fig-signal-types} distingue três formas de representação de sinais. A
+primeira apresenta uma amplitude contínua; a segunda utiliza um conjunto finito
+de níveis de amplitude; a terceira admite apenas dois níveis, associados aos
+símbolos binários. As formas de onda são esquemáticas e não representam
+necessariamente etapas sucessivas de um mesmo conversor.
 
 <!-- prettier-ignore -->
 ::: figure Tipos de sinais {#fig-signal-types}
@@ -119,8 +122,14 @@ A {@ref fig-signal-types} distingue três formas de representação de sinais. A
 
 :::
 
-<!-- prettier-ignore -->
-A {@ref fig-analog-digital} compara, no mesmo sistema de eixos, uma senoide contínua, uma aproximação em degraus obtida por quantização e uma representação binária por limiar. As três curvas compartilham a mesma referência temporal, mas **não contêm a mesma quantidade de informação sobre a amplitude**: o sinal binário indica apenas de que lado do limiar está a grandeza, enquanto a aproximação multinível preserva mais distinções. A curva em degraus ilustra uma retenção entre instantes de atualização; não deve ser confundida com a forma física instantânea de todas as saídas digitais.
+A {@ref fig-analog-digital} compara, no mesmo sistema de eixos, uma senoide
+contínua, uma aproximação em degraus obtida por quantização e uma representação
+binária por limiar. As três curvas compartilham a mesma referência temporal,
+mas **não contêm a mesma quantidade de informação sobre a amplitude**: o sinal
+binário indica apenas de que lado do limiar está a grandeza, enquanto a
+aproximação multinível preserva mais distinções. A curva em degraus ilustra uma
+retenção entre instantes de atualização; não deve ser confundida com a forma
+física instantânea de todas as saídas digitais.
 
 <!-- prettier-ignore -->
 ::: figure Comparação entre sinais analógico, discreto e binário {#fig-analog-digital}
@@ -314,9 +323,9 @@ sistema.
 
 ## 1.2. Sinais contínuos, discretos e binários {#sec-continuous-discrete-binary-signals}
 
-<!-- prettier-ignore -->
-Como antecipado na {@ref sec-analog-and-digital-quantities}, é necessário distinguir duas propriedades independentes: **o domínio temporal**
-e **o conjunto de amplitudes possíveis**. Um sinal pode ser contínuo no tempo e
+Como antecipado na {@ref sec-analog-and-digital-quantities}, é necessário
+distinguir duas propriedades independentes: **o domínio temporal** e **o
+conjunto de amplitudes possíveis**. Um sinal pode ser contínuo no tempo e
 discreto em amplitude, ou discreto no tempo e contínuo em amplitude. Assim, a
 expressão “sinal discreto” não especifica, isoladamente, qual dessas
 propriedades foi discretizada.
@@ -366,10 +375,19 @@ saturação, vale $|e_q[n]|\leq\Delta/2$. Essa desigualdade deixa de descrever
 adequadamente amostras fora da faixa admitida, nas quais ocorre saturação ou
 outro tratamento de sobrecarga.
 
-<!-- prettier-ignore -->
-A {@ref fig-analog-digital} permite relacionar visualmente os três conceitos discutidos. A curva azul descreve um sinal harmônico contínuo; a representação verde, em degraus, aproxima suas amplitudes por valores quantizados em intervalos sucessivos; e o traçado vermelho mostra uma decisão binária obtida por comparação com um limiar. Os degraus constituem uma representação esquemática dos valores discretizados, e não a forma de onda elétrica necessariamente produzida por um conversor. A diferença entre a curva e os níveis representados evidencia a perda de resolução em amplitude; já a sequência binária conserva apenas a distinção entre dois estados, não os diversos valores de amplitude. Assim, a figura ilustra conceitos relacionados, mas não deve ser interpretada como o diagrama temporal de um único conversor analógico-digital real.
+A {@ref fig-analog-digital} permite relacionar visualmente os três conceitos
+discutidos. A curva azul descreve um sinal harmônico contínuo; a representação
+verde, em degraus, aproxima suas amplitudes por valores quantizados em
+intervalos sucessivos; e o traçado vermelho mostra uma decisão binária obtida
+por comparação com um limiar. Os degraus constituem uma representação
+esquemática dos valores discretizados, e não a forma de onda elétrica
+necessariamente produzida por um conversor. A diferença entre a curva e os
+níveis representados evidencia a perda de resolução em amplitude; já a
+sequência binária conserva apenas a distinção entre dois estados, não os
+diversos valores de amplitude. Assim, a figura ilustra conceitos relacionados,
+mas não deve ser interpretada como o diagrama temporal de um único conversor
+analógico-digital real.
 
-<!-- prettier-ignore -->
 A {@ref fig-digitization-flow} organiza as operações envolvidas. Um circuito
 eletrônico não precisa realizar todas elas: uma porta lógica recebe e fornece
 estados binários sem necessariamente amostrar uma grandeza analógica.
@@ -453,16 +471,16 @@ temporais e a complexidade de integração.
 
 ## 1.4. Níveis lógicos e sinais elétricos {#sec-logic-levels-electrical-signals}
 
-<!-- prettier-ignore -->
-Os símbolos 0 e 1 não são tensões elétricas. Essa distinção, introduzida na {@ref sec-analog-and-digital-quantities}, é fundamental para a interpretação das especificações. Um circuito lógico implementa
-esses símbolos por **faixas de valores elétricos aceitos**. Em lógica positiva,
-valores de tensão mais elevados são associados ao nível lógico 1 e valores mais
-baixos ao nível lógico 0. Em lógica negativa, a associação é invertida. A
-escolha da convenção lógica não altera as leis físicas dos dispositivos.
+Os símbolos 0 e 1 não são tensões elétricas. Essa distinção, introduzida na
+{@ref sec-analog-and-digital-quantities}, é fundamental para a interpretação
+das especificações. Um circuito lógico implementa esses símbolos por **faixas
+de valores elétricos aceitos**. Em lógica positiva, valores de tensão mais
+elevados são associados ao nível lógico 1 e valores mais baixos ao nível
+lógico 0. Em lógica negativa, a associação é invertida. A escolha da convenção
+lógica não altera as leis físicas dos dispositivos.
 
 Para uma interface digital convencional, os parâmetros fundamentais são:
 
-<!-- prettier-ignore -->
 A {@ref tab-logic-thresholds} reúne os quatro limites mais utilizados para
 avaliar a compatibilidade estática entre circuitos digitais.
 
@@ -508,11 +526,10 @@ a carga e as condições de operação.
 
 :::
 
-<!-- prettier-ignore -->
-A {@ref fig-noise-margin-bands} apresenta geometricamente as duas
-margens de ruído para a especificação hipotética do exemplo. As faixas
-ilustradas correspondem aos valores garantidos de saída e aos limites de
-reconhecimento de entrada, e não a uma curva de transferência real.
+A {@ref fig-noise-margin-bands} apresenta geometricamente as duas margens de
+ruído para a especificação hipotética do exemplo. As faixas ilustradas
+correspondem aos valores garantidos de saída e aos limites de reconhecimento de
+entrada, e não a uma curva de transferência real.
 
 <!-- prettier-ignore -->
 ::: figure Margens estáticas de ruído entre os limites de saída e de entrada {#fig-noise-margin-bands}
@@ -574,7 +591,6 @@ lógico garantido.
 
 :::
 
-<!-- prettier-ignore -->
 A {@ref fig-logic-interface} ilustra os parâmetros de uma ligação lógica. A
 especificação de saída pertence ao dispositivo transmissor; a de entrada, ao
 receptor. Essa distinção é essencial ao conectar circuitos de famílias
@@ -603,7 +619,6 @@ flowchart LR
 
 :::
 
-<!-- prettier-ignore -->
 A {@ref fig-digital-timing} apresenta uma sequência de estados binários e um
 sinal de relógio idealizado. O diagrama representa estados lógicos, não níveis
 de tensão absolutos nem a forma física das transições.
@@ -754,7 +769,6 @@ adequado a uma classe de problemas:
 5. **Comportamento especificado:** requisitos funcionais e temporais
    observáveis pelo usuário ou por outros sistemas.
 
-<!-- prettier-ignore -->
 A {@ref fig-abstraction-levels} representa essa hierarquia. O sentido
 ascendente oculta detalhes de implementação; o descendente exige refinamento
 até chegar a componentes e conexões realizáveis.
@@ -880,7 +894,6 @@ $L\in\{0,1\}$ o comando de iluminação. A especificação lógica é
 
 $$L=P\land E.\tag{1.13}$$
 
-<!-- prettier-ignore -->
 A {@ref tab-illumination-truth} apresenta a tabela-verdade correspondente.
 
 <!-- prettier-ignore -->

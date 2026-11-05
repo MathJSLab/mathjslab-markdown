@@ -69,7 +69,8 @@ Ele dispõe de dez algarismos, de $0$ a $9$, mas permite escrever quantidades
 arbitrariamente grandes por meio da combinação entre algarismos e posições. A
 posição imediatamente à esquerda da unidade vale dez vezes a anterior; cada
 deslocamento para a esquerda multiplica o peso por dez. Assim, em $1349_{10}$,
-o algarismo $3$ não representa três unidades, mas três centenas. A {@ref fig-decimal-place-value} explicita os pesos e a decomposição do número.
+o algarismo $3$ não representa três unidades, mas três centenas.
+A {@ref fig-decimal-place-value} explicita os pesos e a decomposição do número.
 
 $$
 1349_{10}=1\cdot10^3+3\cdot10^2+4\cdot10^1+9\cdot10^0.\tag{2.3}
@@ -324,7 +325,8 @@ aplicada a duas bases diferentes**. Elas não representam o mesmo número; foram
 escolhidas para tornar visível a mudança dos pesos. O princípio geral pode ser
 retomado na forma $d_i b^i$, e a {@ref fig-binary-place-value} oferece um
 exemplo binário, no qual somente as posições que contêm $1$ contribuem para a
-soma. As questões de largura de palavra, MSB e LSB serão retomadas na {@ref sec-bits-words-significance}.
+soma. As questões de largura de palavra, MSB e LSB serão retomadas
+na {@ref sec-bits-words-significance}.
 
 <!-- prettier-ignore -->
 ::: figure Representação posicional do número binário 110101 {#fig-binary-place-value}
@@ -462,7 +464,10 @@ soma. As questões de largura de palavra, MSB e LSB serão retomadas na {@ref se
 ## 2.2. Sistemas decimal, binário, octal e hexadecimal {#sec-decimal-binary-octal-hexadecimal}
 
 <!-- prettier-ignore -->
-O sistema decimal emprega dez algarismos; o binário, dois; o octal, oito; e o hexadecimal, dezesseis. Neste último, as letras A a F representam os valores decimais 10 a 15. A {@ref tbl-base-comparison} apresenta algumas correspondências.
+O sistema decimal emprega dez algarismos; o binário, dois; o octal, oito; e o
+hexadecimal, dezesseis. Neste último, as letras A a F representam os valores
+decimais 10 a 15. A {@ref tbl-base-comparison} apresenta
+algumas correspondências.
 
 <!-- prettier-ignore -->
 ::: table Correspondência entre representações de inteiros não negativos {#tbl-base-comparison .full-width}
@@ -502,7 +507,10 @@ hexadecimal, ou quantidades físicas em decimal.
 ## 2.3. Conversão entre bases {#sec-base-conversion}
 
 <!-- prettier-ignore -->
-A conversão **para decimal** consiste em aplicar os pesos posicionais da {@ref sec-positional-number-systems}. Para converter um inteiro decimal não negativo para a base $b$, realizam-se divisões sucessivas por $b$; os restos, lidos na ordem inversa à obtenção, formam os algarismos.
+A conversão **para decimal** consiste em aplicar os pesos posicionais
+da {@ref sec-positional-number-systems}. Para converter um inteiro decimal não
+negativo para a base $b$, realizam-se divisões sucessivas por $b$; os restos,
+lidos na ordem inversa à obtenção, formam os algarismos.
 
 <!-- prettier-ignore -->
 ::: example Conversão de inteiro decimal para binário {#ex-decimal-to-binary}
@@ -510,7 +518,9 @@ A conversão **para decimal** consiste em aplicar os pesos posicionais da {@ref 
 Para representar $45_{10}$ em binário:
 
 <!-- prettier-ignore -->
-As divisões sucessivas produzem os pares quociente–resto: $45=2\cdot22+1$; $22=2\cdot11+0$; $11=2\cdot5+1$; $5=2\cdot2+1$; $2=2\cdot1+0$; $1=2\cdot0+1$. A {@ref tbl-decimal-binary-divisions} organiza o procedimento.
+As divisões sucessivas produzem os pares quociente$-$resto:
+$45=2\cdot22+1$; $22=2\cdot11+0$; $11=2\cdot5+1$; $5=2\cdot2+1$; $2=2\cdot1+0$;
+$1=2\cdot0+1$. A {@ref tbl-decimal-binary-divisions} organiza o procedimento.
 
 Lendo os restos de baixo para cima, obtém-se $45_{10}=101101_2$. A verificação
 é $32+8+4+1=45$.
@@ -2361,8 +2371,9 @@ redundância para identificar determinados padrões de alteração. Detectar um
 erro não é necessariamente localizar sua posição nem corrigi-lo.
 
 No esquema de **paridade par**, acrescenta-se um bit para que a quantidade
-total de bits iguais a 1 seja par. Para uma palavra de dados $d_{N-1}\ldots
-d_0$, o bit de paridade é
+total de bits iguais a 1 seja par. Para uma palavra de dados
+<!-- prettier-ignore -->
+$d_{N-1}\ldots d_0$, o bit de paridade é
 
 $$
 p=d_0\oplus d_1\oplus\cdots\oplus d_{N-1}\tag{2.34}

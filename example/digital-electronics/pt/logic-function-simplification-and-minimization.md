@@ -565,8 +565,9 @@ Assim, $F=C$ atende a todas as combinações especificadas.
 <!-- prettier-ignore -->
 :::: exercise Método tabular {#exr-qm-four}
 
-Utilize combinações de mintermos para simplificar $F(A,B,C,D)=\Sigma
-m(0,1,2,3,8,9,10,11,14,15)$.
+Utilize combinações de mintermos para simplificar
+<!-- prettier-ignore -->
+$F(A,B,C,D)=\Sigma m(0,1,2,3,8,9,10,11,14,15)$.
 
 <!-- prettier-ignore -->
 ::: solution

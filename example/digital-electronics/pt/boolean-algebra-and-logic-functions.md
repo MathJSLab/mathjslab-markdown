@@ -55,7 +55,10 @@ $B$, enquanto a diferença simétrica exclui precisamente essa interseção.
 ### 3.1.1. Diagramas de Venn {#sec-venn-diagrams}
 
 <!-- prettier-ignore -->
-Diagramas de Venn representam subconjuntos por regiões de um universo retangular. O preenchimento identifica o conjunto resultante. Na {@ref fig-venn-and-or}, a interseção corresponde à região comum; a união, à região coberta por ao menos um conjunto.
+Diagramas de Venn representam subconjuntos por regiões de um universo
+retangular. O preenchimento identifica o conjunto resultante.
+Na {@ref fig-venn-and-or}, a interseção corresponde à região comum; a
+união, à região coberta por ao menos um conjunto.
 
 <!-- prettier-ignore -->
 ::: figure Interseção e união de conjuntos em diagramas de Venn {#fig-venn-and-or}
@@ -87,7 +90,7 @@ Diagramas de Venn são úteis para visualizar identidades como as leis de De
 Morgan:
 
 $$
-(A\cup B)^c=A^c\cap B^c,\qquad (A\cap B)^c=A^c\cup B^c.
+(A\cup B)^c=A^c\cap B^c,\qquad (A\cap B)^c=A^c\cup B^c. \tag{X}
 $$
 
 ### 3.1.2. Relações, operações e identidades de conjuntos {#sec-set-identities}
@@ -104,18 +107,37 @@ x\in A\cap(B\cup C)
 &\iff (x\in A)\land((x\in B)\lor(x\in C))\\
 &\iff ((x\in A)\land(x\in B))\lor((x\in A)\land(x\in C))\\
 &\iff x\in(A\cap B)\cup(A\cap C).
-\end{aligned}
+\end{aligned}\tag{X}
 $$
 
 Portanto, $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$. A demonstração depende da
 equivalência lógica da distributividade e evidencia por que a teoria dos
 conjuntos e a lógica proposicional compartilham a mesma estrutura operacional.
-Valem ainda $A\cap U=A$, $A\cup\varnothing=A$, $A\cap A^c=\varnothing$ e $A\cup
-A^c=U$.
+Valem ainda
 
+$$
+A\cap U=A, \tag{X}
+$$
+
+$$
+A\cup\varnothing=A, \tag{X}
+$$
+
+$$
+A\cap A^c=\varnothing \tag{X}
+$$
+
+e
+
+$$
+A\cup A^c=U. \tag{X}
+$$
+
+<!-- prettier-ignore -->
 Uma _partição_ de $U$ é uma família de subconjuntos não vazios, dois a dois
-disjuntos, cuja união é $U$. As quatro regiões $A\cap B$, $A\cap B^c$, $A^c\cap
-B$ e $A^c\cap B^c$ constituem uma partição quando nenhuma delas é vazia. Essas
+disjuntos, cuja união é $U$. As quatro regiões $A\cap B$,
+$A\cap B^c$, $A^c\cap B$ e $A^c\cap B^c$
+constituem uma partição quando nenhuma delas é vazia. Essas
 regiões correspondem às quatro linhas de uma tabela-verdade com duas variáveis,
 quando todas as combinações são possíveis.
 
@@ -125,7 +147,7 @@ Para cada $A\subseteq U$, definimos a **função característica**
 $\chi_A:U\to\{0,1\}$ por
 
 $$
-\chi_A(x)=\begin{cases}1,&x\in A,\\0,&x\notin A.\end{cases}
+\chi_A(x)=\begin{cases}1,&x\in A,\\0,&x\notin A.\end{cases} \tag{X}
 $$
 
 Essa construção estabelece uma ponte matemática precisa entre conjuntos e
@@ -137,7 +159,7 @@ $$
 \chi_{A\cup B}(x)&=\chi_A(x)\lor\chi_B(x),\\
 \chi_{A^c}(x)&=1-\chi_A(x),\\
 \chi_{A\triangle B}(x)&=\chi_A(x)\oplus\chi_B(x).
-\end{aligned}
+\end{aligned} \tag{X}
 $$
 
 Na segunda igualdade, $\lor$ denota OU lógico, e não soma aritmética. Assim, a
@@ -154,11 +176,12 @@ Representamos proposições por $P,Q,R,\ldots$.
 
 ### 3.2.1. Sintaxe, interpretação e valoração {#sec-propositional-syntax-semantics}
 
+<!-- prettier-ignore -->
 As fórmulas são construídas a partir de variáveis proposicionais e conectivos.
-Se $P$ e $Q$ são fórmulas, então $\neg P$, $(P\land Q)$, $(P\lor Q)$, $(P\to
-Q)$ e $(P\leftrightarrow Q)$ também são fórmulas. A **sintaxe** especifica
-quais cadeias são fórmulas bem formadas; a **semântica** especifica seus
-valores de verdade.
+Se $P$ e $Q$ são fórmulas, então $\neg P$, $(P\land Q)$, $(P\lor Q)$,
+$(P\to Q)$ e $(P\leftrightarrow Q)$ também são fórmulas. A **sintaxe**
+especifica quais cadeias são fórmulas bem formadas; a **semântica** especifica
+seus valores de verdade.
 
 Uma **valoração** $v$ atribui a cada variável um valor em $\{F,V\}$ e estende
 essa atribuição recursivamente aos conectivos. Convencionamos
@@ -202,7 +225,7 @@ v(\neg\varphi)&=1-v(\varphi),\\
 v(\varphi\land\psi)&=\min\{v(\varphi),v(\psi)\},\\
 v(\varphi\lor\psi)&=\max\{v(\varphi),v(\psi)\},\\
 v(\varphi\to\psi)&=\max\{1-v(\varphi),v(\psi)\}.
-\end{aligned}
+\end{aligned} \tag{X}
 $$
 
 Essa definição é _composicional_: o valor de uma fórmula depende dos valores de
@@ -224,9 +247,11 @@ em todas; uma **contingência**, verdadeira em algumas e falsa em outras.
 Escrevemos $\Gamma\models\varphi$ quando toda valoração que satisfaz as
 premissas de $\Gamma$ satisfaz também $\varphi$.
 
-Por exemplo, $P\to Q\equiv\neg P\lor Q$ e $P\leftrightarrow Q\equiv(P\land
-Q)\lor(\neg P\land\neg Q)$. A equivalência é verificável pela coincidência das
-colunas da tabela-verdade, independentemente da redação das proposições.
+<!-- prettier-ignore -->
+Por exemplo, $P\to Q\equiv\neg P\lor Q$ e
+$P\leftrightarrow Q\equiv(P\land Q)\lor(\neg P\land\neg Q)$. A equivalência é
+verificável pela coincidência das colunas da tabela-verdade, independentemente
+da redação das proposições.
 
 ### 3.2.4. Argumentos, validade e regras de inferência {#sec-propositional-inference}
 
@@ -239,7 +264,7 @@ verdade sob todas as interpretações possíveis.
 Uma regra fundamental é o _modus ponens_:
 
 $$
-\frac{\varphi\qquad\varphi\to\psi}{\psi}.
+\frac{\varphi\qquad\varphi\to\psi}{\psi}. \tag{X}
 $$
 
 Se $v(\varphi)=1$ e $v(\varphi\to\psi)=1$, necessariamente $v(\psi)=1$. Já a
@@ -264,7 +289,7 @@ Se $\Omega$ é o conjunto de todas as valorações de um conjunto fixo de
 variáveis, a cada fórmula $\varphi$ associamos seu **conjunto-verdade**:
 
 $$
-[\![\varphi]\!]=\{v\in\Omega:v(\varphi)=V\}.
+[\![\varphi]\!]=\{v\in\Omega:v(\varphi)=V\}. \tag{X}
 $$
 
 Então $[\![\varphi\land\psi]\!]=[\![\varphi]\!]\cap[\![\psi]\!]$,
@@ -281,12 +306,13 @@ fórmula está em **forma normal conjuntiva** (FNC) quando é uma conjunção de
 cláusulas, e em **forma normal disjuntiva** (FND) quando é uma disjunção de
 termos conjuntivos.
 
-As equivalências $P\to Q\equiv\neg P\lor Q$ e $P\leftrightarrow Q\equiv(P\land
-Q)\lor(\neg P\land\neg Q)$ permitem eliminar conectivos derivados. Aplicando De
-Morgan e distributividade, obtêm-se FNC e FND equivalentes. Para funções de um
-número finito de variáveis, essas formas correspondem diretamente às
-representações algébricas por produtos de somas e somas de produtos,
-desenvolvidas na Seção 3.5.
+<!-- prettier-ignore -->
+As equivalências $P\to Q\equiv\neg P\lor Q$ e
+$P\leftrightarrow Q\equiv(P\land Q)\lor(\neg P\land\neg Q)$ permitem eliminar
+conectivos derivados. Aplicando De Morgan e distributividade, obtêm-se FNC e
+FND equivalentes. Para funções de um número finito de variáveis, essas formas
+correspondem diretamente às representações algébricas por produtos de somas e
+somas de produtos, desenvolvidas na Seção 3.5.
 
 A **satisfatibilidade** pergunta se existe ao menos uma valoração que torna uma
 fórmula verdadeira; a **validade** pergunta se todas as valorações a tornam
@@ -331,10 +357,11 @@ muitos elementos.
 <!-- prettier-ignore -->
 ::: definition Álgebra booleana {#def-boolean-algebra}
 
-Uma **álgebra de Boole** é uma estrutura $(A,+,\cdot,\overline{\phantom
-a},0,1)$, com $0\ne1$ na convenção não trivial, na qual $+$ e $\cdot$ são
-operações binárias fechadas, a barra denota complemento e, para todos $a,b,c\in
-A$, valem os seguintes postulados:
+<!-- prettier-ignore -->
+Uma **álgebra de Boole** é uma estrutura $(A,+,\cdot,\overline{\phantom a},0,1)$,
+com $0\ne1$ na convenção não trivial, na qual $+$ e $\cdot$ são
+operações binárias fechadas, a barra denota complemento e, para todos
+$a,b,c\in A$, valem os seguintes postulados:
 
 1. **Comutatividade:** $a+b=b+a$ e $a\cdot b=b\cdot a$.
 2. **Elementos neutros:** $a+0=a$ e $a\cdot1=a$.
@@ -353,9 +380,11 @@ empregaremos respectivamente $\lor$, $\land$ e $\neg$.
 
 ### 3.3.1. Fechamento e modelos {#sec-boolean-models}
 
+<!-- prettier-ignore -->
 Fechamento significa que o resultado de cada operação pertence ao mesmo
-conjunto $A$. Três modelos importantes são: (i) a álgebra binária $\mathbb
-B=\{0,1\}$; (ii) o conjunto das partes $\mathcal P(U)$, com união, interseção,
+conjunto $A$. Três modelos importantes são: (i) a álgebra binária
+$\mathbb B=\{0,1\}$;
+(ii) o conjunto das partes $\mathcal P(U)$, com união, interseção,
 complemento relativo a $U$, vazio e universo; (iii) funções $U\to\mathbb B$ com
 operações ponto a ponto. A correspondência $A\mapsto\chi_A$ é um isomorfismo
 entre os modelos (ii) e (iii).
@@ -432,7 +461,7 @@ $$
 \begin{aligned}
 b&=b\cdot1=b(a+c)=ba+bc=0+bc=bc,\\
 c&=c\cdot1=c(a+b)=ca+cb=0+cb=bc.
-\end{aligned}
+\end{aligned} \tag{X}
 $$
 
 Logo, $b=c$. Essa demonstração mostra que a barra de complementação é uma
@@ -442,7 +471,7 @@ Também se demonstra a idempotência a partir dos postulados. Como $a+\bar a=1$ 
 $a\bar a=0$,
 
 $$
-a=a\cdot1=a(a+\bar a)=aa+a\bar a=aa+0=aa.
+a=a\cdot1=a(a+\bar a)=aa+a\bar a=aa+0=aa. \tag{X}
 $$
 
 Por dualidade, $a+a=a$. Uma vez estabelecidas as identidades fundamentais,
@@ -451,18 +480,18 @@ constituindo um cálculo equacional rigoroso para otimização de funções lóg
 
 ### 3.3.5. Ordem booleana e leis de De Morgan {#sec-boolean-order-demorgan}
 
+<!-- prettier-ignore -->
 Definimos $a\le b$ quando $ab=a$, equivalentemente quando $a+b=b$. Na álgebra
 de conjuntos, essa ordem é a inclusão $A\subseteq B$; na álgebra binária,
 $0\le1$. A operação E é o maior limite inferior (ínfimo), e OU é o menor limite
-superior (supremo). O complemento inverte a ordem: $a\le b$ implica $\bar
-b\le\bar a$.
+superior (supremo). O complemento inverte a ordem: $a\le b$ implica $\bar b\le\bar a$.
 
 Os teoremas de De Morgan expressam a troca entre as operações sob
 complementação:
 
 $$
 \overline{a+b}=\bar a\bar b,\qquad
-\overline{ab}=\bar a+\bar b.
+\overline{ab}=\bar a+\bar b. \tag{X}
 $$
 
 Essas identidades explicam, por exemplo, por que uma condição de **não ativação
@@ -481,7 +510,7 @@ h(0)&=0,\quad h(1)=1,\\
 h(a+b)&=h(a)+h(b),\\
 h(a\cdot b)&=h(a)\cdot h(b),\\
 h(\bar a)&=\overline{h(a)}.
-\end{aligned}
+\end{aligned} \tag{X}
 $$
 
 Um homomorfismo bijetivo é um _isomorfismo_. A aplicação $A\mapsto\chi_A$ entre
@@ -497,8 +526,9 @@ topologia, seus componentes e sua dinâmica podem diferir.
 
 ## 3.4. Funções booleanas e tabelas-verdade {#sec-boolean-functions}
 
-Uma função booleana de $n$ entradas é uma aplicação $f:\mathbb B^n\to\mathbb
-B$. Seu domínio tem $2^n$ combinações; portanto, existem $2^{2^n}$ funções
+<!-- prettier-ignore -->
+Uma função booleana de $n$ entradas é uma aplicação $f:\mathbb B^n\to\mathbb B$.
+Seu domínio tem $2^n$ combinações; portanto, existem $2^{2^n}$ funções
 distintas de $n$ variáveis. Uma **expressão** é uma maneira de representar uma
 função, mas diferentes expressões podem definir a mesma aplicação.
 
@@ -526,15 +556,16 @@ independentemente uma saída em $\{0,1\}$; daí a existência de $2^{2^n}$ funç
 booleanas. A tabela-verdade define uma função de maneira extensional, ao passo
 que uma expressão a define por composição de operações.
 
+<!-- prettier-ignore -->
 Um conjunto de conectivos é **funcionalmente completo** quando toda função
 booleana finita pode ser expressa usando apenas esses conectivos e variáveis. O
-conjunto $\{\neg,\land\}$ é completo porque $A\lor B\equiv\neg(\neg A\land\neg
-B)$. O conjunto $\{\neg,\lor\}$ também é completo. A operação NAND, escrita
+conjunto $\{\neg,\land\}$ é completo porque $A\lor B\equiv\neg(\neg A\land\neg B)$.
+O conjunto $\{\neg,\lor\}$ também é completo. A operação NAND, escrita
 $A\uparrow B=\overline{AB}$, basta sozinha:
 
 $$
 \bar A=A\uparrow A,\qquad
-AB=(A\uparrow B)\uparrow(A\uparrow B).
+AB=(A\uparrow B)\uparrow(A\uparrow B). \tag{X}
 $$
 
 Analogamente, a operação NOR $A\downarrow B=\overline{A+B}$ permite construir
@@ -561,13 +592,15 @@ uma linha.
 
 ### 3.5.1. Mintermos {#sec-minterms}
 
-Para três variáveis $a,b,c$, a combinação $010$ corresponde ao mintermo $\bar a
-b\bar c$. Sua construção é sistemática: variável negada quando o bit é 0;
+<!-- prettier-ignore -->
+Para três variáveis $a,b,c$, a combinação $010$ corresponde ao mintermo
+$\bar a b\bar c$. Sua construção é sistemática: variável negada quando o bit é 0;
 variável direta quando é 1. A soma dos mintermos associados às linhas em que a
 função vale 1 reproduz exatamente a função.
 
 ### 3.5.2. Maxtermos {#sec-maxterms}
 
+<!-- prettier-ignore -->
 A mesma combinação $010$ corresponde ao maxtermo $(a+\bar b+c)$: a variável
 aparece direta quando o bit é 0 e complementada quando é 1. O produto dos
 maxtermos das linhas com saída 0 reproduz a função.
@@ -594,14 +627,15 @@ $$
 \begin{aligned}
 T&=\bar a\bar b\bar c+\bar a\bar bc+\bar abc+a\bar bc+ab\bar c\\
  &=\Sigma m(0,1,3,5,6).
-\end{aligned}
+\end{aligned} \tag{X}
 $$
 
+<!-- prettier-ignore -->
 Sua complementar é $\bar T=\bar a b\bar c+a\bar b\bar c+abc=\Sigma m(2,4,7)$.
 Pela complementação e por De Morgan:
 
 $$
-T=(a+\bar b+c)(\bar a+b+c)(\bar a+\bar b+\bar c)=\Pi M(2,4,7).
+T=(a+\bar b+c)(\bar a+b+c)(\bar a+\bar b+\bar c)=\Pi M(2,4,7). \tag{X}
 $$
 
 O índice de cada linha é o valor decimal do vetor binário $abc$. As duas
@@ -609,20 +643,21 @@ expressões são diferentes sintaticamente, mas têm a mesma tabela-verdade.
 
 ### 3.5.3. Derivação das formas canônicas e unicidade da tabela {#sec-canonical-derivation}
 
+<!-- prettier-ignore -->
 Se $\mathbf{x}=(x_1,\ldots,x_n)\in\mathbb B^n$ e
 $\boldsymbol\alpha=(\alpha_1,\ldots,\alpha_n)$ é uma combinação fixa, definimos
 o mintermo correspondente por
 
 $$
 m_{\boldsymbol\alpha}(\mathbf{x})=\prod_{i=1}^{n}
-\begin{cases}x_i,&\alpha_i=1,\\\bar x_i,&\alpha_i=0.\end{cases}
+\begin{cases}x_i,&\alpha_i=1,\\\bar x_i,&\alpha_i=0.\end{cases} \tag{X}
 $$
 
 Esse produto vale 1 exatamente quando $\mathbf{x}=\boldsymbol\alpha$. Assim,
 toda função $f:\mathbb B^n\to\mathbb B$ admite a expansão
 
 $$
-f(\mathbf{x})=\sum_{\boldsymbol\alpha:\,f(\boldsymbol\alpha)=1}m_{\boldsymbol\alpha}(\mathbf{x}),
+f(\mathbf{x})=\sum_{\boldsymbol\alpha:\,f(\boldsymbol\alpha)=1}m_{\boldsymbol\alpha}(\mathbf{x}), \tag{X}
 $$
 
 na qual $\sum$ indica OU booleano e $\prod$ indica E booleano. A construção é
@@ -768,7 +803,7 @@ paralelo, cada um contendo dois contatos em série: um normalmente aberto (NA) e
 outro normalmente fechado (NF). Sua expressão booleana é:
 
 $$
-a\oplus b=a\bar b+\bar a b.
+a\oplus b=a\bar b+\bar a b. \tag{X}
 $$
 
 No primeiro ramo, a condução ocorre quando $a=1$ e $b=0$, enquanto, no segundo,
@@ -1502,7 +1537,7 @@ Para todo $\omega$, vale
 $$
 \chi_{S_A\cap S_B^c}(\omega)
 =\chi_{S_A}(\omega)\bigl(1-\chi_{S_B}(\omega)\bigr)
-=a\bar b.
+=a\bar b. \tag{X}
 $$
 
 A identidade demonstra que as representações têm a mesma condição de ativação
@@ -1589,27 +1624,18 @@ funcional.
 
 ## Referências bibliográficas {#sec-boolean-chapter-references}
 
-- MARTINS, Luiz Gustavo Almeida. _Apostila de Lógica Proposicional: fundamentos
-  básicos_. Universidade Federal de Uberlândia, Faculdade de Computação.
-  Material fornecido para elaboração deste capítulo.
-- BRAGA, Newton C. _Curso de Eletrônica Digital_. Saber Eletrônica Especial, n.
-  8, 2002. Material fornecido.
-- CAMPOS, Frederico Oioli de. _Elementos Básicos da Eletrônica Digital_. São
-  Paulo, 2001. Material fornecido.
-- _Fundamentos de Eletrônica Digital, volume 1: Sistemas Combinacionais_.
-  Trecho fornecido pelo usuário.
-- _Definição de uma álgebra de Boole_. Transcrição em `algebra-booleana.md`,
-  fornecida pelo usuário.
-- _Resumo das operações lógicas_. Tabela em `table-boolean.md`, fornecida pelo
-  usuário.
-- _Representações de operações lógicas_. Diagrama em
-  `representation-comparation.md`, fornecido pelo usuário.
-- WIKIPÉDIA. _Lógica proposicional_. Disponível em:
-  https://pt.wikipedia.org/wiki/L%C3%B3gica_proposicional. Acesso em: 1
-  nov. 2026.
-- WIKIPEDIA. _Propositional logic_. Disponível em:
-  https://en.wikipedia.org/wiki/Propositional_logic. Acesso em: 1 nov. 2026.
-- WIKIPÉDIA. _Álgebra booliana_. Disponível em:
-  https://pt.wikipedia.org/wiki/%C3%81lgebra_booliana. Acesso em: 1 nov. 2026.
-- WIKIPEDIA. _Boolean algebra_. Disponível em:
-  https://en.wikipedia.org/wiki/Boolean_algebra. Acesso em: 1 nov. 2026.
+1. MANO, M. Morris; CILETTI, Michael D. **Digital Design**. 6. ed.
+   Pearson, 2018.
+2. FLOYD, Thomas L. **Digital Fundamentals**. 11. ed. Pearson, 2015.
+3. TOCCI, Ronald J.; WIDMER, Neal S.; MOSS, Gregory L. **Digital Systems:
+   Principles and Applications**. 12. ed. Pearson, 2017.
+4. HARRIS, David Money; HARRIS, Sarah L. **Digital Design and Computer
+   Architecture**. 2. ed. Morgan Kaufmann, 2012.
+5. HUTH, Michael; RYAN, Mark. **Logic in Computer Science: Modelling and
+   Reasoning about Systems**. 2. ed. Cambridge University Press, 2004.
+6. EPP, Susanna S. **Discrete Mathematics with Applications**. 5. ed. Cengage
+   Learning, 2020.
+7. ROSEN, Kenneth H. **Discrete Mathematics and Its Applications**. 8. ed.
+   McGraw-Hill Education, 2019.
+8. WAKERLY, John F. **Digital Design: Principles and Practices**. 5. ed.
+   Pearson, 2018.
