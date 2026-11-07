@@ -90,7 +90,7 @@ Diagramas de Venn são úteis para visualizar identidades como as leis de De
 Morgan:
 
 $$
-(A\cup B)^c=A^c\cap B^c,\qquad (A\cap B)^c=A^c\cup B^c. \tag{X}
+(A\cup B)^c=A^c\cap B^c,\qquad (A\cap B)^c=A^c\cup B^c. \tag{3.1}
 $$
 
 ### 3.1.2. Relações, operações e identidades de conjuntos {#sec-set-identities}
@@ -107,7 +107,7 @@ x\in A\cap(B\cup C)
 &\iff (x\in A)\land((x\in B)\lor(x\in C))\\
 &\iff ((x\in A)\land(x\in B))\lor((x\in A)\land(x\in C))\\
 &\iff x\in(A\cap B)\cup(A\cap C).
-\end{aligned}\tag{X}
+\end{aligned}\tag{3.2}
 $$
 
 Portanto, $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$. A demonstração depende da
@@ -116,21 +116,21 @@ conjuntos e a lógica proposicional compartilham a mesma estrutura operacional.
 Valem ainda
 
 $$
-A\cap U=A, \tag{X}
+A\cap U=A, \tag{3.3}
 $$
 
 $$
-A\cup\varnothing=A, \tag{X}
+A\cup\varnothing=A, \tag{3.4}
 $$
 
 $$
-A\cap A^c=\varnothing \tag{X}
+A\cap A^c=\varnothing \tag{3.5}
 $$
 
 e
 
 $$
-A\cup A^c=U. \tag{X}
+A\cup A^c=U. \tag{3.6}
 $$
 
 <!-- prettier-ignore -->
@@ -147,7 +147,7 @@ Para cada $A\subseteq U$, definimos a **função característica**
 $\chi_A:U\to\{0,1\}$ por
 
 $$
-\chi_A(x)=\begin{cases}1,&x\in A,\\0,&x\notin A.\end{cases} \tag{X}
+\chi_A(x)=\begin{cases}1,&x\in A,\\0,&x\notin A.\end{cases} \tag{3.7}
 $$
 
 Essa construção estabelece uma ponte matemática precisa entre conjuntos e
@@ -159,7 +159,7 @@ $$
 \chi_{A\cup B}(x)&=\chi_A(x)\lor\chi_B(x),\\
 \chi_{A^c}(x)&=1-\chi_A(x),\\
 \chi_{A\triangle B}(x)&=\chi_A(x)\oplus\chi_B(x).
-\end{aligned} \tag{X}
+\end{aligned} \tag{3.8}
 $$
 
 Na segunda igualdade, $\lor$ denota OU lógico, e não soma aritmética. Assim, a
@@ -225,7 +225,7 @@ v(\neg\varphi)&=1-v(\varphi),\\
 v(\varphi\land\psi)&=\min\{v(\varphi),v(\psi)\},\\
 v(\varphi\lor\psi)&=\max\{v(\varphi),v(\psi)\},\\
 v(\varphi\to\psi)&=\max\{1-v(\varphi),v(\psi)\}.
-\end{aligned} \tag{X}
+\end{aligned} \tag{3.9}
 $$
 
 Essa definição é _composicional_: o valor de uma fórmula depende dos valores de
@@ -264,7 +264,7 @@ verdade sob todas as interpretações possíveis.
 Uma regra fundamental é o _modus ponens_:
 
 $$
-\frac{\varphi\qquad\varphi\to\psi}{\psi}. \tag{X}
+\frac{\varphi\qquad\varphi\to\psi}{\psi}. \tag{3.10}
 $$
 
 Se $v(\varphi)=1$ e $v(\varphi\to\psi)=1$, necessariamente $v(\psi)=1$. Já a
@@ -289,7 +289,7 @@ Se $\Omega$ é o conjunto de todas as valorações de um conjunto fixo de
 variáveis, a cada fórmula $\varphi$ associamos seu **conjunto-verdade**:
 
 $$
-[\![\varphi]\!]=\{v\in\Omega:v(\varphi)=V\}. \tag{X}
+[\![\varphi]\!]=\{v\in\Omega:v(\varphi)=V\}. \tag{3.11}
 $$
 
 Então $[\![\varphi\land\psi]\!]=[\![\varphi]\!]\cap[\![\psi]\!]$,
@@ -461,7 +461,7 @@ $$
 \begin{aligned}
 b&=b\cdot1=b(a+c)=ba+bc=0+bc=bc,\\
 c&=c\cdot1=c(a+b)=ca+cb=0+cb=bc.
-\end{aligned} \tag{X}
+\end{aligned} \tag{3.12}
 $$
 
 Logo, $b=c$. Essa demonstração mostra que a barra de complementação é uma
@@ -471,7 +471,7 @@ Também se demonstra a idempotência a partir dos postulados. Como $a+\bar a=1$ 
 $a\bar a=0$,
 
 $$
-a=a\cdot1=a(a+\bar a)=aa+a\bar a=aa+0=aa. \tag{X}
+a=a\cdot1=a(a+\bar a)=aa+a\bar a=aa+0=aa. \tag{3.13}
 $$
 
 Por dualidade, $a+a=a$. Uma vez estabelecidas as identidades fundamentais,
@@ -491,7 +491,7 @@ complementação:
 
 $$
 \overline{a+b}=\bar a\bar b,\qquad
-\overline{ab}=\bar a+\bar b. \tag{X}
+\overline{ab}=\bar a+\bar b. \tag{3.14}
 $$
 
 Essas identidades explicam, por exemplo, por que uma condição de **não ativação
@@ -510,7 +510,7 @@ h(0)&=0,\quad h(1)=1,\\
 h(a+b)&=h(a)+h(b),\\
 h(a\cdot b)&=h(a)\cdot h(b),\\
 h(\bar a)&=\overline{h(a)}.
-\end{aligned} \tag{X}
+\end{aligned} \tag{3.15}
 $$
 
 Um homomorfismo bijetivo é um _isomorfismo_. A aplicação $A\mapsto\chi_A$ entre
@@ -565,7 +565,7 @@ $A\uparrow B=\overline{AB}$, basta sozinha:
 
 $$
 \bar A=A\uparrow A,\qquad
-AB=(A\uparrow B)\uparrow(A\uparrow B). \tag{X}
+AB=(A\uparrow B)\uparrow(A\uparrow B). \tag{3.16}
 $$
 
 Analogamente, a operação NOR $A\downarrow B=\overline{A+B}$ permite construir
@@ -611,13 +611,13 @@ maxtermos das linhas com saída 0 reproduz a função.
 | $a$ | $b$ | $c$ | $T$ | $\bar T$ |
 | :-: | :-: | :-: | :-: | :------: |
 |  0  |  0  |  0  |  1  |    0     |
-|  0  |  0  |  1  |  1  |    0     |
-|  0  |  1  |  0  |  0  |    1     |
+|  0  |  0  |  1  |  0  |    1     |
+|  0  |  1  |  0  |  1  |    0     |
 |  0  |  1  |  1  |  1  |    0     |
 |  1  |  0  |  0  |  0  |    1     |
-|  1  |  0  |  1  |  1  |    0     |
+|  1  |  0  |  1  |  0  |    1     |
 |  1  |  1  |  0  |  1  |    0     |
-|  1  |  1  |  1  |  0  |    1     |
+|  1  |  1  |  1  |  1  |    0     |
 
 :::
 
@@ -625,17 +625,17 @@ A função da tabela é
 
 $$
 \begin{aligned}
-T&=\bar a\bar b\bar c+\bar a\bar bc+\bar abc+a\bar bc+ab\bar c\\
- &=\Sigma m(0,1,3,5,6).
-\end{aligned} \tag{X}
+T&=\bar a\bar b\bar c+\bar ab\bar c+\bar abc+ab\bar c+abc\\
+ &=\Sigma m(0,2,3,6,7).
+\end{aligned} \tag{3.17}
 $$
 
 <!-- prettier-ignore -->
-Sua complementar é $\bar T=\bar a b\bar c+a\bar b\bar c+abc=\Sigma m(2,4,7)$.
+Sua complementar é $\bar T=\bar a\bar bc+a\bar b\bar c+a\bar bc=\Sigma m(1,4,5)$.
 Pela complementação e por De Morgan:
 
 $$
-T=(a+\bar b+c)(\bar a+b+c)(\bar a+\bar b+\bar c)=\Pi M(2,4,7). \tag{X}
+T=(a+b+\bar c)(\bar a+b+c)(\bar a+b+\bar c)=\Pi M(1,4,5). \tag{3.18}
 $$
 
 O índice de cada linha é o valor decimal do vetor binário $abc$. As duas
@@ -650,14 +650,14 @@ o mintermo correspondente por
 
 $$
 m_{\boldsymbol\alpha}(\mathbf{x})=\prod_{i=1}^{n}
-\begin{cases}x_i,&\alpha_i=1,\\\bar x_i,&\alpha_i=0.\end{cases} \tag{X}
+\begin{cases}x_i,&\alpha_i=1,\\\bar x_i,&\alpha_i=0.\end{cases} \tag{3.19}
 $$
 
 Esse produto vale 1 exatamente quando $\mathbf{x}=\boldsymbol\alpha$. Assim,
 toda função $f:\mathbb B^n\to\mathbb B$ admite a expansão
 
 $$
-f(\mathbf{x})=\sum_{\boldsymbol\alpha:\,f(\boldsymbol\alpha)=1}m_{\boldsymbol\alpha}(\mathbf{x}), \tag{X}
+f(\mathbf{x})=\sum_{\boldsymbol\alpha:\,f(\boldsymbol\alpha)=1}m_{\boldsymbol\alpha}(\mathbf{x}), \tag{3.20}
 $$
 
 na qual $\sum$ indica OU booleano e $\prod$ indica E booleano. A construção é
@@ -803,7 +803,7 @@ paralelo, cada um contendo dois contatos em série: um normalmente aberto (NA) e
 outro normalmente fechado (NF). Sua expressão booleana é:
 
 $$
-a\oplus b=a\bar b+\bar a b. \tag{X}
+a\oplus b=a\bar b+\bar a b. \tag{3.21}
 $$
 
 No primeiro ramo, a condução ocorre quando $a=1$ e $b=0$, enquanto, no segundo,
@@ -872,6 +872,7 @@ especificadas pela tecnologia. Portas AND, OR, NOT, NAND, NOR, XOR e XNOR
 possuem símbolos convencionais; uma pequena bolha em uma entrada ou saída
 indica inversão lógica.
 
+
 <!-- prettier-ignore -->
 ::: figure Portas AND, OR e NOT e suas funções {#fig-basic-logic-gates}
 
@@ -879,24 +880,53 @@ indica inversão lógica.
 \usetikzlibrary{circuits.logic.US}
 
 \begin{tikzpicture}[
-    scale=1.6,
-    transform shape,
-    >=stealth
+    gate/.style={
+        draw,
+        minimum width=1.8cm,
+        minimum height=1.6cm,
+        inner sep=5pt
+    },
+    signal/.style={
+        font=\Large,
+        inner sep=3pt
+    },
+    gate title/.style={
+        font=\Large\bfseries,
+        anchor=west
+    }
 ]
-\node[and gate US,draw,logic gate inputs=nn] (and) at (2,3) {};
-\node[or gate US,draw,logic gate inputs=nn] (or) at (2,1.5) {};
-\node[not gate US,draw] (not) at (2,0) {};
 
-\draw (and.input 1)--++(-0.8,0) node[left] {$a$};
-\draw (and.input 2)--++(-0.8,0) node[left] {$b$};
-\draw (and.output)--++(0.8,0) node[right] {$ab$};
+% Primeira coluna: portas lógicas
+\node[and gate US,gate,logic gate inputs=nn] (gand) at (3,5) {};
+\node[or gate US,gate,logic gate inputs=nn] (gor) at (3,2.5) {};
+\node[not gate US,gate] (gnot) at (3,0) {};
 
-\draw (or.input 1)--++(-0.8,0) node[left] {$a$};
-\draw (or.input 2)--++(-0.8,0) node[left] {$b$};
-\draw (or.output)--++(0.8,0) node[right] {$a+b$};
+% Porta AND
+\draw (gand.input 1) -- ++(-1.2,0)
+    node[left,signal] {$a$};
+\draw (gand.input 2) -- ++(-1.2,0)
+    node[left,signal] {$b$};
+\draw (gand.output) -- ++(1.2,0)
+    node[right,signal] {$ab$};
 
-\draw (not.input)--++(-0.8,0) node[left] {$a$};
-\draw (not.output)--++(0.8,0) node[right] {$\overline{a}$};
+% Porta OR
+\draw (gor.input 1) -- ++(-1.2,0)
+    node[left,signal] {$a$};
+\draw (gor.input 2) -- ++(-1.2,0)
+    node[left,signal] {$b$};
+\draw (gor.output) -- ++(1.2,0)
+    node[right,signal] {$a+b$};
+
+% Porta NOT
+\draw (gnot.input) -- ++(-1.2,0)
+    node[left,signal] {$a$};
+\draw (gnot.output) -- ++(1.2,0)
+    node[right,signal] {$\bar a$};
+
+% Segunda coluna: identificação das portas
+\node[gate title] at (8.0,5) {AND};
+\node[gate title] at (8.0,2.5) {OR};
+\node[gate title] at (8.0,0) {NOT};
 
 \end{tikzpicture}
 ```
@@ -918,6 +948,7 @@ com $c$. A mesma função pode ser implementada com NAND e inversões adequadas.
 Essa transformação preserva a tabela-verdade, mas pode alterar número de
 componentes, fan-out, consumo, atraso e riscos de transição.
 
+
 <!-- prettier-ignore -->
 ::: figure Realização por portas da função $y=ab+c$ {#fig-gates-sop-example}
 
@@ -925,20 +956,40 @@ componentes, fan-out, consumo, atraso e riscos de transição.
 \usetikzlibrary{circuits.logic.US}
 
 \begin{tikzpicture}[
-    scale=1.8,
-    transform shape
+    gate/.style={
+        draw,
+        minimum width=1.8cm,
+        minimum height=1.6cm,
+        inner sep=5pt
+    },
+    signal/.style={
+        font=\Large,
+        inner sep=3pt
+    }
 ]
-\node[and gate US,draw,logic gate inputs=nn] (g1) at (2,2) {};
-\node[or gate US,draw,logic gate inputs=nn] (g2) at (5,1.5) {};
 
-\draw (g1.input 1)--++(-1,0) node[left] {$a$};
-\draw (g1.input 2)--++(-1,0) node[left] {$b$};
+% Portas lógicas
+\node[and gate US,gate,logic gate inputs=nn] (g1) at (2,3) {};
+\node[or gate US,gate,logic gate inputs=nn] (g2) at (6,1.5) {};
 
-\draw (g1.output)--(g2.input 1);
+% Entradas da porta AND
+\draw (g1.input 1) -- ++(-1.2,0)
+    node[left,signal] {$a$};
 
-\draw (g2.input 2)--++(-1,0) node[left] {$c$};
+\draw (g1.input 2) -- ++(-1.2,0)
+    node[left,signal] {$b$};
 
-\draw (g2.output)--++(1,0) node[right] {$y$};
+% Ligação ortogonal entre AND e OR
+\draw (g1.output) -- ++(1.0,0)
+    |- (g2.input 1);
+
+% Segunda entrada da porta OR
+\draw (g2.input 2) -- ++(-1.2,0)
+    node[left,signal] {$c$};
+
+% Saída da porta OR
+\draw (g2.output) -- ++(1.2,0)
+    node[right,signal] {$y$};
 
 \end{tikzpicture}
 ```
@@ -1537,7 +1588,7 @@ Para todo $\omega$, vale
 $$
 \chi_{S_A\cap S_B^c}(\omega)
 =\chi_{S_A}(\omega)\bigl(1-\chi_{S_B}(\omega)\bigr)
-=a\bar b. \tag{X}
+=a\bar b. \tag{3.22}
 $$
 
 A identidade demonstra que as representações têm a mesma condição de ativação
