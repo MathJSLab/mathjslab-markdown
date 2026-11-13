@@ -10,7 +10,9 @@ export const mermaidExtension = (): MarkdownExtension => {
   const rendered = new Set<Element>();
 
   const load = (): Promise<MermaidApi> => {
-    loading ??= import(/* webpackChunkName: "markdown-mermaid" */ 'mermaid').then(({ default: mermaid }) => {
+    loading ??= import(/* webpackChunkName: "markdown-mermaid" */ 'mermaid').then(async ({ default: mermaid }) => {
+      // Mermaid tooltips need the selection prototype extension in production bundles.
+      await import('d3-transition');
       mermaid.initialize({
         startOnLoad: false,
         theme: 'neutral',

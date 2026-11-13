@@ -19,3 +19,5 @@ declare module 'verovio/esm' {
     public destroy(): void;
   }
 }
+
+declare module 'd3-transition';
