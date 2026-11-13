@@ -110,6 +110,7 @@ export const sanitizeSVG = async (svg: string): Promise<string> => {
   const safe = DOMPurify.sanitize(svg, {
     USE_PROFILES: { svg: true, svgFilters: true },
     ADD_TAGS: ['use'],
+    ADD_ATTR: ['role'],
     FORBID_TAGS: ['script', 'foreignObject'],
   });
   // Music glyphs and diagram symbols use local definitions. Never permit a

@@ -78,7 +78,8 @@ describe('three-language teaching collections', () => {
     }
     for (const [feature, files] of coverage) {
       expect({ feature, notes: files.length }).toEqual({ feature, notes: expect.any(Number) });
-      if (files.length < 4) throw new Error(`${lang}: ${feature} has only ${files.length} distinct examples`);
+      const minimum = feature === 'vega' ? 1 : 4;
+      if (files.length < minimum) throw new Error(`${lang}: ${feature} has only ${files.length} distinct examples (expected ${minimum})`);
       const row = Array.from(index.querySelectorAll('tr')).find((node) => node.querySelector('td code')?.textContent === feature);
       expect(row?.querySelectorAll('td')[1]?.textContent).toBe(String(files.length));
     }

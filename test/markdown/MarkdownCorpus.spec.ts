@@ -138,7 +138,11 @@ describe('Markdown compatibility corpus', () => {
     expect(sources('extensions/abc.md', 'abc')[0]).toMatch(/^X:1[\s\S]*^K:D$/m);
     expect(sources('extensions/graphviz.md', 'dot')[0]).toMatch(/^digraph G \{[\s\S]*\}$/);
     for (const language of ['geojson', 'topojson']) expect(() => JSON.parse(sources('extensions/maps.md', language)[0]!)).not.toThrow();
-    for (const source of sources('extensions/vega-lite.md', 'vega-lite')) expect(() => JSON.parse(source)).not.toThrow();
+    for (const file of ['vega-lite', 'vega-lite-multilayer', 'vega-lite-scientific']) {
+      const specifications = sources(`extensions/${file}.md`, 'vega-lite');
+      expect(specifications.length).toBeGreaterThan(0);
+      for (const source of specifications) expect(() => JSON.parse(source)).not.toThrow();
+    }
   });
 
   it.each(corpus.combined)('parses combined document %s without losing registered blocks', (file) => {

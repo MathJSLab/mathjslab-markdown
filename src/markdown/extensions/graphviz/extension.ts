@@ -34,6 +34,10 @@ export const graphvizExtension = (): MarkdownExtension => {
     fences: graphvizManifest.fences.map((fence) => ({
       ...fence,
       render,
+      exportSVG(container) {
+        const svg = rendered.has(container) ? container.querySelector('svg') : null;
+        return svg ? Promise.resolve(svg.outerHTML) : undefined;
+      },
       dispose: (container) => {
         rendered.delete(container);
         container.replaceChildren();

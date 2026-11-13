@@ -22,6 +22,36 @@ execFileSync(process.execPath, [process.env.npm_execpath, 'install', '--ignore-s
 const manifest = JSON.parse(readFileSync(path.join(directory, 'node_modules/mathjslab/package.json')));
 assert.equal(manifest.version, '2.10.0');
 const require = createRequire(path.join(directory, 'package.json'));
+for (const name of ['vega', 'vega-lite', 'vega-embed']) {
+  assert.throws(() => require.resolve(name), { code: 'MODULE_NOT_FOUND' });
+}
+writeFileSync(
+  path.join(directory, 'optional-renderers.mjs'),
+  `import assert from 'node:assert/strict';
+import { JSDOM } from ${JSON.stringify(import.meta.resolve('jsdom'))};
+import { vegaExtension, vegaLiteExtension } from 'mathjslab-markdown/extensions';
+const dom = new JSDOM();
+globalThis.document = dom.window.document;
+try {
+  for (const create of [vegaExtension, vegaLiteExtension]) {
+    const extension = create();
+    const fence = extension.fences[0];
+    const element = document.createElement('div');
+    const source = '{}';
+    const diagnostics = [];
+    await fence.render(element, source, { onDiagnostic: (value) => diagnostics.push(value) });
+    assert.equal(element.querySelector('.markdown-extension-fallback')?.textContent, source);
+    assert.equal(diagnostics[0]?.code, 'extension-render-error');
+    assert.equal(diagnostics[0]?.cause?.code, 'ERR_MODULE_NOT_FOUND');
+    assert.equal(fence.exportSVG(element), undefined);
+    await extension.dispose();
+  }
+} finally {
+  dom.window.close();
+}
+`,
+);
+execFileSync(process.execPath, ['optional-renderers.mjs'], { cwd: directory, stdio: 'inherit', windowsHide: true });
 for (const name of ['mathjslab-markdown/mathjslab', 'mathjslab/runtime']) {
   assert.ok(require.resolve(name).startsWith(directory + path.sep), `${name} must resolve inside the installed consumer`);
 }

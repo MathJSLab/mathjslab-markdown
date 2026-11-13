@@ -12,3 +12,4 @@ export type { MarkdownExtensionCatalogEntry } from './markdown/extensionCatalog.
 export * from './markdown/createMarkdownEnginePreset.js';
 
 export * from './markdown/execution/scheduler.js';
+export { rasterizeMarkdownVisual, type MarkdownPNGOptions } from './markdown/rasterizeVisual.js';

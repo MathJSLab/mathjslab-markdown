@@ -13,7 +13,7 @@ export type TikZOptions = {
   /** Host-owned Worker transport, principally useful for integrations and tests. */
   createWorker?: (script: string) => TikZWorker;
 };
-export type TikZResult = { svg: string; release: () => void };
+export type TikZResult = { svg: string; release: () => void; exportFonts: ReadonlyMap<string, Uint8Array> };
 
 const bridge = String.raw`
 (() => {
@@ -224,8 +224,10 @@ export const compileTikZ = async (source: string, language: string, options: Tik
     });
     if (families.size > 64) throw new Error('TikZ exceeds the 64-font limit');
     let css = '';
+    const exportFonts = new Map<string, Uint8Array>();
     for (const family of families) {
       const bytes = await readBytes(new URL(`fonts/${family}.woff2`, base), context);
+      if (context.onVisualExport) exportFonts.set(prefix + family, bytes);
       // CSS @font-face rules inside a shadow root do not register document fonts.
       // Register the uniquely named face explicitly and remove it on disposal.
       if (typeof FontFace !== 'undefined' && document.fonts) {
@@ -242,7 +244,7 @@ export const compileTikZ = async (source: string, language: string, options: Tik
     style.textContent = css;
     svg.prepend(style);
     controller.signal.throwIfAborted();
-    return { svg: svg.outerHTML, release: cleanupFonts };
+    return { svg: svg.outerHTML, release: cleanupFonts, exportFonts };
   } catch (cause) {
     cleanupFonts();
     throw cause;

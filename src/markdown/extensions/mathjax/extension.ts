@@ -12,6 +12,7 @@ type MathToken = {
 
 type MathJaxApi = {
   startup?: { promise?: Promise<void> };
+  tex2svgPromise?: (tex: string, options: { display: boolean }) => Promise<HTMLElement>;
   typesetPromise?: (elements?: Element[]) => Promise<void>;
   typesetClear?: (elements?: Element[]) => void;
 };
@@ -105,8 +106,55 @@ const blockMath = {
   renderer: (token: MathToken): string => placeholder(token.text, token.display),
 };
 
+let mathJaxLoading: Promise<MathJaxApi> | undefined;
+
+export const loadMathJax = async (): Promise<MathJaxApi> => {
+  if (globalThis.MathJax && typeof (globalThis.MathJax as MathJaxApi).typesetPromise === 'function') {
+    return globalThis.MathJax as MathJaxApi;
+  }
+  if (!mathJaxLoading) {
+    globalThis.MathJax = {
+      loader: {
+        load: ['[tex]/mhchem', '[tex]/mathtools', '[tex]/physics', '[tex]/units', 'ui/safe'],
+        require: loadMathJaxComponent,
+      },
+      tex: {
+        packages: { '[+]': ['mhchem', 'mathtools', 'physics', 'units'] },
+        processEscapes: true,
+        require: {
+          defaultAllow: true,
+          allow: {
+            base: false,
+            autoload: false,
+            configmacros: false,
+            setoptions: false,
+            tagformat: false,
+            texhtml: false,
+          },
+        },
+      },
+      options: {
+        enableMenu: false,
+        enableEnrichment: false,
+        enableSpeech: false,
+        enableBraille: false,
+        menuOptions: {
+          settings: { enrich: false, speech: false, braille: false },
+        },
+      },
+      startup: { typeset: false },
+    };
+    mathJaxLoading = import(/* webpackChunkName: "markdown-mathjax" */ 'mathjax/tex-svg.js').then(async () => {
+      const api = globalThis.MathJax as MathJaxApi;
+      await api.startup?.promise;
+      if (typeof api.typesetPromise !== 'function') throw new Error('MathJax failed to initialize');
+      return api;
+    });
+  }
+  return mathJaxLoading;
+};
+
 export const mathJaxExtension = (): MarkdownExtension => {
-  let mathJaxLoading: Promise<MathJaxApi> | undefined;
   let mathJax: MathJaxApi | undefined;
   const rendered = new Set<Element>();
 
@@ -118,54 +166,6 @@ export const mathJaxExtension = (): MarkdownExtension => {
       rendered.delete(element);
       element.replaceChildren();
     }
-  };
-
-  const loadMathJax = async (): Promise<MathJaxApi> => {
-    if (globalThis.MathJax && typeof (globalThis.MathJax as MathJaxApi).typesetPromise === 'function') {
-      mathJax = globalThis.MathJax as MathJaxApi;
-      return mathJax;
-    }
-    if (!mathJaxLoading) {
-      globalThis.MathJax = {
-        loader: {
-          load: ['[tex]/mhchem', '[tex]/mathtools', '[tex]/physics', '[tex]/units', 'ui/safe'],
-          require: loadMathJaxComponent,
-        },
-        tex: {
-          packages: { '[+]': ['mhchem', 'mathtools', 'physics', 'units'] },
-          processEscapes: true,
-          require: {
-            defaultAllow: true,
-            allow: {
-              base: false,
-              autoload: false,
-              configmacros: false,
-              setoptions: false,
-              tagformat: false,
-              texhtml: false,
-            },
-          },
-        },
-        options: {
-          enableMenu: false,
-          enableEnrichment: false,
-          enableSpeech: false,
-          enableBraille: false,
-          menuOptions: {
-            settings: { enrich: false, speech: false, braille: false },
-          },
-        },
-        startup: { typeset: false },
-      };
-      mathJaxLoading = import(/* webpackChunkName: "markdown-mathjax" */ 'mathjax/tex-svg.js').then(async () => {
-        const api = globalThis.MathJax as MathJaxApi;
-        await api.startup?.promise;
-        if (typeof api.typesetPromise !== 'function') throw new Error('MathJax failed to initialize');
-        return api;
-      });
-    }
-    mathJax = await mathJaxLoading;
-    return mathJax;
   };
 
   return {
@@ -183,7 +183,7 @@ export const mathJaxExtension = (): MarkdownExtension => {
     async typeset(container, context) {
       const elements = Array.from(container.querySelectorAll('.mathjax-pending')).filter((element) => !element.hasAttribute('data-mathjax-rendered'));
       if (elements.length === 0 || context.signal?.aborted) return;
-      const mathJax = await loadMathJax();
+      mathJax = await loadMathJax();
       if (context.signal?.aborted) return;
       for (const element of elements) {
         const source = element.querySelector('.mathjax-source, .markdown-extension-source')?.textContent ?? '';
@@ -212,7 +212,7 @@ export const mathJaxExtension = (): MarkdownExtension => {
         rendered.delete(element);
         element.replaceChildren();
       }
-      mathJaxLoading = undefined;
+
       mathJax = undefined;
     },
   };

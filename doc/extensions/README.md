@@ -45,12 +45,13 @@ uses the corresponding fence. Factories and manifests are exported through
 
 | Family                                                       | Fences                                              | Renderer                    |
 | ------------------------------------------------------------ | --------------------------------------------------- | --------------------------- |
-| Diagrams                                                     | `mermaid`                                           | Mermaid                     |
+| [Diagrams](mermaid.md)                                       | `mermaid`                                           | Mermaid                     |
 | [Teaching blocks and references](didactic-and-references.md) | Colon containers and inline `{@ref label}`          | Built-in, no dependencies   |
 | Flat molecules                                               | `smiles`                                            | SmilesDrawer                |
 | [Music](music.md)                                            | `abc`, `mei`, `musicxml`                            | abcjs and Verovio           |
 | [Maps](maps.md)                                              | `geojson`, `topojson`                               | Leaflet and topojson-client |
 | [Declarative charts](vega-lite.md)                           | `vega-lite`                                         | Vega-Lite                   |
+| [Vega charts](vega.md)                                      | `vega`                                              | Vega                        |
 | [Graphs](graphviz.md)                                        | `dot`, `graphviz`                                   | Graphviz/Viz.js             |
 | [3D molecules](molecules-3d.md)                              | `pdb`, `cif`, `mmcif`, `sdf`, `mol2`, `xyz`, `cube` | 3Dmol.js                    |
 | [3D models](models-3d.md)                                    | `stl`, `obj`, `gltf`                                | Three.js                    |

@@ -45,7 +45,17 @@ export const mermaidExtension = (): MarkdownExtension => {
   return {
     name: mermaidManifest.name,
     manifest: mermaidManifest,
-    fences: [{ ...mermaidManifest.fences[0], render, dispose: disposeContainer }],
+    fences: [
+      {
+        ...mermaidManifest.fences[0],
+        render,
+        dispose: disposeContainer,
+        exportSVG(container) {
+          const svg = rendered.has(container) ? container.querySelector('svg') : null;
+          return svg ? import('./exportSVG.js').then(({ exportMermaidSVG }) => exportMermaidSVG(svg)) : undefined;
+        },
+      },
+    ],
     dispose() {
       for (const container of rendered) container.replaceChildren();
       rendered.clear();

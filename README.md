@@ -178,9 +178,10 @@ least four distinct notes per extension and language, along with explanations,
 exercises and commented answers. Topics include mathematics, chemistry, music,
 geography, history, biology, physics, statistics, geometry and computing. The
 312 notes include ABC, MusicXML and MEI scores, SMILES and XYZ/SDF molecules,
-OBJ/STL solids, Mermaid and Graphviz diagrams, GeoJSON/TopoJSON maps, Vega-Lite
-charts and MathJSLab calculations, plus teaching blocks, numbered references,
-WaveDrom diagrams, dynamic geometry, TikZ/CircuiTikZ and CSL bibliographies.
+OBJ/STL solids, Mermaid and Graphviz diagrams, GeoJSON/TopoJSON maps, Vega and
+Vega-Lite charts and MathJSLab calculations, plus teaching blocks, numbered
+references, WaveDrom diagrams, dynamic geometry, TikZ/CircuiTikZ and CSL
+bibliographies.
 
 Each note identifies the extensions it uses. View the examples with those
 extensions enabled in a host application; ordinary Markdown viewers may display
@@ -215,15 +216,16 @@ declarations; `build:browser` builds all browser entries together to preserve
 shared runtime identity. `build:dev` builds for development; `build` performs a
 clean production build.
 
-| Command                               | Purpose                                           |
-| ------------------------------------- | ------------------------------------------------- |
-| `npm run typecheck`                   | Check source types without emitting files         |
-| `npm test`                            | Run reusable Markdown regressions                 |
-| `npm run test:distribution`           | Check emitted package exports                     |
-| `npm run verify:package`              | Inspect the npm file list, exports and imports    |
-| `npm run pack:dry-run`                | Inspect existing build contents without packaging |
-| `npm run clean:results`               | Remove temporary results and measurements         |
-| `npm run clone:copy:clean:repository` | Fetch shared files from the organization          |
+| Command                               | Purpose                                            |
+| ------------------------------------- | -------------------------------------------------- |
+| `npm run typecheck`                   | Check source types without emitting files          |
+| `npm test`                            | Run reusable Markdown regressions                  |
+| `npm run test:visual`                 | Compare visual fixtures against platform baselines |
+| `npm run test:distribution`           | Check emitted package exports                      |
+| `npm run verify:package`              | Inspect the npm file list, exports and imports     |
+| `npm run pack:dry-run`                | Inspect existing build contents without packaging  |
+| `npm run clean:results`               | Remove temporary results and measurements          |
+| `npm run clone:copy:clean:repository` | Fetch shared files from the organization           |
 
 Until the organization changes are pushed, synchronize from the local checkout:
 

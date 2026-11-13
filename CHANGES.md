@@ -1,5 +1,31 @@
 # Release notes
 
+## 0.11.0 — 2026-11-13
+
+- Rasterize a supported SVG export to PNG in the browser, with optional
+  scaling, background and cancellation.
+
+- Export standalone TikZ and CircuiTikZ SVGs with embedded WOFF2 fonts.
+
+- Export standalone SVG from Mermaid diagrams that use SVG labels.
+
+- Export standalone SVG from Graphviz's `dot` and `graphviz` fences.
+
+- Render explicit host-configured MathJax annotations in Vega and Vega-Lite,
+  including in standalone SVG exports.
+
+- Add opt-in, revision-scoped SVG export for Vega and Vega-Lite.
+
+- Add the optional `vega` fence for full Vega JSON specifications with the
+  same rendering and resource policy as Vega-Lite.
+
+- Keep Vega-Lite rendering in SVG with host-controlled embed options.
+  Route renderer data reads through the document resource policy and
+  use the Vega expression interpreter for inline JSON charts under strict CSP.
+
+- Add scientific Vega recipes, CMOS authoring guidance and browser visual and accessibility checks.
+- Refresh direct and transitive dependencies, including Mermaid, Marked and Playwright.
+
 ## 0.10.0 — 2026-11-02
 
 - Align the optional MathJSLab peer and development dependency with published

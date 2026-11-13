@@ -72,7 +72,8 @@ Each built-in extension has a factory and a manifest:
 `molecule3DExtension/molecule3DManifest`,
 `relativeUrlsExtension/relativeUrlsManifest`, `smilesExtension/smilesManifest`,
 `syntaxHighlightExtension/syntaxHighlightManifest`,
-`vegaLiteExtension/vegaLiteManifest` and `verovioExtension/verovioManifest`.
+`vegaExtension/vegaManifest`, `vegaLiteExtension/vegaLiteManifest` and
+`verovioExtension/verovioManifest`.
 
 Manifests describe formats, dependencies and capabilities without loading the
 optional libraries. The [extension catalogue](extensions/README.md) provides

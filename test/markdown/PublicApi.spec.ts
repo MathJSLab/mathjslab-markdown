@@ -50,6 +50,7 @@ describe('standalone Markdown public API', () => {
     ['relativeUrlsExtension', 'relativeUrlsManifest'],
     ['smilesExtension', 'smilesManifest'],
     ['syntaxHighlightExtension', 'syntaxHighlightManifest'],
+    ['vegaExtension', 'vegaManifest'],
     ['vegaLiteExtension', 'vegaLiteManifest'],
     ['verovioExtension', 'verovioManifest'],
   ])('exports %s together with %s', (factory, manifest) => {
@@ -130,6 +131,7 @@ describe('standalone Markdown public API', () => {
         'markdownExtensionCatalog',
         'markdownProfiles',
         'markdownPublicApiVersion',
+        'rasterizeMarkdownVisual',
       ].sort(),
     );
     expect(Object.keys(componentApi).sort()).toEqual(
@@ -183,6 +185,8 @@ describe('standalone Markdown public API', () => {
         'smilesManifest',
         'syntaxHighlightExtension',
         'syntaxHighlightManifest',
+        'vegaExtension',
+        'vegaManifest',
         'vegaLiteExtension',
         'vegaLiteManifest',
         'verovioExtension',

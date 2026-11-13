@@ -38,7 +38,8 @@ import { smilesExtension } from './extensions/smiles/extension.js';
 import { smilesManifest } from './extensions/smiles/manifest.js';
 import { syntaxHighlightExtension } from './extensions/syntax-highlight/extension.js';
 import { syntaxHighlightManifest } from './extensions/syntax-highlight/manifest.js';
-import { vegaLiteExtension } from './extensions/vega-lite/extension.js';
+import { vegaExtension, vegaLiteExtension } from './extensions/vega-lite/extension.js';
+import { vegaManifest } from './extensions/vega/manifest.js';
 import { vegaLiteManifest } from './extensions/vega-lite/manifest.js';
 import { verovioExtension } from './extensions/verovio/extension.js';
 import { verovioManifest } from './extensions/verovio/manifest.js';
@@ -59,6 +60,7 @@ export type EducationalMarkdownFeature =
   | 'netlist'
   | 'smiles'
   | 'tikz'
+  | 'vega'
   | 'vega-lite'
   | 'verovio'
   | 'vcd'
@@ -124,6 +126,7 @@ export const markdownExtensionCatalog: Readonly<Record<string, MarkdownExtension
     manifest: syntaxHighlightManifest,
     create: syntaxHighlightExtension,
   },
+  vega: { manifest: vegaManifest, create: vegaExtension, educational: true },
   'vega-lite': {
     manifest: vegaLiteManifest,
     create: vegaLiteExtension,

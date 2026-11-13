@@ -23,12 +23,36 @@ test('citations exports remain load-free and ship a lazy browser chunk', async (
 test('TikZ exports are load-free and ship the worker, TeX assets, fonts and licenses', async () => {
   const extensions = await import('mathjslab-markdown/extensions');
   assert.equal(typeof extensions.tikzExtension, 'function');
+  assert.deepEqual(
+    extensions
+      .tikzExtension()
+      .fences.filter((fence) => typeof fence.exportSVG === 'function')
+      .map((fence) => fence.language),
+    ['tikz', 'circuitikz'],
+  );
   assert.deepEqual(extensions.tikzManifest.capabilities, ['wasm', 'network']);
   const root = new URL('../../dist/browser/tikzjax/', import.meta.url);
   for (const file of ['run-tex.js', 'tex.wasm.gz', 'core.dump.gz', 'tex_files/circuitikz.sty.gz', 'fonts/cmr10.woff2', 'LICENSE', 'run-tex.js.LICENSE.txt'])
     assert.ok(statSync(new URL(file, root)).size > 0, file);
   const files = readdirSync(new URL('../../dist/browser/chunks/', import.meta.url));
   assert.ok(files.some((file) => /^markdown-tikz\..*\.js$/.test(file)));
+});
+
+test('Vega and Vega-Lite are available from the DOM-free extensions entry and share a lazy browser chunk', async () => {
+  const extensions = await import('mathjslab-markdown/extensions');
+  assert.equal(typeof extensions.vegaLiteExtension, 'function');
+  assert.equal(typeof extensions.vegaExtension, 'function');
+  assert.deepEqual(extensions.vegaManifest.dependencies, extensions.vegaLiteManifest.dependencies);
+  for (const create of [extensions.vegaExtension, extensions.vegaLiteExtension]) {
+    assert.equal(typeof create().fences[0].exportSVG, 'function');
+  }
+  const types = readFileSync(new URL('../../dist/types/MarkdownEngine.d.ts', import.meta.url), 'utf8');
+  assert.match(types, /export type MarkdownVisualExport/);
+  assert.match(types, /onVisualExport\?: \(visual: MarkdownVisualExport\)/);
+  assert.match(types, /vegaMathLabels\?: Readonly<Record<string, MarkdownVegaMathLabel>>/);
+  assert.deepEqual(extensions.vegaLiteManifest.dependencies, ['vega', 'vega-lite', 'vega-embed']);
+  const files = readdirSync(new URL('../../dist/browser/chunks/', import.meta.url));
+  assert.ok(files.some((file) => /^markdown-vega-lite\..*\.js$/.test(file)));
 });
 
 test('geometry exports stay load-free and produce a lazy browser chunk', async () => {
@@ -92,6 +116,7 @@ test('package core imports without a DOM, component registration or optional ren
   const core = await import('mathjslab-markdown');
   assert.equal(core.markdownPublicApiVersion, 2);
   assert.equal(typeof core.MarkdownEngine, 'function');
+  assert.equal(typeof core.rasterizeMarkdownVisual, 'function');
   assert.equal('MarkdownDocumentElement' in core, false);
   assert.equal(typeof globalThis.customElements, 'undefined');
   const engine = core.createMarkdownEnginePreset('safe-remote');

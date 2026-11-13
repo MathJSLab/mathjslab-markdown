@@ -9,7 +9,8 @@ module.exports = {
     '^mathjslab-markdown/hdl$': '<rootDir>/src/markdown-hdl.ts',
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-  testMatch: ['<rootDir>/test/markdown/**/*.spec.ts'],
+  roots: ['<rootDir>/src', '<rootDir>/test/markdown'],
+  testMatch: ['**/test/markdown/**/*.spec.ts'],
   // Archived HDL consumer installations are not part of this package's tests.
   modulePathIgnorePatterns: ['<rootDir>/.hdl-research/', '<rootDir>/repo/'],
   transform: {

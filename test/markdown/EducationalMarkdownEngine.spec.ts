@@ -14,7 +14,7 @@ describe('createEducationalMarkdownEngine', () => {
   });
 
   it('supports the complete catalog and removes duplicate selections', async () => {
-    expect(educationalMarkdownFeatures).toHaveLength(17);
+    expect(educationalMarkdownFeatures).toHaveLength(18);
     const engine = createEducationalMarkdownEngine({
       features: ['graphviz', 'graphviz'],
     });
@@ -46,6 +46,7 @@ describe('createEducationalMarkdownEngine', () => {
         'smiles',
         'tikz',
         'syntax-highlight',
+        'vega',
         'vega-lite',
         'verovio',
         'wavedrom',

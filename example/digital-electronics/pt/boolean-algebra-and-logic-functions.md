@@ -1,17 +1,17 @@
 # 3. Álgebra booleana e funções lógicas {#chapter-03}
 
-A eletrônica digital, a automação e o controle podem ser descritos por linguagens
-matemáticas e técnicas distintas, mas estruturalmente relacionadas. A **teoria dos conjuntos** permite
-caracterizar regiões de um universo e condições de pertencimento; a **lógica
-proposicional** formaliza sentenças e conectivos segundo suas condições de
-verdade; a **álgebra de Boole** abstrai as operações comuns a essas estruturas;
-e as **funções booleanas** fornecem a descrição matemática das relações entre
-entradas e saídas de sistemas digitais. Nos circuitos com contatos, essas
-relações são interpretadas como condições de continuidade elétrica; nas portas
-lógicas, são realizadas por dispositivos eletrônicos. Na automação,
-essas relações também especificam decisões de controladores que recebem
-informações de sensores e comandam atuadores elétricos, hidráulicos ou
-pneumáticos.
+A eletrônica digital, a automação e o controle podem ser descritos por
+linguagens matemáticas e técnicas distintas, mas estruturalmente relacionadas.
+A **teoria dos conjuntos** permite caracterizar regiões de um universo e
+condições de pertencimento; a **lógica proposicional** formaliza sentenças e
+conectivos segundo suas condições de verdade; a **álgebra de Boole** abstrai as
+operações comuns a essas estruturas; e as **funções booleanas** fornecem a
+descrição matemática das relações entre entradas e saídas de sistemas digitais.
+Nos circuitos com contatos, essas relações são interpretadas como condições de
+continuidade elétrica; nas portas lógicas, são realizadas por dispositivos
+eletrônicos. Na automação, essas relações também especificam decisões de
+controladores que recebem informações de sensores e comandam atuadores
+elétricos, hidráulicos ou pneumáticos.
 
 O desenvolvimento parte de conjuntos e diagramas de Venn, avança pelas
 proposições e suas tabelas-verdade e chega à definição axiomática da álgebra
@@ -27,14 +27,14 @@ equivalência física**. Identidades booleanas são exatas em seus modelos
 matemáticos; contatos e portas reais apresentam atrasos, limites elétricos e
 condições específicas de funcionamento. Assim, a mesma função pode admitir
 diferentes realizações sem que elas tenham necessariamente o mesmo
-comportamento temporal, consumo ou confiabilidade. Em sistemas automatizados,
-a distinção se estende à interface com o processo físico: um **sensor**
-converte uma condição ou grandeza observada em informação utilizável pelo
-controlador, enquanto um **atuador** converte um comando em ação física.
-A interpretação booleana de ambos exige definir limiares, convenções de
-sinal, condições de alimentação e estados de falha. Um controlador pode
-combinar essas informações por lógica combinacional, mas a dinâmica do
-processo e a segurança da atuação não decorrem apenas de uma tabela-verdade.
+comportamento temporal, consumo ou confiabilidade. Em sistemas automatizados, a
+distinção se estende à interface com o processo físico: um **sensor** converte
+uma condição ou grandeza observada em informação utilizável pelo controlador,
+enquanto um **atuador** converte um comando em ação física. A interpretação
+booleana de ambos exige definir limiares, convenções de sinal, condições de
+alimentação e estados de falha. Um controlador pode combinar essas informações
+por lógica combinacional, mas a dinâmica do processo e a segurança da atuação
+não decorrem apenas de uma tabela-verdade.
 
 ## 3.1. Conjuntos, universo e operações {#sec-sets-and-operations}
 
@@ -297,19 +297,18 @@ Quando as proposições descrevem acontecimentos físicos, a validade formal
 permanece distinta da veracidade das premissas e da qualidade da medição.
 Considere $P$: “o sensor indica pressão suficiente” e $Q$: “a condição de
 partida está autorizada”. A inferência de $P$ e $P\to Q$ para $Q$ é válida
-independentemente da tecnologia empregada; entretanto, ela não prova que
-a pressão real seja suficiente, que o sensor esteja calibrado ou que o
-atuador responderá ao comando. A associação entre uma observação e a
-proposição requer um critério operacional de medição, e a associação entre
-a conclusão e uma ação requer uma arquitetura de comando.
+independentemente da tecnologia empregada; entretanto, ela não prova que a
+pressão real seja suficiente, que o sensor esteja calibrado ou que o atuador
+responderá ao comando. A associação entre uma observação e a proposição requer
+um critério operacional de medição, e a associação entre a conclusão e uma ação
+requer uma arquitetura de comando.
 
-Em automação, distinguem-se, portanto, **correção lógica**, **adequação
-da especificação** e **integridade da realização física**. Uma lógica
-corretamente implementada pode operar sobre sinais incorretos, e uma
-conclusão logicamente autorizada não substitui intertravamentos físicos,
-diagnóstico de falhas nem avaliação de riscos. Essas distinções reaparecem
-na programação de controladores e na comparação entre tecnologias de
-comutação.
+Em automação, distinguem-se, portanto, **correção lógica**, **adequação da
+especificação** e **integridade da realização física**. Uma lógica corretamente
+implementada pode operar sobre sinais incorretos, e uma conclusão logicamente
+autorizada não substitui intertravamentos físicos, diagnóstico de falhas nem
+avaliação de riscos. Essas distinções reaparecem na programação de
+controladores e na comparação entre tecnologias de comutação.
 
 ### 3.2.5. Conjuntos de valorações {#sec-truth-sets}
 
@@ -709,8 +708,8 @@ O uso de $X$ exige justificar que a combinação não será relevante no context
 de operação. Em sistemas automatizados, combinações aparentemente impossíveis
 podem ocorrer durante partidas, manutenção, falhas de sensores ou transições
 assíncronas. Por isso, a declaração de uma condição indiferente deve ser
-compatível com a análise dos estados físicos alcançáveis e não pode dispensar
-a definição do comportamento seguro diante de anomalias.
+compatível com a análise dos estados físicos alcançáveis e não pode dispensar a
+definição do comportamento seguro diante de anomalias.
 
 ## 3.6. Circuitos lógicos com interruptores {#sec-switching-circuits}
 
@@ -826,13 +825,13 @@ segunda fornece $(a+b)c=0$.
 A realização por contatos deve considerar a disponibilidade de contatos
 complementares do mesmo atuador. Em sistemas reais, contatos mecânicos podem
 sofrer _bounce_, desgaste e atrasos; a equivalência descrita é **estática**,
-não temporal. Um contato pode ser acionado diretamente por uma pessoa, por
-um mecanismo ou por um relé comandado eletricamente. Em aplicações industriais,
-a variável lógica frequentemente representa o **estado interpretado de um
+não temporal. Um contato pode ser acionado diretamente por uma pessoa, por um
+mecanismo ou por um relé comandado eletricamente. Em aplicações industriais, a
+variável lógica frequentemente representa o **estado interpretado de um
 sensor**, não a posição de um interruptor manual; já a continuidade resultante
-pode energizar uma bobina que comanda um atuador. O contato, o sensor e a
-carga devem ser distinguidos: um é elemento de comutação, outro produz
-informação e a terceira recebe energia ou comando.
+pode energizar uma bobina que comanda um atuador. O contato, o sensor e a carga
+devem ser distinguidos: um é elemento de comutação, outro produz informação e a
+terceira recebe energia ou comando.
 
 ### 3.6.5. Contatos em série e paralelo representam OU exclusivo (XOR) {#sec-switch-xor}
 
@@ -908,14 +907,13 @@ recebendo sinais elétricos interpretados como 0 ou 1. Em lógica positiva, o
 nível alto corresponde a 1 e o baixo a 0, respeitadas as faixas de tensão
 especificadas pela tecnologia. Portas AND, OR, NOT, NAND, NOR, XOR e XNOR
 possuem símbolos convencionais; uma pequena bolha em uma entrada ou saída
-indica inversão lógica. A porta é um elemento de processamento de sinais,
-não um sensor nem um atuador: para interagir com o processo físico, seus
-níveis elétricos precisam ser adaptados às interfaces de entrada e saída.
-Na realização semicondutora, **diodos e transistores** permitem construir
-funções de comutação; nas famílias lógicas modernas, redes de transistores
-constituem o elemento central da implementação. O símbolo de uma porta
-expressa a função lógica, não seu circuito interno.
-
+indica inversão lógica. A porta é um elemento de processamento de sinais, não
+um sensor nem um atuador: para interagir com o processo físico, seus níveis
+elétricos precisam ser adaptados às interfaces de entrada e saída. Na
+realização semicondutora, **diodos e transistores** permitem construir funções
+de comutação; nas famílias lógicas modernas, redes de transistores constituem o
+elemento central da implementação. O símbolo de uma porta expressa a função
+lógica, não seu circuito interno.
 
 <!-- prettier-ignore -->
 ::: figure Portas lógicas AND, OR, NOT, XOR, NAND, NOR e XNOR e suas funções {#fig-basic-logic-gates}
@@ -1045,7 +1043,6 @@ com $c$. A mesma função pode ser implementada com NAND e inversões adequadas.
 Essa transformação preserva a tabela-verdade, mas pode alterar número de
 componentes, fan-out, consumo, atraso e riscos de transição.
 
-
 <!-- prettier-ignore -->
 ::: figure Realização por portas da função $y=ab+c$ {#fig-gates-sop-example}
 
@@ -1100,14 +1097,13 @@ com NAND ou apenas com NOR, pois cada uma dessas famílias permite obter
 negação, conjunção e disjunção. A possibilidade matemática não elimina limites
 físicos: tensões de entrada, margens de ruído, atrasos de propagação, potência
 dissipada, correntes de saída e temporização precisam ser avaliados no projeto
-eletrônico. A universalidade é uma propriedade de expressividade das
-funções booleanas, não uma garantia de compatibilidade entre dispositivos.
-Uma saída de porta não pode, em geral, alimentar diretamente a bobina de
-uma válvula solenóide, um motor ou uma carga de potência: são necessários
-estágios de acionamento, proteção e, conforme a aplicação, isolamento.
-Tampouco a realização de uma função apenas com NAND ou NOR assegura o
-comportamento seguro de um sistema diante de perda de energia ou falha de
-um sensor.
+eletrônico. A universalidade é uma propriedade de expressividade das funções
+booleanas, não uma garantia de compatibilidade entre dispositivos. Uma saída de
+porta não pode, em geral, alimentar diretamente a bobina de uma válvula
+solenóide, um motor ou uma carga de potência: são necessários estágios de
+acionamento, proteção e, conforme a aplicação, isolamento. Tampouco a
+realização de uma função apenas com NAND ou NOR assegura o comportamento seguro
+de um sistema diante de perda de energia ou falha de um sensor.
 
 ### 3.7.3. Implementação física e limites da equivalência {#sec-physical-logic-limits}
 
@@ -1132,64 +1128,64 @@ interpretação booleana depende de uma variável de comando e da hipótese de
 funcionamento ideal dos contatos.
 
 A distinção torna-se ainda mais importante quando o sinal elétrico é a
-representação de uma grandeza contínua, como temperatura, posição, nível
-ou pressão. Um comparador ou uma entrada digital condicionada converte
-essa grandeza em um estado lógico segundo um limiar especificado. Próximo
-ao limiar, ruído e pequenas oscilações podem produzir comutações repetidas;
-por isso, alguns dispositivos utilizam **histerese**, isto é, limiares
-diferentes para ligar e desligar. Essa propriedade introduz dependência do
-estado anterior e não pode ser descrita por uma única função combinacional
-da entrada instantânea. O estudo detalhado dos controladores com histerese,
-dos controladores proporcionais, integrais e derivativos (PID) e da dinâmica
-dos processos pertence aos capítulos posteriores de automação e controle.
+representação de uma grandeza contínua, como temperatura, posição, nível ou
+pressão. Um comparador ou uma entrada digital condicionada converte essa
+grandeza em um estado lógico segundo um limiar especificado. Próximo ao limiar,
+ruído e pequenas oscilações podem produzir comutações repetidas; por isso,
+alguns dispositivos utilizam **histerese**, isto é, limiares diferentes para
+ligar e desligar. Essa propriedade introduz dependência do estado anterior e
+não pode ser descrita por uma única função combinacional da entrada
+instantânea. O estudo detalhado dos controladores com histerese, dos
+controladores proporcionais, integrais e derivativos (PID) e da dinâmica dos
+processos pertence aos capítulos posteriores de automação e controle.
 
 ### 3.7.4. Interfaces de sensores e atuadores {#sec-sensor-actuator-interfaces}
 
-Em um sistema de automação, denominamos **processo** a parte do mundo
-físico cujo comportamento se pretende observar ou modificar. Um **sensor**
-é um dispositivo que produz um sinal relacionado a uma grandeza ou estado
-do processo; sua relação de transdução pode ser contínua ou discreta. Um
-**atuador** é um dispositivo que transforma energia disponível e um sinal
-de comando em uma ação física, como deslocamento, força, vazão ou torque.
-Um **controlador** recebe informações, aplica uma regra de decisão e produz
+Em um sistema de automação, denominamos **processo** a parte do mundo físico
+cujo comportamento se pretende observar ou modificar. Um **sensor** é um
+dispositivo que produz um sinal relacionado a uma grandeza ou estado do
+processo; sua relação de transdução pode ser contínua ou discreta. Um
+**atuador** é um dispositivo que transforma energia disponível e um sinal de
+comando em uma ação física, como deslocamento, força, vazão ou torque. Um
+**controlador** recebe informações, aplica uma regra de decisão e produz
 comandos. Essas funções podem estar distribuídas entre dispositivos e não
 implicam necessariamente três equipamentos separados.
 
-Para representar uma medição por uma variável booleana, deve-se definir
-uma função de interpretação. Por exemplo, se $p$ é uma pressão medida e
-$p_0$ um limiar, uma condição idealizada pode ser escrita como
+Para representar uma medição por uma variável booleana, deve-se definir uma
+função de interpretação. Por exemplo, se $p$ é uma pressão medida e $p_0$ um
+limiar, uma condição idealizada pode ser escrita como
 
 $$
 a=\begin{cases}1,&p\ge p_0,\\0,&p<p_0.\end{cases}
 $$
 
-Essa definição não descreve, por si só, erro de medição, resolução,
-tempo de resposta, histerese ou perda de sinal. Um sensor analógico pode
-requerer condicionamento e conversão analógico-digital; um sensor binário
-pode incorporar internamente um comparador e apresentar diretamente um
-contato ou uma saída eletrônica. Analogamente, uma saída lógica $y=1$
-representa uma **ordem de atuação**, não a confirmação de que o movimento
-ou a vazão efetivamente ocorreram. A confirmação exige observação
-independente, quando requerida pela especificação.
+Essa definição não descreve, por si só, erro de medição, resolução, tempo de
+resposta, histerese ou perda de sinal. Um sensor analógico pode requerer
+condicionamento e conversão analógico-digital; um sensor binário pode
+incorporar internamente um comparador e apresentar diretamente um contato ou
+uma saída eletrônica. Analogamente, uma saída lógica $y=1$ representa uma
+**ordem de atuação**, não a confirmação de que o movimento ou a vazão
+efetivamente ocorreram. A confirmação exige observação independente, quando
+requerida pela especificação.
 
 <!-- prettier-ignore -->
 ::: table Elementos da interface entre lógica e processo físico {#tbl-automation-interfaces .full-width}
 
-| Elemento | Grandeza ou função | Exemplo | Distinção necessária |
-| :--- | :--- | :--- | :--- |
-| Sensor | Mede ou detecta uma condição | Pressostato, sensor indutivo, termorresistência | Medição não é a própria grandeza |
-| Condicionamento | Adapta ou discretiza sinais | Comparador, filtro, conversor A/D | Limiares e atrasos alteram a interpretação |
-| Controlador | Avalia regras e estados | Circuito lógico, CLP, controlador embarcado | Comando não garante execução |
-| Interface de saída | Adapta potência e isola circuitos | Driver, relé, transistor de potência | Nível lógico não equivale à energia de atuação |
-| Atuador | Produz efeito físico | Solenoide, cilindro, motor, válvula acionada | Ação depende da energia e da carga |
-| Realimentação | Observa o efeito da atuação | Fim de curso, encoder, transdutor de pressão | Permite confrontar comando e resultado |
+| Elemento           | Grandeza ou função                | Exemplo                                         | Distinção necessária                           |
+| :----------------- | :-------------------------------- | :---------------------------------------------- | :--------------------------------------------- |
+| Sensor             | Mede ou detecta uma condição      | Pressostato, sensor indutivo, termorresistência | Medição não é a própria grandeza               |
+| Condicionamento    | Adapta ou discretiza sinais       | Comparador, filtro, conversor A/D               | Limiares e atrasos alteram a interpretação     |
+| Controlador        | Avalia regras e estados           | Circuito lógico, CLP, controlador embarcado     | Comando não garante execução                   |
+| Interface de saída | Adapta potência e isola circuitos | Driver, relé, transistor de potência            | Nível lógico não equivale à energia de atuação |
+| Atuador            | Produz efeito físico              | Solenoide, cilindro, motor, válvula acionada    | Ação depende da energia e da carga             |
+| Realimentação      | Observa o efeito da atuação       | Fim de curso, encoder, transdutor de pressão    | Permite confrontar comando e resultado         |
 
 :::
 
-A distinção entre comando e resposta física prepara a passagem da lógica
-de comutação ao controle de processos: em malha aberta, o comando é
-produzido sem correção baseada na saída observada; em malha fechada,
-medidas da resposta participam da determinação dos comandos.
+A distinção entre comando e resposta física prepara a passagem da lógica de
+comutação ao controle de processos: em malha aberta, o comando é produzido sem
+correção baseada na saída observada; em malha fechada, medidas da resposta
+participam da determinação dos comandos.
 
 ## 3.8. Equivalência das representações {#sec-equivalence-of-representations}
 
@@ -1767,84 +1763,81 @@ Considere uma carga que deve ser acionada quando houver solicitação $s$ e a
 condição de bloqueio $h$ estiver inativa, ou quando o comando de teste manual
 $t$ estiver ativo. Convencionamos $h=1$ para a presença do bloqueio e $h=0$
 para sua ausência. A especificação verbal é “($s$ e não $h$) ou $t$”. Sua
-fórmula proposicional é $(s\land\neg h)\lor t$, e sua expressão booleana
-é $y=s\overline{h}+t$. Na representação por conjuntos de estados,
-$S_y=(S_s\cap S_h^c)\cup S_t$. Em contatos, um contato normalmente aberto
-(NA) comandado por $s$ e um contato normalmente fechado (NF) comandado por
-$h$ formam um ramo em série, em paralelo com um contato NA comandado por $t$.
-Em portas lógicas, a saída da inversão de $h$ é combinada com $s$ por uma
-AND; o resultado alimenta uma OR juntamente com $t$.
+fórmula proposicional é $(s\land\neg h)\lor t$, e sua expressão booleana é
+$y=s\overline{h}+t$. Na representação por conjuntos de estados, $S_y=(S_s\cap
+S_h^c)\cup S_t$. Em contatos, um contato normalmente aberto (NA) comandado por
+$s$ e um contato normalmente fechado (NF) comandado por $h$ formam um ramo em
+série, em paralelo com um contato NA comandado por $t$. Em portas lógicas, a
+saída da inversão de $h$ é combinada com $s$ por uma AND; o resultado alimenta
+uma OR juntamente com $t$.
 
 <!-- prettier-ignore -->
 ::: table Tabela-verdade da habilitação $y=s\overline{h}+t$ {#tbl-integrated-example .full-width}
 
 | $s$ | $h$ | $t$ | $s\overline{h}$ | $y$ |
-| :-: | :-: | :-: | :--------------: | :-: |
-|  0  |  0  |  0  |        0         |  0  |
-|  0  |  0  |  1  |        0         |  1  |
-|  0  |  1  |  0  |        0         |  0  |
-|  0  |  1  |  1  |        0         |  1  |
-|  1  |  0  |  0  |        1         |  1  |
-|  1  |  0  |  1  |        1         |  1  |
-|  1  |  1  |  0  |        0         |  0  |
-|  1  |  1  |  1  |        0         |  1  |
+| :-: | :-: | :-: | :-------------: | :-: |
+|  0  |  0  |  0  |        0        |  0  |
+|  0  |  0  |  1  |        0        |  1  |
+|  0  |  1  |  0  |        0        |  0  |
+|  0  |  1  |  1  |        0        |  1  |
+|  1  |  0  |  0  |        1        |  1  |
+|  1  |  0  |  1  |        1        |  1  |
+|  1  |  1  |  0  |        0        |  0  |
+|  1  |  1  |  1  |        0        |  1  |
 
 :::
 
 A tabela é a especificação funcional comum a todas as representações. Quando
-$t=0$, a carga só é habilitada se $s=1$ e $h=0$; quando $t=1$, a saída
-vale 1 independentemente dos outros sinais. Portanto, **o comando de teste
-contorna a condição de bloqueio**. Se $h$ representar um intertravamento que
-não pode ser contornado, essa especificação não é apropriada: seria necessário,
-por exemplo, adotar $y=(s+t)\overline{h}$, após a análise dos requisitos de
-segurança e dos estados de falha do sistema.
-
+$t=0$, a carga só é habilitada se $s=1$ e $h=0$; quando $t=1$, a saída vale 1
+independentemente dos outros sinais. Portanto, **o comando de teste contorna a
+condição de bloqueio**. Se $h$ representar um intertravamento que não pode ser
+contornado, essa especificação não é apropriada: seria necessário, por exemplo,
+adotar $y=(s+t)\overline{h}$, após a análise dos requisitos de segurança e dos
+estados de falha do sistema.
 
 ### 3.8.3. Comutação elétrica, hidráulica e pneumática {#sec-multidomain-switching}
 
-A noção de **comutação** pode ser generalizada como a seleção, a interrupção
-ou o redirecionamento de um caminho de transmissão de energia ou de sinal,
-segundo uma condição de comando. No circuito elétrico, a variável de saída
-pode indicar a existência de um caminho condutor; em circuitos hidráulicos e
-pneumáticos, pode indicar a existência de um caminho idealizado para o
-escoamento entre uma alimentação e uma utilização. A correspondência é
-**funcional e condicional**: corrente elétrica, pressão e vazão não são
-grandezas intercambiáveis, e uma válvula não é literalmente um contato.
+A noção de **comutação** pode ser generalizada como a seleção, a interrupção ou
+o redirecionamento de um caminho de transmissão de energia ou de sinal, segundo
+uma condição de comando. No circuito elétrico, a variável de saída pode indicar
+a existência de um caminho condutor; em circuitos hidráulicos e pneumáticos,
+pode indicar a existência de um caminho idealizado para o escoamento entre uma
+alimentação e uma utilização. A correspondência é **funcional e condicional**:
+corrente elétrica, pressão e vazão não são grandezas intercambiáveis, e uma
+válvula não é literalmente um contato.
 
-Uma **válvula direcional** estabelece conexões entre portas de fluido em
-função de sua posição. Na designação usual, uma válvula **2/2** possui duas
-vias e duas posições; uma **3/2**, três vias e duas posições. A primeira
-pode servir, em um modelo simplificado, para habilitar ou interromper um
-caminho de alimentação; a segunda também pode conectar a utilização a
-uma via de retorno ou escape, conforme a posição. O estado **normal**
-refere-se à posição de repouso definida pelo mecanismo de acionamento e
-retorno, não à ausência universal de pressão nem a uma convenção booleana
-independente do circuito.
+Uma **válvula direcional** estabelece conexões entre portas de fluido em função
+de sua posição. Na designação usual, uma válvula **2/2** possui duas vias e
+duas posições; uma **3/2**, três vias e duas posições. A primeira pode servir,
+em um modelo simplificado, para habilitar ou interromper um caminho de
+alimentação; a segunda também pode conectar a utilização a uma via de retorno
+ou escape, conforme a posição. O estado **normal** refere-se à posição de
+repouso definida pelo mecanismo de acionamento e retorno, não à ausência
+universal de pressão nem a uma convenção booleana independente do circuito.
 
 <!-- prettier-ignore -->
 ::: table Correspondência funcional de elementos de comutação {#tbl-electrofluidic-switching .full-width}
 
-| Aspecto | Elétrico | Hidráulico | Pneumático |
-| :--- | :--- | :--- | :--- |
-| Fonte de energia | Fonte de tensão e corrente | Unidade de potência hidráulica | Fonte de ar comprimido |
-| Meio de transmissão | Condutores elétricos | Fluido hidráulico e tubulações | Ar comprimido e tubulações |
-| Elemento de comutação | Contato, relé ou transistor | Válvula direcional | Válvula direcional |
-| Comando possível | Mecânico ou eletromagnético | Manual, mecânico, piloto ou solenoide | Manual, mecânico, piloto ou solenoide |
-| Variável de saída idealizada | Continuidade ou energização | Caminho habilitado para alimentação | Caminho habilitado para alimentação |
-| E (modelo estático) | Contatos NA em série | Duas válvulas de bloqueio em série | Duas válvulas de bloqueio em série |
-| OU (modelo estático) | Contatos NA em paralelo | Caminhos alternativos, com isolamento quando necessário | Caminhos alternativos, com isolamento quando necessário |
-| NÃO (sob comando complementar) | Contato NF | Válvula cuja posição de repouso habilita o caminho | Válvula cuja posição de repouso habilita o caminho |
+| Aspecto                        | Elétrico                    | Hidráulico                                              | Pneumático                                              |
+| :----------------------------- | :-------------------------- | :------------------------------------------------------ | :------------------------------------------------------ |
+| Fonte de energia               | Fonte de tensão e corrente  | Unidade de potência hidráulica                          | Fonte de ar comprimido                                  |
+| Meio de transmissão            | Condutores elétricos        | Fluido hidráulico e tubulações                          | Ar comprimido e tubulações                              |
+| Elemento de comutação          | Contato, relé ou transistor | Válvula direcional                                      | Válvula direcional                                      |
+| Comando possível               | Mecânico ou eletromagnético | Manual, mecânico, piloto ou solenoide                   | Manual, mecânico, piloto ou solenoide                   |
+| Variável de saída idealizada   | Continuidade ou energização | Caminho habilitado para alimentação                     | Caminho habilitado para alimentação                     |
+| E (modelo estático)            | Contatos NA em série        | Duas válvulas de bloqueio em série                      | Duas válvulas de bloqueio em série                      |
+| OU (modelo estático)           | Contatos NA em paralelo     | Caminhos alternativos, com isolamento quando necessário | Caminhos alternativos, com isolamento quando necessário |
+| NÃO (sob comando complementar) | Contato NF                  | Válvula cuja posição de repouso habilita o caminho      | Válvula cuja posição de repouso habilita o caminho      |
 
 :::
 
 A {@ref fig-electrofluidic-switching} representa os casos E e OU em três
-tecnologias. Para tornar explícita a analogia, as válvulas são desenhadas
-como **blocos funcionais simplificados de passagem comandada**; não se
-pretende reproduzir a simbologia completa de válvulas direcionais da norma
-ISO 1219, que exige identificar posições, vias, conexões, acionamentos e
-retornos. A identificação normativa será aprofundada no estudo de circuitos
-hidráulicos e pneumáticos.
-
+tecnologias. Para tornar explícita a analogia, as válvulas são desenhadas como
+**blocos funcionais simplificados de passagem comandada**; não se pretende
+reproduzir a simbologia completa de válvulas direcionais da norma ISO 1219, que
+exige identificar posições, vias, conexões, acionamentos e retornos. A
+identificação normativa será aprofundada no estudo de circuitos hidráulicos e
+pneumáticos.
 
 <!-- prettier-ignore -->
 ::: figure Comparação funcional entre contatos elétricos e válvulas hidráulicas e pneumáticas {#fig-electrofluidic-switching}
@@ -1952,42 +1945,41 @@ hidráulicos e pneumáticos.
 
 Na leitura idealizada da figura, a conexão em série exige que ambos os
 comutadores habilitem a passagem; os ramos paralelos admitem caminhos
-alternativos. Contudo, **a associação paralela de vias de fluido não é,
-por si só, uma porta OU pneumática ou hidráulica universal**. Conforme as
-pressões e os estados das fontes, pode haver retorno de fluxo, comunicação
-indesejada entre ramos ou interferência entre comandos. Elementos de
-retenção, válvulas seletoras (_shuttle valves_) e arquiteturas específicas
-podem ser necessários para obter uma função OU de sinais de pressão.
-Da mesma forma, a implementação de NÃO pode exigir uma válvula 3/2 com
-alimentação e escape apropriados; não basta inverter graficamente uma
-seta de escoamento.
+alternativos. Contudo, **a associação paralela de vias de fluido não é, por si
+só, uma porta OU pneumática ou hidráulica universal**. Conforme as pressões e
+os estados das fontes, pode haver retorno de fluxo, comunicação indesejada
+entre ramos ou interferência entre comandos. Elementos de retenção, válvulas
+seletoras (_shuttle valves_) e arquiteturas específicas podem ser necessários
+para obter uma função OU de sinais de pressão. Da mesma forma, a implementação
+de NÃO pode exigir uma válvula 3/2 com alimentação e escape apropriados; não
+basta inverter graficamente uma seta de escoamento.
 
-A analogia se aplica à **condição de passagem em regime especificado**,
-não à igualdade de vazões, pressões, forças, velocidades ou tempos de
-resposta. Compressibilidade do ar, perdas de carga, vazamentos, viscosidade,
-pressão diferencial, retorno por mola e tempos de deslocamento das válvulas
-alteram a realização física. A posição de uma válvula também não assegura,
-sem hipóteses adicionais, a presença de vazão: uma via pode estar aberta
-sem diferença de pressão suficiente para o escoamento.
+A analogia se aplica à **condição de passagem em regime especificado**, não à
+igualdade de vazões, pressões, forças, velocidades ou tempos de resposta.
+Compressibilidade do ar, perdas de carga, vazamentos, viscosidade, pressão
+diferencial, retorno por mola e tempos de deslocamento das válvulas alteram a
+realização física. A posição de uma válvula também não assegura, sem hipóteses
+adicionais, a presença de vazão: uma via pode estar aberta sem diferença de
+pressão suficiente para o escoamento.
 
 ### 3.8.4. Linguagem Ladder e controladores lógicos programáveis {#sec-ladder-plc}
 
-A linguagem **Ladder** (diagrama de contatos, ou *Ladder Diagram* — LD)
+A linguagem **Ladder** (diagrama de contatos, ou _Ladder Diagram_ — LD)
 representa regras de comando por trilhos e degraus que lembram circuitos de
-relés. Na leitura lógica elementar, contatos em série representam E,
-contatos em paralelo representam OU e contatos de teste normalmente
-fechado representam a negação da condição examinada. A saída de um degrau
-pode ser representada por uma **bobina**, que designa uma variável de
-comando. Essa representação aproxima a expressão booleana do trabalho de
-programação e manutenção de sistemas automatizados.
+relés. Na leitura lógica elementar, contatos em série representam E, contatos
+em paralelo representam OU e contatos de teste normalmente fechado representam
+a negação da condição examinada. A saída de um degrau pode ser representada por
+uma **bobina**, que designa uma variável de comando. Essa representação
+aproxima a expressão booleana do trabalho de programação e manutenção de
+sistemas automatizados.
 
 Um **controlador lógico programável** (CLP) é um equipamento industrial
 programável destinado à aquisição de entradas, à execução de uma lógica de
-controle e ao comando de saídas, com interfaces e características adequadas
-ao ambiente de aplicação. Ladder é uma das linguagens utilizadas na
-programação de CLPs; não deve ser confundida com o equipamento, nem com
-um circuito de relés fisicamente montado. A família de normas IEC 61131-3
-trata de linguagens de programação de controladores programáveis.
+controle e ao comando de saídas, com interfaces e características adequadas ao
+ambiente de aplicação. Ladder é uma das linguagens utilizadas na programação de
+CLPs; não deve ser confundida com o equipamento, nem com um circuito de relés
+fisicamente montado. A família de normas IEC 61131-3 trata de linguagens de
+programação de controladores programáveis.
 
 <!-- prettier-ignore -->
 ::: figure Representação Ladder da função de habilitação $y=s\overline{h}+t$ {#fig-ladder-integrated-example}
@@ -2023,53 +2015,52 @@ trata de linguagens de programação de controladores programáveis.
 :::
 
 No exemplo da {@ref fig-ladder-integrated-example}, o degrau possui dois
-caminhos paralelos: o primeiro exige $s=1$ e $h=0$, pois o contato associado
-a $h$ é **normalmente fechado**; o segundo exige $t=1$. Sua condição de
+caminhos paralelos: o primeiro exige $s=1$ e $h=0$, pois o contato associado a
+$h$ é **normalmente fechado**; o segundo exige $t=1$. Sua condição de
 habilitação é, portanto, $y=s\overline{h}+t$, exatamente a mesma da tabela
 {@ref tbl-integrated-example}. Os trilhos e contatos são uma **notação de
-programação**: em um CLP, os contatos do diagrama normalmente testam bits
-na memória ou estados de entradas, não estabelecem diretamente uma
-continuidade elétrica entre os trilhos desenhados. O contato NF de $h$ testa
-o valor lógico 0 da variável, não necessariamente um contato físico NF.
-A bobina representa uma atribuição de estado ou um comando, e não
-necessariamente uma bobina eletromagnética real.
+programação**: em um CLP, os contatos do diagrama normalmente testam bits na
+memória ou estados de entradas, não estabelecem diretamente uma continuidade
+elétrica entre os trilhos desenhados. O contato NF de $h$ testa o valor lógico
+0 da variável, não necessariamente um contato físico NF. A bobina representa
+uma atribuição de estado ou um comando, e não necessariamente uma bobina
+eletromagnética real.
 
-Em uma implementação típica, o CLP adquire as entradas, executa o programa
-e atualiza as saídas segundo uma organização cíclica de execução. Por
-isso, a ordem de avaliação, o ciclo de varredura, a atualização das
-entradas e saídas, os temporizadores e a retenção de estados podem
-introduzir diferenças em relação a um circuito combinacional ideal.
-O programa também pode conter contatos associados a variáveis internas,
-memórias, temporizadores e estados de diagnóstico. A semelhança gráfica
-com contatos físicos é instrutiva, mas não autoriza identificá-los.
+Em uma implementação típica, o CLP adquire as entradas, executa o programa e
+atualiza as saídas segundo uma organização cíclica de execução. Por isso, a
+ordem de avaliação, o ciclo de varredura, a atualização das entradas e saídas,
+os temporizadores e a retenção de estados podem introduzir diferenças em
+relação a um circuito combinacional ideal. O programa também pode conter
+contatos associados a variáveis internas, memórias, temporizadores e estados de
+diagnóstico. A semelhança gráfica com contatos físicos é instrutiva, mas não
+autoriza identificá-los.
 
 ### 3.8.5. Exemplo de interfaceamento eletropneumático {#sec-electropneumatic-example}
 
-Considere um cilindro pneumático comandado por uma válvula direcional
-acionada eletricamente. Um sensor de presença fornece a condição $s$;
-um sensor de posição ou de proteção fornece a condição permissiva $h$;
-e o controlador calcula $y=sh$. Quando $y=1$, sua interface de saída
-pode energizar o solenoide da válvula, desde que as condições de potência
-e proteção tenham sido atendidas. A válvula estabelece então conexões
-pneumáticas que podem provocar o movimento do cilindro. A sequência de
-transformações é: **condição física → medição → codificação binária →
-decisão lógica → acionamento elétrico → comutação pneumática → movimento**.
+Considere um cilindro pneumático comandado por uma válvula direcional acionada
+eletricamente. Um sensor de presença fornece a condição $s$; um sensor de
+posição ou de proteção fornece a condição permissiva $h$; e o controlador
+calcula $y=sh$. Quando $y=1$, sua interface de saída pode energizar o solenoide
+da válvula, desde que as condições de potência e proteção tenham sido
+atendidas. A válvula estabelece então conexões pneumáticas que podem provocar o
+movimento do cilindro. A sequência de transformações é: **condição física →
+medição → codificação binária → decisão lógica → acionamento elétrico →
+comutação pneumática → movimento**.
 
-Essa cadeia contém elementos de naturezas distintas. A presença detectada
-não é o bit armazenado; o bit não é a corrente da bobina; a corrente não
-é a posição efetiva do êmbolo; e a posição do êmbolo não garante, sozinha,
-que a carga tenha atingido o resultado desejado. Para verificar a execução,
-pode-se acrescentar um sensor de fim de curso e comparar o comando com a
-resposta observada. O exemplo evidencia por que a equivalência booleana
-é necessária para projetar a decisão, mas insuficiente para caracterizar
-toda a operação de um sistema automatizado.
+Essa cadeia contém elementos de naturezas distintas. A presença detectada não é
+o bit armazenado; o bit não é a corrente da bobina; a corrente não é a posição
+efetiva do êmbolo; e a posição do êmbolo não garante, sozinha, que a carga
+tenha atingido o resultado desejado. Para verificar a execução, pode-se
+acrescentar um sensor de fim de curso e comparar o comando com a resposta
+observada. O exemplo evidencia por que a equivalência booleana é necessária
+para projetar a decisão, mas insuficiente para caracterizar toda a operação de
+um sistema automatizado.
 
 A mesma função lógica pode comandar uma válvula hidráulica, um contator
-elétrico ou um driver de motor. Isso não torna os atuadores equivalentes
-em força, potência, velocidade, precisão ou segurança. O projeto deve
-considerar a natureza da energia empregada, o estado seguro em falhas,
-a possibilidade de movimentos inesperados e as medidas de proteção
-adequadas à aplicação.
+elétrico ou um driver de motor. Isso não torna os atuadores equivalentes em
+força, potência, velocidade, precisão ou segurança. O projeto deve considerar a
+natureza da energia empregada, o estado seguro em falhas, a possibilidade de
+movimentos inesperados e as medidas de proteção adequadas à aplicação.
 
 ## 3.9. Síntese conceitual e fronteiras do modelo {#sec-model-limits}
 
@@ -2077,27 +2068,25 @@ O encadeamento estudado pode ser resumido como **conjuntos de estados →
 condições proposicionais → funções booleanas → redes de contatos ou portas**.
 Cada seta exige uma interpretação: universo e pertencimento, valoração das
 proposições, codificação de verdadeiro/falso como 1/0, convenção de atuação dos
-contatos e definição dos níveis elétricos. Na automação, a cadeia se amplia para
-**processo físico → sensor → interpretação do sinal → decisão lógica →
-interface de potência → atuador → processo físico**. Essa descrição
-permite distinguir os objetos físicos dos valores binários que os
-representam, e explicita que a função lógica especifica a decisão, não
-a totalidade do comportamento do processo. Com essas hipóteses, as
-tabelas-verdade permitem verificar equivalências de maneira independente da
-implementação.
+contatos e definição dos níveis elétricos. Na automação, a cadeia se amplia
+para **processo físico → sensor → interpretação do sinal → decisão lógica →
+interface de potência → atuador → processo físico**. Essa descrição permite
+distinguir os objetos físicos dos valores binários que os representam, e
+explicita que a função lógica especifica a decisão, não a totalidade do
+comportamento do processo. Com essas hipóteses, as tabelas-verdade permitem
+verificar equivalências de maneira independente da implementação.
 
 Em aplicações reais, a lógica combinacional estática não descreve memória,
 temporização, transições simultâneas, estados metastáveis ou falhas. Uma função
 booleana estabelece qual deve ser o resultado para entradas estáveis; não
 determina automaticamente quando a saída muda. Esses temas serão retomados nos
-capítulos sobre portas, circuitos sequenciais e temporização, bem como
-nos estudos de instrumentação, CLPs, sistemas hidráulicos e pneumáticos
-e teoria de controle. O controle **com histerese** emprega limiares
-distintos de entrada e saída de uma região de comutação; o controle
-**PID** combina ações proporcional, integral e derivativa sobre um
-sinal de erro. Essas estratégias respondem a problemas dinâmicos que
-ultrapassam a síntese de funções booleanas estáticas e serão formalizadas
-no desenvolvimento posterior da obra.
+capítulos sobre portas, circuitos sequenciais e temporização, bem como nos
+estudos de instrumentação, CLPs, sistemas hidráulicos e pneumáticos e teoria de
+controle. O controle **com histerese** emprega limiares distintos de entrada e
+saída de uma região de comutação; o controle **PID** combina ações
+proporcional, integral e derivativa sobre um sinal de erro. Essas estratégias
+respondem a problemas dinâmicos que ultrapassam a síntese de funções booleanas
+estáticas e serão formalizadas no desenvolvimento posterior da obra.
 
 ### 3.9.1. Limites de expressividade e extensões da lógica {#sec-logic-expressivity}
 
@@ -2115,13 +2104,13 @@ A separação entre lógica combinacional, dinâmica elétrica e comportamento
 sequencial evita atribuir às identidades algébricas propriedades que elas não
 garantem.
 
-Nos sistemas eletro-hidráulicos e eletropneumáticos, a representação de
-uma condição de passagem por 0 ou 1 exige ainda hipóteses sobre pressões,
-vazões e posições de válvulas. Mesmo quando duas arquiteturas possuem a
-mesma função de habilitação, podem diferir quanto a armazenamento de
-energia, dissipação, resposta transitória e comportamento em falhas. A
-verificação funcional por tabela-verdade deve, portanto, ser acompanhada
-de especificações físicas e de segurança adequadas ao processo.
+Nos sistemas eletro-hidráulicos e eletropneumáticos, a representação de uma
+condição de passagem por 0 ou 1 exige ainda hipóteses sobre pressões, vazões e
+posições de válvulas. Mesmo quando duas arquiteturas possuem a mesma função de
+habilitação, podem diferir quanto a armazenamento de energia, dissipação,
+resposta transitória e comportamento em falhas. A verificação funcional por
+tabela-verdade deve, portanto, ser acompanhada de especificações físicas e de
+segurança adequadas ao processo.
 
 ## Síntese do capítulo {#sec-boolean-chapter-summary}
 
@@ -2133,12 +2122,11 @@ Contatos em série, em paralelo e normalmente fechados realizam, sob convençõe
 explícitas, E, OU e NÃO; portas lógicas implementam eletronicamente as mesmas
 funções. Em automação, sensores traduzem condições físicas em sinais,
 controladores processam esses sinais e interfaces de potência comandam
-atuadores. A linguagem Ladder transpõe a lógica de contatos para a
-programação de CLPs; válvulas hidráulicas e pneumáticas admitem analogias
-funcionais com contatos, desde que se explicitem as condições de
-pressão, vazão e comutação. As formas canônicas permitem passar da tabela à expressão, e as
-identidades permitem transformar expressões sem modificar seu significado
-funcional.
+atuadores. A linguagem Ladder transpõe a lógica de contatos para a programação
+de CLPs; válvulas hidráulicas e pneumáticas admitem analogias funcionais com
+contatos, desde que se explicitem as condições de pressão, vazão e comutação.
+As formas canônicas permitem passar da tabela à expressão, e as identidades
+permitem transformar expressões sem modificar seu significado funcional.
 
 ## Referências bibliográficas {#sec-boolean-chapter-references}
 
@@ -2157,11 +2145,12 @@ funcional.
    McGraw-Hill Education, 2019.
 8. WAKERLY, John F. **Digital Design: Principles and Practices**. 5. ed.
    Pearson, 2018.
-9. IEC. **IEC 61131-3: Programmable controllers — Part 3: Programming languages**.
-   International Electrotechnical Commission.
+9. IEC. **IEC 61131-3: Programmable controllers — Part 3: Programming
+   languages**. International Electrotechnical Commission.
 10. ISO. **ISO 1219-1: Fluid power systems and components — Graphical symbols
-    and circuit diagrams — Part 1: Graphical symbols for conventional use
-    and data-processing applications**. International Organization for
+    and circuit diagrams — Part 1: Graphical symbols for conventional use and
+    data-processing applications**. International Organization for
     Standardization.
 11. BOLTON, W. **Programmable Logic Controllers**. Newnes.
-12. OGATA, Katsuhiko. **Modern Control Engineering**. 5. ed. Prentice Hall, 2010.
+12. OGATA, Katsuhiko. **Modern Control Engineering**. 5. ed. Prentice
+    Hall, 2010.

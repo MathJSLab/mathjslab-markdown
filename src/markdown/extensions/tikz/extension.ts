@@ -1,14 +1,14 @@
 import type { MarkdownDocumentContext, MarkdownExtension } from '../../../MarkdownEngine.js';
 import { assertSourceSize, renderExtensionError, sanitizeSVG } from '../../extensionUtils.js';
 import { isMarkdownNodeWithin } from '../../lifecycle.js';
-import { compileTikZ, type TikZOptions } from './runtime.js';
+import { compileTikZ, type TikZOptions, type TikZResult } from './runtime.js';
 import { tikzManifest } from './manifest.js';
 
 export const tikzExtension = (options: TikZOptions = {}): MarkdownExtension => {
-  const rendered = new Map<Element, () => void>();
+  const rendered = new Map<Element, Pick<TikZResult, 'release' | 'exportFonts'>>();
   let queue = Promise.resolve();
   const dispose = (container: Element): void => {
-    rendered.get(container)?.();
+    rendered.get(container)?.release();
     rendered.delete(container);
     container.replaceChildren();
   };
@@ -33,7 +33,7 @@ export const tikzExtension = (options: TikZOptions = {}): MarkdownExtension => {
           const image = container.querySelector('svg');
           image?.setAttribute('role', 'img');
           image?.setAttribute('aria-label', language === 'circuitikz' ? 'CircuiTikZ circuit diagram' : 'TikZ diagram');
-          rendered.set(container, release);
+          rendered.set(container, { release, exportFonts: result.exportFonts });
           release = undefined;
         } catch (cause) {
           release?.();
@@ -46,7 +46,16 @@ export const tikzExtension = (options: TikZOptions = {}): MarkdownExtension => {
   return {
     name: tikzManifest.name,
     manifest: tikzManifest,
-    fences: tikzManifest.fences.map((fence) => ({ ...fence, render, dispose })),
+    fences: tikzManifest.fences.map((fence) => ({
+      ...fence,
+      render,
+      dispose,
+      exportSVG(container) {
+        const entry = rendered.get(container);
+        const svg = container.querySelector('svg');
+        return entry && svg ? Promise.resolve({ svg: svg.outerHTML, fonts: entry.exportFonts }) : undefined;
+      },
+    })),
     disposeContainer(container) {
       for (const element of Array.from(rendered.keys())) if (isMarkdownNodeWithin(container, element)) dispose(element);
     },

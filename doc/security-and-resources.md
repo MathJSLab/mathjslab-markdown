@@ -12,7 +12,10 @@ renderer does not make authored content trustworthy.
 | `sanitized` | DOMPurify removes active tags, media, handlers, inline styles and `srcdoc` | `interactive` and `wasm`  |
 | `strict`    | Raw HTML becomes text; generated Markdown HTML is sanitized                | None                      |
 
-Generated HTML/SVG/MathML is sanitized in restricted modes. `parse()` is a
+HTML/SVG/MathML produced during the Markdown-to-HTML pass is sanitized in
+restricted modes. Extensions that render later own their output and resource
+boundaries. For example, Vega-Lite uses a policy-aware loader for its live SVG.
+`parse()` is a
 low-level synchronous operation and does not sanitize or validate URLs; use
 managed rendering APIs before inserting untrusted content into DOM.
 

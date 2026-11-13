@@ -14,6 +14,10 @@ on:
         required: false
         type: boolean
         default: false
+      visual_baselines:
+        description: Generate and verify Linux visual baseline candidates for review
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -24,7 +28,49 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  visual-baselines:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.visual_baselines }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install locked dependencies and Chromium
+        run: |
+          npm ci --ignore-scripts
+          npx playwright-core install --with-deps chromium
+      - name: Build package
+        run: npm run build
+      - name: Record the reference environment
+        run: |
+          mkdir -p test-results/visual
+          {
+            cat /etc/os-release
+            printf 'Runner image: %s %s\n' "$ImageOS" "$ImageVersion"
+            node --version
+            npm --version
+            npx playwright-core --version
+            fc-match sans-serif
+            fc-match serif
+          } > test-results/visual/environment.txt
+      - name: Generate candidates and compare two fresh runs
+        run: |
+          npm run test:visual -- --update
+          npm run test:visual
+          npm run test:visual
+          node test/browser/visual/math-labels.mjs
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: markdown-visual-baselines-linux
+          path: |
+            test/browser/visual/baselines/linux/
+            test-results/visual/
+          if-no-files-found: ignore
   linux:
+    if: ${{ !inputs.visual_baselines }}
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     env:
@@ -88,6 +134,12 @@ jobs:
         if: ${{ !inputs.candidate_run }}
         working-directory: package
         run: npm run test:browser:structured-blocks
+      - name: Check visual renderer fixtures in Chromium
+        if: ${{ !inputs.candidate_run }}
+        working-directory: package
+        run: |
+          node test/browser/visual-fixtures.mjs
+          node test/browser/visual/math-labels.mjs
       - name: Check molecular rendering with native and absent OffscreenCanvas
         if: ${{ !inputs.candidate_run || inputs.package_only }}
         working-directory: package

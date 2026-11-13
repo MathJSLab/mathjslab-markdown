@@ -14,3 +14,8 @@ digraph lesson {
 The extension retains source and a local diagnostic on failure. Its SVG must be
 handled through the managed rendering pipeline rather than inserted as
 arbitrary trusted markup by a host.
+
+Both fences support [standalone SVG export](../visual-export.md). The export
+preserves intrinsic dimensions, the viewBox and the accessible name. Markdown
+sizing attributes control the live layout. URL-bearing links and images are
+removed from exported files.

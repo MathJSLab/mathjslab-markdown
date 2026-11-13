@@ -49,7 +49,21 @@ export interface MarkdownResourceService {
   revokeObjectURL(url: string): void;
   dispose(): void;
 }
+export type MarkdownVisualExport = Readonly<{
+  kind: 'svg';
+  mimeType: 'image/svg+xml';
+  element: Element;
+  language: string;
+  serialize(): Promise<string>;
+}>;
+/** Renderer-provided SVG and optional WOFF2 bytes obtained through its resource service. */
+export type MarkdownSVGSource = string | Readonly<{ svg: string; fonts: ReadonlyMap<string, Uint8Array> }>;
+export type MarkdownVegaMathLabel = Readonly<{ tex: string; accessibleName: string }>;
 export type MarkdownDocumentContext = {
+  /** Trusted host formulas keyed by text in a Vega mark or Vega-Lite layer named markdown_math. */
+  vegaMathLabels?: Readonly<Record<string, MarkdownVegaMathLabel>>;
+  /** Receive an SVG export handle when an opted-in fence is ready. */
+  onVisualExport?: (visual: MarkdownVisualExport) => void;
   /** Per-fence presentation, resolved independently of legacy pixel hints. */
   renderSize?: MarkdownRenderSize;
   /** Optional ordered HDL updates; scoped to a single dispatched action. */
@@ -91,6 +105,8 @@ export type MarkdownFence = {
   language: string;
   className: string;
   render: (container: Element, source: string, context: MarkdownDocumentContext) => Promise<void>;
+  /** Return standalone SVG from a live render, or undefined when no visual is available. */
+  exportSVG?: (container: Element) => Promise<MarkdownSVGSource> | undefined;
   dispose?: (container: Element) => void | Promise<void>;
 };
 export type MarkdownExtensionManifest = {
@@ -753,6 +769,27 @@ export class MarkdownEngine {
       try {
         await entry.fence.render(renderable, source, diagnosticContext);
         finishRenderSize(renderable, diagnosticContext.renderSize);
+        if (diagnosticContext.onVisualExport && entry.fence.exportSVG && !context.signal?.aborted && !renderable.querySelector('.markdown-extension-fallback')) {
+          const assertActive = (): void => {
+            context.signal?.throwIfAborted();
+            if (this.disposed || this.rendered.get(renderable) !== entry.fence) throw new Error('Visual export is no longer available');
+          };
+          diagnosticContext.onVisualExport({
+            kind: 'svg',
+            mimeType: 'image/svg+xml',
+            element: renderable,
+            language: entry.fence.language,
+            async serialize() {
+              assertActive();
+              const pending = entry.fence.exportSVG?.(renderable);
+              if (!pending) throw new Error('Visual export is unavailable for this fence');
+              const [source, { serializeStandaloneSVG }] = await Promise.all([pending, import('./markdown/visualExport.js')]);
+              const svg = await serializeStandaloneSVG(source);
+              assertActive();
+              return svg;
+            },
+          });
+        }
       } catch (error) {
         try {
           await entry.fence.dispose?.(renderable);

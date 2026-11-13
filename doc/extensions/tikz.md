@@ -22,6 +22,22 @@ await engine.renderDocument(source, container);
 
 ## Authoring
 
+### CMOS schematics
+
+The [CMOS NAND/NOR fixture](../../test/markdown/extensions/circuitikz-cmos.md)
+uses named MOS devices and their `.G`, `.D` and `.S` anchors. Connect
+these anchors with orthogonal segments using `|-` and `-|`.
+Place `node[circ]{}` at a shared electrical junction and
+`node[ocirc]{}` at an open terminal. Use a short `to[crossing]`
+segment where a wire bridges another wire without an electrical
+connection. Use `node[vcc]` and `node[ground]` for the supply rails.
+
+For a CMOS NAND, the PMOS pull-up branches are in parallel and the
+NMOS pull-down devices are in series. For NOR, the PMOS devices are
+in series and the NMOS branches are in parallel. Keep device labels
+on the transistors and use the enclosing `::: figure ... {#id}`
+for the caption and `{@ref id}` target.
+
 Supply a complete picture environment, without a document class or document
 environment. TikZJax supplies the surrounding document. The `circuitikz` fence
 loads the CircuiTikZ package automatically; a `tikz` fence using a `circuitikz`
@@ -83,6 +99,11 @@ Third-party runtime licensing and notices are preserved in the deployed tree;
 see the [TikZJax project](https://github.com/rod2ik/tikzjax).
 
 ## Limits and lifecycle
+
+Hosts can opt in to [standalone SVG export](../visual-export.md) for both
+TikZ and CircuiTikZ. The exporter embeds the WOFF2 fonts already loaded
+through the document resource service. The exported file retains its
+intrinsic dimensions and can be saved before disposing the session.
 
 Compilation is sequential within an extension instance, bounding concurrent TeX
 memory use. Each diagram gets a fresh Worker; its virtual filesystem and

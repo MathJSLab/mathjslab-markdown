@@ -16,10 +16,11 @@ const viewer = {
 };
 jest.unstable_mockModule('../../src/markdown/extensions/molecule-3d/vendor/3dmol.js', () => ({ default: { createViewer: jest.fn(() => viewer) } }));
 const result = { view: { resize: jest.fn(), runAsync: jest.fn(async () => undefined) }, finalize: jest.fn() };
-jest.unstable_mockModule('vega-embed', () => ({ default: jest.fn(async () => result) }));
+const embed = jest.fn(async (_element: Element, _spec: unknown, _options: unknown) => result);
+jest.unstable_mockModule('vega-embed', () => ({ default: embed }));
 Object.assign(globalThis, { TextEncoder, cancelAnimationFrame: jest.fn(), requestAnimationFrame: jest.fn(() => 1) });
 const { molecule3DExtension } = await import('../../src/markdown/extensions/molecule-3d/extension');
-const { vegaLiteExtension } = await import('../../src/markdown/extensions/vega-lite/extension');
+const { vegaExtension, vegaLiteExtension } = await import('../../src/markdown/extensions/vega-lite/extension');
 const { waitForElementLayout } = await import('../../src/markdown/extensionUtils');
 
 it('renders non-protein PDB atoms and retains the viewer for resize until disposal', async () => {
@@ -73,6 +74,85 @@ it('cancels layout waiting for a disconnected viewport before resources are allo
   controller.abort();
   await expect(operation).resolves.toBeUndefined();
   expect(cancelAnimationFrame).toHaveBeenCalled();
+});
+
+it('keeps embed options host-controlled and routes Vega loader reads through the document service', async () => {
+  const extension = vegaLiteExtension();
+  const container = document.createElement('div');
+  const readText = jest.fn(async () => '[]');
+  const resolve = jest.fn((reference: string) => new URL(reference, 'https://example.test/'));
+  const resources = { readText, resolve, fetch: jest.fn<() => Promise<Response>>(), createObjectURL: jest.fn<() => string>(), revokeObjectURL: jest.fn(), dispose: jest.fn() };
+  const onDiagnostic = jest.fn();
+  const source = '{"usermeta":{"title":"Keep me","embedOptions":{"actions":true,"renderer":"canvas","config":"https://elsewhere.test/config.json"}}}';
+  try {
+    await extension.fences![0]!.render(container, source, { resources, onDiagnostic });
+    expect(embed).toHaveBeenLastCalledWith(container, { usermeta: { title: 'Keep me' } }, expect.objectContaining({ renderer: 'svg', actions: false, ast: true }));
+    const options = embed.mock.lastCall![2] as { loader: import('vega').Loader };
+    await expect(options.loader.load('data.json')).resolves.toBe('[]');
+    expect(readText).toHaveBeenCalledWith('data.json', expect.objectContaining({ resources }));
+    await expect(options.loader.sanitize('image.png', { context: 'image' })).rejects.toThrow(/image resources/);
+    expect(onDiagnostic).toHaveBeenCalledWith(expect.objectContaining({ code: 'resource-url-blocked' }));
+  } finally {
+    await extension.dispose!();
+  }
+  expect(resources.dispose).not.toHaveBeenCalled();
+});
+
+it.each(['{', 'null', '[]'])('preserves an invalid Vega-Lite source (%s) and reports a render diagnostic', async (source) => {
+  const extension = vegaLiteExtension();
+  const container = document.createElement('div');
+  const onDiagnostic = jest.fn();
+  const calls = embed.mock.calls.length;
+  await extension.fences![0]!.render(container, source, { onDiagnostic });
+  expect(container.querySelector('.markdown-extension-fallback')?.textContent).toBe(source);
+  expect(onDiagnostic).toHaveBeenCalledWith(expect.objectContaining({ code: 'extension-render-error', language: 'vega-lite' }));
+  expect(embed.mock.calls).toHaveLength(calls);
+});
+
+it('finalizes an embed that resolves after its document signal is aborted', async () => {
+  const extension = vegaLiteExtension();
+  const container = document.createElement('div');
+  const controller = new AbortController();
+  const observeResize = jest.fn();
+  const finalize = jest.fn();
+  embed.mockImplementationOnce(async () => {
+    container.append(document.createElement('svg'));
+    controller.abort();
+    return { view: result.view, finalize };
+  });
+  await extension.fences![0]!.render(container, '{}', { signal: controller.signal, observeResize });
+  expect(container.childElementCount).toBe(0);
+  expect(finalize).toHaveBeenCalledTimes(1);
+  expect(observeResize).not.toHaveBeenCalled();
+  await extension.dispose!();
+  expect(finalize).toHaveBeenCalledTimes(1);
+});
+
+it('uses full Vega mode and preserves the source when the runtime absorbs a failed dataset request', async () => {
+  const extension = vegaExtension();
+  const container = document.createElement('div');
+  const onDiagnostic = jest.fn();
+  const finalize = jest.fn();
+  const source = '{"data":[{"name":"samples","url":"samples.json"}]}';
+  embed.mockImplementationOnce(async (_element, spec, options) => {
+    expect(spec).toEqual(JSON.parse(source));
+    expect(options).toEqual(expect.objectContaining({ mode: 'vega', renderer: 'svg' }));
+    const { loader } = options as { loader: import('vega').Loader };
+    await expect(loader.load('samples.json')).rejects.toThrow('Request failed');
+    return { view: result.view, finalize };
+  });
+  await extension.fences![0]!.render(container, source, {
+    sourceUrl: new URL('https://example.test/page.md'),
+    fetchResource: async () => {
+      throw new Error('Request failed');
+    },
+    onDiagnostic,
+  });
+  expect(container.querySelector('.markdown-extension-fallback')?.textContent).toBe(source);
+  expect(onDiagnostic).toHaveBeenCalledWith(expect.objectContaining({ code: 'extension-render-error', language: 'vega' }));
+  expect(finalize).toHaveBeenCalledTimes(1);
+  await extension.dispose!();
+  expect(finalize).toHaveBeenCalledTimes(1);
 });
 
 it.each(['pdb', 'cif', 'mmcif', 'sdf', 'mol2', 'xyz', 'cube'])('sizes the %s viewport before initialization and retains resize/disposal', async (language) => {

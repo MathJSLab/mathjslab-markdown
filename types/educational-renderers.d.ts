@@ -1,6 +1,6 @@
 declare module 'vega-embed' {
   type Result = {
-    view: { resize(): unknown; runAsync(): Promise<unknown> };
+    view: { resize(): unknown; runAsync(): Promise<unknown>; toSVG(): Promise<string> };
     finalize(): void;
   };
   export default function embed(element: HTMLElement | string, spec: object, options?: object): Promise<Result>;
