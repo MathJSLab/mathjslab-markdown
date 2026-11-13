@@ -138,7 +138,7 @@ jobs:
         if: ${{ !inputs.candidate_run }}
         working-directory: package
         run: |
-          node test/browser/visual-fixtures.mjs
+          npm run test:visual
           node test/browser/visual/math-labels.mjs
       - name: Check molecular rendering with native and absent OffscreenCanvas
         if: ${{ !inputs.candidate_run || inputs.package_only }}

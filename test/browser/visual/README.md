@@ -13,8 +13,8 @@ the reference platform with the same installed fonts. Other platforms can run
 the functional checks while separate baselines are pending. Baseline updates on
 another platform write to `baselines/<platform>/` so they cannot replace the
 Windows captures. For Linux, generate and compare twice on the same Ubuntu
-24.04 image and font set used by release CI. Review the captures before adding
-pixel comparison to that job.
+24.04 image and font set used by release CI. Review updated captures before running
+pixel comparison in that job.
 
 To generate candidates on GitHub Actions, run the **Markdown release
 validation** workflow manually with `visual_baselines` enabled on the ref to
