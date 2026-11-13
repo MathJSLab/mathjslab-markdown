@@ -1,9 +1,9 @@
 # Notas de aula em Markdown
 
-Esta coleção reúne **105 notas em português brasileiro**. Todas têm versões
+Esta coleção reúne **107 notas em português brasileiro**. Todas têm versões
 correspondentes em [inglês](../en/README.md) e [espanhol](../es/README.md), com
-os mesmos nomes de arquivo. Cada uma das 24 extensões tem pelo menos quatro
-notas distintas por idioma.
+os mesmos nomes de arquivo. Vega tem uma nota por idioma. Cada uma das outras
+24 extensões tem pelo menos quatro notas distintas por idioma.
 
 As notas incluem explicações, exemplos, atividades e respostas. Os dados são
 locais ou incorporados, incluindo [temperaturas](resources/temperaturas.csv) e
@@ -44,7 +44,8 @@ de execução. Configure `locale: "pt-BR"` para os rótulos gerados. Consulte os
 | `smiles`           |    12 |
 | `syntax-highlight` |     7 |
 | `tikz`             |     6 |
-| `vega-lite`        |    10 |
+| `vega`             |     1 |
+| `vega-lite`        |    11 |
 | `verovio`          |     5 |
 | `vcd`              |     4 |
 | `wavedrom`         |     7 |
@@ -77,6 +78,8 @@ de execução. Configure `locale: "pt-BR"` para os rótulos gerados. Consulte os
 | [SPI: clock e seleção](comunicacao-spi.md)                                                               | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom`                                 |
 | [Crescimento composto: um modelo multiplicativo](crescimento-composto.md)                                | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                                                     |
 | [Cubo: superfície, volume e malha triangular](cubo-em-stl.md)                                            | `heading-ids`, `mathjax`, `model-3d`, `relative-urls`                                                      |
+| [Curvas científicas com eixos contrapostos](curvas-cientificas.md)                                       | `vega-lite`                                                                                                |
+| [Tensão medida com Vega](tensao-vega.md)                                                                 | `vega`                                                                                                     |
 | [Definições e exemplos: norma de um vetor](definicoes-e-exemplos.md)                                     | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`                                  |
 | [Indução: soma dos primeiros inteiros](demonstracao-por-inducao.md)                                      | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`                                  |
 | [Dependências de um projeto](dependencias-de-projeto.md)                                                 | `graphviz`, `heading-ids`, `relative-urls`                                                                 |

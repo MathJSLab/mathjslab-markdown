@@ -1,9 +1,9 @@
 # Markdown lesson notes
 
-This collection contains **105 notes in English**. Every note has corresponding
+This collection contains **107 notes in English**. Every note has corresponding
 [Brazilian Portuguese](../pt/README.md) and [Spanish](../es/README.md) versions
-with the same filename. Each of the 24 extensions has at least four distinct
-notes per language.
+with the same filename. Vega has one note per language. Each of the other 24
+extensions has at least four distinct notes per language.
 
 Notes include explanations, examples, activities and answers. Data are local or
 embedded, including [temperatures](resources/temperaturas.csv) and
@@ -44,7 +44,8 @@ MathJSLab requires an executor and execution authorization. Set
 | `smiles`           |    12 |
 | `syntax-highlight` |     7 |
 | `tikz`             |     6 |
-| `vega-lite`        |    10 |
+| `vega`             |     1 |
+| `vega-lite`        |    11 |
 | `verovio`          |     5 |
 | `vcd`              |     4 |
 | `wavedrom`         |     7 |
@@ -77,6 +78,8 @@ MathJSLab requires an executor and execution authorization. Set
 | [SPI: clock and selection](comunicacao-spi.md)                                                   | `cross-references`, `didactic`, `heading-ids`, `relative-urls`, `wavedrom`                                 |
 | [Compound growth: a multiplicative model](crescimento-composto.md)                               | `heading-ids`, `mathjax`, `mathjslab`, `relative-urls`                                                     |
 | [Cube: surface area, volume and triangle mesh](cubo-em-stl.md)                                   | `heading-ids`, `mathjax`, `model-3d`, `relative-urls`                                                      |
+| [Scientific curves with opposed axes](curvas-cientificas.md)                                     | `vega-lite`                                                                                                |
+| [Measured voltage with Vega](tensao-vega.md)                                                     | `vega`                                                                                                     |
 | [Definitions and examples: vector norm](definicoes-e-exemplos.md)                                | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`                                  |
 | [Induction: sum of the first integers](demonstracao-por-inducao.md)                              | `cross-references`, `didactic`, `heading-ids`, `mathjax`, `relative-urls`                                  |
 | [Project dependencies](dependencias-de-projeto.md)                                               | `graphviz`, `heading-ids`, `relative-urls`                                                                 |
