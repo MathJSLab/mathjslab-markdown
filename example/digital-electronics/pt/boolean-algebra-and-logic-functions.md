@@ -13,13 +13,10 @@ eletrônicos. Na automação, essas relações também especificam decisões de
 controladores que recebem informações de sensores e comandam atuadores
 elétricos, hidráulicos ou pneumáticos.
 
-O desenvolvimento parte de conjuntos e diagramas de Venn, avança pelas
-proposições e suas tabelas-verdade e chega à definição axiomática da álgebra
-booleana, às identidades, às formas canônicas e à síntese de funções. Em
-seguida, examina a realização dessas funções por contatos e portas, para
-estabelecer, de maneira sistemática, a correspondência entre representações
-gráficas, simbólicas, tabulares e físicas. A comparação não depende apenas de
-semelhanças visuais: requer explicitar o universo de estados, as valorações e a
+O percurso inicia-se nos conjuntos e na lógica proposicional, formaliza a
+álgebra de Boole e a síntese de funções, e examina suas realizações por
+contatos e portas. A correspondência entre representações gráficas, simbólicas,
+tabulares e físicas exige explicitar o universo de estados, as valorações e a
 interpretação das variáveis binárias.
 
 Uma distinção acompanhará todo o capítulo: **equivalência lógica não é
@@ -366,13 +363,10 @@ ativação quanto sua escrita algébrica.
 
 :::
 
-A operação E exige a satisfação simultânea das condições; OU, ao contrário,
-exige a satisfação de pelo menos uma delas; e NÃO inverte uma condição. Na
-notação algébrica, $+$ designa a disjunção inclusiva, $\cdot$ a conjunção e a
-barra a complementação. Esses símbolos **não** devem ser interpretados
-automaticamente como operações aritméticas ordinárias: por exemplo, $1+1=1$ na
-álgebra booleana binária. As definições apresentadas até aqui justificam a
-introdução de uma estrutura algébrica que preserve formalmente essas relações.
+Na notação algébrica, $+$ designa a disjunção inclusiva, $\cdot$ a conjunção
+e a barra a complementação. Não são operações aritméticas ordinárias:
+na álgebra booleana binária, por exemplo, $1+1=1$. Essas relações motivam a
+definição formal apresentada a seguir.
 
 ## 3.3. Definição formal da álgebra de Boole {#sec-formal-boolean-algebra}
 
@@ -523,7 +517,7 @@ $$
 
 Essas identidades explicam, por exemplo, por que uma condição de **não ativação
 simultânea** pode ser implementada como a conjunção das negações, e fundamentam
-a transformação entre portas NAND e NOR.
+a transformação entre portas **NAND** e **NOR**.
 
 ### 3.3.6. Homomorfismos, isomorfismos e preservação das operações {#sec-boolean-homomorphisms}
 
@@ -571,23 +565,21 @@ função, mas diferentes expressões podem definir a mesma aplicação.
 
 :::
 
-As funções AND (E), OR (OU) e NOT (NÃO) formam uma base funcionalmente
-completa. NAND isoladamente e NOR isoladamente também são bases completas: por
-exemplo, $\bar A=\overline{AA}$ com NAND, e $AB=\overline{\bar A+\bar B}$ por
-De Morgan. XOR representa a desigualdade entre dois bits; XNOR, sua igualdade.
+As funções **AND** (E), **OR** (OU) e **NOT** (NÃO) formam uma base funcionalmente
+completa. **NAND** isoladamente e **NOR** isoladamente também são bases completas: por
+exemplo, $\bar A=\overline{AA}$ com **NAND**, e $AB=\overline{\bar A+\bar B}$ por
+De Morgan. **XOR** representa a desigualdade entre dois bits; **XNOR**, sua igualdade.
 
 ### 3.4.1. Funções de comutação e completude funcional {#sec-switching-functions-completeness}
 
-Para $n$ variáveis, cada uma das $2^n$ combinações de entrada pode receber
-independentemente uma saída em $\{0,1\}$; daí a existência de $2^{2^n}$ funções
-booleanas. A tabela-verdade define uma função de maneira extensional, ao passo
-que uma expressão a define por composição de operações.
+A tabela-verdade define uma função por seus valores em cada combinação de
+entrada; uma expressão a define pela composição de operações.
 
 <!-- prettier-ignore -->
 Um conjunto de conectivos é **funcionalmente completo** quando toda função
 booleana finita pode ser expressa usando apenas esses conectivos e variáveis. O
 conjunto $\{\neg,\land\}$ é completo porque $A\lor B\equiv\neg(\neg A\land\neg B)$.
-O conjunto $\{\neg,\lor\}$ também é completo. A operação NAND, escrita
+O conjunto $\{\neg,\lor\}$ também é completo. A operação **NAND**, escrita
 $A\uparrow B=\overline{AB}$, basta sozinha:
 
 $$
@@ -595,7 +587,7 @@ $$
 AB=(A\uparrow B)\uparrow(A\uparrow B). \tag{3.16}
 $$
 
-Analogamente, a operação NOR $A\downarrow B=\overline{A+B}$ permite construir
+Analogamente, a operação **NOR** $A\downarrow B=\overline{A+B}$ permite construir
 $\bar A=A\downarrow A$ e $A+B=(A\downarrow B)\downarrow(A\downarrow B)$. Essas
 identidades justificam arquiteturas construídas exclusivamente com uma família
 de portas, sem afirmar que tal implementação seja sempre a mais econômica ou
@@ -720,13 +712,13 @@ adequadas, a saída $y=1$ significa existência de caminho condutor entre a font
 e a carga. Essa é uma abstração de conectividade: resistências, transientes,
 arcos e quedas de tensão são desconsiderados.
 
-### 3.6.1. Série representa E {#sec-switch-and}
+### 3.6.1. Série representa **AND** {#sec-switch-and}
 
 Dois contatos normalmente abertos em **série** permitem corrente apenas se
 ambos estiverem fechados. Logo, $y=a\cdot b=ab$.
 
 <!-- prettier-ignore -->
-::: figure Dois contatos em série realizam a operação E {#fig-switch-and}
+::: figure Dois contatos em série realizam a operação AND {#fig-switch-and}
 
 ```tikz
 \begin{tikzpicture}[scale=2.0,transform shape,>=stealth]
@@ -742,14 +734,14 @@ ambos estiverem fechados. Logo, $y=a\cdot b=ab$.
 
 :::
 
-### 3.6.2. Paralelo representa OU {#sec-switch-or}
+### 3.6.2. Paralelo representa **OR** {#sec-switch-or}
 
 Dois contatos normalmente abertos em **paralelo** fornecem caminhos
 alternativos. Basta que um deles esteja fechado para existir continuidade:
 $y=a+b$.
 
 <!-- prettier-ignore -->
-::: figure Dois contatos em paralelo realizam a operação OU {#fig-switch-or}
+::: figure Dois contatos em paralelo realizam a operação OR {#fig-switch-or}
 
 ```tikz
 \begin{tikzpicture}[scale=2.0,transform shape]
@@ -777,7 +769,7 @@ na ausência de atuação, não um valor lógico universal: é necessário decla
 como a variável representa a atuação.
 
 <!-- prettier-ignore -->
-::: figure Contato normalmente fechado como realização de NÃO {#fig-switch-not}
+::: figure Contato normalmente fechado como realização de NOT {#fig-switch-not}
 
 ```tikz
 \begin{tikzpicture}[scale=2.0,transform shape]
@@ -799,13 +791,10 @@ booleanas: um caminho em série corresponde a um produto lógico, enquanto ramos
 alternativos em paralelo correspondem a uma soma lógica. A ordem e o
 agrupamento dessas associações determinam a função realizada.
 
-As associações em série e em paralelo podem ser compostas recursivamente,
-permitindo construir funções mais complexas a partir das operações E e OU. Por
-exemplo, $y=ab+c$ corresponde a dois contatos em série em um ramo, ligados em
-paralelo com um terceiro contato. A expressão $y=(a+b)c$ corresponde ao
-paralelo de $a$ e $b$ seguido de um contato $c$ em série. As expressões são
-diferentes: para $(a,b,c)=(0,0,1)$, a primeira fornece $ab+c=1$, enquanto a
-segunda fornece $(a+b)c=0$.
+Por exemplo, $y=ab+c$ corresponde a dois contatos em série, em paralelo com
+um terceiro; já $y=(a+b)c$ corresponde a dois contatos em paralelo seguidos
+por um terceiro em série. O agrupamento importa: para $(a,b,c)=(0,0,1)$,
+a primeira expressão vale 1 e a segunda, 0.
 
 <!-- prettier-ignore -->
 ::: table Correspondência entre operações e contatos {#tbl-switch-correspondence .full-width}
@@ -833,9 +822,9 @@ pode energizar uma bobina que comanda um atuador. O contato, o sensor e a carga
 devem ser distinguidos: um é elemento de comutação, outro produz informação e a
 terceira recebe energia ou comando.
 
-### 3.6.5. Contatos em série e paralelo representam OU exclusivo (XOR) {#sec-switch-xor}
+### 3.6.5. Realização de **XOR** com contatos {#sec-switch-xor}
 
-A operação **OU exclusivo (XOR)** pode ser realizada por dois ramos em
+A operação **OU exclusivo (**XOR**)** pode ser realizada por dois ramos em
 paralelo, cada um contendo dois contatos em série: um normalmente aberto (NA) e
 outro normalmente fechado (NF). Sua expressão booleana é:
 
@@ -905,7 +894,7 @@ aberto e o outro normalmente fechado.
 Uma **porta lógica** é um bloco físico que implementa uma função booleana,
 recebendo sinais elétricos interpretados como 0 ou 1. Em lógica positiva, o
 nível alto corresponde a 1 e o baixo a 0, respeitadas as faixas de tensão
-especificadas pela tecnologia. Portas AND, OR, NOT, NAND, NOR, XOR e XNOR
+especificadas pela tecnologia. Portas **AND**, **OR**, **NOT**, **NAND**, **NOR**, **XOR** e **XNOR**
 possuem símbolos convencionais; uma pequena bolha em uma entrada ou saída
 indica inversão lógica. A porta é um elemento de processamento de sinais, não
 um sensor nem um atuador: para interagir com o processo físico, seus níveis
@@ -915,13 +904,20 @@ de comutação; nas famílias lógicas modernas, redes de transistores constitue
 elemento central da implementação. O símbolo de uma porta expressa a função
 lógica, não seu circuito interno.
 
+A simbologia será examinada em detalhe a seguir, desde blocos de múltiplas
+entradas até portas com entradas e saídas complementadas. As figuras
+complementares explicitam como uma mesma função admite diferentes
+representações, sem alterar as convenções matemáticas estabelecidas.
+
 <!-- prettier-ignore -->
-::: figure Portas lógicas AND, OR, NOT, XOR, NAND, NOR e XNOR e suas funções {#fig-basic-logic-gates}
+::: figure Portas lógicas AND, NAND, OR, NOR, XOR, XNOR e NOT, e suas funções {#fig-basic-logic-gates}
 
 ```tikz
-\usetikzlibrary{circuits.logic.US}
+\usetikzlibrary{circuits.logic.US,calc}
 
 \begin{tikzpicture}[
+    scale=1.2,
+    transform shape,
     gate/.style={
         draw,
         minimum width=1.8cm,
@@ -930,116 +926,1220 @@ lógica, não seu circuito interno.
     },
     signal/.style={
         font=\Large,
-        inner sep=3pt
+        inner sep=8pt
     },
     gate title/.style={
         font=\Large\bfseries,
-        anchor=west
+        anchor=center
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
     }
 ]
 
-% Primeira coluna: portas lógicas
+% ==================================================
+% Organização em duas colunas
+%
+% Coluna 1: AND, OR, XOR, NOT
+% Coluna 2: NAND, NOR, XNOR
+%
+% A quarta posição da coluna 2 fica vazia.
+% ==================================================
+
+% --------------------------------------------------
+% Primeira coluna
+% --------------------------------------------------
+
 \node[and gate US,gate,logic gate inputs=nn]
-    (gand) at (3,15) {};
+    (gand) at (3,12) {};
 
 \node[or gate US,gate,logic gate inputs=nn]
-    (gor) at (3,12.5) {};
-
-\node[not gate US,gate]
-    (gnot) at (3,10) {};
+    (gor) at (3,8) {};
 
 \node[xor gate US,gate,logic gate inputs=nn]
-    (gxor) at (3,7.5) {};
+    (gxor) at (3,4) {};
+
+\node[not gate US,gate]
+    (gnot) at (3,0) {};
+
+% --------------------------------------------------
+% Segunda coluna
+% --------------------------------------------------
 
 \node[nand gate US,gate,logic gate inputs=nn]
-    (gnand) at (3,5) {};
+    (gnand) at (11,12) {};
 
 \node[nor gate US,gate,logic gate inputs=nn]
-    (gnor) at (3,2.5) {};
+    (gnor) at (11,8) {};
 
 \node[xnor gate US,gate,logic gate inputs=nn]
-    (gxnor) at (3,0) {};
+    (gxnor) at (11,4) {};
 
-% Porta AND
+% --------------------------------------------------
+% Títulos acima das portas
+% --------------------------------------------------
+
+\node[gate title] at (3,13.7) {AND};
+\node[gate title] at (3,9.7) {OR};
+\node[gate title] at (3,5.7) {XOR};
+\node[gate title] at (3,1.7) {NOT};
+
+\node[gate title] at (11,13.7) {NAND};
+\node[gate title] at (11,9.7) {NOR};
+\node[gate title] at (11,5.7) {XNOR};
+
+% ==================================================
+% Coluna 1
+% ==================================================
+
+% --------------------------------------------------
+% AND: ab
+% --------------------------------------------------
+
 \draw (gand.input 1) -- ++(-1.2,0)
+    coordinate (and-in1)
     node[left,signal] {$a$};
+
 \draw (gand.input 2) -- ++(-1.2,0)
+    coordinate (and-in2)
     node[left,signal] {$b$};
+
 \draw (gand.output) -- ++(1.2,0)
+    coordinate (and-out)
     node[right,signal] {$ab$};
 
-% Porta OR
+\node[terminal] at (and-in1) {};
+\node[terminal] at (and-in2) {};
+\node[terminal] at (and-out) {};
+
+% --------------------------------------------------
+% OR: a+b
+% --------------------------------------------------
+
 \draw (gor.input 1) -- ++(-1.2,0)
+    coordinate (or-in1)
     node[left,signal] {$a$};
+
 \draw (gor.input 2) -- ++(-1.2,0)
+    coordinate (or-in2)
     node[left,signal] {$b$};
+
 \draw (gor.output) -- ++(1.2,0)
+    coordinate (or-out)
     node[right,signal] {$a+b$};
 
-% Porta NOT
-\draw (gnot.input) -- ++(-1.2,0)
-    node[left,signal] {$a$};
-\draw (gnot.output) -- ++(1.2,0)
-    node[right,signal] {$\overline{a}$};
+\node[terminal] at (or-in1) {};
+\node[terminal] at (or-in2) {};
+\node[terminal] at (or-out) {};
 
-% Porta XOR
+% --------------------------------------------------
+% XOR: a \oplus b
+% --------------------------------------------------
+
 \draw (gxor.input 1) -- ++(-1.2,0)
+    coordinate (xor-in1)
     node[left,signal] {$a$};
+
 \draw (gxor.input 2) -- ++(-1.2,0)
+    coordinate (xor-in2)
     node[left,signal] {$b$};
+
 \draw (gxor.output) -- ++(1.2,0)
+    coordinate (xor-out)
     node[right,signal] {$a\oplus b$};
 
-% Porta NAND
-\draw (gnand.input 1) -- ++(-1.2,0)
+\node[terminal] at (xor-in1) {};
+\node[terminal] at (xor-in2) {};
+\node[terminal] at (xor-out) {};
+
+% --------------------------------------------------
+% NOT: complemento de a
+% --------------------------------------------------
+
+\draw (gnot.input) -- ++(-1.2,0)
+    coordinate (not-in)
     node[left,signal] {$a$};
+
+\draw (gnot.output) -- ++(1.2,0)
+    coordinate (not-out)
+    node[right,signal] {$\overline{a}$};
+
+\node[terminal] at (not-in) {};
+\node[terminal] at (not-out) {};
+
+% ==================================================
+% Coluna 2
+% ==================================================
+
+% --------------------------------------------------
+% NAND: complemento de ab
+% --------------------------------------------------
+
+\draw (gnand.input 1) -- ++(-1.2,0)
+    coordinate (nand-in1)
+    node[left,signal] {$a$};
+
 \draw (gnand.input 2) -- ++(-1.2,0)
+    coordinate (nand-in2)
     node[left,signal] {$b$};
+
 \draw (gnand.output) -- ++(1.2,0)
+    coordinate (nand-out)
     node[right,signal] {$\overline{ab}$};
 
-% Porta NOR
+\node[terminal] at (nand-in1) {};
+\node[terminal] at (nand-in2) {};
+\node[terminal] at (nand-out) {};
+
+% --------------------------------------------------
+% NOR: complemento de a+b
+% --------------------------------------------------
+
 \draw (gnor.input 1) -- ++(-1.2,0)
+    coordinate (nor-in1)
     node[left,signal] {$a$};
+
 \draw (gnor.input 2) -- ++(-1.2,0)
+    coordinate (nor-in2)
     node[left,signal] {$b$};
+
 \draw (gnor.output) -- ++(1.2,0)
+    coordinate (nor-out)
     node[right,signal] {$\overline{a+b}$};
 
-% Porta XNOR
+\node[terminal] at (nor-in1) {};
+\node[terminal] at (nor-in2) {};
+\node[terminal] at (nor-out) {};
+
+% --------------------------------------------------
+% XNOR: complemento de a \oplus b
+% --------------------------------------------------
+
 \draw (gxnor.input 1) -- ++(-1.2,0)
+    coordinate (xnor-in1)
     node[left,signal] {$a$};
+
 \draw (gxnor.input 2) -- ++(-1.2,0)
+    coordinate (xnor-in2)
     node[left,signal] {$b$};
+
 \draw (gxnor.output) -- ++(1.2,0)
+    coordinate (xnor-out)
     node[right,signal] {$\overline{a\oplus b}$};
 
-% Segunda coluna: identificação das portas
-\node[gate title] at (8.0,15) {AND};
-\node[gate title] at (8.0,12.5) {OR};
-\node[gate title] at (8.0,10) {NOT};
-\node[gate title] at (8.0,7.5) {XOR};
-\node[gate title] at (8.0,5) {NAND};
-\node[gate title] at (8.0,2.5) {NOR};
-\node[gate title] at (8.0,0) {XNOR};
+\node[terminal] at (xnor-in1) {};
+\node[terminal] at (xnor-in2) {};
+\node[terminal] at (xnor-out) {};
 
 \end{tikzpicture}
 ```
 
 :::
 
-### 3.7.1. Correspondência entre contatos e portas {#sec-gates-and-switches}
+### 3.7.1. Blocos funcionais e número de entradas {#sec-functional-blocks-multiple-inputs}
 
-Um conjunto de contatos em série e uma porta AND têm a mesma **tabela
+Um **bloco funcional** especifica a relação entre entradas binárias e saída,
+independentemente da tecnologia construtiva. Essa abstração aplica-se a uma
+porta isolada, a uma associação de portas ou a um subsistema.
+
+As portas **AND** (conjunção) e **OR** (disjunção inclusiva) admitem duas ou mais entradas. Para $n\geq2$, suas funções são:
+
+$$
+F_{\mathrm{AND}}(a_1,\ldots,a_n)=\prod_{i=1}^{n}a_i=a_1a_2\cdots a_n. \tag{3.22}
+$$
+
+$$
+F_{\mathrm{OR}}(a_1,\ldots,a_n)=\sum_{i=1}^{n}a_i=a_1+a_2+\cdots+a_n. \tag{3.23}
+$$
+
+Os símbolos $\prod$ e $\sum$ representam operações booleanas, não
+aritméticas. A **AND** exige todas as entradas iguais a 1; a **OR** exige pelo
+menos uma. A associatividade permite estender ambas as operações. Nas figuras,
+$a,b,\ldots,n$ são rótulos ilustrativos dos terminais; o rótulo $n$ não é a
+contagem das entradas.
+
+<!-- prettier-ignore -->
+::: figure Bloco funcional AND de múltiplas entradas {#fig-multiple-input-gate-and}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    scale=1.5,
+    transform shape,
+    signal/.style={
+        font=\normalsize,
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    }
+]
+
+% ==========================================
+% Porta AND de múltiplas entradas
+% ==========================================
+
+\node[
+    and gate US,
+    draw,
+    logic gate inputs=nnnnn,
+    minimum width=1.8cm,
+    minimum height=1.5cm
+] (g) at (3,0) {};
+
+% ==========================================
+% Terminais de entrada
+% ==========================================
+
+% Coordenada horizontal comum
+\coordinate (left) at ($(g.west)+(-1.2,0)$);
+
+% Entrada a
+\draw (left |- g.input 1) -- (g.input 1);
+\node[terminal] at (left |- g.input 1) {};
+\node[anchor=east,signal]
+    at (left |- g.input 1) {$a$};
+
+% Entrada b
+\draw (left |- g.input 2) -- (g.input 2);
+\node[terminal] at (left |- g.input 2) {};
+\node[anchor=east,signal]
+    at (left |- g.input 2) {$b$};
+
+% Entradas intermediárias omitidas
+\node at ($(g.input 3)+(-0.45,0)$)
+    {$\vdots$};
+
+% Última entrada n
+\draw (left |- g.input 5) -- (g.input 5);
+\node[terminal] at (left |- g.input 5) {};
+\node[anchor=east,signal]
+    at (left |- g.input 5) {$n$};
+
+% ==========================================
+% Terminal de saída
+% ==========================================
+
+\draw (g.output) -- ++(1.0,0)
+    coordinate (out);
+
+\node[terminal] at (out) {};
+
+\node[anchor=west,signal] at (out)
+    {$F=ab\cdots n$};
+
+\end{tikzpicture}
+```
+
+:::
+
+Na {@ref fig-multiple-input-gate-and}, as entradas intermediárias foram omitidas graficamente por reticências, mas continuam participando da conjunção. Se qualquer entrada valer 0, a saída será 0, independentemente das demais.
+
+<!-- prettier-ignore -->
+::: figure Bloco funcional OR de múltiplas entradas {#fig-multiple-input-gate-or}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    scale=1.5,
+    transform shape,
+    signal/.style={
+        font=\normalsize,
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    }
+]
+
+% ==========================================
+% Porta OR de múltiplas entradas
+% ==========================================
+
+\node[
+    or gate US,
+    draw,
+    logic gate inputs=nnnnn,
+    minimum width=1.8cm,
+    minimum height=1.5cm
+] (g) at (3,0) {};
+
+% ==========================================
+% Terminais de entrada
+% ==========================================
+
+% Coordenada horizontal comum
+\coordinate (left) at ($(g.west)+(-1.2,0)$);
+
+% Entrada a
+\draw (left |- g.input 1) -- (g.input 1);
+\node[terminal] at (left |- g.input 1) {};
+\node[anchor=east,signal]
+    at (left |- g.input 1) {$a$};
+
+% Entrada b
+\draw (left |- g.input 2) -- (g.input 2);
+\node[terminal] at (left |- g.input 2) {};
+\node[anchor=east,signal]
+    at (left |- g.input 2) {$b$};
+
+% Entradas intermediárias omitidas
+\node at ($(g.input 3)+(-0.45,0)$)
+    {$\vdots$};
+
+% Última entrada n
+\draw (left |- g.input 5) -- (g.input 5);
+\node[terminal] at (left |- g.input 5) {};
+\node[anchor=east,signal]
+    at (left |- g.input 5) {$n$};
+
+% ==========================================
+% Terminal de saída
+% ==========================================
+
+\draw (g.output) -- ++(1.0,0)
+    coordinate (out);
+
+\node[terminal] at (out) {};
+
+\node[anchor=west,signal] at (out)
+    {$F=a+b+\cdots+n$};
+
+\end{tikzpicture}
+```
+
+:::
+
+Na {@ref fig-multiple-input-gate-or}, basta uma entrada igual a 1 para que a saída seja 1. Se todas forem 0, a saída será 0. Uma porta física possui uma quantidade determinada de terminais; portanto, o desenho com reticências exprime uma **generalização funcional**, não uma porta de número ilimitado de entradas. Funções com muitas entradas podem ser implementadas por portas apropriadas ou por associações em múltiplos estágios. Embora associativamente equivalentes, essas implementações podem apresentar diferentes atrasos e cargas elétricas.
+
+### 3.7.2. Complementação e bolhas de inversão {#sec-inversion-bubbles-and-not}
+
+A operação NÃO (**NOT**) é **unária**: transforma 0 em 1 e 1 em 0. Nos símbolos de portas lógicas, um pequeno círculo, frequentemente denominado **bolha de inversão**, assinala a complementação do sinal lógico no terminal em que aparece. Na saída, a bolha indica que o resultado da operação interna é negado; na entrada, indica que aquela variável é considerada em sua forma complementada antes de participar da operação representada pelo bloco. A localização da bolha é, portanto, parte essencial da especificação funcional.
+
+
+<!-- prettier-ignore -->
+::: figure Exemplos de representação da complementação por bolhas de inversão {#fig-original-complementacao}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    line width=0.8pt,
+    line cap=round,
+    line join=round,
+    font=\fontsize{20}{24}\selectfont,
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    },
+    signal/.style={
+        inner sep=8pt
+    }
+]
+
+% ==========================================
+% Parâmetros geométricos
+% ==========================================
+
+\def\h{0.55}
+\def\rb{0.10}
+
+% Distância horizontal entre colunas
+\def\colsep{6.5}
+
+% Distância vertical entre linhas
+\def\rowsep{2.8}
+
+% ==========================================
+% PRIMEIRA LINHA
+% ==========================================
+
+% ------------------------------------------
+% 1. AND com inversão na saída
+% ------------------------------------------
+
+\begin{scope}[shift={(0,0)}]
+
+% Corpo da porta AND
+\draw (1,-\h) -- (1,\h) -- (1.65,\h)
+      arc[start angle=90,end angle=-90,radius=\h]
+      -- (1,-\h) -- cycle;
+
+% Entrada
+\draw (0.15,0) -- (1,0);
+
+\node[terminal] at (0.15,0) {};
+\node[anchor=east,signal] at (0.15,0) {$a$};
+
+% Bolha de inversão
+\draw[fill=white] (2.30,0) circle (\rb);
+
+% Saída
+\draw (2.40,0) -- (3.10,0);
+
+\node[terminal] at (3.10,0) {};
+\node[anchor=west,signal] at (3.10,0)
+    {$\overline{a}$};
+
+\end{scope}
+
+% ------------------------------------------
+% 2. OR com inversão na saída
+% ------------------------------------------
+
+\begin{scope}[shift={(\colsep,0)}]
+
+% Corpo da porta OR
+\draw (1,-\h)
+      .. controls (1.25,-0.18) and (1.25,0.18) .. (1,\h)
+      .. controls (1.65,\h) and (2.00,0.40) .. (2.30,0)
+      .. controls (2.00,-0.40) and (1.65,-\h) .. (1,-\h)
+      -- cycle;
+
+% Entrada
+\draw (0.15,0) -- (1.12,0);
+
+\node[terminal] at (0.15,0) {};
+\node[anchor=east,signal] at (0.15,0) {$a$};
+
+% Bolha de inversão
+\draw[fill=white] (2.40,0) circle (\rb);
+
+% Saída
+\draw (2.50,0) -- (3.10,0);
+
+\node[terminal] at (3.10,0) {};
+\node[anchor=west,signal] at (3.10,0)
+    {$\overline{a}$};
+
+\end{scope}
+
+% ==========================================
+% SEGUNDA LINHA
+% ==========================================
+
+% ------------------------------------------
+% 3. AND com inversão na entrada
+% ------------------------------------------
+
+\begin{scope}[shift={(0,-\rowsep)}]
+
+% Corpo da porta AND
+\draw (1,-\h) -- (1,\h) -- (1.65,\h)
+      arc[start angle=90,end angle=-90,radius=\h]
+      -- (1,-\h) -- cycle;
+
+% Entrada
+\draw (0.15,0) -- (0.80,0);
+
+\node[terminal] at (0.15,0) {};
+\node[anchor=east,signal] at (0.15,0) {$a$};
+
+% Bolha de inversão na entrada
+\draw[fill=white] (0.90,0) circle (\rb);
+
+% Saída
+\draw (2.20,0) -- (3.10,0);
+
+\node[terminal] at (3.10,0) {};
+\node[anchor=west,signal] at (3.10,0)
+    {$\overline{a}$};
+
+\end{scope}
+
+% ------------------------------------------
+% 4. OR com inversão na entrada
+% ------------------------------------------
+
+\begin{scope}[shift={(\colsep,-\rowsep)}]
+
+% Corpo da porta OR
+\draw (1,-\h)
+      .. controls (1.25,-0.18) and (1.25,0.18) .. (1,\h)
+      .. controls (1.65,\h) and (2.00,0.40) .. (2.30,0)
+      .. controls (2.00,-0.40) and (1.65,-\h) .. (1,-\h)
+      -- cycle;
+
+% Entrada
+\draw (0.15,0) -- (1.02,0);
+
+\node[terminal] at (0.15,0) {};
+\node[anchor=east,signal] at (0.15,0) {$a$};
+
+% Bolha de inversão na entrada
+\draw[fill=white] (1.12,0) circle (\rb);
+
+% Saída
+\draw (2.30,0) -- (3.10,0);
+
+\node[terminal] at (3.10,0) {};
+\node[anchor=west,signal] at (3.10,0)
+    {$\overline{a}$};
+
+\end{scope}
+
+% ==========================================
+% TERCEIRA LINHA
+% Representação convencional da porta NOT
+% ==========================================
+
+\begin{scope}[shift={(4.8,-6.0)}]
+
+% Porta NOT predefinida
+\node[
+    not gate US,
+    draw,
+    minimum width=1.8cm,
+    minimum height=1.5cm,
+    inner sep=5pt
+] (gnot) at (0,0) {};
+
+% Entrada
+\draw (gnot.input) -- ++(-1.2,0)
+    coordinate (innot);
+
+\node[terminal] at (innot) {};
+\node[anchor=east,signal] at (innot)
+    {$a$};
+
+% Saída
+\draw (gnot.output) -- ++(1.2,0)
+    coordinate (outnot);
+
+\node[terminal] at (outnot) {};
+\node[anchor=west,signal] at (outnot)
+    {$\overline{a}$};
+
+\end{scope}
+
+\end{tikzpicture}
+```
+
+:::
+
+Nas quatro representações superiores da {@ref fig-original-complementacao}, a
+operação é **unária**, embora sejam utilizados corpos gráficos associados às
+portas **AND** e **OR**. Esses símbolos têm finalidade didática: a conjunção ou
+a disjunção de um único operando devolve o próprio valor, que pode então ser
+complementado pela bolha. Portanto, **não constituem representações
+convencionais de portas **NAND** ou **NOR** de múltiplas entradas**, nem devem ser
+interpretados como portas padronizadas de uma entrada.
+
+A representação inferior, triangular, é a forma convencional da porta inversora
+**NOT**, com uma bolha na saída, também apresentada na
+{@ref fig-basic-logic-gates}. Sem a bolha, o triângulo representa um buffer não
+inversor. A bolha indica inversão lógica, e não um nível absoluto de tensão.
+
+### 3.7.3. Funções **NAND** e **NOR** de múltiplas entradas {#sec-multi-input-nand-nor}
+
+A porta **NAND** (*NOT AND*, negação da conjunção) complementa a saída de uma
+**AND**; a **NOR** (*NOT OR*, negação da disjunção) complementa a saída de uma
+**OR**. Para $n$ entradas, suas expressões são
+
+$$
+F_{\mathrm{NAND}}=\overline{a_1a_2\cdots a_n}=\bar a_1+\bar a_2+\cdots+\bar a_n. \tag{3.24}
+$$
+
+$$
+F_{\mathrm{NOR}}=\overline{a_1+a_2+\cdots+a_n}=\bar a_1\bar a_2\cdots\bar a_n. \tag{3.25}
+$$
+
+Pelas **leis generalizadas de De Morgan**, a **NAND** fornece 0 apenas quando
+todas as entradas valem 1; a **NOR** fornece 1 apenas quando todas valem 0.
+Em ambos os símbolos, a bolha na saída representa a complementação.
+
+<!-- prettier-ignore -->
+::: figure Bloco NAND de múltiplas entradas {#fig-original-bloco-nand}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    scale=1.5,
+    transform shape,
+    signal/.style={
+        font=\normalsize,
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    }
+]
+
+% ==========================================
+% Porta NAND de múltiplas entradas
+% ==========================================
+
+\node[
+    nand gate US,
+    draw,
+    logic gate inputs=nnnnn,
+    minimum width=1.8cm,
+    minimum height=1.5cm
+] (g) at (3,0) {};
+
+% ==========================================
+% Terminais de entrada
+% ==========================================
+
+% Coordenada horizontal comum às entradas
+\coordinate (left) at ($(g.west)+(-1.2,0)$);
+
+% Entrada a
+\draw (left |- g.input 1) -- (g.input 1);
+
+\node[terminal] at (left |- g.input 1) {};
+
+\node[anchor=east,signal]
+    at (left |- g.input 1) {$a$};
+
+% Entrada b
+\draw (left |- g.input 2) -- (g.input 2);
+
+\node[terminal] at (left |- g.input 2) {};
+
+\node[anchor=east,signal]
+    at (left |- g.input 2) {$b$};
+
+% Entradas intermediárias omitidas
+\node at ($(g.input 3)+(-0.45,0)$)
+    {$\vdots$};
+
+% Última entrada n
+\draw (left |- g.input 5) -- (g.input 5);
+
+\node[terminal] at (left |- g.input 5) {};
+
+\node[anchor=east,signal]
+    at (left |- g.input 5) {$n$};
+
+% ==========================================
+% Terminal de saída
+% ==========================================
+
+\draw (g.output) -- ++(1.0,0)
+    coordinate (out);
+
+\node[terminal] at (out) {};
+
+\node[anchor=west,signal] at (out)
+    {$F=\overline{ab\cdots n}=\bar a+\bar b+\cdots+\bar n$};
+
+\end{tikzpicture}
+```
+
+:::
+
+A {@ref fig-original-bloco-nand} apresenta uma **NAND** de múltiplas entradas. Note que a função NÃO E **não** é a conjunção dos complementos: $\overline{ab}$ e $\bar a\bar b$ possuem tabelas-verdade diferentes.
+
+<!-- prettier-ignore -->
+::: figure Bloco NOR de múltiplas entradas {#fig-original-bloco-nor}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    scale=1.5,
+    transform shape,
+    signal/.style={
+        font=\normalsize,
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    }
+]
+
+% ==========================================
+% Porta NOR de múltiplas entradas
+% ==========================================
+
+\node[
+    nor gate US,
+    draw,
+    logic gate inputs=nnnnn,
+    minimum width=1.8cm,
+    minimum height=1.5cm
+] (g) at (3,0) {};
+
+% ==========================================
+% Terminais de entrada
+% ==========================================
+
+% Coordenada horizontal comum às entradas
+\coordinate (left) at ($(g.west)+(-1.2,0)$);
+
+% Entrada a
+\draw (left |- g.input 1) -- (g.input 1);
+
+\node[terminal] at (left |- g.input 1) {};
+
+\node[anchor=east,signal]
+    at (left |- g.input 1) {$a$};
+
+% Entrada b
+\draw (left |- g.input 2) -- (g.input 2);
+
+\node[terminal] at (left |- g.input 2) {};
+
+\node[anchor=east,signal]
+    at (left |- g.input 2) {$b$};
+
+% Entradas intermediárias omitidas
+\node at ($(g.input 3)+(-0.45,0)$)
+    {$\vdots$};
+
+% Última entrada n
+\draw (left |- g.input 5) -- (g.input 5);
+
+\node[terminal] at (left |- g.input 5) {};
+
+\node[anchor=east,signal]
+    at (left |- g.input 5) {$n$};
+
+% ==========================================
+% Terminal de saída
+% ==========================================
+
+\draw (g.output) -- ++(1.0,0)
+    coordinate (out);
+
+\node[terminal] at (out) {};
+
+\node[anchor=west,signal] at (out)
+    {$F=\overline{a+b+\cdots+n}=\bar a\bar b\cdots\bar n$};
+
+\end{tikzpicture}
+```
+
+:::
+
+A {@ref fig-original-bloco-nor} representa a função **NOR**. A identidade $\overline{a+b}=\bar a\bar b$ explicita que negar uma disjunção equivale a exigir simultaneamente a falsidade de todas as condições. Essas relações sustentam as transformações de circuitos realizadas pela técnica de deslocamento de bolhas, desde que se apliquem as leis de De Morgan a **todos** os terminais pertinentes.
+
+### 3.7.4. Entradas complementadas e equivalências simbólicas {#sec-complemented-input-gate-equivalences}
+
+Além de negar a saída de um bloco, é possível complementar individualmente uma ou mais de suas entradas. O símbolo gráfico resultante expressa diretamente uma função composta, dispensando a representação de inversores separados quando a convenção gráfica for suficientemente clara. A interpretação deve seguir uma ordem lógica: identificar as entradas complementadas, aplicar a operação indicada pelo corpo do bloco e, finalmente, complementar a saída se houver uma bolha nesse terminal.
+
+<!-- prettier-ignore -->
+::: figure Exemplos de funções derivadas com entradas complementadas {#fig-original-funcoes-derivadas}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    scale=1.5,
+    transform shape,
+    gate/.style={
+        draw,
+        minimum width=1.8cm,
+        minimum height=1.5cm,
+        inner sep=4pt
+    },
+    signal/.style={
+        font=\normalsize,
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    },
+    line width=0.6pt
+]
+
+% Posições horizontais das extremidades esquerdas
+\def\leftA{1.6}
+\def\leftB{9.6}
+
+% ==========================================
+% F1 = a b̄
+% ==========================================
+
+\node[
+    and gate US,
+    gate,
+    logic gate inputs=ni
+] (g1) at (3,3) {};
+
+% Entradas
+\coordinate (a1) at (g1.input 1 -| \leftA,0);
+\coordinate (b1) at (g1.input 2 -| \leftA,0);
+
+\draw (a1) -- (g1.input 1);
+\draw (b1) -- (g1.input 2);
+
+% Terminais externos
+\node[terminal] at (a1) {};
+\node[terminal] at (b1) {};
+
+% Rótulos das entradas
+\node[anchor=east,signal] at (a1) {$a$};
+\node[anchor=east,signal] at (b1) {$b$};
+
+% Saída
+\draw (g1.output) -- ++(1,0)
+    coordinate (out1);
+
+\node[terminal] at (out1) {};
+
+\node[anchor=west,signal] at (out1)
+    {$F_1=a\bar b$};
+
+% ==========================================
+% F2 = a + b̄
+% ==========================================
+
+\node[
+    or gate US,
+    gate,
+    logic gate inputs=ni
+] (g2) at (11,3) {};
+
+% Entradas
+\coordinate (a2) at (g2.input 1 -| \leftB,0);
+\coordinate (b2) at (g2.input 2 -| \leftB,0);
+
+\draw (a2) -- (g2.input 1);
+\draw (b2) -- (g2.input 2);
+
+% Terminais externos
+\node[terminal] at (a2) {};
+\node[terminal] at (b2) {};
+
+% Rótulos das entradas
+\node[anchor=east,signal] at (a2) {$a$};
+\node[anchor=east,signal] at (b2) {$b$};
+
+% Saída
+\draw (g2.output) -- ++(1,0)
+    coordinate (out2);
+
+\node[terminal] at (out2) {};
+
+\node[anchor=west,signal] at (out2)
+    {$F_2=a+\bar b$};
+
+% ==========================================
+% F3 = (a b̄)̄ = ā + b
+% ==========================================
+
+\node[
+    nand gate US,
+    gate,
+    logic gate inputs=ni
+] (g3) at (3,-1) {};
+
+% Entradas
+\coordinate (a3) at (g3.input 1 -| \leftA,0);
+\coordinate (b3) at (g3.input 2 -| \leftA,0);
+
+\draw (a3) -- (g3.input 1);
+\draw (b3) -- (g3.input 2);
+
+% Terminais externos
+\node[terminal] at (a3) {};
+\node[terminal] at (b3) {};
+
+% Rótulos das entradas
+\node[anchor=east,signal] at (a3) {$a$};
+\node[anchor=east,signal] at (b3) {$b$};
+
+% Saída
+\draw (g3.output) -- ++(1,0)
+    coordinate (out3);
+
+\node[terminal] at (out3) {};
+
+\node[anchor=west,signal] at (out3)
+    {$F_3=\overline{a\bar b}=\bar a+b$};
+
+% ==========================================
+% F4 = (ā + b)̄ = a b̄
+% ==========================================
+
+\node[
+    nor gate US,
+    gate,
+    logic gate inputs=in
+] (g4) at (11,-1) {};
+
+% Entradas
+\coordinate (a4) at (g4.input 1 -| \leftB,0);
+\coordinate (b4) at (g4.input 2 -| \leftB,0);
+
+\draw (a4) -- (g4.input 1);
+\draw (b4) -- (g4.input 2);
+
+% Terminais externos
+\node[terminal] at (a4) {};
+\node[terminal] at (b4) {};
+
+% Rótulos das entradas
+\node[anchor=east,signal] at (a4) {$a$};
+\node[anchor=east,signal] at (b4) {$b$};
+
+% Saída
+\draw (g4.output) -- ++(1,0)
+    coordinate (out4);
+
+\node[terminal] at (out4) {};
+
+\node[anchor=west,signal] at (out4)
+    {$F_4=\overline{\bar a+b}=a\bar b$};
+
+\end{tikzpicture}
+```
+
+:::
+
+Na {@ref fig-original-funcoes-derivadas}, as funções são $F_1=a\bar b$,
+$F_2=a+\bar b$, $F_3=\overline{a\bar b}=\bar a+b$ e
+$F_4=\overline{\bar a+b}=a\bar b$. Assim, $F_1$ e $F_4$ são equivalentes
+por De Morgan, embora empreguem corpos gráficos diferentes. A transformação
+entre símbolos **AND** e **OR** exige ajustar também as polaridades das
+entradas e da saída; ela preserva a função estática, não necessariamente os
+tempos de propagação ou outras propriedades físicas.
+
+### 3.7.5. **XOR** e **XNOR**: exclusão e coincidência {#sec-xor-xnor-coincidence}
+
+A operação **OU exclusivo** (**XOR**) de duas entradas fornece 1 quando os valores de entrada **diferem**. Ela pode ser obtida pela soma booleana de dois mintermos mutuamente exclusivos, cada qual representando uma das combinações desiguais.
+
+<!-- prettier-ignore -->
+::: figure Função XOR (OU exclusivo) {#fig-original-xor}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    scale=1.5,
+    transform shape,
+    gate/.style={
+        draw,
+        minimum width=1.8cm,
+        minimum height=1.5cm,
+        inner sep=5pt
+    },
+    signal/.style={
+        font=\normalsize,
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    },
+    line width=0.6pt
+]
+
+% Porta XOR
+\node[
+    xor gate US,
+    gate,
+    logic gate inputs=nn
+] (g) at (3,0) {};
+
+% ==========================================
+% Primeira entrada
+% ==========================================
+
+\draw (g.input 1) -- ++(-1.2,0)
+    coordinate (in1);
+
+\node[terminal] at (in1) {};
+
+\node[anchor=east,signal] at (in1)
+    {$a$};
+
+% ==========================================
+% Segunda entrada
+% ==========================================
+
+\draw (g.input 2) -- ++(-1.2,0)
+    coordinate (in2);
+
+\node[terminal] at (in2) {};
+
+\node[anchor=east,signal] at (in2)
+    {$b$};
+
+% ==========================================
+% Saída e expressão booleana
+% ==========================================
+
+\draw (g.output) -- ++(1.2,0)
+    coordinate (out);
+
+\node[terminal] at (out) {};
+
+\node[anchor=west,signal] at (out)
+    {$F=a\oplus b=\bar a b+a\bar b$};
+
+\end{tikzpicture}
+```
+
+:::
+
+Na {@ref fig-original-xor}, a linha curva adicional junto às entradas distingue graficamente **XOR** de **OR**. O uso de **XOR** é frequente em comparadores de desigualdade, circuitos aritméticos e mecanismos de verificação de paridade. A expressão “apenas uma entrada é 1” caracteriza especificamente a **XOR** de duas entradas: para mais de duas entradas, a generalização associativa de **XOR** vale 1 quando há uma **quantidade ímpar** de entradas iguais a 1, não necessariamente apenas uma.
+
+A função **coincidência**, ou **equivalência lógica**, fornece 1 quando os dois valores são iguais. Na nomenclatura atual de portas, é denominada **XNOR** (*exclusive NOR*), isto é, o complemento de **XOR**. Sua expressão algébrica e seu símbolo convencional de equivalência são mostrados na saída do bloco na {@ref fig-original-coincidencia}.
+
+A notação $\odot$ será empregada neste capítulo para a coincidência de **duas entradas**. Ela é uma convenção algébrica útil, mas não é universal: outros textos usam $\overline{a\oplus b}$, $a\leftrightarrow b$ ou símbolos próprios para **XNOR**. Convém declarar a convenção sempre que houver risco de ambiguidade.
+
+<!-- prettier-ignore -->
+::: figure Função XNOR (coincidência) {#fig-original-coincidencia}
+
+```tikz
+\usetikzlibrary{circuits.logic.US,calc}
+
+\begin{tikzpicture}[
+    scale=1.5,
+    transform shape,
+    gate/.style={
+        draw,
+        minimum width=1.8cm,
+        minimum height=1.5cm,
+        inner sep=5pt
+    },
+    signal/.style={
+        font=\normalsize,
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
+    },
+    line width=0.6pt
+]
+
+% Porta XNOR — função coincidência
+\node[
+    xnor gate US,
+    gate,
+    logic gate inputs=nn
+] (g) at (3,0) {};
+
+% ==========================================
+% Primeira entrada
+% ==========================================
+
+\draw (g.input 1) -- ++(-1.2,0)
+    coordinate (in1);
+
+\node[terminal] at (in1) {};
+
+\node[anchor=east,signal] at (in1)
+    {$a$};
+
+% ==========================================
+% Segunda entrada
+% ==========================================
+
+\draw (g.input 2) -- ++(-1.2,0)
+    coordinate (in2);
+
+\node[terminal] at (in2) {};
+
+\node[anchor=east,signal] at (in2)
+    {$b$};
+
+% ==========================================
+% Saída e expressão booleana
+% ==========================================
+
+\draw (g.output) -- ++(1.2,0)
+    coordinate (out);
+
+\node[terminal] at (out) {};
+
+\node[anchor=west,signal] at (out)
+    {$F=ab+\bar a\bar b=\overline{a\oplus b}=a\odot b$};
+
+\end{tikzpicture}
+```
+
+:::
+
+Na {@ref fig-original-coincidencia}, a bolha na saída do símbolo **XOR** indica a complementação do resultado, característica da **XNOR**. Para $a=b=0$ ou $a=b=1$, a saída é 1; para $a\ne b$, é 0. Portanto, a função coincidência é a negação lógica da desigualdade.
+
+<!-- prettier-ignore -->
+::: table Comparação das funções XOR e XNOR de duas entradas {#tbl-xor-xnor-coincidence .full-width}
+
+| $a$ | $b$ | $a\oplus b$ | $a\odot b$ |
+| :-: | :-: | :------------: | :-----------: |
+|  0  |  0  |       0        |       1       |
+|  0  |  1  |       1        |       0       |
+|  1  |  0  |       1        |       0       |
+|  1  |  1  |       0        |       1       |
+
+:::
+
+As colunas são complementares. Com múltiplas entradas, uma cadeia de **XOR**
+detecta paridade ímpar, e sua negação detecta paridade par, o que **não**
+significa igualdade de todas as entradas: $0,0,1,1$ tem paridade par, mas
+valores distintos.
+
+<!-- prettier-ignore -->
+::: exercise Equivalência entre **XOR** e coincidência {#ex-xor-xnor-equivalence}
+
+Demonstre, utilizando as leis de De Morgan e a distributividade, que $a\odot b=\overline{a\oplus b}$. Em seguida, confirme a igualdade por uma tabela-verdade e explique por que a interpretação como igualdade entre entradas não se generaliza diretamente para uma cadeia de **XNOR** com três ou mais entradas.
+
+:::
+
+### 3.7.6. Correspondência entre contatos e portas {#sec-gates-and-switches}
+
+Um conjunto de contatos em série e uma porta **AND** têm a mesma **tabela
 funcional** quando as entradas representam as mesmas condições. Contudo, a
 porta eletrônica não é necessariamente composta por interruptores mecânicos
 ligados em série; sua implementação interna pode utilizar redes de
 transistores, inversões intermediárias e outras topologias. Analogamente, o
-arranjo paralelo de contatos e a porta OR são equivalentes em lógica, mas não
+arranjo paralelo de contatos e a porta **OR** são equivalentes em lógica, mas não
 em constituição física.
 
-A implementação de $y=ab+c$ por portas é uma AND alimentando uma OR juntamente
-com $c$. A mesma função pode ser implementada com NAND e inversões adequadas.
+A implementação de $y=ab+c$ por portas é uma **AND** alimentando uma **OR** juntamente
+com $c$. A mesma função pode ser implementada com **NAND** e inversões adequadas.
 Essa transformação preserva a tabela-verdade, mas pode alterar número de
 componentes, fan-out, consumo, atraso e riscos de transição.
 
@@ -1058,42 +2158,87 @@ componentes, fan-out, consumo, atraso e riscos de transição.
     },
     signal/.style={
         font=\Large,
-        inner sep=3pt
+        inner sep=8pt
+    },
+    terminal/.style={
+        circle,
+        draw=black,
+        fill=white,
+        line width=0.6pt,
+        inner sep=0pt,
+        minimum size=2.5pt
     }
 ]
 
+% ==========================================
 % Portas lógicas
-\node[and gate US,gate,logic gate inputs=nn] (g1) at (2,3) {};
-\node[or gate US,gate,logic gate inputs=nn] (g2) at (6,1.5) {};
+% ==========================================
 
-% Entradas da porta AND
+\node[and gate US,gate,logic gate inputs=nn]
+    (g1) at (2,3) {};
+
+\node[or gate US,gate,logic gate inputs=nn]
+    (g2) at (6,1.5) {};
+
+% ==========================================
+% Entradas externas da porta AND
+% ==========================================
+
+% Entrada a
 \draw (g1.input 1) -- ++(-1.2,0)
+    coordinate (and-in1)
     node[left,signal] {$a$};
 
+\node[terminal] at (and-in1) {};
+
+% Entrada b
 \draw (g1.input 2) -- ++(-1.2,0)
+    coordinate (and-in2)
     node[left,signal] {$b$};
 
-% Ligação ortogonal entre AND e OR
+\node[terminal] at (and-in2) {};
+
+% ==========================================
+% Ligação interna entre AND e OR
+% ==========================================
+
+% A saída da AND alimenta a primeira
+% entrada da OR por uma ligação ortogonal.
+
 \draw (g1.output) -- ++(1.0,0)
     |- (g2.input 1);
 
-% Segunda entrada da porta OR
+% ==========================================
+% Segunda entrada externa da porta OR
+% ==========================================
+
+% Entrada c
 \draw (g2.input 2) -- ++(-1.2,0)
+    coordinate (or-in2)
     node[left,signal] {$c$};
 
-% Saída da porta OR
+\node[terminal] at (or-in2) {};
+
+% ==========================================
+% Saída externa da porta OR
+% ==========================================
+
+% Saída y
 \draw (g2.output) -- ++(1.2,0)
+    coordinate (or-out)
     node[right,signal] {$y$};
+
+\node[terminal] at (or-out) {};
 
 \end{tikzpicture}
 ```
 
 :::
 
-### 3.7.2. Universalidade e limitações físicas {#sec-gate-universality}
+### 3.7.7. Universalidade e limitações físicas {#sec-gate-universality}
 
 As identidades de De Morgan permitem realizar qualquer função booleana apenas
-com NAND ou apenas com NOR, pois cada uma dessas famílias permite obter
+com **NAND** ou apenas com **NOR**, pois cada uma dessas famílias permite obter
 negação, conjunção e disjunção. A possibilidade matemática não elimina limites
 físicos: tensões de entrada, margens de ruído, atrasos de propagação, potência
 dissipada, correntes de saída e temporização precisam ser avaliados no projeto
@@ -1102,10 +2247,10 @@ booleanas, não uma garantia de compatibilidade entre dispositivos. Uma saída d
 porta não pode, em geral, alimentar diretamente a bobina de uma válvula
 solenóide, um motor ou uma carga de potência: são necessários estágios de
 acionamento, proteção e, conforme a aplicação, isolamento. Tampouco a
-realização de uma função apenas com NAND ou NOR assegura o comportamento seguro
+realização de uma função apenas com **NAND** ou **NOR** assegura o comportamento seguro
 de um sistema diante de perda de energia ou falha de um sensor.
 
-### 3.7.3. Implementação física e limites da equivalência {#sec-physical-logic-limits}
+### 3.7.8. Implementação física e limites da equivalência {#sec-physical-logic-limits}
 
 Na eletrônica digital, uma entrada não recebe literalmente o número abstrato
 $0$ ou $1$, mas uma grandeza elétrica interpretada por faixas de tensão. Para
@@ -1139,7 +2284,7 @@ instantânea. O estudo detalhado dos controladores com histerese, dos
 controladores proporcionais, integrais e derivativos (PID) e da dinâmica dos
 processos pertence aos capítulos posteriores de automação e controle.
 
-### 3.7.4. Interfaces de sensores e atuadores {#sec-sensor-actuator-interfaces}
+### 3.7.9. Interfaces de sensores e atuadores {#sec-sensor-actuator-interfaces}
 
 Em um sistema de automação, denominamos **processo** a parte do mundo físico
 cujo comportamento se pretende observar ou modificar. Um **sensor** é um
@@ -1189,13 +2334,11 @@ participam da determinação dos comandos.
 
 ## 3.8. Equivalência das representações {#sec-equivalence-of-representations}
 
-A relação entre as seis representações pode ser formalizada escolhendo um
-universo de estados $\Omega$ e duas condições $A$ e $B$. Os conjuntos
-$S_A,S_B\subseteq\Omega$ contêm os estados em que cada condição é verdadeira.
-Suas funções características produzem os bits $a=\chi_{S_A}(\omega)$ e
-$b=\chi_{S_B}(\omega)$. A lógica proposicional combina as condições por
-conectivos; a álgebra booleana combina seus bits; os contatos e portas realizam
-a mesma tabela sob as convenções físicas declaradas.
+Fixado um universo de estados $\Omega$, sejam $S_A,S_B\subseteq\Omega$ os
+estados que satisfazem duas condições. Suas funções características fornecem
+$a=\chi_{S_A}(\omega)$ e $b=\chi_{S_B}(\omega)$. Conectivos proposicionais,
+operações booleanas, contatos e portas podem expressar a mesma função-verdade,
+respeitadas suas interpretações.
 
 <!-- prettier-ignore -->
 ::: table Equivalência entre conjuntos, proposições, álgebra e circuitos {#tbl-representation-equivalence .full-width}
@@ -1212,15 +2355,12 @@ a mesma tabela sob as convenções físicas declaradas.
 
 :::
 
-A {@ref fig-logic-representations} apresenta uma comparação integrada de seis
-formas de representação das operações E, OU, OU exclusivo e NÃO: diagramas de
-Venn, tabelas-verdade proposicionais, tabelas booleanas, redes de contatos,
-portas lógicas e expressões de programação. Em cada linha, a função de verdade
-é a mesma, embora os objetos representados, os símbolos e as hipóteses de
-realização sejam diferentes. Na coluna de contatos, a continuidade depende dos
-estados dos contatos normalmente abertos e normalmente fechados; na de portas,
-a função corresponde à relação lógica entre níveis de entrada e saída, em
-regime estável.
+A {@ref fig-logic-representations} compara seis representações das operações
+**AND**, **OR**, **XOR** e **NOT**: diagramas de Venn, tabelas proposicionais,
+tabelas booleanas, contatos, portas e expressões de programação. Cada linha
+preserva a função-verdade, embora varie a natureza dos objetos e as hipóteses
+de realização. Nos contatos, importa a continuidade elétrica; nas portas,
+a relação entre níveis lógicos em regime estável.
 
 <!-- prettier-ignore -->
 ::: figure Correspondência entre operações de conjuntos, lógica proposicional, álgebra booleana, circuitos com contatos, circuitos digitais e programação {#fig-logic-representations}
@@ -1715,7 +2855,7 @@ A figura deve ser lida horizontalmente: cada linha fixa uma operação e cada
 coluna oferece uma interpretação particular. A comparação permite verificar,
 por exemplo, que a diferença simétrica entre conjuntos, a disjunção exclusiva
 de proposições, a expressão $a\oplus b$, os dois ramos de contatos NA/NF e a
-porta XOR descrevem a mesma condição de desigualdade entre dois valores
+porta **XOR** descrevem a mesma condição de desigualdade entre dois valores
 binários. Os símbolos empregados na coluna de programação representam uma
 convenção de operadores que precisa ser interpretada no contexto da linguagem e
 dos tipos de dados; não se deve confundir automaticamente operações bit a bit e
@@ -1740,15 +2880,15 @@ Considere a condição "A ocorre e B não ocorre". Suas representações são:
 - **Álgebra binária:** $a\bar b$.
 - **Contatos:** contato normalmente aberto comandado por $a$ em série com
   contato normalmente fechado comandado por $b$.
-- **Portas:** saída de uma porta NOT aplicada a $b$, combinada com $a$ em uma
-  porta AND.
+- **Portas:** saída de uma porta **NOT** aplicada a $b$, combinada com $a$ em uma
+  porta **AND**.
 
 Para todo $\omega$, vale
 
 $$
 \chi_{S_A\cap S_B^c}(\omega)
 =\chi_{S_A}(\omega)\bigl(1-\chi_{S_B}(\omega)\bigr)
-=a\bar b. \tag{3.22}
+=a\bar b. \tag{3.26}
 $$
 
 A identidade demonstra que as representações têm a mesma condição de ativação
@@ -1759,17 +2899,19 @@ comportamento ideal dos dispositivos.
 
 ### 3.8.2. Exemplo integrador: habilitação de uma carga {#sec-integrated-example}
 
+<!-- prettier-ignore -->
 Considere uma carga que deve ser acionada quando houver solicitação $s$ e a
 condição de bloqueio $h$ estiver inativa, ou quando o comando de teste manual
 $t$ estiver ativo. Convencionamos $h=1$ para a presença do bloqueio e $h=0$
 para sua ausência. A especificação verbal é “($s$ e não $h$) ou $t$”. Sua
 fórmula proposicional é $(s\land\neg h)\lor t$, e sua expressão booleana é
-$y=s\overline{h}+t$. Na representação por conjuntos de estados, $S_y=(S_s\cap
-S_h^c)\cup S_t$. Em contatos, um contato normalmente aberto (NA) comandado por
+$y=s\overline{h}+t$. Na representação por conjuntos de estados,
+$S_y=(S_s\cap S_h^c)\cup S_t$.
+Em contatos, um contato normalmente aberto (NA) comandado por
 $s$ e um contato normalmente fechado (NF) comandado por $h$ formam um ramo em
 série, em paralelo com um contato NA comandado por $t$. Em portas lógicas, a
-saída da inversão de $h$ é combinada com $s$ por uma AND; o resultado alimenta
-uma OR juntamente com $t$.
+saída da inversão de $h$ é combinada com $s$ por uma **AND**; o resultado alimenta
+uma **OR** juntamente com $t$.
 
 <!-- prettier-ignore -->
 ::: table Tabela-verdade da habilitação $y=s\overline{h}+t$ {#tbl-integrated-example .full-width}
@@ -1945,8 +3087,8 @@ pneumáticos.
 
 Na leitura idealizada da figura, a conexão em série exige que ambos os
 comutadores habilitem a passagem; os ramos paralelos admitem caminhos
-alternativos. Contudo, **a associação paralela de vias de fluido não é, por si
-só, uma porta OU pneumática ou hidráulica universal**. Conforme as pressões e
+alternativos. Contudo, a associação paralela de vias de fluido **não constitui, por si só, uma
+porta OR pneumática ou hidráulica universal**. Conforme as pressões e
 os estados das fontes, pode haver retorno de fluxo, comunicação indesejada
 entre ramos ou interferência entre comandos. Elementos de retenção, válvulas
 seletoras (_shuttle valves_) e arquiteturas específicas podem ser necessários
@@ -2064,17 +3206,13 @@ movimentos inesperados e as medidas de proteção adequadas à aplicação.
 
 ## 3.9. Síntese conceitual e fronteiras do modelo {#sec-model-limits}
 
-O encadeamento estudado pode ser resumido como **conjuntos de estados →
-condições proposicionais → funções booleanas → redes de contatos ou portas**.
-Cada seta exige uma interpretação: universo e pertencimento, valoração das
-proposições, codificação de verdadeiro/falso como 1/0, convenção de atuação dos
-contatos e definição dos níveis elétricos. Na automação, a cadeia se amplia
-para **processo físico → sensor → interpretação do sinal → decisão lógica →
-interface de potência → atuador → processo físico**. Essa descrição permite
-distinguir os objetos físicos dos valores binários que os representam, e
-explicita que a função lógica especifica a decisão, não a totalidade do
-comportamento do processo. Com essas hipóteses, as tabelas-verdade permitem
-verificar equivalências de maneira independente da implementação.
+A correspondência **conjuntos de estados → condições proposicionais → funções
+booleanas → contatos ou portas** depende de interpretações explícitas:
+pertencimento, valoração, codificação binária e convenções elétricas. Em
+automação, integra-se à cadeia **processo físico → sensor → interpretação do
+sinal → decisão lógica → interface de potência → atuador → processo físico**.
+A tabela-verdade verifica a decisão lógica, mas não descreve integralmente o
+processo físico.
 
 Em aplicações reais, a lógica combinacional estática não descreve memória,
 temporização, transições simultâneas, estados metastáveis ou falhas. Uma função
@@ -2114,19 +3252,21 @@ segurança adequadas ao processo.
 
 ## Síntese do capítulo {#sec-boolean-chapter-summary}
 
-A união, a interseção e o complemento de conjuntos correspondem à disjunção, à
-conjunção e à negação de proposições quando se consideram os conjuntos de
-estados que satisfazem as condições. A álgebra de Boole axiomatiza essas
-operações; sua versão binária fundamenta tabelas-verdade e funções digitais.
-Contatos em série, em paralelo e normalmente fechados realizam, sob convenções
-explícitas, E, OU e NÃO; portas lógicas implementam eletronicamente as mesmas
-funções. Em automação, sensores traduzem condições físicas em sinais,
-controladores processam esses sinais e interfaces de potência comandam
-atuadores. A linguagem Ladder transpõe a lógica de contatos para a programação
-de CLPs; válvulas hidráulicas e pneumáticas admitem analogias funcionais com
-contatos, desde que se explicitem as condições de pressão, vazão e comutação.
-As formas canônicas permitem passar da tabela à expressão, e as identidades
-permitem transformar expressões sem modificar seu significado funcional.
+Conjuntos de estados, proposições e funções booleanas compartilham operações
+correspondentes de interseção/conjunção, união/disjunção e complemento/negação.
+A álgebra de Boole formaliza essas relações; as formas canônicas permitem
+sintetizar funções a partir de tabelas-verdade e as identidades permitem
+transformá-las sem alterar seus resultados. Contatos e portas implementam
+essas funções sob convenções explícitas. Na automação, sensores, controladores,
+interfaces de potência e atuadores conectam a decisão lógica ao processo
+físico; Ladder e circuitos fluídicos oferecem outras representações, com
+hipóteses próprias de operação.
+
+As portas **AND** e **OR** admitem múltiplas entradas; bolhas de inversão e
+leis de De Morgan permitem interpretar **NAND**, **NOR** e entradas
+complementadas. Para duas entradas, **XOR** representa desigualdade e **XNOR**,
+coincidência; para mais entradas, paridade e igualdade simultânea não se
+confundem.
 
 ## Referências bibliográficas {#sec-boolean-chapter-references}
 

@@ -1,480 +1,4 @@
-# Blocos funcionais básicos e implementação de funções booleanas
-
-## 1.2.3. Blocos funcionais básicos e simbologia
-
-Alguns blocos funcionais são mais fáceis de se implementar na prática,
-recebendo, por esse motivo, o nome de **blocos funcionais básicos**.
-
-Como primeiro caso a ser analisado consideremos o bloco “E”, representativo de
-um produto de variáveis booleanas. Tal bloco é normalmente representado da
-seguinte forma:
-
-<!-- prettier-ignore -->
-::: figure Bloco funcional E de múltiplas entradas {#fig-original-bloco-e}
-
-```tikz
-\usetikzlibrary{circuits.logic.US}
-\begin{tikzpicture}[scale=1.5,transform shape]
-\node[and gate US,draw,logic gate inputs=nnnnn,minimum width=1.8cm,minimum height=1.5cm] (g) at (3,0) {};
-
-\draw (g.input 1)--++(-1,0) node[left] {$a$};
-\draw (g.input 2)--++(-1,0) node[left] {$b$};
-\node at ($(g.input 3)+(-0.45,0)$) {$\vdots$};
-\draw (g.input 5)--++(-1,0) node[left] {$n$};
-
-\draw (g.output)--++(1,0) node[right] {$F=ab\cdots n$};
-\end{tikzpicture}
-```
-
-:::
-
-Ou seja, a função de saída tem o valor 1 somente quando todas as entradas
-estiverem no valor 1.
-
-Outro bloco funcional básico importante na prática é o bloco “Ou”. O bloco
-“Ou”, também denominado de “Ou inclusivo”, realiza a operação $+$, “Ou”, entre
-variáveis booleanas, do modo representado a seguir.
-
-<!-- prettier-ignore -->
-::: figure Bloco funcional Ou de múltiplas entradas {#fig-original-bloco-ou}
-
-```tikz
-\usetikzlibrary{circuits.logic.US,calc}
-
-\begin{tikzpicture}[scale=1.5,transform shape]
-
-\node[
-    or gate US,
-    draw,
-    logic gate inputs=nnnnn,
-    minimum width=1.8cm,
-    minimum height=1.5cm
-] (g) at (3,0) {};
-
-% Coordenada horizontal comum às entradas
-\coordinate (left) at ($(g.west)+(-1.2,0)$);
-
-% Entradas alinhadas verticalmente
-\draw (left |- g.input 1) -- (g.input 1);
-\draw (left |- g.input 2) -- (g.input 2);
-\draw (left |- g.input 5) -- (g.input 5);
-
-% Rótulos alinhados
-\node[anchor=east] at (left |- g.input 1) {$a$};
-\node[anchor=east] at (left |- g.input 2) {$b$};
-\node[anchor=east] at (left |- g.input 5) {$n$};
-
-% Reticências verticais
-\node at ($(g.input 3)+(-0.45,0)$) {$\vdots$};
-
-% Saída
-\draw (g.output) -- ++(1,0)
-    node[right] {$F=a+b+\cdots+n$};
-
-\end{tikzpicture}
-```
-
-:::
-
-Ou seja, a função de saída $F$ tem o valor 1 quando pelo menos uma das entradas
-estiver no valor 1.
-
-A função booleana complementação pode ser representada pelo bloco “Não”, cujo
-símbolo está delineado a seguir.
-
-<!-- prettier-ignore -->
-::: figure Exemplos de representação da complementação por bolhas de inversão {#fig-original-complementacao}
-
-```tikz
-\begin{tikzpicture}[
-    x=1cm,
-    y=1cm,
-    line width=0.8pt,
-    line cap=round,
-    line join=round,
-    font=\fontsize{20}{24}\selectfont
-]
-
-% Dimensões dos símbolos
-\def\h{0.55}
-\def\rb{0.10}
-
-% Espaçamento horizontal entre os blocos
-\def\sep{4.8}
-
-% --------------------------------------------------
-% 1. Porta NAND de uma entrada
-% --------------------------------------------------
-\begin{scope}[shift={(0,0)}]
-
-% Corpo da porta AND
-\draw (1,-\h) -- (1,\h) -- (1.65,\h)
-      arc[start angle=90,end angle=-90,radius=\h]
-      -- (1,-\h) -- cycle;
-
-% Entrada
-\draw (0.15,0) -- (1,0);
-\node[anchor=east] at (0.10,0) {$a$};
-
-% Bolha de inversão na saída
-\draw[fill=white] (2.30,0) circle (\rb);
-
-% Saída
-\draw (2.40,0) -- (3.10,0);
-\node[anchor=west] at (3.15,0) {$\bar a$};
-
-\end{scope}
-
-% --------------------------------------------------
-% 2. Porta NOR de uma entrada
-% --------------------------------------------------
-\begin{scope}[shift={(\sep,0)}]
-
-% Corpo da porta OR
-\draw (1,-\h)
-      .. controls (1.25,-0.18) and (1.25,0.18) .. (1,\h)
-      .. controls (1.65,\h) and (2.00,0.40) .. (2.30,0)
-      .. controls (2.00,-0.40) and (1.65,-\h) .. (1,-\h)
-      -- cycle;
-
-% Entrada
-\draw (0.15,0) -- (1.12,0);
-\node[anchor=east] at (0.10,0) {$a$};
-
-% Bolha de inversão na saída
-\draw[fill=white] (2.40,0) circle (\rb);
-
-% Saída
-\draw (2.50,0) -- (3.10,0);
-\node[anchor=west] at (3.15,0) {$\bar a$};
-
-\end{scope}
-
-% --------------------------------------------------
-% 3. Porta AND com entrada negada
-% --------------------------------------------------
-\begin{scope}[shift={(2*\sep,0)}]
-
-% Corpo da porta AND
-\draw (1,-\h) -- (1,\h) -- (1.65,\h)
-      arc[start angle=90,end angle=-90,radius=\h]
-      -- (1,-\h) -- cycle;
-
-% Entrada e bolha de inversão
-\draw (0.15,0) -- (0.80,0);
-\node[anchor=east] at (0.10,0) {$a$};
-\draw[fill=white] (0.90,0) circle (\rb);
-
-% Saída
-\draw (2.20,0) -- (3.10,0);
-\node[anchor=west] at (3.15,0) {$\bar a$};
-
-\end{scope}
-
-% --------------------------------------------------
-% 4. Porta OR com entrada negada
-% --------------------------------------------------
-\begin{scope}[shift={(3*\sep,0)}]
-
-% Corpo da porta OR
-\draw (1,-\h)
-      .. controls (1.25,-0.18) and (1.25,0.18) .. (1,\h)
-      .. controls (1.65,\h) and (2.00,0.40) .. (2.30,0)
-      .. controls (2.00,-0.40) and (1.65,-\h) .. (1,-\h)
-      -- cycle;
-
-% Entrada e bolha de inversão
-\draw (0.15,0) -- (1.02,0);
-\node[anchor=east] at (0.10,0) {$a$};
-\draw[fill=white] (1.12,0) circle (\rb);
-
-% Saída
-\draw (2.30,0) -- (3.10,0);
-\node[anchor=west] at (3.15,0) {$\bar a$};
-
-\end{scope}
-
-\end{tikzpicture}
-```
-
-:::
-
-De modo geral um pequeno círculo representa a função negação.
-
-Nessas condições um bloco “E” com mais de uma entrada representa a função
-booleana “negação de E” ou “NE”.
-
-<!-- prettier-ignore -->
-::: figure Bloco NE de múltiplas entradas {#fig-original-bloco-ne}
-
-```tikz
-\usetikzlibrary{circuits.logic.US,calc}
-
-\begin{tikzpicture}[scale=1.5,transform shape]
-
-\node[
-    nand gate US,
-    draw,
-    logic gate inputs=nnnnn,
-    minimum width=1.8cm,
-    minimum height=1.5cm
-] (g) at (3,0) {};
-
-% Coordenada horizontal comum às entradas
-\coordinate (left) at ($(g.west)+(-1.2,0)$);
-
-% Condutores alinhados
-\draw (left |- g.input 1) -- (g.input 1);
-\draw (left |- g.input 2) -- (g.input 2);
-\draw (left |- g.input 5) -- (g.input 5);
-
-% Rótulos das entradas
-\node[anchor=east] at (left |- g.input 1) {$a$};
-\node[anchor=east] at (left |- g.input 2) {$b$};
-\node[anchor=east] at (left |- g.input 5) {$n$};
-
-% Reticências verticais
-\node at ($(g.input 3)+(-0.45,0)$) {$\vdots$};
-
-% Saída e expressão booleana
-\draw (g.output) -- ++(1,0)
-    node[right] {$F=\overline{ab\cdots n}=\bar a+\bar b+\cdots+\bar n$};
-
-\end{tikzpicture}
-```
-
-:::
-
-Ou seja, a função de saída $F$ é igual a zero quando todas as variáveis
-aplicadas às entradas tiverem o valor 1.
-
-A função “Nou” resulta da negação de um circuito “Ou”, seja:
-
-<!-- prettier-ignore -->
-::: figure Bloco Nou de múltiplas entradas {#fig-original-bloco-nou}
-
-```tikz
-\usetikzlibrary{circuits.logic.US,calc}
-
-\begin{tikzpicture}[scale=1.5,transform shape]
-
-\node[
-    nor gate US,
-    draw,
-    logic gate inputs=nnnnn,
-    minimum width=1.8cm,
-    minimum height=1.5cm
-] (g) at (3,0) {};
-
-% Coordenada horizontal comum às entradas
-\coordinate (left) at ($(g.west)+(-1.2,0)$);
-
-% Condutores alinhados
-\draw (left |- g.input 1) -- (g.input 1);
-\draw (left |- g.input 2) -- (g.input 2);
-\draw (left |- g.input 5) -- (g.input 5);
-
-% Rótulos das entradas
-\node[anchor=east] at (left |- g.input 1) {$a$};
-\node[anchor=east] at (left |- g.input 2) {$b$};
-\node[anchor=east] at (left |- g.input 5) {$n$};
-
-% Reticências verticais
-\node at ($(g.input 3)+(-0.45,0)$) {$\vdots$};
-
-% Saída e expressão booleana
-\draw (g.output) -- ++(1,0)
-    node[right] {$F=\overline{a+b+\cdots+n}=\bar a\bar b\cdots\bar n$};
-
-\end{tikzpicture}
-```
-
-:::
-
-Ou seja, a função $F$ tem o valor 0 quando pelo menos uma das variáveis de
-entrada tem o valor 1.
-
-Além dos blocos descritos anteriormente existem miríades de derivações,
-combinando o circuito de negação com os blocos “Ou” e “E”, nos quais alguns
-exemplos estão representados a seguir, com duas entradas.
-
-<!-- prettier-ignore -->
-::: figure Exemplos de funções derivadas com entradas complementadas {#fig-original-funcoes-derivadas}
-
-```tikz
-\usetikzlibrary{circuits.logic.US,calc}
-
-\begin{tikzpicture}[
-    scale=1.5,
-    transform shape,
-    gate/.style={
-        draw,
-        minimum width=1.8cm,
-        minimum height=1.5cm,
-        inner sep=4pt
-    },
-    line width=0.6pt
-]
-
-% Posições horizontais das extremidades esquerdas.
-\def\leftA{1.6}
-\def\leftB{9.6}
-
-% --------------------------------------------------
-% F1 = a b̄
-% --------------------------------------------------
-\node[
-    and gate US,
-    gate,
-    logic gate inputs=ni
-] (g1) at (3,3) {};
-
-\coordinate (a1) at (g1.input 1 -| \leftA,0);
-\coordinate (b1) at (g1.input 2 -| \leftA,0);
-
-\draw (a1) -- (g1.input 1);
-\draw (b1) -- (g1.input 2);
-
-\node[left] at (a1) {$a$};
-\node[left] at (b1) {$b$};
-
-\draw (g1.output) -- ++(1,0)
-    node[right] {$F_1=a\bar b$};
-
-% --------------------------------------------------
-% F2 = a + b̄
-% --------------------------------------------------
-\node[
-    or gate US,
-    gate,
-    logic gate inputs=ni
-] (g2) at (11,3) {};
-
-\coordinate (a2) at (g2.input 1 -| \leftB,0);
-\coordinate (b2) at (g2.input 2 -| \leftB,0);
-
-\draw (a2) -- (g2.input 1);
-\draw (b2) -- (g2.input 2);
-
-\node[left] at (a2) {$a$};
-\node[left] at (b2) {$b$};
-
-\draw (g2.output) -- ++(1,0)
-    node[right] {$F_2=a+\bar b$};
-
-% --------------------------------------------------
-% F3 = (a b̄)̄ = ā + b
-% --------------------------------------------------
-\node[
-    nand gate US,
-    gate,
-    logic gate inputs=ni
-] (g3) at (3,-1) {};
-
-\coordinate (a3) at (g3.input 1 -| \leftA,0);
-\coordinate (b3) at (g3.input 2 -| \leftA,0);
-
-\draw (a3) -- (g3.input 1);
-\draw (b3) -- (g3.input 2);
-
-\node[left] at (a3) {$a$};
-\node[left] at (b3) {$b$};
-
-\draw (g3.output) -- ++(1,0)
-    node[right] {$F_3=\overline{a\bar b}=\bar a+b$};
-
-% --------------------------------------------------
-% F4 = (ā + b)̄ = a b̄
-% --------------------------------------------------
-\node[
-    nor gate US,
-    gate,
-    logic gate inputs=in
-] (g4) at (11,-1) {};
-
-\coordinate (a4) at (g4.input 1 -| \leftB,0);
-\coordinate (b4) at (g4.input 2 -| \leftB,0);
-
-\draw (a4) -- (g4.input 1);
-\draw (b4) -- (g4.input 2);
-
-\node[left] at (a4) {$a$};
-\node[left] at (b4) {$b$};
-
-\draw (g4.output) -- ++(1,0)
-    node[right] {$F_4=\overline{\bar a+b}=a\bar b$};
-
-\end{tikzpicture}
-```
-
-:::
-
-Um bloco funcional de grande importância prática é o bloco “Ou exclusivo”, cuja
-saída é igual a 1 quando apenas uma das entradas for igual a 1. Tal bloco é
-representado esquematicamente pelo diagrama a seguir.
-
-<!-- prettier-ignore -->
-::: figure Função Ou exclusivo {#fig-original-xor}
-
-```tikz
-\usetikzlibrary{circuits.logic.US}
-\begin{tikzpicture}[scale=1.5,transform shape]
-\node[xor gate US,draw,logic gate inputs=nn,minimum width=1.8cm,minimum height=1.5cm] (g) at (3,0) {};
-\draw (g.input 1)--++(-1,0) node[left] {$a$};
-\draw (g.input 2)--++(-1,0) node[left] {$b$};
-\draw (g.output)--++(1,0) node[right] {$F$};
-\end{tikzpicture}
-```
-
-$$
-F=\bar a b+a\bar b.
-$$
-
-:::
-
-Ou seja, $F$ na saída é igual a 1 quando a entrada $a$ for igual a zero e a
-entrada $b$ for igual a 1, ou quando a entrada $a$ for igual a 1 e a entrada
-$b$ for igual a zero. A função “Ou exclusivo”, por ser muito comum, é
-representada pelo símbolo $\oplus$. Nessas condições temos
-
-$$
-F=a\oplus b.
-$$
-
-A função “Coincidência” é tal que a saída $F$ é igual a 1 quando o valor das
-variáveis de entrada coincidem. Essa função pode ser representada
-esquematicamente pelo bloco delineado a seguir.
-
-<!-- prettier-ignore -->
-::: figure Função Coincidência {#fig-original-coincidencia}
-
-```tikz
-\usetikzlibrary{circuits.logic.US}
-\begin{tikzpicture}[scale=1.5,transform shape]
-\node[xnor gate US,draw,logic gate inputs=nn,minimum width=1.8cm,minimum height=1.5cm] (g) at (3,0) {};
-\draw (g.input 1)--++(-1,0) node[left] {$a$};
-\draw (g.input 2)--++(-1,0) node[left] {$b$};
-\draw (g.output)--++(1,0) node[right] {$F$};
-\end{tikzpicture}
-```
-
-$$
-F=ab+\bar a\bar b.
-$$
-
-:::
-
-Ou seja, a função $F$ é igual a 1 quando $a$ e $b$ forem ambos iguais a zero,
-ou, então, quando $a$ e $b$ forem ambos iguais a 1. Por ser muito comum, a
-função “Coincidência” é representada por
-
-$$
-F=a\odot b.
-$$
-
-**Exercício.** Mostre que $a\odot b=\overline{a\oplus b}$.
-
-## 1.2.4. Implementação de funções booleanas com componentes discretos. Integração em pequena escala
+# Implementação de funções booleanas com componentes discretos - Integração em pequena escala
 
 Os blocos lógicos “Ou” e “E” podem ser implementados simplesmente,
 empregando-se lógica de diodos e resistores. Consideremos que estamos operando
@@ -2204,15 +1728,16 @@ de um circuito inversor, como o esquematizado na Fig. 1-12.
 ```vega-lite
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Reconstrução geométrica aproximada das curvas características independentes dos transistores NMOS e PMOS de um inversor CMOS.",
+  "description": "Reconstrução qualitativa das características justapostas de transistores MOS complementares, com famílias de curvas, escalas opostas e trajetória de operação.",
   "width": 900,
-  "height": 480,
+  "height": 500,
   "padding": {
-    "left": 65,
-    "right": 75,
-    "top": 55,
-    "bottom": 65
+    "left": 85,
+    "right": 95,
+    "top": 65,
+    "bottom": 80
   },
+  "background": "white",
   "config": {
     "view": {
       "stroke": null
@@ -2225,70 +1750,244 @@ de um circuito inversor, como o esquematizado na Fig. 1-12.
       "title": null
     }
   },
+  "encoding": {
+    "x": {
+      "field": "x",
+      "type": "quantitative",
+      "scale": {
+        "domain": [-1.65, 12],
+        "nice": false,
+        "zero": false
+      },
+      "axis": null
+    },
+    "y": {
+      "field": "y",
+      "type": "quantitative",
+      "scale": {
+        "domain": [-2.2, 11.7],
+        "nice": false,
+        "zero": false
+      },
+      "axis": null
+    }
+  },
   "layer": [
     {
       "data": {
         "values": [
-          {"x": 0, "y": -0.5},
-          {"x": 0, "y": 10.5}
+          {"x": 0, "y": -0.8, "x2": 0, "y2": 10.2},
+          {"x": 10, "y": -0.8, "x2": 10, "y2": 10.2},
+          {"x": -1.1, "y": 0, "x2": 11.15, "y2": 0}
         ]
       },
       "mark": {
-        "type": "line",
+        "type": "rule",
         "color": "black",
-        "strokeWidth": 2
+        "strokeWidth": 2.2
       },
       "encoding": {
-        "x": {
-          "field": "x",
+        "x2": {"field": "x2"},
+        "y2": {"field": "y2"}
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {"x": 0, "y": 10.2, "angle": 0},
+          {"x": 10, "y": 10.2, "angle": 0},
+          {"x": -1.1, "y": 0, "angle": 270},
+          {"x": 11.15, "y": 0, "angle": 90}
+        ]
+      },
+      "mark": {
+        "type": "point",
+        "shape": "triangle",
+        "filled": true,
+        "size": 240,
+        "fill": "#000000",
+        "stroke": "#000000",
+        "strokeWidth": 0,
+        "opacity": 1,
+        "fillOpacity": 1
+      },
+      "encoding": {
+        "angle": {
+          "field": "angle",
           "type": "quantitative",
-          "scale": {
-            "domain": [-1.5, 11.5],
-            "nice": false
-          }
+          "scale": null
+        }
+      }
+    },
+
+    {
+      "data": {
+        "sequence": {
+          "start": 0,
+          "stop": 8.151,
+          "step": 0.005,
+          "as": "x"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "4.05*(1-exp(-pow(datum.x/0.7514166,0.95)))",
+          "as": "base"
         },
-        "y": {
-          "field": "y",
-          "type": "quantitative",
-          "scale": {
-            "domain": [-1.5, 11.5],
-            "nice": false
-          }
+        {
+          "calculate": "0.38",
+          "as": "xb"
+        },
+        {
+          "calculate": "4.05*(1-exp(-pow(datum.xb/0.7514166,0.95)))",
+          "as": "yb"
+        },
+        {
+          "calculate": "4.05*(1-exp(-pow(datum.x/0.74,0.95)))",
+          "as": "orig3"
+        },
+        {
+          "calculate": "6.4*(1-exp(-pow(datum.x/1.27,1.07)))",
+          "as": "orig6"
+        },
+        {
+          "calculate": "8.75*(1-exp(-pow(datum.x/1.35,1.4)))",
+          "as": "orig9"
+        },
+        {
+          "calculate": "4.05*(1-exp(-pow(datum.xb/0.74,0.95)))",
+          "as": "orig3b"
+        },
+        {
+          "calculate": "6.4*(1-exp(-pow(datum.xb/1.27,1.07)))",
+          "as": "orig6b"
+        },
+        {
+          "calculate": "8.75*(1-exp(-pow(datum.xb/1.35,1.4)))",
+          "as": "orig9b"
+        },
+        {
+          "calculate": "datum.x <= datum.xb ? datum.base : datum.yb + (4.05-datum.yb)*(datum.orig3-datum.orig3b)/(4.05-datum.orig3b)",
+          "as": "c0"
+        },
+        {
+          "calculate": "datum.x <= datum.xb ? datum.base : datum.yb + (6.4-datum.yb)*(datum.orig6-datum.orig6b)/(6.4-datum.orig6b)",
+          "as": "c1"
+        },
+        {
+          "calculate": "datum.x <= datum.xb ? datum.base : datum.yb + (8.75-datum.yb)*(datum.orig9-datum.orig9b)/(8.75-datum.orig9b)",
+          "as": "c2"
+        },
+        {
+          "fold": ["c0", "c1", "c2"],
+          "as": ["serie", "y"]
+        }
+      ],
+      "mark": {
+        "type": "line",
+        "color": "black",
+        "strokeWidth": 2.3,
+        "interpolate": "linear"
+      },
+      "encoding": {
+        "detail": {
+          "field": "serie",
+          "type": "nominal"
+        },
+        "order": {
+          "field": "x",
+          "type": "quantitative"
         }
       }
     },
+
     {
       "data": {
-        "values": [
-          {"x": 10, "y": -0.5},
-          {"x": 10, "y": 10.5}
-        ]
+        "sequence": {
+          "start": -0.5,
+          "stop": 10.001,
+          "step": 0.025,
+          "as": "x"
+        }
       },
+      "transform": [
+        {
+          "calculate": "(datum.x+0.5)/10.5",
+          "as": "u"
+        },
+        {
+          "calculate": "1.65*(1-0.018*datum.u)*(1-pow(datum.u,8))",
+          "as": "c0"
+        },
+        {
+          "calculate": "4.65*(1-0.018*datum.u)*(1-pow(datum.u,8))",
+          "as": "c1"
+        },
+        {
+          "calculate": "6.9*(1-0.018*datum.u)*(1-pow(datum.u,10))",
+          "as": "c2"
+        },
+        {
+          "calculate": "9.2*(1-0.018*datum.u)*(1-pow(datum.u,12))",
+          "as": "c3"
+        },
+        {
+          "fold": ["c0", "c1", "c2", "c3"],
+          "as": ["serie", "y"]
+        }
+      ],
       "mark": {
         "type": "line",
         "color": "black",
-        "strokeWidth": 2
+        "strokeWidth": 2.3,
+        "interpolate": "linear"
       },
       "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
+        "detail": {
+          "field": "serie",
+          "type": "nominal"
+        },
+        "order": {
+          "field": "x",
+          "type": "quantitative"
+        }
       }
     },
+
     {
       "data": {
-        "values": [
-          {"x": -1, "y": 0},
-          {"x": 11, "y": 0}
-        ]
+        "sequence": {
+          "start": 0.1,
+          "stop": 9.651,
+          "step": 0.025,
+          "as": "x"
+        }
       },
+      "transform": [
+        {
+          "calculate": "0.85*(1-exp(-(datum.x-0.1)/1.35))",
+          "as": "c0"
+        },
+        {
+          "fold": ["c0"],
+          "as": ["serie", "y"]
+        }
+      ],
       "mark": {
         "type": "line",
         "color": "black",
-        "strokeWidth": 2
+        "strokeWidth": 2.3,
+        "interpolate": "linear"
       },
       "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
+        "detail": {
+          "field": "serie",
+          "type": "nominal"
+        },
+        "order": {
+          "field": "x",
+          "type": "quantitative"
+        }
       }
     },
 
@@ -2296,194 +1995,82 @@ de um circuito inversor, como o esquematizado na Fig. 1-12.
       "data": {
         "sequence": {
           "start": 0,
-          "stop": 10.01,
-          "step": 0.05,
-          "as": "x"
+          "stop": 1.0001,
+          "step": 0.001,
+          "as": "t"
         }
       },
       "transform": [
         {
-          "calculate": "9*(1-exp(-datum.x/1.1))",
+          "calculate": "datum.t",
+          "as": "u"
+        },
+        {
+          "calculate": "1-datum.u",
+          "as": "v"
+        },
+        {
+          "calculate": "6.75*pow(datum.v,3)+3*6.75*pow(datum.v,2)*datum.u+3*7.70*datum.v*pow(datum.u,2)+9.0718678*pow(datum.u,3)",
+          "as": "x"
+        },
+        {
+          "calculate": "9.50*pow(datum.v,3)+3*6.20*pow(datum.v,2)*datum.u+3*1.55*datum.v*pow(datum.u,2)+0.8488955*pow(datum.u,3)",
           "as": "y"
         }
       ],
       "mark": {
         "type": "line",
-        "color": "black",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
-      }
-    },
-    {
-      "data": {
-        "sequence": {
-          "start": 0,
-          "stop": 10.01,
-          "step": 0.05,
-          "as": "x"
-        }
-      },
-      "transform": [
-        {
-          "calculate": "6*(1-exp(-datum.x/1.1))",
-          "as": "y"
-        }
-      ],
-      "mark": {
-        "type": "line",
-        "color": "black",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
-      }
-    },
-    {
-      "data": {
-        "sequence": {
-          "start": 0,
-          "stop": 10.01,
-          "step": 0.05,
-          "as": "x"
-        }
-      },
-      "transform": [
-        {
-          "calculate": "3*(1-exp(-datum.x/1.1))",
-          "as": "y"
-        }
-      ],
-      "mark": {
-        "type": "line",
-        "color": "black",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
-      }
-    },
-
-    {
-      "data": {
-        "sequence": {
-          "start": 0,
-          "stop": 10.01,
-          "step": 0.05,
-          "as": "x"
-        }
-      },
-      "transform": [
-        {
-          "calculate": "9*(1-exp(-(10-datum.x)/1.1))",
-          "as": "y"
-        }
-      ],
-      "mark": {
-        "type": "line",
-        "color": "black",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
-      }
-    },
-    {
-      "data": {
-        "sequence": {
-          "start": 0,
-          "stop": 10.01,
-          "step": 0.05,
-          "as": "x"
-        }
-      },
-      "transform": [
-        {
-          "calculate": "6*(1-exp(-(10-datum.x)/1.1))",
-          "as": "y"
-        }
-      ],
-      "mark": {
-        "type": "line",
-        "color": "black",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
-      }
-    },
-    {
-      "data": {
-        "sequence": {
-          "start": 0,
-          "stop": 10.01,
-          "step": 0.05,
-          "as": "x"
-        }
-      },
-      "transform": [
-        {
-          "calculate": "3*(1-exp(-(10-datum.x)/1.1))",
-          "as": "y"
-        }
-      ],
-      "mark": {
-        "type": "line",
-        "color": "black",
-        "strokeWidth": 2
-      },
-      "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
-      }
-    },
-
-    {
-      "data": {
-        "values": [
-          {"x": 6.5, "y": 9.3},
-          {"x": 6.7, "y": 7.5},
-          {"x": 7.0, "y": 5.2},
-          {"x": 7.4, "y": 3.1},
-          {"x": 8.2, "y": 1.4},
-          {"x": 9.3, "y": 0.2}
-        ]
-      },
-      "mark": {
-        "type": "line",
-        "interpolate": "monotone",
-        "strokeDash": [9, 6],
+        "interpolate": "linear",
+        "strokeDash": [10, 7],
         "strokeWidth": 2.2,
         "color": "black"
       },
       "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"}
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "order": {
+          "field": "t",
+          "type": "quantitative"
+        }
       }
     },
 
     {
       "data": {
         "values": [
-          {"x": 9.3, "y": 0.35, "label": "A"},
-          {"x": 0.35, "y": 0.35, "label": "B"}
+          {"x": 0.38, "y": 1.65},
+          {"x": 9.0718678, "y": 0.8488955}
+        ]
+      },
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 65,
+        "color": "black",
+        "opacity": 1
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {"x": 0.50, "y": 1.10, "label": "B"},
+          {"x": 9.25, "y": 1.30, "label": "A"}
         ]
       },
       "mark": {
         "type": "text",
-        "fontSize": 19,
+        "fontSize": 22,
         "fontWeight": "bold",
         "color": "black"
       },
       "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"},
         "text": {"field": "label"}
       }
     },
@@ -2491,20 +2078,60 @@ de um circuito inversor, como o esquematizado na Fig. 1-12.
     {
       "data": {
         "values": [
-          {"x": -0.45, "y": 10.7, "label": "I_D2"},
-          {"x": 10.5, "y": 10.7, "label": "I_D1"},
-          {"x": -1.0, "y": -0.6, "label": "V_DF2"},
-          {"x": 10.8, "y": -0.6, "label": "V_DF1"}
+          {"x": -0.59, "y": 1.65, "label": "0"},
+          {"x": -0.59, "y": 4.65, "label": "−4"},
+          {"x": -0.59, "y": 6.9, "label": "−8"},
+          {"x": -0.59, "y": 9.2, "label": "−12"}
         ]
       },
       "mark": {
         "type": "text",
-        "fontSize": 17,
+        "fontSize": 19,
+        "align": "right",
+        "baseline": "middle",
         "color": "black"
       },
       "encoding": {
-        "x": {"field": "x", "type": "quantitative"},
-        "y": {"field": "y", "type": "quantitative"},
+        "text": {"field": "label"}
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {"x": 8.4, "y": 0.48, "label": "0"},
+          {"x": 8.37, "y": 4.5, "label": "4"},
+          {"x": 8.37, "y": 6.77, "label": "8"},
+          {"x": 8.37, "y": 8.75, "label": "12"}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 19,
+        "align": "left",
+        "baseline": "middle",
+        "color": "black"
+      },
+      "encoding": {
+        "text": {"field": "label"}
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {"x": 0.55, "y": 10.25, "label": "Iᴅ₂"},
+          {"x": 10.5, "y": 10.25, "label": "Iᴅ₁"},
+          {"x": -1.15, "y": -0.65, "label": "Vᴅꜰ₂"},
+          {"x": 11.15, "y": -0.65, "label": "Vᴅꜰ₁"}
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 21,
+        "color": "black"
+      },
+      "encoding": {
         "text": {"field": "label"}
       }
     }
