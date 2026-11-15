@@ -1,4 +1,4 @@
-# 13. Dispositivos semicondutores e chaveamento digital {#chapter-13}
+# 12. Dispositivos semicondutores e chaveamento digital {#chapter-12}
 
 Nos capítulos anteriores, portas lógicas, registradores e máquinas de estados
 foram estudados como estruturas funcionais. A implementação física desses
@@ -14,7 +14,7 @@ elétrico. Uma variável lógica ideal assume os valores 0 e 1; um terminal fís
 apresenta tensão, corrente, capacitância, dissipação e atraso. Essa distinção
 orienta a análise de todos os circuitos deste capítulo.
 
-## 13.1. Fundamentos de semicondutores aplicados à lógica digital {#sec-semiconductor-fundamentals}
+## 12.1. Fundamentos de semicondutores aplicados à lógica digital {#sec-semiconductor-fundamentals}
 
 Materiais semicondutores, como o silício, apresentam condutividade elétrica que
 pode ser modificada pela temperatura, pela iluminação, por campos elétricos e
@@ -52,9 +52,9 @@ consequentemente, a corrente que atravessa a junção.
 A tensão que representa um nível lógico não é determinada diretamente pelo
 valor da banda proibida. Ela resulta da arquitetura do circuito e das
 especificações de alimentação e de entrada/saída. As margens de ruído e a
-compatibilidade entre famílias lógicas serão examinadas no Capítulo 14.
+compatibilidade entre famílias lógicas serão examinadas no Capítulo 13.
 
-## 13.2. Diodos e transistores como chaves {#sec-semiconductor-switches}
+## 12.2. Diodos e transistores como chaves {#sec-semiconductor-switches}
 
 Uma **chave eletrônica** alterna entre condições de baixa e alta condução. O
 modelo ideal considera resistência nula no estado fechado e infinita no estado
@@ -67,7 +67,7 @@ inversamente. Uma aproximação frequente para sua característica corrente–te
 é a equação de Shockley:
 
 $$
-I_D=I_S\left(e^{V_D/(nV_T)}-1\right),\qquad V_T=\frac{kT}{q}. \tag{13.1}
+I_D=I_S\left(e^{V_D/(nV_T)}-1\right),\qquad V_T=\frac{kT}{q}. \tag{12.1}
 $$
 
 Nessa expressão, $I_S$ é a corrente de saturação do modelo, $n$ é o fator de
@@ -97,7 +97,7 @@ conectada à saída. A mesma chave pode funcionar adequadamente com uma carga
 resistiva pequena e apresentar transições lentas ao acionar uma capacitância
 elevada.
 
-## 13.3. Transistores bipolares de junção {#sec-semiconductor-bjt}
+## 12.3. Transistores bipolares de junção {#sec-semiconductor-bjt}
 
 O transistor bipolar de junção (BJT) é formado por três regiões semicondutoras,
 constituindo dispositivos NPN ou PNP. Na configuração NPN, uma corrente de base
@@ -105,7 +105,7 @@ pode controlar uma corrente de coletor maior. Em operação ativa direta,
 utiliza-se frequentemente a aproximação:
 
 $$
-I_C\approx\beta I_B, \tag{13.2}
+I_C\approx\beta I_B, \tag{12.2}
 $$
 
 em que $\beta$ representa o ganho de corrente em condições específicas. Essa
@@ -117,7 +117,7 @@ alimentação $V_{CC}$ e emissor aterrado, uma estimativa da corrente de coletor
 em saturação é:
 
 $$
-I_{C,\mathrm{sat}}\approx\frac{V_{CC}-V_{CE,\mathrm{sat}}}{R_C}. \tag{13.3}
+I_{C,\mathrm{sat}}\approx\frac{V_{CC}-V_{CE,\mathrm{sat}}}{R_C}. \tag{12.3}
 $$
 
 Para assegurar saturação com margem, é comum projetar uma razão forçada
@@ -168,7 +168,7 @@ esse nível.
 
 Considere $V_{CC}=5\,\mathrm{V}$, $R_C=1\,\mathrm{k\Omega}$ e
 $V_{CE,\mathrm{sat}}=0{,}2\,\mathrm{V}$ como hipótese de projeto. Pela equação
-(13.3), $I_{C,\mathrm{sat}}\approx4{,}8\,\mathrm{mA}$. Se for adotado
+(12.3), $I_{C,\mathrm{sat}}\approx4{,}8\,\mathrm{mA}$. Se for adotado
 $\beta_{\mathrm{forçado}}=10$, a corrente de base desejada é de aproximadamente
 $0{,}48\,\mathrm{mA}$. Para uma entrada de $5\,\mathrm{V}$ e uma hipótese de
 $V_{BE}=0{,}8\,\mathrm{V}$, obtém-se
@@ -178,7 +178,7 @@ controle e pela dissipação.
 
 :::
 
-## 13.4. Transistores MOSFET {#sec-semiconductor-mosfet}
+## 12.4. Transistores MOSFET {#sec-semiconductor-mosfet}
 
 O MOSFET utiliza um campo elétrico associado à tensão entre porta e fonte para
 controlar a condução entre dreno e fonte. Em MOSFETs de enriquecimento, o canal
@@ -202,7 +202,7 @@ k_n\!\left[(V_{GS}-V_{TH})V_{DS}-\dfrac{V_{DS}^{2}}{2}\right],
 & 0\le V_{DS}<V_{GS}-V_{TH},\\
 \dfrac{k_n}{2}(V_{GS}-V_{TH})^2,
 & V_{DS}\ge V_{GS}-V_{TH}.
-\end{cases} \tag{13.4}
+\end{cases} \tag{12.4}
 $$
 
 Aqui, $k_n=\mu_n C_{ox}(W/L)$ é um parâmetro simplificado, $V_{TH}$ é a tensão
@@ -235,7 +235,7 @@ condução. Para escolher um MOSFET acionado por uma tensão específica, é
 necessário consultar a especificação de $R_{DS(on)}$ nessa tensão de porta, nas
 condições relevantes de corrente e temperatura.
 
-## 13.5. Regiões de operação e chaveamento {#sec-semiconductor-operating-regions}
+## 12.5. Regiões de operação e chaveamento {#sec-semiconductor-operating-regions}
 
 O projeto de uma chave procura estabelecer dois estados estáveis bem definidos
 e atravessar rapidamente a região de transição. Para um BJT NPN, costuma-se
@@ -262,7 +262,7 @@ rápidos, a dinâmica de carga pode ser mais importante que a relação estátic
 corrente–tensão. Para uma carga puramente capacitiva, a corrente instantânea é:
 
 $$
-i_C=C_L\frac{dV_{out}}{dt}. \tag{13.5}
+i_C=C_L\frac{dV_{out}}{dt}. \tag{12.5}
 $$
 
 A equação evidencia que, para uma mesma capacitância $C_L$, transições mais
@@ -270,7 +270,7 @@ rápidas exigem maior corrente instantânea. Em dispositivos reais, a corrente
 varia durante a transição, e o atraso depende também da resistência efetiva de
 condução e das capacitâncias internas.
 
-## 13.6. Características estáticas e dinâmicas {#sec-semiconductor-static-dynamic}
+## 12.6. Características estáticas e dinâmicas {#sec-semiconductor-static-dynamic}
 
 As **características estáticas** descrevem correntes e tensões em condições
 aproximadamente estacionárias. Entre elas estão correntes de fuga, quedas de
@@ -282,14 +282,14 @@ Para um circuito equivalente de primeira ordem, formado por resistência $R$ e
 capacitância $C$, a constante de tempo é:
 
 $$
-\tau=RC. \tag{13.6}
+\tau=RC. \tag{12.6}
 $$
 
 Na carga de um capacitor inicialmente descarregado por uma fonte ideal
 $V_{DD}$, tem-se:
 
 $$
-V_C(t)=V_{DD}\left(1-e^{-t/RC}\right). \tag{13.7}
+V_C(t)=V_{DD}\left(1-e^{-t/RC}\right). \tag{12.7}
 $$
 
 <!-- prettier-ignore -->
@@ -331,11 +331,11 @@ A {@ref fig-semiconductor-rc-response} mostra a resposta normalizada de um
 modelo RC ideal. Ela não representa uma forma de onda medida em um componente
 específico.
 
-## 13.7. Inversores implementados com transistores {#sec-semiconductor-inverters}
+## 12.7. Inversores implementados com transistores {#sec-semiconductor-inverters}
 
 Um **inversor lógico** produz um nível de saída oposto ao nível de entrada. O
 inversor pode ser implementado com uma chave transistorada e um resistor de
-carga, como no exemplo BJT da Seção 13.3. Entretanto, o uso de resistores de
+carga, como no exemplo BJT da Seção 12.3. Entretanto, o uso de resistores de
 carga pode provocar dissipação estática significativa quando a chave conduz.
 
 Na arquitetura **CMOS complementar**, um PMOS conecta a saída à alimentação
@@ -407,19 +407,19 @@ polarização apropriada, e a faixa admissível de tensão de entrada deve ser
 respeitada. A saída de um inversor CMOS não deve ser confundida com uma fonte
 ideal capaz de fornecer corrente ilimitada.
 
-## 13.8. Dissipação de potência e limitações físicas {#sec-semiconductor-power}
+## 12.8. Dissipação de potência e limitações físicas {#sec-semiconductor-power}
 
 A potência dissipada por um dispositivo elétrico é, instantaneamente,
 
 $$
-p(t)=v(t)i(t). \tag{13.8}
+p(t)=v(t)i(t). \tag{12.8}
 $$
 
 Em um MOSFET conduzindo na região ôhmica, uma estimativa da potência de
 condução é:
 
 $$
-P_{\mathrm{cond}}\approx I_{D,\mathrm{rms}}^2R_{DS(on)}. \tag{13.9}
+P_{\mathrm{cond}}\approx I_{D,\mathrm{rms}}^2R_{DS(on)}. \tag{12.9}
 $$
 
 Em uma chave BJT saturada, uma aproximação para a dissipação no caminho
@@ -429,7 +429,7 @@ CMOS, a potência dinâmica associada à carga e descarga de capacitâncias pode
 ser aproximada por:
 
 $$
-P_{\mathrm{din}}\approx\alpha C_LV_{DD}^{2}f, \tag{13.10}
+P_{\mathrm{din}}\approx\alpha C_LV_{DD}^{2}f, \tag{12.10}
 $$
 
 em que $\alpha$ é o número médio de transições de carga $0\to1$ por ciclo de
@@ -451,7 +451,7 @@ O aquecimento do dispositivo pode ser estimado por uma resistência térmica
 equivalente, em condições especificadas:
 
 $$
-T_J\approx T_A+P_D\theta_{JA}, \tag{13.11}
+T_J\approx T_A+P_D\theta_{JA}, \tag{12.11}
 $$
 
 em que $T_J$ é a temperatura de junção, $T_A$ a temperatura ambiente, $P_D$ a
@@ -536,5 +536,5 @@ potência e temperatura impõem limites físicos à abstração booleana.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 12 — Máquinas de estados finitos](finite-state-machines.md) ·
-[Capítulo 14 — Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md)
+[Capítulo 11 — Máquinas de estados finitos](finite-state-machines.md) ·
+[Capítulo 13 — Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md)

@@ -1,4 +1,4 @@
-# 15. Integridade de sinais e implementação física {#chapter-15}
+# 14. Integridade de sinais e implementação física {#chapter-14}
 
 No capítulo anterior, os níveis lógicos, as margens de ruído e a capacidade de
 acionamento foram apresentados como condições para interligar circuitos
@@ -15,7 +15,7 @@ retornos de corrente e redes de alimentação. O objetivo não é obter uma form
 de onda perfeitamente retangular, mas garantir que tensões e tempos permaneçam
 dentro das condições admissíveis para o receptor.
 
-## 15.1. Modelos reais de entradas e saídas digitais {#sec-signal-integrity-io-models}
+## 14.1. Modelos reais de entradas e saídas digitais {#sec-signal-integrity-io-models}
 
 Uma saída digital pode ser aproximada, em primeira análise, por uma fonte de
 tensão dependente do estado lógico, associada a uma resistência de saída
@@ -65,13 +65,13 @@ A validade do modelo depende da geometria e da escala temporal do problema.
 Quando a conexão se comporta como linha de transmissão, seus parâmetros devem
 ser tratados como distribuídos ao longo do comprimento.
 
-## 15.2. Capacitâncias parasitas e cargas {#sec-signal-integrity-capacitance}
+## 14.2. Capacitâncias parasitas e cargas {#sec-signal-integrity-capacitance}
 
 A capacitância total acionada por uma saída pode incluir as entradas dos
 receptores, a interconexão e os elementos de proteção:
 
 $$
-C_L \approx \sum_{k=1}^{N}C_{\mathrm{in},k}+C_{\mathrm{trilha}}+C_{\mathrm{extra}}. \tag{15.1}
+C_L \approx \sum_{k=1}^{N}C_{\mathrm{in},k}+C_{\mathrm{trilha}}+C_{\mathrm{extra}}. \tag{14.1}
 $$
 
 Essa soma é uma aproximação válida quando os elementos podem ser representados
@@ -81,7 +81,7 @@ resistiva, é $C_LV_{DD}^2$; metade fica armazenada no capacitor e metade é
 dissipada no processo resistivo idealizado. A energia armazenada é
 
 $$
-E_C=\frac{1}{2}C_LV^2. \tag{15.2}
+E_C=\frac{1}{2}C_LV^2. \tag{14.2}
 $$
 
 Uma carga maior geralmente eleva os tempos de transição e a energia de
@@ -104,7 +104,7 @@ energia dissipada nos circuitos internos.
 
 :::
 
-## 15.3. Tempos de subida e descida {#sec-signal-integrity-edges}
+## 14.3. Tempos de subida e descida {#sec-signal-integrity-edges}
 
 O **tempo de subida** $t_r$ é medido entre dois níveis de referência durante
 uma transição ascendente; o **tempo de descida** $t_f$ é definido de maneira
@@ -116,13 +116,13 @@ No modelo RC de primeira ordem, para um degrau aplicado a uma capacitância
 inicialmente descarregada,
 
 $$
-v_C(t)=V_{DD}\left(1-e^{-t/(RC)}\right). \tag{15.3}
+v_C(t)=V_{DD}\left(1-e^{-t/(RC)}\right). \tag{14.3}
 $$
 
 Para referências de 10% e 90%,
 
 $$
-t_r=RC\ln 9\approx 2{,}20RC. \tag{15.4}
+t_r=RC\ln 9\approx 2{,}20RC. \tag{14.4}
 $$
 
 O tempo para atingir metade da excursão é $t_{50\%}=RC\ln2$. Esses resultados
@@ -163,7 +163,7 @@ $t_r=11\,\mathrm{ns}$.
 
 :::
 
-## 15.4. Reflexões e linhas de transmissão {#sec-signal-integrity-transmission-lines}
+## 14.4. Reflexões e linhas de transmissão {#sec-signal-integrity-transmission-lines}
 
 Uma interconexão deve ser tratada como **linha de transmissão** quando seu
 atraso de propagação não é desprezível em relação ao tempo de transição. O
@@ -177,20 +177,20 @@ perdas, com indutância e capacitância por unidade de comprimento $L'$ e $C'$,
 
 $$
 Z_0=\sqrt{\frac{L'}{C'}}, \qquad
-v_p=\frac{1}{\sqrt{L'C'}}. \tag{15.5}
+v_p=\frac{1}{\sqrt{L'C'}}. \tag{14.5}
 $$
 
 O atraso unidirecional de uma conexão de comprimento $\ell$ é
 
 $$
-t_p=\frac{\ell}{v_p}. \tag{15.6}
+t_p=\frac{\ell}{v_p}. \tag{14.6}
 $$
 
 Quando uma onda encontra uma terminação resistiva $R_L$, o coeficiente de
 reflexão de tensão é
 
 $$
-\Gamma_L=\frac{R_L-Z_0}{R_L+Z_0}. \tag{15.7}
+\Gamma_L=\frac{R_L-Z_0}{R_L+Z_0}. \tag{14.7}
 $$
 
 Assim, uma terminação igual a $Z_0$ produz $\Gamma_L=0$ no modelo resistivo
@@ -223,7 +223,7 @@ característica não é um resistor discreto inserido em série na trilha.
 ::: example Reflexão em uma terminação {#ex-signal-integrity-reflection}
 
 Uma linha de $Z_0=50\,\Omega$ termina em $R_L=100\,\Omega$. Pela equação
-(15.7),
+(14.7),
 
 $$
 \Gamma_L=\frac{100-50}{100+50}=\frac{1}{3}.
@@ -234,7 +234,7 @@ com a mesma polaridade, no modelo ideal.
 
 :::
 
-## 15.5. Ruído, interferência e diafonia {#sec-signal-integrity-noise}
+## 14.5. Ruído, interferência e diafonia {#sec-signal-integrity-noise}
 
 O ruído em circuitos digitais pode ser conduzido pela alimentação, acoplado por
 campos elétricos ou magnéticos ou introduzido por retornos de corrente
@@ -245,13 +245,13 @@ O acoplamento capacitivo tende a aumentar com a taxa de variação de tensão,
 pois a corrente através de uma capacitância é
 
 $$
-i_C=C\frac{dv}{dt}. \tag{15.8}
+i_C=C\frac{dv}{dt}. \tag{14.8}
 $$
 
 Já a tensão associada à indutância é
 
 $$
-v_L=L\frac{di}{dt}. \tag{15.9}
+v_L=L\frac{di}{dt}. \tag{14.9}
 $$
 
 Essas relações ajudam a compreender por que transições rápidas podem produzir
@@ -272,12 +272,12 @@ os caminhos de retorno também importam.
 
 :::
 
-As margens de ruído estudadas no capítulo 14 referem-se a condições estáticas
+As margens de ruído estudadas no capítulo 13 referem-se a condições estáticas
 especificadas. Um pulso transitório de duração suficiente para atravessar a
 lógica ou violar a temporização pode provocar falhas mesmo quando os níveis
 estáticos são compatíveis.
 
-## 15.6. Aterramento e desacoplamento {#sec-signal-integrity-ground-decoupling}
+## 14.6. Aterramento e desacoplamento {#sec-signal-integrity-ground-decoupling}
 
 O termo **terra** pode designar funções distintas: referência de potencial do
 circuito, retorno de corrente, ligação de proteção ou conexão ao solo. Em uma
@@ -332,7 +332,7 @@ capacitor. Na placa, o desacoplamento deve ser conectado aos pinos apropriados
 com trajetos curtos e baixa indutância; a representação não indica a geometria
 física ideal.
 
-## 15.7. Terminação de sinais {#sec-signal-integrity-termination}
+## 14.7. Terminação de sinais {#sec-signal-integrity-termination}
 
 A **terminação** busca controlar reflexões e melhorar a forma de onda recebida.
 Sua necessidade depende do comprimento elétrico da conexão, da impedância
@@ -349,7 +349,7 @@ a resistência efetiva do transmissor mais a resistência externa se aproxime de
 $Z_0$:
 
 $$
-R_{\mathrm{out}}+R_T\approx Z_0. \tag{15.10}
+R_{\mathrm{out}}+R_T\approx Z_0. \tag{14.10}
 $$
 
 Essa abordagem pode funcionar bem em conexões ponto a ponto com receptor de
@@ -380,7 +380,7 @@ especificações do circuito integrado.
 
 :::
 
-## 15.8. Interligação de circuitos integrados {#sec-signal-integrity-interconnect}
+## 14.8. Interligação de circuitos integrados {#sec-signal-integrity-interconnect}
 
 Ao interligar circuitos integrados, é necessário verificar simultaneamente
 **compatibilidade lógica, compatibilidade elétrica, temporização e integridade
@@ -400,7 +400,7 @@ pareça funcionar em testes ocasionais.
 
 Sinais assíncronos que cruzam domínios de relógio exigem técnicas específicas
 de sincronização. A integridade elétrica da forma de onda não elimina o risco
-de metastabilidade discutido no capítulo 10.
+de metastabilidade discutido no capítulo 9.
 
 <!-- prettier-ignore -->
 ::: example Verificação de compatibilidade estática {#ex-signal-integrity-compatibility}
@@ -420,7 +420,7 @@ limites absolutos e condições dinâmicas.
 
 :::
 
-## 15.9. Cuidados no projeto de placas de circuito impresso {#sec-signal-integrity-pcb}
+## 14.9. Cuidados no projeto de placas de circuito impresso {#sec-signal-integrity-pcb}
 
 O projeto de uma placa de circuito impresso (PCI) transforma o esquema elétrico
 em uma geometria tridimensional. Largura e espessura de trilhas, distância até
@@ -461,7 +461,7 @@ avaliado conforme a velocidade das bordas. Para sinais críticos, modelos de
 campo, calculadoras de impedância e simulações podem complementar as regras
 práticas.
 
-## 15.10. Testes, medições e diagnóstico de falhas {#sec-signal-integrity-testing}
+## 14.10. Testes, medições e diagnóstico de falhas {#sec-signal-integrity-testing}
 
 A observação de uma forma de onda digital exige instrumentos e procedimentos
 compatíveis com sua escala temporal. Um osciloscópio com largura de banda
@@ -473,7 +473,7 @@ Como estimativa para um sistema de medição com resposta aproximadamente
 gaussiana,
 
 $$
-t_{r,\mathrm{instrumento}}\approx\frac{0{,}35}{BW}. \tag{15.11}
+t_{r,\mathrm{instrumento}}\approx\frac{0{,}35}{BW}. \tag{14.11}
 $$
 
 A relação é aproximada e depende da resposta em frequência do instrumento.
@@ -482,7 +482,7 @@ composição de tempos de subida é
 
 $$
 t_{r,\mathrm{medido}}^2\approx
-t_{r,\mathrm{sinal}}^2+t_{r,\mathrm{instrumento}}^2. \tag{15.12}
+t_{r,\mathrm{sinal}}^2+t_{r,\mathrm{instrumento}}^2. \tag{14.12}
 $$
 
 Em uma investigação, deve-se distinguir defeitos permanentes de falhas
@@ -505,7 +505,7 @@ chaveamento e alimentação.
 
 ::: example Largura de banda e tempo de subida {#ex-signal-integrity-scope}
 
-Para um osciloscópio com $BW=100\,\mathrm{MHz}$, a aproximação (15.11) fornece
+Para um osciloscópio com $BW=100\,\mathrm{MHz}$, a aproximação (14.11) fornece
 $t_{r,\mathrm{instrumento}}\approx3{,}5\,\mathrm{ns}$. Se a borda real for de
 $2\,\mathrm{ns}$ e a aproximação gaussiana for aplicável, o tempo medido seria
 aproximadamente $\sqrt{2^2+3{,}5^2}=4{,}03\,\mathrm{ns}$. Portanto, a medição
@@ -586,5 +586,5 @@ reais de operação.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 14 — Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md)
-· [Capítulo 16 — Memórias semicondutoras](semiconductor-memories.md)
+[Capítulo 13 — Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md)
+· [Capítulo 15 — Memórias semicondutoras](semiconductor-memories.md)

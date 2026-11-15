@@ -1,4 +1,4 @@
-# 20. Dispositivos lógicos programáveis {#chapter-20}
+# 19. Dispositivos lógicos programáveis {#chapter-19}
 
 A implementação de uma função digital não exige, necessariamente, a montagem de
 um circuito distinto para cada aplicação. Em um **dispositivo lógico
@@ -15,7 +15,7 @@ escolha da tecnologia**. As linguagens de descrição de hardware e os
 procedimentos detalhados de síntese e verificação serão aprofundados nos
 capítulos seguintes.
 
-## 20.1. Conceito de lógica programável
+## 19.1. Conceito de lógica programável
 
 Na **lógica fixa**, a função implementada é determinada pelas interconexões e
 pelos componentes do circuito. Na **lógica programável**, o fabricante fornece
@@ -64,7 +64,7 @@ implementação. Trata-se de um fluxo conceitual: a configuração real pode exi
 síntese, posicionamento, roteamento, análise temporal e geração de um arquivo
 próprio do dispositivo.
 
-## 20.2. ROM como implementação de funções lógicas
+## 19.2. ROM como implementação de funções lógicas
 
 Uma memória somente de leitura (**ROM**) pode implementar funções
 combinacionais usando as variáveis de entrada como endereço e os valores da
@@ -126,7 +126,7 @@ funções de seis variáveis precisa, no mapeamento direto, de $2^6=64$ endereç
 e quatro bits por endereço. Sua capacidade lógica é $64\times4=256$ bits. Esse
 valor não inclui circuitos de decodificação e periféricos. :::
 
-## 20.3. PLA e PAL
+## 19.3. PLA e PAL
 
 Uma **matriz lógica programável** (_programmable logic array_, PLA) é
 organizada, no modelo clássico, em dois planos: um plano AND programável, que
@@ -185,7 +185,7 @@ pode impor limites de quantidade, compartilhamento e atraso.
 
 :::
 
-## 20.4. PLDs e CPLDs
+## 19.4. PLDs e CPLDs
 
 **PLD** (_programmable logic device_) é uma denominação abrangente para
 dispositivos lógicos programáveis. Historicamente, inclui soluções simples
@@ -234,7 +234,7 @@ exigiriam vários circuitos discretos. Não se deve, porém, supor que todos os
 caminhos apresentem atraso idêntico: o desempenho depende do percurso efetivo e
 da arquitetura.
 
-## 20.5. Arquitetura básica de FPGAs
+## 19.5. Arquitetura básica de FPGAs
 
 Uma **FPGA** (_field-programmable gate array_) contém uma quantidade
 significativa de recursos lógicos configuráveis distribuídos espacialmente e
@@ -275,7 +275,7 @@ portanto, após a energização, normalmente é necessário carregar um arquivo 
 configuração a partir de uma fonte externa ou integrada ao sistema. Existem
 também FPGAs com outras tecnologias de configuração, inclusive não voláteis.
 
-## 20.6. Blocos lógicos configuráveis
+## 19.6. Blocos lógicos configuráveis
 
 Uma **LUT de $k$ entradas** pode implementar qualquer função booleana de até
 $k$ variáveis, armazenando os $2^k$ resultados da tabela-verdade. As entradas
@@ -326,7 +326,7 @@ reinicialização e as conexões internas dependem do bloco lógico disponível.
 capacidade de uma LUT não equivale à capacidade total do CLB, que pode agrupar
 várias LUTs e registradores.
 
-## 20.7. Redes de interconexão programáveis
+## 19.7. Redes de interconexão programáveis
 
 A lógica configurável só se torna um circuito útil quando seus blocos podem ser
 conectados. As **redes de interconexão programáveis** permitem escolher
@@ -354,7 +354,7 @@ dos modelos de temporização da tecnologia.
 de temporização verifica se os caminhos resultantes satisfazem as restrições do
 projeto.
 
-## 20.8. Recursos de memória e processamento
+## 19.8. Recursos de memória e processamento
 
 FPGAs frequentemente oferecem **memórias internas em blocos**, **memória
 distribuída** construída a partir de recursos lógicos e **blocos de
@@ -386,7 +386,7 @@ específicas do dispositivo. Uma FPGA não substitui automaticamente memórias
 externas, processadores ou circuitos analógicos quando a aplicação exige
 capacidades que ultrapassam seus recursos.
 
-## 20.9. Comparação entre lógica discreta, CPLDs e FPGAs
+## 19.9. Comparação entre lógica discreta, CPLDs e FPGAs
 
 A escolha de uma implementação não depende apenas da quantidade de portas
 equivalentes. Devem ser considerados a complexidade funcional, o número de
@@ -422,7 +422,7 @@ paralelo de alta taxa, uma FPGA com recursos DSP e memória poderá ser mais
 apropriada. A decisão definitiva exige verificar temporização, interfaces,
 consumo, custo e disponibilidade. :::
 
-## 20.10. Aplicações de dispositivos programáveis
+## 19.10. Aplicações de dispositivos programáveis
 
 Dispositivos lógicos programáveis aparecem em controle industrial,
 instrumentação, telecomunicações, sistemas embarcados, aquisição de dados,

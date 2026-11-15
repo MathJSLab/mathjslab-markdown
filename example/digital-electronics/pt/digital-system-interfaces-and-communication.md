@@ -1,4 +1,4 @@
-# 23. Interfaces e comunicação entre sistemas digitais {#chapter-23}
+# 22. Interfaces e comunicação entre sistemas digitais {#chapter-22}
 
 Um sistema digital raramente opera isoladamente. Processadores, controladores,
 memórias, conversores, sensores e atuadores precisam trocar dados e sinais de
@@ -22,7 +22,7 @@ integração com dispositivos periféricos. O objetivo não é substituir as
 especificações de fabricantes e normas, mas estabelecer critérios para
 interpretá-las e empregá-las em projetos verificáveis.
 
-## 23.1. Barramentos e sinais de controle
+## 22.1. Barramentos e sinais de controle
 
 Um **barramento** é um conjunto de conexões utilizado para transportar
 informação entre blocos. Conforme a arquitetura, pode reunir linhas de
@@ -89,7 +89,7 @@ na borda ativa em que ambos estão em nível alto. A validade e a estabilidade
 dos dados devem ser mantidas conforme o protocolo; não basta produzir pulsos
 arbitrários.
 
-## 23.2. Comunicação paralela e serial
+## 22.2. Comunicação paralela e serial
 
 Na **comunicação paralela**, vários bits de uma palavra são transportados por
 condutores distintos. Na **comunicação serial**, os bits são transmitidos
@@ -159,7 +159,7 @@ paralelos simples.
 
 :::
 
-## 23.3. Interfaces síncronas e assíncronas
+## 22.3. Interfaces síncronas e assíncronas
 
 Uma interface **síncrona** utiliza uma referência temporal comum, tipicamente
 um sinal de relógio, para definir quando os sinais devem ser apresentados e
@@ -211,7 +211,7 @@ protocolos de handshake, codificação Gray ou FIFOs assíncronas. Dois
 registradores em série não garantem, isoladamente, uma transferência coerente
 de uma palavra inteira.
 
-## 23.4. Princípios de UART, SPI e I²C
+## 22.4. Princípios de UART, SPI e I²C
 
 UART, SPI e I²C são interfaces seriais muito empregadas na comunicação entre
 circuitos integrados e sistemas embarcados. Diferem na organização temporal, na
@@ -376,7 +376,7 @@ para manter o nível baixo.
 
 :::
 
-## 23.5. UART e camadas físicas: RS-232
+## 22.5. UART e camadas físicas: RS-232
 
 É fundamental distinguir o **controlador UART**, responsável pelo enquadramento
 e pela serialização, da **interface elétrica** que transporta seus sinais. Uma
@@ -410,7 +410,7 @@ comprimento de cabo e eventuais sinais adicionais de controle de fluxo.
 
 :::
 
-## 23.6. Barramento 1-Wire e identificação de dispositivos
+## 22.6. Barramento 1-Wire e identificação de dispositivos
 
 O **1-Wire** utiliza uma linha de dados (`DQ`) e uma referência elétrica comum.
 A linha costuma operar com resistor de _pull-up_ e dispositivos que a conduzem
@@ -470,7 +470,7 @@ A figura mostra apenas a conexão de dados e o _pull-up_. Em uma instalação
 real, deve-se prever também a referência de terra e a alimentação dos
 dispositivos que não operam em modo parasita.
 
-## 23.7. Sinalização diferencial: RS-422 e RS-485
+## 22.7. Sinalização diferencial: RS-422 e RS-485
 
 Uma interface diferencial representa a informação por uma diferença de
 potencial entre dois condutores:
@@ -522,7 +522,7 @@ As letras `A` e `B` podem seguir convenções de polaridade diferentes entre
 fabricantes. É indispensável verificar a documentação do transceptor antes da
 ligação.
 
-## 23.8. PROFIBUS e redes industriais
+## 22.8. PROFIBUS e redes industriais
 
 **PROFIBUS** designa uma família de redes de automação. Em **PROFIBUS DP**, a
 comunicação frequentemente utiliza uma camada física baseada em RS-485, mas
@@ -558,7 +558,7 @@ A figura representa somente a terminação e a polarização, sem transceptor,
 blindagem ou proteção. Como a terminação é ativa, seu funcionamento pressupõe
 alimentação apropriada.
 
-## 23.9. JTAG: teste, depuração e programação
+## 22.9. JTAG: teste, depuração e programação
 
 **JTAG**, associado à norma IEEE 1149.1, foi concebido para **teste de
 interconexões** por varredura de fronteira (_boundary scan_). As linhas usuais
@@ -595,7 +595,7 @@ de comunicação com sensores.
 
 :::
 
-## 23.10. Integridade do sinal e dimensionamento das interconexões
+## 22.10. Integridade do sinal e dimensionamento das interconexões
 
 A interconexão física apresenta resistência, indutância e capacitância
 distribuídas. Para ligações curtas e bordas relativamente lentas, um modelo RC
@@ -635,7 +635,7 @@ níveis de tensão.
 
 :::
 
-## 23.11. Adaptação de níveis lógicos
+## 22.11. Adaptação de níveis lógicos
 
 Uma interface digital é eletricamente compatível quando o transmissor consegue
 produzir níveis reconhecidos pelo receptor sem violar os limites de tensão,
@@ -687,7 +687,7 @@ funcione para uma saída push-pull unidirecional não é automaticamente válida
 para I²C. Também é necessário considerar a alimentação desligada de um dos
 lados e eventuais caminhos de corrente por diodos de proteção.
 
-## 23.12. Buffers e isolamento
+## 22.12. Buffers e isolamento
 
 Um **buffer** é um estágio destinado a reforçar ou condicionar a transmissão de
 um sinal, sem necessariamente alterar sua informação lógica. Pode aumentar a
@@ -746,7 +746,7 @@ adicionais para atender às tensões e ao protocolo. O uso de optoacopladores ou
 isoladores digitais também introduz atrasos e limites de taxa que devem ser
 verificados.
 
-## 23.13. Interface com sensores e atuadores
+## 22.13. Interface com sensores e atuadores
 
 Sensores transformam grandezas físicas em sinais elétricos ou digitais;
 atuadores recebem energia e comandos para produzir uma ação física. A interface
@@ -821,7 +821,7 @@ analógicos, temporização por software ou circuitos digitais de debounce podem
 ser usados. Quando o sinal chega de outro domínio temporal, o debounce não
 substitui necessariamente a sincronização contra metastabilidade.
 
-## 23.14. Integração com conversores e memórias
+## 22.14. Integração com conversores e memórias
 
 A integração de **ADCs**, **DACs** e **memórias** exige compatibilizar formato
 de dados, protocolo, latência e largura de banda. Um ADC pode entregar palavras
@@ -909,7 +909,7 @@ corrupção de dados e comportamento durante a energização. Uma transação
 bem-sucedida em condições nominais não demonstra que o sistema se recupera
 corretamente de falhas de comunicação.
 
-## 23.15. Comparação e critérios de escolha
+## 22.15. Comparação e critérios de escolha
 
 As tecnologias estudadas atuam em **níveis distintos de especificação**. UART
 descreve enquadramento serial; RS-232, RS-422 e RS-485 tratam de

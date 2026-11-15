@@ -1,8 +1,8 @@
-# 5. Simplificação e minimização de funções lógicas
+# 4. Simplificação e minimização de funções lógicas {#chapter-04}
 
 No [Capítulo 3](boolean-algebra-and-logic-functions.md), estudamos a
 equivalência entre expressões booleanas e suas representações canônicas. No
-[Capítulo 4](logic-gates-and-circuit-representation.md), relacionamos essas
+[Seção 3.7](boolean-algebra-and-logic-functions.md#sec-logic-gates), relacionamos essas
 expressões a redes de portas lógicas. Neste capítulo, passamos da
 **representação de uma função** à **escolha de uma implementação**: buscamos
 expressões equivalentes que possam ser realizadas de maneira adequada às
@@ -23,7 +23,7 @@ oportunidades de fatoração multinível; comparar critérios de custo lógico e
 físico; e identificar e eliminar riscos estáticos em implementações
 combinacionais.
 
-## 5.1. Simplificação algébrica {#sec-algebraic-simplification}
+## 4.1. Simplificação algébrica {#sec-algebraic-simplification}
 
 Duas expressões são **funcionalmente equivalentes** quando produzem a mesma
 saída para toda combinação de entradas especificada. A simplificação procura
@@ -35,13 +35,13 @@ pode ser insuficiente.
 Considere
 
 $$
-F=\overline A B+AB+C.\tag{5.1}
+F=\overline A B+AB+C.\tag{4.1}
 $$
 
 Pela distributividade e pela complementaridade,
 
 $$
-F=B(\overline A+A)+C=B+C.\tag{5.2}
+F=B(\overline A+A)+C=B+C.\tag{4.2}
 $$
 
 A entrada $A$ é irrelevante para o valor de $F$. A transformação é exata: não
@@ -60,11 +60,11 @@ de entrada.
 A lei do consenso, já apresentada no Capítulo 3, fornece outro mecanismo:
 
 $$
-AB+\overline A C+BC=AB+\overline A C.\tag{5.3}
+AB+\overline A C+BC=AB+\overline A C.\tag{4.3}
 $$
 
 O termo $BC$ é redundante **do ponto de vista da função estática**. Na seção
-5.9 veremos que um termo logicamente redundante pode, em certas implementações,
+4.9 veremos que um termo logicamente redundante pode, em certas implementações,
 ser útil para impedir um risco transitório.
 
 <!-- prettier-ignore -->
@@ -77,7 +77,7 @@ após o mapeamento para uma tecnologia concreta.
 
 :::
 
-## 5.2. Mapas de Karnaugh {#sec-karnaugh-maps}
+## 4.2. Mapas de Karnaugh {#sec-karnaugh-maps}
 
 Um **mapa de Karnaugh** reorganiza as linhas da tabela-verdade para que células
 adjacentes correspondam a combinações que diferem em **uma única variável**.
@@ -85,7 +85,7 @@ Essa disposição permite reconhecer visualmente termos que podem ser combinados
 pela identidade
 
 $$
-XY+X\overline Y=X.\tag{5.4}
+XY+X\overline Y=X.\tag{4.4}
 $$
 
 As linhas e colunas usam a ordem Gray. Em um mapa de quatro variáveis, por
@@ -132,7 +132,7 @@ produzem o implicante $\overline A$. Os mintermos $m_1,m_3,m_5,m_7$
 correspondem a $C=1$ e produzem $C$. A função reduzida é
 
 $$
-F=\overline A+C.\tag{5.5}
+F=\overline A+C.\tag{4.5}
 $$
 
 Os grupos se sobrepõem em $m_1$ e $m_3$. A sobreposição é permitida e não
@@ -140,7 +140,7 @@ altera a função.
 
 :::
 
-## 5.3. Agrupamentos e implicantes {#sec-groupings-and-implicants}
+## 4.3. Agrupamentos e implicantes {#sec-groupings-and-implicants}
 
 Para obter uma forma SOP a partir do mapa, agrupamos células com saída 1 em
 retângulos de $1,2,4,8,\ldots$ células, admitindo a continuidade pelas bordas.
@@ -186,7 +186,7 @@ Apesar de parecerem separadas no desenho plano, constituem um único grupo por
 adjacência nas bordas. Como $B=0$ e $D=0$ em todas elas,
 
 $$
-F=\overline B\,\overline D.\tag{5.6}
+F=\overline B\,\overline D.\tag{4.6}
 $$
 
 :::
@@ -195,7 +195,7 @@ Para obter uma forma POS, pode-se agrupar as células de saída 0. Cada
 agrupamento produz um termo soma que vale 0 naquela região. A escolha entre SOP
 e POS depende também da biblioteca de portas e da topologia pretendida.
 
-## 5.4. Condições indiferentes (_don't care_) {#sec-dont-care-minimization}
+## 4.4. Condições indiferentes (_don't care_) {#sec-dont-care-minimization}
 
 Uma função **incompletamente especificada** possui combinações de entrada nas
 quais a saída não é imposta pelo problema. Essas combinações são marcadas por
@@ -205,7 +205,7 @@ implementação respeite todas as combinações especificadas.
 Escrevemos, por exemplo,
 
 $$
-F(A,B,C)=\Sigma m(1,3,7),\qquad d(A,B,C)=\Sigma m(5).\tag{5.7}
+F(A,B,C)=\Sigma m(1,3,7),\qquad d(A,B,C)=\Sigma m(5).\tag{4.7}
 $$
 
 O conjunto $d$ identifica as condições indiferentes. Se utilizarmos $m_5$ como
@@ -240,7 +240,7 @@ a segurança ou o funcionamento do sistema.
 
 :::
 
-## 5.5. Método de Quine–McCluskey {#sec-quine-mccluskey}
+## 4.5. Método de Quine–McCluskey {#sec-quine-mccluskey}
 
 O método de **Quine–McCluskey** sistematiza a combinação de mintermos e permite
 identificar implicantes primos sem depender exclusivamente da inspeção visual
@@ -259,7 +259,7 @@ assumir 0 ou 1.
 Considere
 
 $$
-F(A,B,C,D)=\Sigma m(0,1,2,3,8,9,10,11,14,15).\tag{5.8}
+F(A,B,C,D)=\Sigma m(0,1,2,3,8,9,10,11,14,15).\tag{4.8}
 $$
 
 <!-- prettier-ignore -->
@@ -284,7 +284,7 @@ $m_0,m_1,m_2,m_3,m_8,m_9,m_{10},m_{11}$; o segundo cobre
 $m_{10},m_{11},m_{14},m_{15}$. Assim,
 
 $$
-F=\overline B+AC.\tag{5.9}
+F=\overline B+AC.\tag{4.9}
 $$
 
 A expressão cobre todos os mintermos especificados e nenhum dos demais. A
@@ -296,7 +296,7 @@ combinações.
 O método pode ser aplicado também a condições indiferentes: elas participam da
 formação de implicantes, mas não precisam ser cobertas na solução final.
 
-## 5.6. Seleção de implicantes essenciais {#sec-essential-prime-implicants}
+## 4.6. Seleção de implicantes essenciais {#sec-essential-prime-implicants}
 
 A obtenção dos implicantes primos não encerra necessariamente a minimização. É
 preciso selecionar um conjunto de implicantes que cubra todos os mintermos de
@@ -325,7 +325,7 @@ Petrick**, que traduz as possibilidades de cobertura em uma expressão booleana
 sobre as escolhas de implicantes. Sua aplicação detalhada pode ser reservada a
 exercícios avançados ou ferramentas de minimização.
 
-## 5.7. Minimização de circuitos multiníveis {#sec-multilevel-minimization}
+## 4.7. Minimização de circuitos multiníveis {#sec-multilevel-minimization}
 
 Uma expressão SOP mínima pode não ser a forma mais adequada para implementação.
 A **fatoração** permite compartilhar operações e produzir circuitos com mais de
@@ -335,13 +335,13 @@ a duplicação de subexpressões.
 Considere
 
 $$
-F=AB+AC+DB+DC.\tag{5.10}
+F=AB+AC+DB+DC.\tag{4.10}
 $$
 
 Fatorando,
 
 $$
-F=A(B+C)+D(B+C)=(A+D)(B+C).\tag{5.11}
+F=A(B+C)+D(B+C)=(A+D)(B+C).\tag{4.11}
 $$
 
 A expressão original possui quatro produtos de dois literais; a forma fatorada
@@ -375,7 +375,7 @@ físicos de portas. Ao comparar implementações, também se deve considerar o
 _fan-out_ (número de cargas dirigidas por uma saída) e a possível necessidade
 de buffers.
 
-## 5.8. Compromissos entre área, atraso e consumo {#sec-area-delay-power-tradeoffs}
+## 4.8. Compromissos entre área, atraso e consumo {#sec-area-delay-power-tradeoffs}
 
 O custo de um circuito depende da tecnologia e do contexto. Em uma
 implementação com circuitos integrados discretos, podem importar a quantidade
@@ -401,7 +401,7 @@ Uma aproximação útil para o consumo dinâmico de um nó capacitivo em tecnolo
 CMOS é
 
 $$
-P_{\mathrm{din}}\approx\alpha C V_{DD}^{2}f,\tag{5.12}
+P_{\mathrm{din}}\approx\alpha C V_{DD}^{2}f,\tag{4.12}
 $$
 
 em que $\alpha$ é o fator de atividade efetivo, $C$ a capacitância comutada,
@@ -421,7 +421,7 @@ delas universalmente superior.
 
 :::
 
-## 5.9. Riscos lógicos (_hazards_) e condições transitórias {#sec-logic-hazards}
+## 4.9. Riscos lógicos (_hazards_) e condições transitórias {#sec-logic-hazards}
 
 As equivalências booleanas descrevem valores estáveis. Em circuitos reais, os
 caminhos de propagação apresentam atrasos distintos. Durante a mudança de uma
@@ -437,7 +437,7 @@ esperada; pode ocorrer em redes multiníveis.
 Considere
 
 $$
-F=AB+\overline A C.\tag{5.13}
+F=AB+\overline A C.\tag{4.13}
 $$
 
 Se $B=C=1$, a função vale 1 tanto para $A=0$ quanto para $A=1$. Entretanto, uma
@@ -448,7 +448,7 @@ transitoriamente.
 Pela lei do consenso, podemos acrescentar o termo redundante $BC$:
 
 $$
-F_{\mathrm{seg}}=AB+\overline A C+BC.\tag{5.14}
+F_{\mathrm{seg}}=AB+\overline A C+BC.\tag{4.14}
 $$
 
 Quando $B=C=1$, o termo $BC$ mantém a saída em 1 durante a transição de $A$,
@@ -664,5 +664,5 @@ aumentar a carga em um nó compartilhado, ou exigir mais estágios.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 4 — Portas lógicas e representação de circuitos](logic-gates-and-circuit-representation.md)
-· [Capítulo 6 — Projeto de circuitos combinacionais](README.md#chapter-06)
+[Seção 3.7 — Portas lógicas e representação de circuitos](boolean-algebra-and-logic-functions.md#sec-logic-gates)
+· [Capítulo 5 — Projeto de circuitos combinacionais](README.md#chapter-05)

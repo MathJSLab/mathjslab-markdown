@@ -1,4 +1,4 @@
-# 22. Metodologia de projeto e verificação digital {#chapter-22}
+# 21. Metodologia de projeto e verificação digital {#chapter-21}
 
 Nos capítulos anteriores, foram estudados os circuitos combinacionais e
 sequenciais, as tecnologias de implementação e as linguagens de descrição de
@@ -20,7 +20,7 @@ sinaliza sua conclusão. O exemplo é deliberadamente pequeno: permite acompanha
 o mesmo requisito desde sua formulação até os ensaios, sem confundir o método
 com a complexidade de um produto particular.
 
-## 22.1. Especificação de requisitos
+## 21.1. Especificação de requisitos
 
 A **especificação de requisitos** estabelece o comportamento observável e as
 condições em que ele deve ser garantido. Um requisito útil deve ser
@@ -62,7 +62,7 @@ procedimento de aceitação. Quando uma mudança altera a latência, por exemplo
 ela pode afetar simultaneamente a máquina de estados, os bancos de testes, as
 restrições temporais e a documentação de interface.
 
-## 22.2. Decomposição funcional e arquitetura
+## 21.2. Decomposição funcional e arquitetura
 
 A **arquitetura** divide o sistema em blocos com responsabilidades e interfaces
 definidas. Essa decomposição facilita a análise e permite verificar cada
@@ -109,7 +109,7 @@ deve reunir uma responsabilidade identificável e depender de interfaces
 explícitas. Uma decomposição excessiva pode criar complexidade de integração;
 uma decomposição insuficiente dificulta testes e reutilização.
 
-## 22.3. Modelagem e simulação
+## 21.3. Modelagem e simulação
 
 A **modelagem** transforma a arquitetura em representações que permitem
 raciocinar sobre o comportamento antes da implementação física. Tabelas de
@@ -191,7 +191,7 @@ atrasos físicos, integridade de sinal ou condições elétricas da placa. É
 necessário construir cenários que incluam operação nominal, reset durante a
 operação, solicitações mantidas e sequências próximas às fronteiras de estado.
 
-## 22.4. Síntese e otimização
+## 21.4. Síntese e otimização
 
 A **síntese lógica** transforma uma descrição HDL sintetizável em uma rede de
 elementos lógicos e de armazenamento. A representação intermediária pode ser
@@ -232,7 +232,7 @@ indesejada; uma frequência estimada insuficiente pode exigir redução do camin
 combinacional, segmentação em estágios ou mudança de arquitetura. A otimização
 deve respeitar a equivalência funcional e as restrições do projeto.
 
-## 22.5. Análise estática de temporização
+## 21.5. Análise estática de temporização
 
 A **análise estática de temporização** (_static timing analysis_, STA) verifica
 relações de tempo em caminhos do circuito sem depender de vetores de estímulo
@@ -284,7 +284,7 @@ dos atrasos de roteamento e das condições reais de operação.
 
 :::
 
-## 22.6. Testes funcionais e estruturais
+## 21.6. Testes funcionais e estruturais
 
 Os **testes funcionais** verificam resultados observáveis diante de estímulos
 definidos. Os **testes estruturais** procuram detectar defeitos associados à
@@ -367,7 +367,7 @@ descida para evitar disputas com a amostragem na borda de subida. Um banco de
 testes de produção deve incluir casos adicionais, como reset durante diferentes
 estados e novas solicitações após a liberação da entrada.
 
-## 22.7. Projeto para testabilidade
+## 21.7. Projeto para testabilidade
 
 O **projeto para testabilidade** (_design for testability_, DFT) incorpora
 recursos que facilitam controlar e observar estados internos. Em circuitos
@@ -415,7 +415,7 @@ caminhos de operação normal e de teste, e o procedimento deve especificar a
 sequência de captura e deslocamento. A existência de recursos de teste não
 dispensa a verificação funcional.
 
-## 22.8. Implementação em circuitos discretos e FPGA
+## 21.8. Implementação em circuitos discretos e FPGA
 
 A implementação em **circuitos discretos** utiliza componentes separados, como
 portas, flip-flops, buffers e dispositivos de memória. A implementação em
@@ -449,7 +449,7 @@ comportamento temporal ou elétrico. Uma solução que funciona em baixa
 frequência sobre uma matriz de contatos pode falhar em uma placa final devido a
 atrasos, ruído, conexões longas ou desacoplamento inadequado.
 
-## 22.9. Validação experimental
+## 21.9. Validação experimental
 
 A **validação experimental** verifica o comportamento do sistema em condições
 representativas de uso. Ela complementa a simulação e a análise estática porque
@@ -493,7 +493,7 @@ A aprovação experimental é sempre relativa às condições efetivamente
 examinadas. Um ensaio bem-sucedido em temperatura ambiente, por exemplo, não
 comprova o funcionamento em toda a faixa térmica especificada.
 
-## 22.10. Documentação técnica
+## 21.10. Documentação técnica
 
 A **documentação técnica** preserva as decisões de projeto e permite
 reproduzir, revisar e manter o sistema. Deve relacionar requisitos,

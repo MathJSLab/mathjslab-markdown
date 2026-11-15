@@ -1,6 +1,6 @@
-# 11. Registradores e contadores {#chapter-11}
+# 10. Registradores e contadores {#chapter-10}
 
-Os _flip-flops_ apresentados no Capítulo 9 armazenam um bit de informação.
+Os _flip-flops_ apresentados no Capítulo 8 armazenam um bit de informação.
 Quando vários elementos de memória são organizados sob sinais de controle
 comuns, formam **registradores**, capazes de guardar e transferir palavras
 binárias. Quando o próximo estado é calculado de modo a percorrer uma sequência
@@ -11,11 +11,11 @@ de comunicação.
 Este capítulo relaciona a descrição funcional dos circuitos à sua implementação
 sequencial. Os exemplos consideram, salvo indicação contrária, _flip-flops_ D
 acionados pela borda de subida de um relógio comum. A análise temporal
-desenvolvida no Capítulo 10 continua válida: as expressões lógicas descrevem o
+desenvolvida no Capítulo 9 continua válida: as expressões lógicas descrevem o
 comportamento pretendido, mas a implementação deve satisfazer as restrições de
 temporização.
 
-## 11.1. Registradores paralelos {#sec-registers-parallel}
+## 10.1. Registradores paralelos {#sec-registers-parallel}
 
 Um **registrador paralelo de $n$ bits** contém $n$ elementos de armazenamento,
 cada um responsável por um bit da palavra. Todos recebem a mesma borda de
@@ -25,17 +25,17 @@ unidade lógica.
 Para um registrador sem habilitação, a equação de próximo estado é:
 
 $$
-Q_i^{+}=D_i,\qquad 0\le i<n.\tag{11.1}
+Q_i^{+}=D_i,\qquad 0\le i<n.\tag{10.1}
 $$
 
 O sobrescrito $+$ designa o estado após a próxima borda ativa. Com uma entrada
 de habilitação $E$, a atualização passa a ser:
 
 $$
-Q_i^{+}=ED_i+\overline E Q_i.\tag{11.2}
+Q_i^{+}=ED_i+\overline E Q_i.\tag{10.2}
 $$
 
-A expressão (11.2) representa um multiplexador por bit: quando $E=1$,
+A expressão (10.2) representa um multiplexador por bit: quando $E=1$,
 captura-se $D_i$; quando $E=0$, conserva-se $Q_i$. Um sinal de limpeza
 síncrona, por sua vez, só atua na borda ativa, ao contrário de uma entrada
 assíncrona de _reset_.
@@ -84,7 +84,7 @@ constante até uma nova atualização habilitada.
 
 :::
 
-## 11.2. Registradores de deslocamento {#sec-registers-shift}
+## 10.2. Registradores de deslocamento {#sec-registers-shift}
 
 Um **registrador de deslocamento** transfere os bits entre estágios sucessivos
 a cada borda ativa. Pode ser usado para produzir atrasos discretos, converter
@@ -99,7 +99,7 @@ Q_3^{+}&=Q_2,\\
 Q_2^{+}&=Q_1,\\
 Q_1^{+}&=Q_0,\\
 Q_0^{+}&=SI.
-\end{aligned}\tag{11.3}
+\end{aligned}\tag{10.3}
 $$
 
 A escolha da direção é uma convenção de projeto: deve-se sempre explicitar qual
@@ -148,7 +148,7 @@ conexões de relógio não são entradas de dados.
 
 :::
 
-## 11.3. Conversão série-paralelo e paralelo-série {#sec-registers-serial-parallel}
+## 10.3. Conversão série-paralelo e paralelo-série {#sec-registers-serial-parallel}
 
 Na **conversão série-paralelo (SIPO)**, os bits chegam um por vez e são
 acumulados em um registrador. Após $n$ bordas, uma palavra de $n$ bits pode ser
@@ -185,7 +185,7 @@ Em interfaces reais, o deslocamento de bits deve ser coordenado com o protocolo
 de comunicação: borda de amostragem, ordem de transmissão, habilitação e
 delimitação de palavra.
 
-## 11.4. Registradores bidirecionais {#sec-registers-bidirectional}
+## 10.4. Registradores bidirecionais {#sec-registers-bidirectional}
 
 Um **registrador bidirecional** desloca os dados para qualquer um dos dois
 sentidos, segundo sinais de controle. Registradores universais frequentemente
@@ -212,7 +212,7 @@ ser implementadas com multiplexadores que selecionam a entrada de cada
 _flip-flop_ D. O controle deve permanecer estável durante a janela de
 amostragem.
 
-## 11.5. Contadores assíncronos {#sec-registers-asynchronous-counters}
+## 10.5. Contadores assíncronos {#sec-registers-asynchronous-counters}
 
 Um **contador** é um circuito sequencial cujos estados percorrem uma sequência
 prescrita. Em um **contador assíncrono**, ou _ripple counter_, a saída de um
@@ -223,7 +223,7 @@ Um contador binário de $n$ bits possui, idealmente, $2^n$ estados distintos. Em
 um contador crescente, a sequência natural é:
 
 $$
-0,1,2,\ldots,2^n-1,0,\ldots\tag{11.4}
+0,1,2,\ldots,2^n-1,0,\ldots\tag{10.4}
 $$
 
 <!-- prettier-ignore -->
@@ -247,7 +247,7 @@ propagação, transições como $011\to100$ podem atravessar estados transitóri
 intermediários. Por esse motivo, saídas de contadores assíncronos não devem ser
 tratadas automaticamente como um barramento estável durante a transição.
 
-## 11.6. Contadores síncronos {#sec-registers-synchronous-counters}
+## 10.6. Contadores síncronos {#sec-registers-synchronous-counters}
 
 Em um **contador síncrono**, todos os _flip-flops_ recebem o mesmo relógio. Uma
 rede combinacional calcula os próximos estados a partir do valor atual. Para um
@@ -258,7 +258,7 @@ $$
 D_0&=\overline{Q_0},\\
 D_1&=Q_1\oplus Q_0,\\
 D_2&=Q_2\oplus(Q_1Q_0).
-\end{aligned}\tag{11.5}
+\end{aligned}\tag{10.5}
 $$
 
 A primeira expressão alterna o bit menos significativo a cada borda. A segunda
@@ -302,14 +302,14 @@ apresentar pequenas diferenças de atraso de relógio até $Q$. Portanto, a
 ausência de _ripple_ não implica transições perfeitamente simultâneas em termos
 físicos.
 
-## 11.7. Contadores de módulo arbitrário {#sec-registers-modulo-counters}
+## 10.7. Contadores de módulo arbitrário {#sec-registers-modulo-counters}
 
 O **módulo** $M$ de um contador é o número de estados distintos percorridos
 antes de repetir a sequência. O número mínimo de bits de estado para um
 contador binário de módulo $M$ é:
 
 $$
-n=\left\lceil\log_2 M\right\rceil.\tag{11.6}
+n=\left\lceil\log_2 M\right\rceil.\tag{10.6}
 $$
 
 Um contador de módulo 10, por exemplo, necessita de quatro bits, mas utiliza
@@ -325,7 +325,7 @@ Q^{+}=
 \begin{cases}
 0,&Q=M-1,\\
 Q+1,&0\le Q<M-1.
-\end{cases}\tag{11.7}
+\end{cases}\tag{10.7}
 $$
 
 A expressão não especifica o comportamento para $Q\ge M$. Uma implementação
@@ -345,7 +345,7 @@ A implementação de contadores truncados por decodificação assíncrona de est
 exige cuidado: atrasos e _hazards_ podem produzir pulsos de limpeza indevidos.
 Quando possível, a transição de retorno síncrona é mais previsível.
 
-## 11.8. Contadores em anel e Johnson {#sec-registers-ring-johnson}
+## 10.8. Contadores em anel e Johnson {#sec-registers-ring-johnson}
 
 Um **contador em anel** é um registrador de deslocamento em que a saída do
 último estágio retorna diretamente à entrada do primeiro. Com uma única posição
@@ -381,27 +381,27 @@ exigem atenção à inicialização. Um anel de quatro bits iniciado em $0000$, 
 exemplo, permanece nesse estado e não entra espontaneamente na sequência de um
 único bit alto.
 
-## 11.9. Divisores de frequência {#sec-registers-frequency-dividers}
+## 10.9. Divisores de frequência {#sec-registers-frequency-dividers}
 
 Um _flip-flop_ configurado para alternar a saída a cada borda ativa produz uma
 frequência de saída igual à metade da frequência de entrada, desde que o sinal
 seja periódico e respeite os requisitos do dispositivo:
 
 $$
-f_{out}=\frac{f_{clk}}{2}.\tag{11.8}
+f_{out}=\frac{f_{clk}}{2}.\tag{10.8}
 $$
 
 Uma cadeia ideal de $n$ estágios divisores por dois permite obter:
 
 $$
-f_{out}=\frac{f_{clk}}{2^n}.\tag{11.9}
+f_{out}=\frac{f_{clk}}{2^n}.\tag{10.9}
 $$
 
 Para um contador de módulo $M$ que gera um evento de saída uma vez por ciclo
 completo de contagem, a **frequência de repetição dos eventos** é:
 
 $$
-f_{\mathrm{evento}}=\frac{f_{clk}}{M}.\tag{11.10}
+f_{\mathrm{evento}}=\frac{f_{clk}}{M}.\tag{10.10}
 $$
 
 Essa última relação não assegura que o sinal de saída seja uma onda quadrada
@@ -418,7 +418,7 @@ distribuir indiscriminadamente saídas combinacionais como novos relógios.
 
 :::
 
-## 11.10. Aplicações de contadores e registradores {#sec-registers-applications}
+## 10.10. Aplicações de contadores e registradores {#sec-registers-applications}
 
 Registradores e contadores aparecem em temporizadores, divisores de frequência,
 máquinas de estados, aquisição de dados, comunicação serial, endereçamento de
@@ -492,7 +492,7 @@ arquiteturas é, portanto, uma decisão funcional e temporal.
 1. **Registrador paralelo:** um registrador de quatro bits contém $Q=1010$. Na
    próxima borda, $D=0111$ e $E=0$. Qual será o novo estado? E se $E=1$?
 2. **Deslocamento:** partindo de $Q_3Q_2Q_1Q_0=0000$, aplique a sequência
-   serial $1,1,0,1$ segundo a equação (11.3). Determine os quatro estados
+   serial $1,1,0,1$ segundo a equação (10.3). Determine os quatro estados
    sucessivos.
 3. **SIPO:** explique como a direção de deslocamento e a ordem de transmissão
    influenciam a interpretação da palavra recebida.
@@ -501,7 +501,7 @@ arquiteturas é, portanto, uma decisão funcional e temporal.
    operações independentes.
 5. **Contador assíncrono:** por que uma transição binária de $0111$ para $1000$
    pode apresentar valores intermediários transitórios?
-6. **Contador síncrono:** use a equação (11.5) para determinar o próximo estado
+6. **Contador síncrono:** use a equação (10.5) para determinar o próximo estado
    de $Q_2Q_1Q_0=101$.
 7. **Módulo arbitrário:** determine o número mínimo de bits para um contador de
    módulo 12 e indique quantos estados binários não são utilizados.
@@ -546,5 +546,5 @@ arquiteturas é, portanto, uma decisão funcional e temporal.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 10 — Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md)
-· [Capítulo 12 — Máquinas de estados finitos](finite-state-machines.md)
+[Capítulo 9 — Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md)
+· [Capítulo 11 — Máquinas de estados finitos](finite-state-machines.md)

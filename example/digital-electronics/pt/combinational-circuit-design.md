@@ -1,8 +1,7 @@
-# 6. Projeto de circuitos combinacionais
+# 5. Projeto de circuitos combinacionais {#chapter-05}
 
-Nos [Capítulos 3](boolean-algebra-and-logic-functions.md),
-[4](logic-gates-and-circuit-representation.md) e
-[5](logic-function-simplification-and-minimization.md), estudamos a descrição
+Nos [Capítulos 3](boolean-algebra-and-logic-functions.md) e
+[4](logic-function-simplification-and-minimization.md), estudamos a descrição
 matemática de funções booleanas, sua implementação por portas e os métodos de
 simplificação. Agora reunimos esses instrumentos em um procedimento de
 **projeto de circuitos combinacionais**: interpretar requisitos, definir
@@ -25,7 +24,7 @@ projetar funções de votação, paridade e comparação; distinguir simplifica�
 lógica de otimização tecnológica; e planejar testes funcionais que cubram casos
 normais, limites e situações de transição.
 
-## 6.1. Especificação funcional {#sec-combinational-specification}
+## 5.1. Especificação funcional {#sec-combinational-specification}
 
 O projeto começa pela descrição do comportamento esperado, e não pela escolha
 de portas. Uma especificação deve identificar as entradas e saídas, o
@@ -49,7 +48,7 @@ Considere um sistema de habilitação de uma máquina com três entradas: $C$
 $H$ deve valer 1 somente quando todas as condições forem satisfeitas:
 
 $$
-H=CPE.\tag{6.1}
+H=CPE.\tag{5.1}
 $$
 
 A expressão é uma consequência da especificação, não um substituto para ela.
@@ -90,7 +89,7 @@ O fluxo da {@ref fig-combinational-design-flow} é iterativo: uma inconsistênci
 encontrada nos testes pode exigir revisar a especificação, e não apenas trocar
 portas.
 
-## 6.2. Modelagem por tabelas-verdade {#sec-combinational-truth-tables}
+## 5.2. Modelagem por tabelas-verdade {#sec-combinational-truth-tables}
 
 Uma tabela-verdade torna explícito o valor de cada saída para todas as
 combinações das entradas. Para $n$ entradas binárias independentes, há $2^n$
@@ -108,7 +107,7 @@ quando a temperatura estiver elevada e não houver solicitação manual. As
 equações são
 
 $$
-V=(T+M)\overline F,\qquad L=F+T\overline M.\tag{6.2}
+V=(T+M)\overline F,\qquad L=F+T\overline M.\tag{5.2}
 $$
 
 A {@ref tbl-fan-alarm-truth-table} especifica conjuntamente as duas saídas.
@@ -146,7 +145,7 @@ condição que possa ocorrer por ruído, defeito ou transição.
 
 :::
 
-## 6.3. Análise de circuitos existentes {#sec-combinational-analysis}
+## 5.3. Análise de circuitos existentes {#sec-combinational-analysis}
 
 A **análise** parte de uma rede conhecida e determina a função realizada; a
 **síntese** parte da função desejada e constrói uma rede. Para analisar um
@@ -157,7 +156,7 @@ Considere os sinais intermediários $N_1=AB$ e $N_2=\overline A C$, combinados
 por uma porta OR:
 
 $$
-Y=N_1+N_2=AB+\overline A C.\tag{6.3}
+Y=N_1+N_2=AB+\overline A C.\tag{5.3}
 $$
 
 <!-- prettier-ignore -->
@@ -221,13 +220,13 @@ para $A=1$, $Y=B$. Trata-se, portanto, da função de um seletor de dois dados
 controlado por $A$:
 
 $$
-Y=\overline A C+AB.\tag{6.4}
+Y=\overline A C+AB.\tag{5.4}
 $$
 
 Essa equivalência mostra como reconhecer estruturas funcionais a partir de
-redes de portas, antecipando os multiplexadores do Capítulo 7.
+redes de portas, antecipando os multiplexadores do Capítulo 6.
 
-## 6.4. Síntese de circuitos a partir de especificações {#sec-combinational-synthesis}
+## 5.4. Síntese de circuitos a partir de especificações {#sec-combinational-synthesis}
 
 O procedimento inverso começa por uma tabela-verdade ou por uma descrição
 verbal. Uma rota sistemática é: identificar os mintermos de saída 1, construir
@@ -241,14 +240,14 @@ Seja $Y=1$ para as combinações $001$, $011$, $100$, $101$ e $111$ de $(A,B,C)$
 Assim,
 
 $$
-Y=\Sigma m(1,3,4,5,7).\tag{6.5}
+Y=\Sigma m(1,3,4,5,7).\tag{5.5}
 $$
 
 Os quatro mintermos ímpares ($1,3,5,7$) formam o implicante $C$. O mintermo $4$
 pode ser agrupado com $5$, formando $A\overline B$. Portanto,
 
 $$
-Y=C+A\overline B.\tag{6.6}
+Y=C+A\overline B.\tag{5.6}
 $$
 
 A implementação direta utiliza uma inversão de $B$, uma AND e uma OR. Outras
@@ -276,7 +275,7 @@ houver restrições específicas de custo e atraso.
 A escolha entre formas SOP, POS e redes multiníveis não deve se basear apenas
 no número de literais. Uma implementação real depende da biblioteca
 tecnológica, do fan-out, da carga, da profundidade lógica e das restrições
-temporais discutidas no Capítulo 5.
+temporais discutidas no Capítulo 4.
 
 ### Descrição funcional em HDL
 
@@ -295,17 +294,17 @@ endmodule
 
 O operador `|` representa OR bit a bit, `&` representa AND bit a bit e `~`
 representa inversão bit a bit. Para entradas de um bit, essa descrição
-corresponde diretamente à equação (6.6). Em HDL, é necessário distinguir os
+corresponde diretamente à equação (5.6). Em HDL, é necessário distinguir os
 operadores lógicos dos operadores bit a bit quando os operandos possuem mais de
 um bit.
 
-## 6.5. Circuitos de votação e decisão {#sec-voting-decision-circuits}
+## 5.5. Circuitos de votação e decisão {#sec-voting-decision-circuits}
 
 Em uma função de **maioria de três entradas**, a saída vale 1 quando pelo menos
 duas entradas são 1. Para $A$, $B$ e $C$, a função é
 
 $$
-M=AB+AC+BC.\tag{6.7}
+M=AB+AC+BC.\tag{5.7}
 $$
 
 <!-- prettier-ignore -->
@@ -342,13 +341,13 @@ Para $n$ entradas, a regra “pelo menos $k$ entradas em 1” define uma funçã
 limiar. A realização pode empregar somadores, comparadores ou estruturas
 específicas, dependendo de $n$, $k$ e das restrições do projeto.
 
-## 6.6. Detectores e geradores de paridade {#sec-parity-circuits}
+## 5.6. Detectores e geradores de paridade {#sec-parity-circuits}
 
 A operação XOR permite construir circuitos de paridade. Para uma palavra
 $D=(D_3,D_2,D_1,D_0)$, a paridade dos quatro bits é
 
 $$
-P=D_3\oplus D_2\oplus D_1\oplus D_0.\tag{6.8}
+P=D_3\oplus D_2\oplus D_1\oplus D_0.\tag{5.8}
 $$
 
 Se acrescentarmos $P$ à palavra, o número total de bits em 1 será par. Assim,
@@ -371,7 +370,7 @@ No receptor, o **síndrome de paridade** é calculado por XOR de todos os bits
 recebidos:
 
 $$
-S=D_3\oplus D_2\oplus D_1\oplus D_0\oplus P.\tag{6.9}
+S=D_3\oplus D_2\oplus D_1\oplus D_0\oplus P.\tag{5.9}
 $$
 
 Para transmissão sem erro, $S=0$. Uma alteração em número ímpar de bits produz
@@ -399,20 +398,20 @@ A estrutura em árvore da {@ref fig-parity-xor-tree} possui dois níveis de XOR,
 em vez de uma cadeia linear de três operações. A diferença de profundidade pode
 ser relevante para o atraso de propagação.
 
-## 6.7. Circuitos de comparação {#sec-comparison-circuits}
+## 5.7. Circuitos de comparação {#sec-comparison-circuits}
 
 Comparadores verificam relações entre palavras binárias. Para um único bit, a
 igualdade é dada por XNOR:
 
 $$
-E_1=\overline{A\oplus B}.\tag{6.10}
+E_1=\overline{A\oplus B}.\tag{5.10}
 $$
 
 Para duas palavras de $n$ bits, $A=(A_{n-1},\ldots,A_0)$ e
 $B=(B_{n-1},\ldots,B_0)$, a igualdade exige igualdade em todas as posições:
 
 $$
-E=\prod_{i=0}^{n-1}\overline{A_i\oplus B_i}.\tag{6.11}
+E=\prod_{i=0}^{n-1}\overline{A_i\oplus B_i}.\tag{5.11}
 $$
 
 A comparação de magnitude entre inteiros **sem sinal** começa pelo bit mais
@@ -420,7 +419,7 @@ significativo: na primeira posição em que os operandos diferem, o operando com
 bit 1 é maior. Para dois bits, uma forma para $A>B$ é
 
 $$
-G=A_1\overline{B_1}+\overline{A_1\oplus B_1}\,A_0\overline{B_0}.\tag{6.12}
+G=A_1\overline{B_1}+\overline{A_1\oplus B_1}\,A_0\overline{B_0}.\tag{5.12}
 $$
 
 O primeiro termo decide quando $A_1=1$ e $B_1=0$; o segundo decide pelo bit
@@ -449,7 +448,7 @@ definida depois de fixar a representação numérica.
 
 :::
 
-## 6.8. Validação e testes funcionais {#sec-combinational-validation}
+## 5.8. Validação e testes funcionais {#sec-combinational-validation}
 
 Validar um circuito significa confrontar o comportamento implementado com uma
 especificação independente. Para poucas entradas, o teste exaustivo das $2^n$
@@ -479,7 +478,7 @@ limitação.
 
 ### Teste automatizado em Verilog
 
-O módulo combinacional da seção 6.4 pode ser verificado por um banco de testes
+O módulo combinacional da seção 5.4 pode ser verificado por um banco de testes
 que percorre as oito combinações e compara a saída com uma expressão de
 referência:
 
@@ -681,6 +680,6 @@ riscos transitórios.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 5 — Simplificação e minimização de funções lógicas](logic-function-simplification-and-minimization.md)
+[Capítulo 4 — Simplificação e minimização de funções lógicas](logic-function-simplification-and-minimization.md)
 ·
-[Capítulo 7 — Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md)
+[Capítulo 6 — Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md)

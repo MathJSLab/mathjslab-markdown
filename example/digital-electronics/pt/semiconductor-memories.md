@@ -1,4 +1,4 @@
-# 16. Memórias semicondutoras {#chapter-16}
+# 15. Memórias semicondutoras {#chapter-15}
 
 A memória é um componente essencial dos sistemas digitais: permite conservar
 instruções, dados, resultados intermediários e informações de configuração.
@@ -14,7 +14,7 @@ controle, os ciclos de acesso e a expansão de capacidade. As especificações
 elétricas e temporais devem sempre ser confirmadas na folha de dados do
 dispositivo empregado.
 
-## 16.1. Organização e endereçamento {#sec-memory-organization}
+## 15.1. Organização e endereçamento {#sec-memory-organization}
 
 Uma memória pode ser descrita como um conjunto de **posições endereçáveis**.
 Cada posição contém uma palavra com determinado número de bits. Uma memória
@@ -22,14 +22,14 @@ organizada em $N$ palavras de $W$ bits possui capacidade lógica de
 armazenamento
 
 $$
-C=N\,W\quad\text{bits}. \tag{16.1}
+C=N\,W\quad\text{bits}. \tag{15.1}
 $$
 
 Quando todos os endereços binários de um barramento de $A$ bits são utilizados,
 há
 
 $$
-N=2^A,\qquad C=2^A W. \tag{16.2}
+N=2^A,\qquad C=2^A W. \tag{15.2}
 $$
 
 Assim, uma memória de $2^{12}$ palavras de 8 bits armazena $4096$ bytes, ou
@@ -96,7 +96,7 @@ $32768\times16=524288$ bits, equivalentes a $64\,\mathrm{KiB}$.
 
 :::
 
-## 16.2. Células de memória {#sec-memory-cells}
+## 15.2. Células de memória {#sec-memory-cells}
 
 Uma **célula de memória** armazena uma quantidade elementar de informação,
 geralmente um bit. O armazenamento pode resultar da realimentação regenerativa
@@ -165,7 +165,7 @@ Além da célula, uma memória real incorpora decodificadores, amplificadores de
 leitura, circuitos de escrita, temporização e interfaces de entrada e saída. Em
 muitos dispositivos, esses circuitos ocupam parcela relevante da área do chip.
 
-## 16.3. Memórias ROM, PROM, EPROM e EEPROM {#sec-memory-rom}
+## 15.3. Memórias ROM, PROM, EPROM e EEPROM {#sec-memory-rom}
 
 As memórias **somente de leitura** (_read-only memory_, ROM) são destinadas ao
 armazenamento de dados que, durante a operação normal do sistema, não precisam
@@ -203,7 +203,7 @@ Em aplicações embarcadas, dados de calibração, parâmetros de configuração
 programas podem ser armazenados em EEPROM ou Flash, conforme a capacidade e a
 frequência de atualização exigidas.
 
-## 16.4. Memórias SRAM e DRAM {#sec-memory-sram-dram}
+## 15.4. Memórias SRAM e DRAM {#sec-memory-sram-dram}
 
 A **SRAM** (_static random-access memory_) utiliza células bistáveis. Oferece
 acesso rápido e dispensa atualização periódica de dados, mas a célula típica
@@ -239,7 +239,7 @@ As expressões “mais rápida” ou “mais barata” devem ser contextualizada
 desempenho, custo por bit e consumo dependem do processo de fabricação, da
 capacidade, da interface e das condições de operação.
 
-## 16.5. Memórias Flash {#sec-memory-flash}
+## 15.5. Memórias Flash {#sec-memory-flash}
 
 A memória **Flash** é uma forma de armazenamento não volátil eletricamente
 reprogramável. Seu funcionamento depende de dispositivos cuja carga armazenada
@@ -277,7 +277,7 @@ outras camadas do sistema.
 
 :::
 
-## 16.6. Organização em palavras e bancos {#sec-memory-banks}
+## 15.6. Organização em palavras e bancos {#sec-memory-banks}
 
 Uma memória física pode ser construída a partir de vários circuitos integrados.
 A associação **em paralelo de largura** aumenta o número de bits de cada
@@ -326,7 +326,7 @@ dispositivos.
 
 :::
 
-## 16.7. Barramentos de endereço, dados e controle {#sec-memory-buses}
+## 15.7. Barramentos de endereço, dados e controle {#sec-memory-buses}
 
 O **barramento de endereço** seleciona a posição lógica de acesso. O
 **barramento de dados** transporta a informação lida ou escrita. O **barramento
@@ -375,7 +375,7 @@ saídas não devem dirigir simultaneamente valores opostos sobre a mesma linha.
 Saídas de três estados e seleção apropriada são mecanismos usuais de
 compartilhamento.
 
-## 16.8. Ciclos de leitura e escrita {#sec-memory-read-write}
+## 15.8. Ciclos de leitura e escrita {#sec-memory-read-write}
 
 Um **ciclo de leitura** solicita o conteúdo de um endereço. Em uma memória
 assíncrona paralela típica, o controlador estabiliza o endereço, seleciona o
@@ -408,7 +408,7 @@ não haja restrições adicionais na folha de dados. Durante uma escrita, o esta
 elétrico dos pinos de dados deve corresponder à direção definida pelo
 dispositivo.
 
-## 16.9. Temporização e desempenho {#sec-memory-timing}
+## 15.9. Temporização e desempenho {#sec-memory-timing}
 
 As memórias apresentam diferentes medidas de tempo. Em uma SRAM assíncrona, o
 **tempo de acesso por endereço** $t_{AA}$ representa o intervalo máximo entre a
@@ -422,7 +422,7 @@ conservadora para o instante em que os dados se tornam válidos é
 $$
 t_{\mathrm{válido}}\ge
 \max\!\left(t_A+t_{AA},\,t_{CE,\mathrm{evento}}+t_{CE},\,
-t_{OE,\mathrm{evento}}+t_{OE}\right). \tag{16.3}
+t_{OE,\mathrm{evento}}+t_{OE}\right). \tag{15.3}
 $$
 
 A expressão pressupõe que as demais condições de leitura estejam satisfeitas; a
@@ -447,13 +447,13 @@ A **largura de banda teórica** de uma interface que transfere $W$ bits por
 operação a uma taxa de $f$ operações por segundo é
 
 $$
-B=\frac{Wf}{8}\quad\text{bytes/s}. \tag{16.4}
+B=\frac{Wf}{8}\quad\text{bytes/s}. \tag{15.4}
 $$
 
 O desempenho sustentado costuma ser inferior, devido a comandos, esperas,
 alternância de direção, atualização e outros custos de protocolo.
 
-## 16.10. Memórias síncronas e assíncronas {#sec-memory-sync-async}
+## 15.10. Memórias síncronas e assíncronas {#sec-memory-sync-async}
 
 Uma memória **assíncrona** realiza operações controladas por níveis e
 transições de sinais, sem exigir que cada acesso seja iniciado por uma borda de
@@ -498,7 +498,7 @@ atraso assíncrono depende dos sinais de controle e do endereço; o exemplo
 síncrono mostra dados disponíveis após bordas de relógio, sem especificar um
 protocolo ou uma latência particular.
 
-## 16.11. Seleção e expansão de memórias {#sec-memory-selection}
+## 15.11. Seleção e expansão de memórias {#sec-memory-selection}
 
 A seleção de um dispositivo deve considerar capacidade, largura de palavra,
 latência, largura de banda, tensão de alimentação, consumo, volatilidade,
@@ -660,6 +660,6 @@ seguintes.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 15 — Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md)
+[Capítulo 14 — Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md)
 ·
-[Capítulo 17 — Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md)
+[Capítulo 16 — Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md)

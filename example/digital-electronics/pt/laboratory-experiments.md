@@ -348,7 +348,7 @@ que condições o modelo concentrado RC deixa de ser suficiente?
 
 **Objetivo:** integrar sensor ou fonte de sinal, aquisição, lógica de controle,
 buffer e apresentação ou armazenamento de dados, articulando os Capítulos
-23–25.
+22–24.
 
 **Requisitos mínimos:** amostragem periódica; indicação de amostra válida;
 registro de pelo menos oito amostras; sinalização de buffer cheio; reset

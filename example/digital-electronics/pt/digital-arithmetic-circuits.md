@@ -1,4 +1,4 @@
-# 8. Circuitos aritméticos digitais
+# 7. Circuitos aritméticos digitais {#chapter-07}
 
 A representação binária estudada no Capítulo 2 permite codificar números, mas
 não explica, por si só, como o hardware os processa. Os circuitos aritméticos
@@ -25,14 +25,14 @@ transbordamento com sinal; interpretar comparadores, multiplicadores e
 deslocadores; e descrever uma ULA combinacional simples, com verificação por
 tabelas e exemplos em HDL.
 
-## 8.1. Meio somador e somador completo {#sec-half-and-full-adder}
+## 7.1. Meio somador e somador completo {#sec-half-and-full-adder}
 
 A soma de dois bits $A$ e $B$ pode produzir dois bits de resultado: o bit de
 **soma** $S$ e o bit de **transporte** $C$ (_carry_). O **meio somador** (_half
 adder_) não recebe transporte de uma posição anterior:
 
 $$
-S=A\oplus B,\qquad C=AB.\tag{8.1}
+S=A\oplus B,\qquad C=AB.\tag{7.1}
 $$
 
 <!-- prettier-ignore -->
@@ -51,14 +51,14 @@ O **somador completo** (_full adder_) recebe também um transporte de entrada
 $C_{in}$. Sua soma e seu transporte de saída $C_{out}$ são:
 
 $$
-S=A\oplus B\oplus C_{in},\tag{8.2}
+S=A\oplus B\oplus C_{in},\tag{7.2}
 $$
 
 $$
-C_{out}=AB+AC_{in}+BC_{in}=AB+(A\oplus B)C_{in}.\tag{8.3}
+C_{out}=AB+AC_{in}+BC_{in}=AB+(A\oplus B)C_{in}.\tag{7.3}
 $$
 
-A segunda igualdade de (8.3) pode ser verificada por álgebra booleana ou pela
+A segunda igualdade de (7.3) pode ser verificada por álgebra booleana ou pela
 tabela-verdade. O transporte é 1 quando pelo menos duas das três entradas
 são 1.
 
@@ -149,7 +149,7 @@ $S=1$ e $C_{out}=1$, como na última linha da {@ref tbl-full-adder}.
 
 :::
 
-## 8.2. Somadores de múltiplos bits {#sec-multibit-adders}
+## 7.2. Somadores de múltiplos bits {#sec-multibit-adders}
 
 Para somar duas palavras de $n$ bits, conectam-se $n$ somadores completos, um
 por posição. Em cada estágio $i$, o transporte de saída alimenta o estágio
@@ -158,7 +158,7 @@ $i+1$. Essa arquitetura é denominada **somador de transporte em cascata**
 
 $$
 S_i=A_i\oplus B_i\oplus C_i,\qquad
-C_{i+1}=A_iB_i+(A_i\oplus B_i)C_i.\tag{8.4}
+C_{i+1}=A_iB_i+(A_i\oplus B_i)C_i.\tag{7.4}
 $$
 
 Em uma soma ordinária sem transporte inicial, $C_0=0$. O vetor $S_{n-1}\ldots
@@ -206,19 +206,19 @@ O somador em cascata é simples e regular, mas o transporte de um estágio pode
 depender do transporte do anterior. Essa dependência limita o desempenho para
 palavras longas.
 
-## 8.3. Propagação de transporte (_carry_) {#sec-carry-propagation}
+## 7.3. Propagação de transporte (_carry_) {#sec-carry-propagation}
 
 Definem-se, para cada posição $i$, os sinais de **propagação** $P_i$ e
 **geração** $G_i$:
 
 $$
-P_i=A_i\oplus B_i,\qquad G_i=A_iB_i.\tag{8.5}
+P_i=A_i\oplus B_i,\qquad G_i=A_iB_i.\tag{7.5}
 $$
 
 Assim, a recorrência do transporte assume a forma:
 
 $$
-C_{i+1}=G_i+P_iC_i.\tag{8.6}
+C_{i+1}=G_i+P_iC_i.\tag{7.6}
 $$
 
 Quando $G_i=1$, o estágio gera transporte independentemente de $C_i$; quando
@@ -239,9 +239,9 @@ propagação do transporte, a contribuição dessa cadeia pode crescer
 aproximadamente como $n t_c$. Essa expressão é apenas um modelo ilustrativo; a
 temporização real requer a análise da rede implementada.
 
-## 8.4. Somadores com antecipação de transporte {#sec-carry-lookahead}
+## 7.4. Somadores com antecipação de transporte {#sec-carry-lookahead}
 
-A **antecipação de transporte** (_carry lookahead_) expande a recorrência (8.6)
+A **antecipação de transporte** (_carry lookahead_) expande a recorrência (7.6)
 para calcular transportes a partir dos sinais $P_i$, $G_i$ e $C_0$, reduzindo a
 necessidade de esperar pela propagação em série. Para quatro bits:
 
@@ -252,7 +252,7 @@ C_2={}&G_1+P_1G_0+P_1P_0C_0,\\
 C_3={}&G_2+P_2G_1+P_2P_1G_0+P_2P_1P_0C_0,\\
 C_4={}&G_3+P_3G_2+P_3P_2G_1+P_3P_2P_1G_0
        +P_3P_2P_1P_0C_0.
-\end{aligned}\tag{8.7}
+\end{aligned}\tag{7.7}
 $$
 
 A implementação paralela dessas expressões troca maior complexidade de portas e
@@ -272,21 +272,21 @@ palavra e da distribuição das conexões.
 
 :::
 
-## 8.5. Subtratores e circuitos somadores-subtratores {#sec-subtractors}
+## 7.5. Subtratores e circuitos somadores-subtratores {#sec-subtractors}
 
 A subtração binária pode ser realizada diretamente por um circuito que manipula
 empréstimos (_borrows_), mas a implementação por **complemento de dois**
 permite reutilizar o somador:
 
 $$
-A-B=A+\overline{B}+1\pmod{2^n}.\tag{8.8}
+A-B=A+\overline{B}+1\pmod{2^n}.\tag{7.8}
 $$
 
 Em uma palavra de $n$ bits, a inversão $\overline B$ é aplicada bit a bit. Um
 circuito somador-subtrator utiliza um sinal de modo $M$:
 
 $$
-B_i'=B_i\oplus M,\qquad C_0=M.\tag{8.9}
+B_i'=B_i\oplus M,\qquad C_0=M.\tag{7.9}
 $$
 
 Para $M=0$, obtém-se $A+B$. Para $M=1$, obtém-se $A+\overline B+1$, isto é,
@@ -322,7 +322,7 @@ Para subtração **sem sinal** implementada como $A+\overline B+1$, $C_n=1$
 indica ausência de empréstimo e $C_n=0$ indica empréstimo. Essa interpretação
 não deve ser confundida com a detecção de transbordamento de números com sinal.
 
-## 8.6. Detecção de transbordamento (_overflow_) {#sec-arithmetic-overflow}
+## 7.6. Detecção de transbordamento (_overflow_) {#sec-arithmetic-overflow}
 
 Em uma operação com largura fixa, um resultado matemático pode não ser
 representável. É necessário distinguir dois indicadores:
@@ -338,7 +338,7 @@ têm o mesmo sinal e o resultado apresenta sinal diferente. Uma expressão
 equivalente é:
 
 $$
-V=C_{n-1}\oplus C_n.\tag{8.10}
+V=C_{n-1}\oplus C_n.\tag{7.10}
 $$
 
 <!-- prettier-ignore -->
@@ -359,16 +359,16 @@ interpretação numérica mudou.
 
 Na subtração com sinal, há transbordamento quando os operandos têm sinais
 diferentes e o resultado apresenta sinal diferente do minuendo. A expressão
-(8.10) também se aplica à subtração implementada pelo somador de complemento de
+(7.10) também se aplica à subtração implementada pelo somador de complemento de
 dois.
 
-## 8.7. Comparadores aritméticos {#sec-arithmetic-comparators}
+## 7.7. Comparadores aritméticos {#sec-arithmetic-comparators}
 
 Comparar duas palavras binárias exige determinar se $A=B$, $A>B$ ou $A<B$. A
 igualdade pode ser obtida pela conjunção das equivalências bit a bit:
 
 $$
-EQ=\prod_{i=0}^{n-1}\overline{A_i\oplus B_i}.\tag{8.11}
+EQ=\prod_{i=0}^{n-1}\overline{A_i\oplus B_i}.\tag{7.11}
 $$
 
 Para palavras **sem sinal**, a comparação de magnitude começa pelo bit mais
@@ -393,14 +393,14 @@ empréstimo; em conjunto com o teste de igualdade, permite distinguir maior e
 menor. Para comparações com sinal, é preciso considerar o indicador de
 transbordamento.
 
-## 8.8. Multiplicação binária e circuitos multiplicadores {#sec-binary-multiplication}
+## 7.8. Multiplicação binária e circuitos multiplicadores {#sec-binary-multiplication}
 
 A multiplicação binária segue o mesmo princípio da multiplicação posicional:
 cada bit 1 do multiplicador produz uma cópia deslocada do multiplicando, e os
 produtos parciais são somados. Para operandos sem sinal:
 
 $$
-A\cdot B=\sum_{i=0}^{n-1} B_i(A\ll i),\tag{8.12}
+A\cdot B=\sum_{i=0}^{n-1} B_i(A\ll i),\tag{7.12}
 $$
 
 em que $A\ll i$ representa um deslocamento de $i$ posições à esquerda,
@@ -422,7 +422,7 @@ Multiplicadores sequenciais reutilizam recursos ao longo de vários ciclos,
 reduzindo hardware à custa de latência. Para operandos com sinal, devem-se
 empregar extensões e correções apropriadas à representação adotada.
 
-## 8.9. Deslocadores e operações bit a bit {#sec-shifters-and-bitwise}
+## 7.9. Deslocadores e operações bit a bit {#sec-shifters-and-bitwise}
 
 Operações **bit a bit** aplicam AND, OR, XOR ou NOT independentemente a cada
 posição. Um deslocador reorganiza posições, inserindo bits conforme o tipo de
@@ -453,7 +453,7 @@ Um **deslocador de barril** (_barrel shifter_) seleciona combinacionalmente
 diferentes quantidades de deslocamento, normalmente por estágios de
 multiplexadores que permitem deslocamentos de $1$, $2$, $4$, etc. posições.
 
-## 8.10. Unidade lógica e aritmética (ULA) {#sec-alu}
+## 7.10. Unidade lógica e aritmética (ULA) {#sec-alu}
 
 Uma **unidade lógica e aritmética** (ULA, ou _ALU_) combina operações sobre
 palavras binárias e seleciona uma saída conforme um código de operação. Sua
@@ -611,4 +611,4 @@ componente essencial de sistemas digitais programáveis.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 7 — Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md)
+[Capítulo 6 — Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md)

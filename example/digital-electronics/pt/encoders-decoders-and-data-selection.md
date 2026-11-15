@@ -1,4 +1,4 @@
-# 7. Codificadores, decodificadores e seleção de dados {#chapter-07}
+# 6. Codificadores, decodificadores e seleção de dados {#chapter-06}
 
 Os circuitos combinacionais estudados no capítulo anterior podem ser
 organizados em blocos reutilizáveis. **Codificadores** transformam a indicação
@@ -25,7 +25,7 @@ Ao concluir o capítulo, o leitor deverá ser capaz de:
 - implementar funções booleanas por seleção de dados;
 - verificar circuitos por tabelas-verdade, simulação e testes funcionais.
 
-## 7.1. Codificadores binários {#sec-binary-encoders}
+## 6.1. Codificadores binários {#sec-binary-encoders}
 
 Um codificador binário convencional com $2^n$ entradas e $n$ saídas associa a
 cada entrada ativa um código binário de $n$ bits. No modelo **um-de-$2^n$**
@@ -52,7 +52,7 @@ saídas $Y_1,Y_0$.
 Da tabela, seguem as equações:
 
 $$
-Y_1=D_2+D_3,\qquad Y_0=D_1+D_3.\tag{7.1}
+Y_1=D_2+D_3,\qquad Y_0=D_1+D_3.\tag{6.1}
 $$
 
 As equações são corretas **sob a hipótese de uma única entrada ativa**. Para
@@ -61,7 +61,7 @@ diferenciar ausência de solicitação de $D_0$ ativo, pode-se acrescentar um
 sinal de validade:
 
 $$
-V=D_0+D_1+D_2+D_3.\tag{7.2}
+V=D_0+D_1+D_2+D_3.\tag{6.2}
 $$
 
 O sinal $V$ indica que pelo menos uma entrada está ativa, mas não detecta
@@ -97,7 +97,7 @@ solicitação.
 
 :::
 
-## 7.2. Codificadores com prioridade {#sec-priority-encoders}
+## 6.2. Codificadores com prioridade {#sec-priority-encoders}
 
 Um codificador com prioridade define o resultado mesmo quando várias entradas
 estão ativas. Em um codificador $4\rightarrow2$ com prioridade
@@ -124,7 +124,7 @@ $$
 Y_1&=D_3+D_2,\\
 Y_0&=D_3+\overline{D_2}D_1,\\
 V&=D_3+D_2+D_1+D_0.
-\end{aligned}\tag{7.3}
+\end{aligned}\tag{6.3}
 $$
 
 Observe que $D_0$ não aparece nas expressões dos bits codificados: sua seleção
@@ -140,7 +140,7 @@ $D_2$ tem a maior prioridade entre elas, a saída é $Y_1Y_0=10$, com $V=1$.
 
 :::
 
-## 7.3. Decodificadores {#sec-decoders}
+## 6.3. Decodificadores {#sec-decoders}
 
 Um decodificador binário de $n$ entradas e $2^n$ saídas ativa a linha associada
 ao código presente na entrada. Em um decodificador $2\rightarrow4$ com
@@ -150,7 +150,7 @@ $$
 \begin{aligned}
 Q_0&=E\overline A\,\overline B, &Q_1&=E\overline A B,\\
 Q_2&=EA\overline B, &Q_3&=EAB.
-\end{aligned}\tag{7.4}
+\end{aligned}\tag{6.4}
 $$
 
 Aqui $A$ é o bit mais significativo e $B$ o menos significativo.
@@ -195,9 +195,9 @@ polaridade das entradas de habilitação.
 
 Decodificadores também implementam funções booleanas: cada saída corresponde a
 um mintermo, e a combinação por OR de saídas selecionadas produz uma soma de
-mintermos. Essa construção conecta diretamente os capítulos 3, 5 e 6.
+mintermos. Essa construção conecta diretamente os capítulos 3, 4 e 5.
 
-## 7.4. Conversores de códigos {#sec-code-converters}
+## 6.4. Conversores de códigos {#sec-code-converters}
 
 Um conversor de códigos recebe uma palavra em determinada representação e
 produz outra que descreve a mesma informação segundo uma convenção diferente.
@@ -213,7 +213,7 @@ G_3&=B_3,\\
 G_2&=B_3\oplus B_2,\\
 G_1&=B_2\oplus B_1,\\
 G_0&=B_1\oplus B_0.
-\end{aligned}\tag{7.5}
+\end{aligned}\tag{6.5}
 $$
 
 A conversão inversa é:
@@ -224,7 +224,7 @@ B_3&=G_3,\\
 B_2&=G_3\oplus G_2,\\
 B_1&=G_3\oplus G_2\oplus G_1,\\
 B_0&=G_3\oplus G_2\oplus G_1\oplus G_0.
-\end{aligned}\tag{7.6}
+\end{aligned}\tag{6.6}
 $$
 
 ::: example Conversão de binário para Gray {#ex-binary-gray}
@@ -242,7 +242,7 @@ comportamento especificado: podem produzir um padrão de erro, apagar a saída o
 ser tratados como condições indiferentes **apenas quando a especificação
 garantir que não ocorrerão**.
 
-## 7.5. Displays de sete segmentos {#sec-seven-segment-displays}
+## 6.5. Displays de sete segmentos {#sec-seven-segment-displays}
 
 Um display de sete segmentos possui elementos luminosos identificados por
 $a,b,c,d,e,f,g$. A ativação de combinações desses segmentos representa
@@ -295,14 +295,14 @@ compartilham as linhas dos segmentos, emprega-se frequentemente varredura
 temporal (_multiplexação de displays_), cuja taxa deve ser escolhida de modo a
 produzir apresentação visual adequada sem ultrapassar os limites elétricos.
 
-## 7.6. Multiplexadores {#sec-multiplexers}
+## 6.6. Multiplexadores {#sec-multiplexers}
 
 Um **multiplexador** (MUX) seleciona uma entre várias entradas de dados e a
 encaminha para uma saída. Em um MUX $2\rightarrow1$, as entradas são $D_0,D_1$,
 o seletor é $S$ e a saída é $Y$:
 
 $$
-Y=\overline S D_0+SD_1.\tag{7.7}
+Y=\overline S D_0+SD_1.\tag{6.7}
 $$
 
 ::: table Multiplexador 2 para 1 {#tbl-mux-2-to-1 .full-width}
@@ -348,7 +348,7 @@ $$
 :::
 
 A posição dos terminais no desenho é ilustrativa; a associação lógica entre
-seletor e entradas é definida pela equação (7.7). Para um MUX $4\rightarrow1$,
+seletor e entradas é definida pela equação (6.7). Para um MUX $4\rightarrow1$,
 com seletores $S_1,S_0$, temos:
 
 $$
@@ -356,7 +356,7 @@ $$
 Y={}&\overline{S_1}\,\overline{S_0}D_0
 +\overline{S_1}S_0D_1\\
 &+S_1\overline{S_0}D_2+S_1S_0D_3.
-\end{aligned}\tag{7.8}
+\end{aligned}\tag{6.8}
 $$
 
 <!-- prettier-ignore -->
@@ -374,10 +374,10 @@ $$
 Multiplexadores maiores podem ser construídos em árvore. Dois MUX
 $2\rightarrow1$ selecionam pares de entradas e um terceiro seleciona entre os
 resultados, formando um MUX $4\rightarrow1$. A organização hierárquica é
-funcionalmente equivalente à expressão (7.8), mas a profundidade lógica
+funcionalmente equivalente à expressão (6.8), mas a profundidade lógica
 influencia o atraso.
 
-## 7.7. Demultiplexadores {#sec-demultiplexers}
+## 6.7. Demultiplexadores {#sec-demultiplexers}
 
 Um **demultiplexador** (DEMUX) distribui um sinal de entrada $D$ para uma entre
 várias saídas, conforme os seletores. Para um DEMUX $1\rightarrow4$, com
@@ -389,7 +389,7 @@ Y_0&=D\overline{S_1}\,\overline{S_0}, &
 Y_1&=D\overline{S_1}S_0,\\
 Y_2&=DS_1\overline{S_0}, &
 Y_3&=DS_1S_0.
-\end{aligned}\tag{7.9}
+\end{aligned}\tag{6.9}
 $$
 
 <!-- prettier-ignore -->
@@ -410,7 +410,7 @@ um código, enquanto o demultiplexador encaminha um sinal de dados. Na
 implementação física, ambas as funções podem compartilhar uma mesma organização
 lógica.
 
-## 7.8. Implementação de funções com multiplexadores {#sec-mux-logic-implementation}
+## 6.8. Implementação de funções com multiplexadores {#sec-mux-logic-implementation}
 
 Um multiplexador pode implementar funções booleanas arbitrárias. O procedimento
 mais direto para uma função de $n$ variáveis consiste em utilizar essas
@@ -420,7 +420,7 @@ dados a 0 ou 1 conforme a linha correspondente da tabela-verdade.
 Um procedimento mais econômico usa a **decomposição de Shannon**:
 
 $$
-F=\overline S\,F\big|_{S=0}+S\,F\big|_{S=1}.\tag{7.10}
+F=\overline S\,F\big|_{S=0}+S\,F\big|_{S=1}.\tag{6.10}
 $$
 
 Os dois cofatores são conectados a $D_0$ e $D_1$ de um MUX $2\rightarrow1$.
@@ -436,10 +436,10 @@ $$
 Logo, basta ligar $S=A$, $D_0=C$ e $D_1=B$. O resultado é:
 
 $$
-Y=\overline A C+AB=F.\tag{7.11}
+Y=\overline A C+AB=F.\tag{6.11}
 $$
 
-Trata-se da mesma função analisada na Figura 2 do Capítulo 6. A implementação
+Trata-se da mesma função analisada na Figura 2 do Capítulo 5. A implementação
 por MUX evidencia a seleção entre $B$ e $C$, enquanto a implementação por
 portas evidencia os dois produtos booleanos.
 
@@ -450,7 +450,7 @@ variáveis podem servir como seletores e a terceira aparece nas entradas de
 dados na forma $0$, $1$, $X$ ou $\overline X$. Essa estratégia reduz a
 quantidade de seletores, mas pode exigir inversores adicionais.
 
-## 7.9. Estruturas de seleção e roteamento de sinais {#sec-signal-routing}
+## 6.9. Estruturas de seleção e roteamento de sinais {#sec-signal-routing}
 
 A associação de multiplexadores, demultiplexadores, decodificadores e sinais de
 habilitação permite construir redes de seleção e distribuição. Em um barramento
@@ -592,5 +592,5 @@ $D=0$, todas as saídas são 0.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 6 — Projeto de circuitos combinacionais](combinational-circuit-design.md)
-· [Capítulo 8 — Circuitos aritméticos digitais](digital-arithmetic-circuits.md)
+[Capítulo 5 — Projeto de circuitos combinacionais](combinational-circuit-design.md)
+· [Capítulo 7 — Circuitos aritméticos digitais](digital-arithmetic-circuits.md)

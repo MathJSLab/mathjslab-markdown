@@ -1,6 +1,6 @@
-# 10. Temporização e confiabilidade de circuitos sequenciais {#chapter-10}
+# 9. Temporização e confiabilidade de circuitos sequenciais {#chapter-09}
 
-O estudo dos elementos de memória, desenvolvido no Capítulo 9, estabeleceu como
+O estudo dos elementos de memória, desenvolvido no Capítulo 8, estabeleceu como
 os circuitos sequenciais preservam e atualizam informações. Em dispositivos
 físicos, entretanto, as mudanças de estado não são instantâneas: portas,
 interconexões e flip-flops apresentam atrasos, e a amostragem de um sinal exige
@@ -13,7 +13,7 @@ leitor deverá ser capaz de analisar caminhos entre registradores, distinguir
 violações de _setup_ e _hold_, compreender a metastabilidade e escolher
 estratégias básicas de transferência entre domínios de relógio.
 
-## 10.1. Atrasos de propagação {#sec-timing-propagation-delays}
+## 9.1. Atrasos de propagação {#sec-timing-propagation-delays}
 
 O **atraso de propagação** é o intervalo entre uma transição de entrada e a
 correspondente transição de saída, medido segundo níveis de referência
@@ -28,7 +28,7 @@ das cargas, das interconexões e das condições de operação. Para uma estimat
 simples de portas em cascata, podemos escrever:
 
 $$
-t_{pd,\mathrm{caminho}}\approx\sum_{i=1}^{n}t_{pd,i}+t_{\mathrm{interconexões}}.\tag{10.1}
+t_{pd,\mathrm{caminho}}\approx\sum_{i=1}^{n}t_{pd,i}+t_{\mathrm{interconexões}}.\tag{9.1}
 $$
 
 A expressão é aproximada: os atrasos de cada estágio dependem também da forma
@@ -59,7 +59,7 @@ registradores, o relógio e as margens temporais.
 
 :::
 
-## 10.2. Tempos de estabelecimento (_setup_) e retenção (_hold_) {#sec-timing-setup-hold}
+## 9.2. Tempos de estabelecimento (_setup_) e retenção (_hold_) {#sec-timing-setup-hold}
 
 Um flip-flop disparado por borda precisa receber uma entrada $D$
 suficientemente estável em torno do instante de amostragem. O **tempo de
@@ -99,7 +99,7 @@ metastabilidade. Uma violação não implica que a falha será observada em toda
 operação: implica que o comportamento garantido pelo fabricante deixou de estar
 assegurado.
 
-## 10.3. Frequência máxima de operação {#sec-timing-maximum-frequency}
+## 9.3. Frequência máxima de operação {#sec-timing-maximum-frequency}
 
 Considere um caminho síncrono formado por um registrador de origem, uma rede
 combinacional e um registrador de destino. Para relógios com bordas
@@ -107,13 +107,13 @@ nominalmente coincidentes e sem considerar, inicialmente, a incerteza do
 relógio, a condição de _setup_ é:
 
 $$
-T_{clk}\ge t_{CQ,\max}+t_{comb,\max}+t_{setup}.\tag{10.2}
+T_{clk}\ge t_{CQ,\max}+t_{comb,\max}+t_{setup}.\tag{9.2}
 $$
 
 A frequência máxima estimada é, portanto:
 
 $$
-f_{\max}\le\frac{1}{t_{CQ,\max}+t_{comb,\max}+t_{setup}}.\tag{10.3}
+f_{\max}\le\frac{1}{t_{CQ,\max}+t_{comb,\max}+t_{setup}}.\tag{9.3}
 $$
 
 Essas relações usam **atrasos máximos**, porque a preocupação é que o dado
@@ -141,14 +141,14 @@ A restrição de _hold_ é distinta: deve ser verificada com os **atrasos
 mínimos**, pois um dado que chega cedo demais pode substituir o valor que
 deveria permanecer estável após a borda de captura.
 
-## 10.4. Distribuição de relógio e _clock skew_ {#sec-timing-clock-skew}
+## 9.4. Distribuição de relógio e _clock skew_ {#sec-timing-clock-skew}
 
 O relógio não chega necessariamente ao mesmo instante a todos os elementos de
 memória. Denominamos **clock skew** a diferença entre os tempos de chegada do
 relógio a dois registradores. Adotaremos a convenção:
 
 $$
-t_{skew}=t_{clk,\mathrm{destino}}-t_{clk,\mathrm{origem}}.\tag{10.4}
+t_{skew}=t_{clk,\mathrm{destino}}-t_{clk,\mathrm{origem}}.\tag{9.4}
 $$
 
 Assim, um _skew_ positivo significa que a borda chega mais tarde ao registrador
@@ -156,11 +156,11 @@ de destino. Sob essa convenção, e supondo captura na borda seguinte, as
 condições simplificadas são:
 
 $$
-T_{clk}\ge t_{CQ,\max}+t_{comb,\max}+t_{setup}-t_{skew}+t_{unc},\tag{10.5}
+T_{clk}\ge t_{CQ,\max}+t_{comb,\max}+t_{setup}-t_{skew}+t_{unc},\tag{9.5}
 $$
 
 $$
-t_{CQ,\min}+t_{comb,\min}\ge t_{hold}+t_{skew}+t_{unc,h}.\tag{10.6}
+t_{CQ,\min}+t_{comb,\min}\ge t_{hold}+t_{skew}+t_{unc,h}.\tag{9.6}
 $$
 
 Aqui, $t_{unc}$ e $t_{unc,h}$ representam margens de incerteza aplicáveis às
@@ -213,7 +213,7 @@ distribuição de relógio. A linha horizontal é apenas uma representação
 funcional; os tempos efetivos de chegada dependem das interconexões e dos
 elementos de distribuição.
 
-## 10.5. Metastabilidade {#sec-timing-metastability}
+## 9.5. Metastabilidade {#sec-timing-metastability}
 
 Quando uma entrada muda muito perto da borda de amostragem, um biestável pode
 entrar temporariamente em um estado **metastável**, no qual sua saída não
@@ -227,7 +227,7 @@ subsequente. Uma relação frequentemente usada para modelar qualitativamente o
 tempo médio entre falhas é:
 
 $$
-MTBF\propto\frac{e^{T_{res}/\tau}}{f_{clk}\,f_{data}}.\tag{10.7}
+MTBF\propto\frac{e^{T_{res}/\tau}}{f_{clk}\,f_{data}}.\tag{9.7}
 $$
 
 Nessa expressão, $T_{res}$ é o tempo disponível para resolução, $\tau$ é uma
@@ -249,7 +249,7 @@ entrada.
 
 :::
 
-## 10.6. Sincronização de entradas assíncronas {#sec-timing-asynchronous-inputs}
+## 9.6. Sincronização de entradas assíncronas {#sec-timing-asynchronous-inputs}
 
 Uma entrada proveniente de botão, sensor, interface externa ou outro domínio de
 relógio pode mudar em qualquer instante em relação ao relógio local. Para um
@@ -300,7 +300,7 @@ a confirmação de recebimento, usando protocolo apropriado.
 
 :::
 
-## 10.7. Domínios de relógio e transferência de sinais {#sec-timing-clock-domains}
+## 9.7. Domínios de relógio e transferência de sinais {#sec-timing-clock-domains}
 
 Um **domínio de relógio** reúne elementos de estado controlados por um relógio
 com relações temporais definidas. A transferência de informações entre domínios
@@ -326,7 +326,7 @@ restrições físicas necessárias ao circuito. Em um barramento binário comum,
 sincronização bit a bit pode produzir combinações que nunca existiram
 simultaneamente na origem.
 
-## 10.8. Condições de corrida e riscos temporais {#sec-timing-races-hazards}
+## 9.8. Condições de corrida e riscos temporais {#sec-timing-races-hazards}
 
 Uma **condição de corrida** ocorre quando o resultado depende da ordem relativa
 de eventos ou de trajetórias de propagação. Um **hazard** é uma transição
@@ -334,7 +334,7 @@ transitória indesejada causada por atrasos diferentes em caminhos lógicos. Em
 sistemas sequenciais, tais efeitos podem produzir pulsos espúrios, violar
 requisitos de temporização ou afetar controles assíncronos.
 
-Os _hazards_ combinacionais foram introduzidos no Capítulo 5. Aqui, o foco é
+Os _hazards_ combinacionais foram introduzidos no Capítulo 4. Aqui, o foco é
 sua interação com elementos de memória e com o relógio. Um pulso espúrio que
 desaparece antes da borda de captura pode não ser registrado; um pulso que
 coincide com a janela de amostragem pode ser capturado. Em sinais assíncronos
@@ -377,7 +377,7 @@ uma palavra ou um fluxo de dados.
 3. **Frequência máxima:** calcule $T_{\min}$ e $f_{\max}$ para
    $t_{CQ,\max}=2\,\mathrm{ns}$, $t_{comb,\max}=7\,\mathrm{ns}$ e
    $t_{setup}=1\,\mathrm{ns}$, sem _skew_ ou incerteza.
-4. **Clock skew:** usando a convenção da equação (10.4), determine o período
+4. **Clock skew:** usando a convenção da equação (9.4), determine o período
    mínimo do exercício anterior quando $t_{skew}=+1\,\mathrm{ns}$ e
    $t_{unc}=0{,}5\,\mathrm{ns}$.
 5. **Hold:** verifique a condição simplificada de _hold_ com
@@ -404,7 +404,7 @@ uma palavra ou um fluxo de dados.
    depois. A amostragem física requer uma janela temporal, não um instante
    matemático sem duração.
 3. $T_{\min}=2+7+1=10\,\mathrm{ns}$; $f_{\max}=100\,\mathrm{MHz}$.
-4. Pela equação (10.5), $T_{\min}=2+7+1-1+0{,}5=9{,}5\,\mathrm{ns}$;
+4. Pela equação (9.5), $T_{\min}=2+7+1-1+0{,}5=9{,}5\,\mathrm{ns}$;
    $f_{\max}\approx105{,}3\,\mathrm{MHz}$. A verificação de _hold_ continua
    necessária.
 5. Lado esquerdo: $0{,}5+0{,}4=0{,}9\,\mathrm{ns}$; lado direito:
@@ -438,5 +438,5 @@ uma palavra ou um fluxo de dados.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 9 — Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md)
-· [Capítulo 11 — Registradores e contadores](registers-and-counters.md)
+[Capítulo 8 — Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md)
+· [Capítulo 10 — Registradores e contadores](registers-and-counters.md)

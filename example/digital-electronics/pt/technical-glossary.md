@@ -24,7 +24,7 @@ digitais de resolução e faixa especificadas. Consulte
 **ALU — Unidade Lógica e Aritmética** (_Arithmetic logic unit_). Bloco
 combinacional ou sequencial que executa operações aritméticas e lógicas
 selecionadas por sinais de controle. Consulte
-[Capítulo 25](integrative-projects.md).
+[Capítulo 24](integrative-projects.md).
 
 **Amostragem** (_Sampling_). Processo de obter valores de um sinal em instantes
 definidos. A frequência de amostragem e o filtro antialiasing determinam quais
@@ -34,12 +34,12 @@ componentes espectrais podem ser representadas adequadamente. Consulte
 **Antialiasing** (_Anti-aliasing_). Filtragem aplicada antes da conversão
 analógico-digital para atenuar componentes acima da banda admitida pelo
 processo de amostragem. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **Assíncrono** (_Asynchronous_). Qualifica operações que não dependem de um
 relógio global comum; seu significado específico varia conforme o circuito ou
 protocolo. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **Atraso de propagação** (_Propagation delay_). Intervalo entre uma mudança na
 entrada de um circuito e a correspondente mudança na saída, medido sob
@@ -55,11 +55,11 @@ funções digitais. Consulte
 
 **Barramento** (_Bus_). Conjunto de condutores ou canais lógicos usado para
 transportar dados, endereços ou sinais de controle entre blocos. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **Baud** (_Baud_). Unidade de taxa de símbolos, igual a um símbolo por segundo;
 não equivale necessariamente a um bit por segundo. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **BCD — Decimal Codificado em Binário** (_Binary-coded decimal_). Representação
 em que cada algarismo decimal é codificado separadamente, em geral por quatro
@@ -76,13 +76,13 @@ relógio utilizada para sincronizar eventos em circuitos sequenciais. Consulte
 **Buffer** (_Buffer_). Elemento de isolamento ou armazenamento temporário. Em
 circuitos lógicos pode reforçar acionamento; em sistemas de dados pode
 desacoplar taxas de produção e consumo. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 ## G.4. C
 
 **Caminho de dados** (_Datapath_). Conjunto de registradores, multiplexadores,
 operadores e conexões que realiza as transformações de dados comandadas pela
-unidade de controle. Consulte [Capítulo 24](integrated-digital-systems.md).
+unidade de controle. Consulte [Capítulo 23](integrated-digital-systems.md).
 
 **Capacitância parasita** (_Parasitic capacitance_). Capacitância não
 intencional associada a trilhas, terminais e estruturas físicas, capaz de
@@ -96,12 +96,12 @@ transbordamento com sinal. Consulte
 
 **Clock — Relógio** (_Clock_). Sinal periódico que estabelece instantes de
 referência para a atualização de elementos sequenciais síncronos. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 **CMOS** (_Complementary metal-oxide-semiconductor_). Tecnologia de circuitos
 integrados que emprega redes complementares de transistores MOS, amplamente
 utilizada em lógica digital. Consulte
-[Capítulo 19](logic-families-and-digital-integrated-circuits.md).
+[Capítulo 13](logic-families-and-digital-integrated-circuits.md).
 
 **Complemento de dois** (_Two's complement_). Representação usual de inteiros
 com sinal em largura fixa, na qual a negação aritmética é obtida pela inversão
@@ -115,7 +115,7 @@ definida de estados, frequentemente associada à contagem de pulsos. Consulte
 **CPLD** (_Complex programmable logic device_). Dispositivo lógico programável
 composto por blocos lógicos e interconexões configuráveis, geralmente destinado
 a funções de controle e lógica de integração. Consulte
-[Capítulo 25](integrative-projects.md).
+[Capítulo 24](integrative-projects.md).
 
 **Código Gray** (_Gray code_). Código em que valores adjacentes, segundo a
 sequência especificada, diferem em apenas um bit. Consulte
@@ -143,7 +143,7 @@ Consulte [Apêndice B](representation-conventions-and-symbols.md).
 **DMA — Acesso Direto à Memória** (_Direct memory access_). Mecanismo pelo qual
 dados são transferidos entre periféricos e memória com intervenção reduzida do
 processador, sob controle de um mecanismo dedicado. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 ## G.6. E
 
@@ -169,7 +169,7 @@ elétricas. Consulte [Apêndice C](reference-tables.md).
 
 **FIFO** (_First in, first out_). Estrutura de armazenamento em que os dados
 são retirados na mesma ordem em que foram inseridos. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 **Flip-flop** (_Flip-flop_). Elemento de memória sequencial que atualiza seu
 estado em resposta a um evento de relógio, com entradas de controle conforme
@@ -177,18 +177,18 @@ seu tipo. Consulte [Apêndice C](reference-tables.md).
 
 **FPGA** (_Field-programmable gate array_). Circuito integrado reconfigurável
 com recursos lógicos, registradores, interconexões e frequentemente memórias e
-blocos especializados. Consulte [Capítulo 25](integrative-projects.md).
+blocos especializados. Consulte [Capítulo 24](integrative-projects.md).
 
 **FSM — Máquina de Estados Finitos** (_Finite-state machine_). Modelo de
 comportamento com conjunto finito de estados, transições condicionadas por
 entradas e saídas associadas a estados ou transições. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 ## G.8. G
 
 **Glitch** (_Glitch_). Pulso transitório indesejado que pode surgir devido a
 diferenças de atraso em caminhos lógicos. Consulte
-[Capítulo 5](logic-function-simplification-and-minimization.md).
+[Capítulo 4](logic-function-simplification-and-minimization.md).
 
 **GND — Referência de potencial** (_Ground_). Nó escolhido como referência de
 tensão de um circuito; nem sempre corresponde à terra de proteção. Consulte
@@ -198,7 +198,7 @@ tensão de um circuito; nem sempre corresponde à terra de proteção. Consulte
 
 **Hazard — Risco lógico** (_Hazard_). Condição estrutural em que atrasos
 diferentes podem provocar transições espúrias em uma saída lógica. Consulte
-[Capítulo 5](logic-function-simplification-and-minimization.md).
+[Capítulo 4](logic-function-simplification-and-minimization.md).
 
 **HDL — Linguagem de Descrição de Hardware** (_Hardware description language_).
 Linguagem usada para descrever estrutura, comportamento e temporização de
@@ -214,19 +214,19 @@ ruído, reflexões, acoplamentos e temporização. Consulte
 
 **Interrupção** (_Interrupt_). Evento que solicita tratamento por uma unidade
 de processamento ou controle, alterando temporariamente o fluxo normal de
-execução. Consulte [Capítulo 24](integrated-digital-systems.md).
+execução. Consulte [Capítulo 23](integrated-digital-systems.md).
 
 **I²C** (_Inter-integrated circuit_). Barramento serial síncrono de dois
 sinais, SDA e SCL, tipicamente com saídas de dreno aberto e resistores de
 pull-up. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 ## G.11. J
 
 **JTAG** (_Joint Test Action Group_). Nome usual de uma interface e de
 mecanismos de teste e acesso a dispositivos digitais associados à família de
 normas IEEE 1149.1. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 ## G.12. L
 
@@ -242,7 +242,7 @@ quantização, conforme o contexto. Consulte [Apêndice C](reference-tables.md).
 
 **Mapa de Karnaugh** (_Karnaugh map_). Organização gráfica de combinações
 booleanas usada para identificar agrupamentos e simplificar funções lógicas.
-Consulte [Capítulo 5](logic-function-simplification-and-minimization.md).
+Consulte [Capítulo 4](logic-function-simplification-and-minimization.md).
 
 **Memória RAM** (_Random-access memory_). Memória endereçável para leitura e
 escrita; o termo não implica, por si só, retenção dos dados sem alimentação.
@@ -251,7 +251,7 @@ Consulte [Apêndice C](reference-tables.md).
 **Metastabilidade** (_Metastability_). Condição transitória de elemento
 biestável em que a saída pode demorar a assumir um nível lógico válido,
 especialmente após violação de requisitos temporais. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 **Minterno — Mintermo** (_Minterm_). Produto lógico que inclui cada variável de
 uma função uma vez, direta ou complementada, e corresponde a uma combinação de
@@ -269,11 +269,11 @@ entre várias entradas de dados por meio de sinais de seleção. Consulte
 
 **NAND** (_NOT AND_). Operação lógica correspondente à negação do produto
 booleano; é funcionalmente completa para a síntese de circuitos combinacionais.
-Consulte [Capítulo 4](logic-gates-and-circuit-representation.md).
+Consulte [Seção 3.7](boolean-algebra-and-logic-functions.md#sec-logic-gates).
 
 **NOR** (_NOT OR_). Operação lógica correspondente à negação da soma booleana;
 também é funcionalmente completa. Consulte
-[Capítulo 4](logic-gates-and-circuit-representation.md).
+[Seção 3.7](boolean-algebra-and-logic-functions.md#sec-logic-gates).
 
 **Nível lógico** (_Logic level_). Intervalo de tensão reconhecido como 0 ou 1
 por uma família lógica, conforme as especificações de entrada e saída. Consulte
@@ -284,7 +284,7 @@ por uma família lógica, conforme as especificações de entrada e saída. Cons
 **One-Wire — 1-Wire** (_1-Wire_). Protocolo de comunicação serial que utiliza
 uma linha de dados compartilhada e referência comum, com temporização
 específica e topologias dependentes dos dispositivos. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **Overflow — Transbordamento** (_Overflow_). Indicação de que o resultado
 aritmético não pode ser representado na faixa numérica adotada; em complemento
@@ -299,15 +299,15 @@ Consulte [Capítulo 2](number-systems-and-information-representation.md).
 
 **Pipeline** (_Pipeline_). Organização que divide uma operação em estágios
 capazes de processar diferentes itens simultaneamente, aumentando
-potencialmente a vazão. Consulte [Capítulo 24](integrated-digital-systems.md).
+potencialmente a vazão. Consulte [Capítulo 23](integrated-digital-systems.md).
 
 **PLL** (_Phase-locked loop_). Malha de controle usada, entre outras
 aplicações, para geração e sincronização de sinais de relógio. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 **Pull-up** (_Pull-up resistor_). Resistor que tende a estabelecer nível alto
 em um nó quando os dispositivos conectados não o forçam a nível baixo. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **PWM — Modulação por Largura de Pulso** (_Pulse-width modulation_).
 Representação ou controle de uma grandeza pela fração do período em que um
@@ -324,7 +324,7 @@ ao valor original. Consulte
 
 **Registrador** (_Register_). Conjunto de elementos de memória que armazena uma
 palavra binária, geralmente com controle de carga e relógio. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 **Reset** (_Reset_). Sinal ou operação que conduz o circuito a um estado
 inicial definido; pode atuar de modo síncrono ou assíncrono. Consulte
@@ -333,12 +333,12 @@ inicial definido; pode atuar de modo síncrono ou assíncrono. Consulte
 **RISC** (_Reduced instruction set computer_). Abordagem de arquitetura de
 processadores associada a conjuntos de instruções e organização de execução
 relativamente regulares; não define uma implementação única. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 **RS-485** (_Recommended Standard 485_). Padrão de características elétricas de
 transceptores diferenciais, empregado em enlaces e barramentos multiponto; não
 define sozinho um protocolo de aplicação. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **RTL** (_Register-transfer level_). Nível de descrição de hardware centrado em
 registradores, operações entre eles e sinais de controle. Consulte
@@ -357,12 +357,12 @@ Consulte [Apêndice C](reference-tables.md).
 **Sincronizador** (_Synchronizer_). Circuito que reduz a probabilidade de
 propagação de metastabilidade ao receber sinais assíncronos em um domínio de
 clock; não elimina o risco absoluto. Consulte
-[Capítulo 24](integrated-digital-systems.md).
+[Capítulo 23](integrated-digital-systems.md).
 
 **SPI** (_Serial peripheral interface_). Interface serial síncrona geralmente
 baseada em clock, dados transmitidos, dados recebidos e seleção de dispositivo;
 seus detalhes dependem da implementação. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **SPICE** (_Simulation program with integrated circuit emphasis_). Família de
 simuladores e formatos de descrição de circuitos para análise elétrica,
@@ -381,7 +381,7 @@ utilizado para testar modelos de circuitos em simulação. Consulte
 
 **Throughput — Vazão** (_Throughput_). Quantidade de dados ou operações
 concluídas por unidade de tempo, distinta da latência de uma operação
-individual. Consulte [Capítulo 24](integrated-digital-systems.md).
+individual. Consulte [Capítulo 23](integrated-digital-systems.md).
 
 **Tri-state — Três estados** (_Three-state output_). Saída digital que pode
 assumir nível baixo, alto ou alta impedância, permitindo determinadas
@@ -391,18 +391,18 @@ arquiteturas de compartilhamento de linhas. Consulte
 **TTL** (_Transistor-transistor logic_). Família de circuitos lógicos baseada
 historicamente em transistores bipolares; seus níveis elétricos não devem ser
 generalizados para todas as tecnologias. Consulte
-[Capítulo 19](logic-families-and-digital-integrated-circuits.md).
+[Capítulo 13](logic-families-and-digital-integrated-circuits.md).
 
 ## G.21. U
 
 **UART** (_Universal asynchronous receiver-transmitter_). Bloco de transmissão
 e recepção serial assíncrona que implementa enquadramento por bits de início,
 dados e parada, com opções como paridade. Consulte
-[Capítulo 23](digital-system-interfaces-and-communication.md).
+[Capítulo 22](digital-system-interfaces-and-communication.md).
 
 **Unidade de controle** (_Control unit_). Bloco que determina operações e
 transferências de um caminho de dados a partir de estado, instruções e
-entradas. Consulte [Capítulo 24](integrated-digital-systems.md).
+entradas. Consulte [Capítulo 23](integrated-digital-systems.md).
 
 ## G.22. V
 
@@ -423,11 +423,11 @@ hardware utilizada para modelar e implementar sistemas digitais. Consulte
 
 **XNOR** (_Exclusive NOR_). Negação da XOR; para duas entradas, resulta em 1
 quando os valores são iguais. Consulte
-[Capítulo 4](logic-gates-and-circuit-representation.md).
+[Seção 3.7](boolean-algebra-and-logic-functions.md#sec-logic-gates).
 
 **XOR** (_Exclusive OR_). Operação que resulta em 1 quando há um número ímpar
 de entradas em nível 1; para duas entradas, quando são diferentes. Consulte
-[Capítulo 4](logic-gates-and-circuit-representation.md).
+[Seção 3.7](boolean-algebra-and-logic-functions.md#sec-logic-gates).
 
 ## G.24. Siglas e unidades de uso recorrente
 
@@ -468,5 +468,5 @@ numéricas e tabelas, consulte o [Apêndice C](reference-tables.md). Para
 ferramentas e verificação, consulte o
 [Apêndice D](introduction-to-simulation-tools.md). Os conceitos de integração
 de sistemas e interfaces são aprofundados nos
-[Capítulos 23](digital-system-interfaces-and-communication.md) e
-[24](integrated-digital-systems.md).
+[Capítulos 22](digital-system-interfaces-and-communication.md) e
+[23](integrated-digital-systems.md).

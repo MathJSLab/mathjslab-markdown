@@ -1,4 +1,4 @@
-# 25. Projetos integradores {#chapter-25}
+# 24. Projetos integradores {#chapter-24}
 
 Os projetos integradores transformam conceitos de representação binária,
 álgebra booleana, circuitos combinacionais e sequenciais, temporização e
@@ -12,7 +12,7 @@ restrições de componentes, frequência, alimentação, ambiente de operação 
 recursos de laboratório. As implementações em HDL podem ser simuladas antes de
 serem transferidas para uma FPGA.
 
-## 25.1. Sistema de votação digital
+## 24.1. Sistema de votação digital
 
 ### Problema e requisitos
 
@@ -67,7 +67,7 @@ condição de maioria e, em bancada, observar o comportamento durante o
 acionamento dos botões. Para ampliar o projeto, podem-se registrar os votos com
 flip-flops e exigir um sinal `CONFIRMAR` antes da contabilização.
 
-## 25.2. Controlador de semáforo
+## 24.2. Controlador de semáforo
 
 ### Especificação e máquina de estados
 
@@ -115,7 +115,7 @@ propriedade de exclusão mútua. Este é um modelo didático: um controlador de
 tráfego real requer supervisão de falhas, estados seguros e requisitos
 normativos adicionais.
 
-## 25.3. Relógio e cronômetro digital
+## 24.3. Relógio e cronômetro digital
 
 Um relógio digital pode ser dividido em quatro subsistemas: referência de
 frequência, base de tempo, contadores de tempo e apresentação. Um cronômetro
@@ -162,7 +162,7 @@ decodificadores de sete segmentos.
 prioridade de `RESET`, `PAUSE` e `START`. Em displays multiplexados, verificar
 também a frequência de atualização e a corrente admissível dos segmentos.
 
-## 25.4. Controlador de acesso por código
+## 24.4. Controlador de acesso por código
 
 Considere um dispositivo que recebe uma sequência de quatro símbolos, compara-a
 com uma senha armazenada e habilita uma saída `ABRIR` durante um intervalo
@@ -188,7 +188,7 @@ repetição rápida de teclas, reset e expiração do bloqueio. Trata-se de um
 exemplo educacional; sistemas de segurança reais exigem proteção contra
 manipulação física e ataques que ultrapassam a lógica apresentada.
 
-## 25.5. Unidade aritmética e lógica
+## 24.5. Unidade aritmética e lógica
 
 Uma ULA reúne operações selecionadas por um código de controle. Como projeto
 inicial, considere duas entradas de quatro bits, $A$ e $B$, uma seleção de dois
@@ -231,7 +231,7 @@ indicadores `C` e `V` exigem lógica adicional e devem ser especificados para
 cada operação. Um teste exaustivo de quatro bits pode percorrer as
 $16\times16\times4=1024$ combinações de entrada e seleção.
 
-## 25.6. Sistema de aquisição e apresentação de dados
+## 24.6. Sistema de aquisição e apresentação de dados
 
 Um sistema de aquisição combina sensor, condicionamento, ADC, controle digital
 e saída de apresentação ou armazenamento. A especificação deve estabelecer a
@@ -281,7 +281,7 @@ condicionamento analógico.
 dados, transbordamento da FIFO e correspondência entre valor medido e
 apresentado.
 
-## 25.7. Controlador baseado em máquina de estados
+## 24.7. Controlador baseado em máquina de estados
 
 Este projeto enfatiza a metodologia de construção de uma FSM a partir de
 requisitos. Considere uma máquina de distribuição que aceita um comando `REQ`,
@@ -338,7 +338,7 @@ unitária de `DONE`, o comportamento de pedidos durante uma operação e a
 recuperação de estados não previstos. A simulação deve usar um banco de testes
 que confira automaticamente a sequência esperada.
 
-## 25.8. Projeto integrado com FPGA
+## 24.8. Projeto integrado com FPGA
 
 Como síntese dos projetos anteriores, propõe-se um sistema em FPGA que recebe
 uma entrada analógica por ADC externo, calcula um valor médio sobre uma janela

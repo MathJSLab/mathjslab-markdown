@@ -1,4 +1,4 @@
-# 24. Sistemas digitais integrados {#chapter-24}
+# 23. Sistemas digitais integrados {#chapter-23}
 
 Um sistema digital integrado reúne circuitos combinacionais, elementos de
 memória, interfaces e mecanismos de controle para realizar uma função completa.
@@ -16,7 +16,7 @@ temporização, a concepção de controladores, a aquisição de dados e uma
 introdução à organização de processadores. Ao final, examinaremos compromissos
 de implementação e dois sistemas completos.
 
-## 24.1. Organização em caminho de dados e controle
+## 23.1. Organização em caminho de dados e controle
 
 Uma maneira produtiva de organizar um sistema digital é separar **caminho de
 dados** (_datapath_) e **unidade de controle**. O caminho de dados contém
@@ -89,7 +89,7 @@ sem sinal.
 
 :::
 
-## 24.2. Interligação de blocos combinacionais e sequenciais
+## 23.2. Interligação de blocos combinacionais e sequenciais
 
 Em um sistema síncrono, registradores delimitam etapas de processamento. Entre
 dois conjuntos de registradores pode existir uma rede combinacional, cuja saída
@@ -155,7 +155,7 @@ dentro do processo acionado por borda significa retenção do valor anterior; n�
 implica a criação de um _latch_. Já em processos combinacionais, atribuições
 incompletas podem inferir armazenamento indesejado.
 
-## 24.3. Temporização global do sistema
+## 23.3. Temporização global do sistema
 
 O período do relógio deve comportar o atraso do registrador de origem, a
 propagação pela lógica e pelas interconexões e o tempo de estabelecimento do
@@ -213,7 +213,7 @@ regime permanente, um pipeline pode entregar um resultado por ciclo mesmo
 quando cada resultado individual percorre vários estágios. **Latência** e
 **vazão** são métricas diferentes e devem ser especificadas separadamente.
 
-## 24.4. Projeto de controladores
+## 23.4. Projeto de controladores
 
 Um controlador sequencial pode ser descrito como uma máquina de estados finitos
 (FSM). Para cada estado, definem-se as saídas de controle e as condições de
@@ -268,7 +268,7 @@ desejado, o projeto deve exigir liberação do comando ou detectar uma borda
 válida. Também é necessário definir a recuperação após reinicialização e a
 reação a um `DONE` que nunca chega, por exemplo por meio de um _timeout_.
 
-## 24.5. Sistemas de aquisição de dados
+## 23.5. Sistemas de aquisição de dados
 
 Um sistema de aquisição de dados pode combinar condicionamento analógico,
 filtro antialiasing, ADC, controlador, buffer e memória. A frequência de
@@ -345,7 +345,7 @@ intervalo**, supondo que não haja consumo e desconsiderando margens. O
 dimensionamento final exige avaliar rajadas, sinalização de cheio e
 comportamento em caso de perda de amostras.
 
-## 24.6. Introdução à organização de processadores
+## 23.6. Introdução à organização de processadores
 
 Um processador é um sistema digital programável que busca instruções,
 interpreta seus campos e executa operações sobre dados. Uma organização
@@ -398,7 +398,7 @@ determina as seleções e habilitações necessárias. Esse exemplo ilustra como
 operações estudadas em circuitos combinacionais e sequenciais formam uma
 arquitetura programável.
 
-## 24.7. Compromissos entre desempenho, consumo e custo
+## 23.7. Compromissos entre desempenho, consumo e custo
 
 Projetar um sistema digital envolve conciliar objetivos que podem competir
 entre si. Uma solução com maior paralelismo tende a exigir mais recursos;
@@ -446,9 +446,9 @@ menos $12{,}5\,\mathrm{MHz}$; com 16 bits, a frequência mínima ideal cai para
 $6{,}25\,\mathrm{MHz}$. A decisão real também depende de pinos, temporização e
 organização do protocolo.
 
-## 24.8. Exemplos de sistemas digitais completos
+## 23.8. Exemplos de sistemas digitais completos
 
-### 24.8.1. Sistema de aquisição e registro de temperatura
+### 23.8.1. Sistema de aquisição e registro de temperatura
 
 Considere um sistema que mede periodicamente uma tensão proporcional à
 temperatura, converte o valor em uma palavra digital, acrescenta uma marca de
@@ -499,7 +499,7 @@ recuperação após erro. Em sistemas reais, também importam a calibração do
 sensor, a precisão da referência de tensão e a proteção contra perturbações
 externas.
 
-### 24.8.2. Controlador de acesso digital
+### 23.8.2. Controlador de acesso digital
 
 Um segundo exemplo é um controlador que recebe uma sequência de dígitos,
 compara-a a uma senha armazenada e aciona uma saída durante um intervalo

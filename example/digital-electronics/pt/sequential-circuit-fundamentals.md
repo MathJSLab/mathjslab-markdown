@@ -1,4 +1,4 @@
-# 9. Fundamentos dos circuitos sequenciais {#chapter-09}
+# 8. Fundamentos dos circuitos sequenciais {#chapter-08}
 
 Os circuitos combinacionais estudados nos capítulos anteriores são descritos
 por relações entre entradas e saídas em um mesmo instante, abstraídos os
@@ -13,14 +13,14 @@ relacionando representações funcionais, circuitos e diagramas temporais. O
 capítulo seguinte tratará, com maior profundidade, dos requisitos de
 temporização e dos mecanismos de falha.
 
-## 9.1. Estado e memória {#sec-sequential-state-memory}
+## 8.1. Estado e memória {#sec-sequential-state-memory}
 
 Uma função combinacional ideal é descrita por $Y(t)=F(X(t))$. Em um sistema
 sequencial, distinguimos as entradas $X$, o **estado interno** $Q$ e as saídas
 $Y$. Para uma descrição síncrona discreta, escrevemos:
 
 $$
-Q_{k+1}=F(Q_k,X_k), \qquad Y_k=G(Q_k,X_k).\tag{9.1}
+Q_{k+1}=F(Q_k,X_k), \qquad Y_k=G(Q_k,X_k).\tag{8.1}
 $$
 
 A primeira relação é a **função de próximo estado**; a segunda é a **função de
@@ -44,7 +44,7 @@ pulso. É necessário um elemento de estado, capaz de reter o valor armazenado.
 
 :::
 
-## 9.2. Realimentação lógica {#sec-sequential-feedback}
+## 8.2. Realimentação lógica {#sec-sequential-feedback}
 
 A **realimentação** ocorre quando uma saída, direta ou indiretamente,
 influencia as entradas da rede que a produz. Duas portas NOR interligadas de
@@ -113,7 +113,7 @@ A figura é funcional: não representa as conexões internas de um dispositivo
 específico. A mudança efetiva de $Q$ depende do mecanismo de habilitação ou do
 evento de relógio.
 
-## 9.3. Circuitos síncronos e assíncronos {#sec-sequential-synchronous-asynchronous}
+## 8.3. Circuitos síncronos e assíncronos {#sec-sequential-synchronous-asynchronous}
 
 Em um **circuito sequencial síncrono**, as mudanças dos elementos de estado são
 coordenadas por um sinal de relógio. Nos dispositivos disparados por borda, as
@@ -142,21 +142,21 @@ Não se deve confundir **circuito assíncrono** com **entrada assíncrona de um
 flip-flop**. Um sistema globalmente síncrono pode conter pinos de _preset_ ou
 _clear_ que atuam independentemente do relógio.
 
-## 9.4. Sinais de relógio (_clock_) {#sec-sequential-clock}
+## 8.4. Sinais de relógio (_clock_) {#sec-sequential-clock}
 
 Um sinal de relógio periódico alterna entre níveis lógicos baixo e alto. Seu
 **período** $T$ é o intervalo entre bordas equivalentes consecutivas, e a
 **frequência** é:
 
 $$
-f=\frac{1}{T}.\tag{9.2}
+f=\frac{1}{T}.\tag{8.2}
 $$
 
 O **ciclo de trabalho** (_duty cycle_) é a fração do período durante a qual o
 sinal permanece em nível alto:
 
 $$
-D=\frac{t_H}{T}\times 100\%.\tag{9.3}
+D=\frac{t_H}{T}\times 100\%.\tag{8.3}
 $$
 
 Em um dispositivo disparado por **borda de subida**, a atualização ocorre no
@@ -174,7 +174,7 @@ ativa.
 
 :::
 
-## 9.5. Diagramas temporais {#sec-sequential-timing-diagrams}
+## 8.5. Diagramas temporais {#sec-sequential-timing-diagrams}
 
 Diagramas temporais permitem comparar entradas, relógio e saídas em uma escala
 de tempo comum. Para interpretar corretamente um diagrama, é necessário
@@ -211,7 +211,7 @@ temporais específicas.
 
 :::
 
-## 9.6. Latches SR e D {#sec-sequential-latches}
+## 8.6. Latches SR e D {#sec-sequential-latches}
 
 O **_latch_ SR** é um elemento biestável comandado por sinais de _set_ ($S$) e
 _reset_ ($R$). Na implementação com duas portas NOR cruzadas, os comandos são
@@ -247,7 +247,7 @@ _set_ e _reset_. Quando habilitado, seu estado acompanha $D$; quando
 desabilitado, mantém o valor armazenado:
 
 $$
-Q^+=EN\,D+\overline{EN}\,Q.\tag{9.4}
+Q^+=EN\,D+\overline{EN}\,Q.\tag{8.4}
 $$
 
 <!-- prettier-ignore -->
@@ -264,7 +264,7 @@ $$
 O símbolo $X$ nessa tabela significa que o valor de $D$ é indiferente quando
 $EN=0$; não representa um nível elétrico intermediário.
 
-## 9.7. Flip-flops SR, JK, D e T {#sec-sequential-flipflops}
+## 8.7. Flip-flops SR, JK, D e T {#sec-sequential-flipflops}
 
 Um **flip-flop** é um elemento de armazenamento cuja atualização é associada a
 uma borda ativa de relógio. As tabelas seguintes descrevem seu comportamento
@@ -325,7 +325,7 @@ adicionais.
 
 :::
 
-## 9.8. Entradas assíncronas de controle {#sec-sequential-asynchronous-controls}
+## 8.8. Entradas assíncronas de controle {#sec-sequential-asynchronous-controls}
 
 Alguns flip-flops possuem entradas de **preset** e **clear** (também chamadas
 _set_ e _reset_ assíncronos). Elas podem forçar o estado independentemente da
@@ -347,10 +347,10 @@ simbologia ou na folha de dados.
 A tabela apresenta uma convenção comum, não uma regra universal para todos os
 componentes. A liberação de uma entrada assíncrona próxima à borda ativa pode
 violar requisitos de **recuperação** e **remoção** (_recovery_ e _removal_), a
-serem estudados no Capítulo 10. Por isso, o acionamento e a liberação de
+serem estudados no Capítulo 9. Por isso, o acionamento e a liberação de
 _reset_ devem ser projetados com atenção especial.
 
-## 9.9. Equações características e tabelas de excitação {#sec-sequential-characteristic-excitation}
+## 8.9. Equações características e tabelas de excitação {#sec-sequential-characteristic-excitation}
 
 A **equação característica** descreve o próximo estado como função das entradas
 e do estado atual. Para os tipos usuais, na borda ativa:
@@ -361,7 +361,7 @@ Q^+_{D}&=D,\\
 Q^+_{T}&=T\oplus Q,\\
 Q^+_{JK}&=J\overline Q+\overline KQ,\\
 Q^+_{SR}&=S+\overline RQ\quad\text{(desde que }SR=0\text{)}.
-\end{aligned}\tag{9.5}
+\end{aligned}\tag{8.5}
 $$
 
 A **tabela de excitação** responde à pergunta inversa: quais entradas permitem
@@ -390,7 +390,7 @@ Desejamos que um flip-flop D se comporte como um flip-flop T. Como $Q^+=D$ para
 o primeiro e $Q^+=T\oplus Q$ para o segundo, basta implementar:
 
 $$
-D=T\oplus Q.\tag{9.6}
+D=T\oplus Q.\tag{8.6}
 $$
 
 Assim, quando $T=0$, $D=Q$ e o estado é mantido; quando $T=1$, $D=\overline Q$
@@ -464,5 +464,5 @@ desejadas.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 8 — Circuitos aritméticos digitais](digital-arithmetic-circuits.md) ·
-[Capítulo 10 — Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md)
+[Capítulo 7 — Circuitos aritméticos digitais](digital-arithmetic-circuits.md) ·
+[Capítulo 9 — Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md)

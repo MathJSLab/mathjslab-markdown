@@ -403,7 +403,7 @@ Simule uma linha com $R=4{,}7\,\mathrm{k\Omega}$ e capacitâncias de $100$, $200
 
 ### Atividade 6 — Verificação de interface
 
-Escolha um protocolo simples de transmissão serial abordado no Capítulo 23. Defina quadro, polaridade, temporização e condições de erro. Desenvolva estímulos que cubram pelo menos uma transmissão válida e uma situação inválida. Registre os critérios utilizados para declarar aprovação ou falha.
+Escolha um protocolo simples de transmissão serial abordado no Capítulo 22. Defina quadro, polaridade, temporização e condições de erro. Desenvolva estímulos que cubram pelo menos uma transmissão válida e uma situação inválida. Registre os critérios utilizados para declarar aprovação ou falha.
 
 ## D.12. Modelo de relatório de simulação
 

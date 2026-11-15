@@ -1,4 +1,4 @@
-# 17. Circuitos de temporização e geração de pulsos {#chapter-17}
+# 16. Circuitos de temporização e geração de pulsos {#chapter-16}
 
 A temporização é uma dimensão fundamental dos sistemas digitais. Além dos
 valores lógicos, importa saber **quando** uma transição ocorre, por quanto
@@ -14,14 +14,14 @@ matemáticos são aproximações úteis para projeto; os limites elétricos,
 tolerâncias e condições de operação devem ser verificados nas folhas de dados
 dos componentes.
 
-## 17.1. Redes RC de temporização {#sec-timing-rc-networks}
+## 16.1. Redes RC de temporização {#sec-timing-rc-networks}
 
 Uma rede formada por um resistor e um capacitor pode transformar uma mudança
 abrupta de tensão em uma evolução gradual. A rapidez dessa evolução depende da
 **constante de tempo**
 
 $$
-\tau=RC. \tag{17.1}
+\tau=RC. \tag{16.1}
 $$
 
 No Sistema Internacional, $R$ é expresso em ohms, $C$ em farads e $\tau$ em
@@ -32,19 +32,19 @@ tensão contínua $V_S$ por meio de um resistor $R$. Aplicando a lei das tensõe
 de Kirchhoff e a relação constitutiva do capacitor,
 
 $$
-V_S=Ri_C+v_C,\qquad i_C=C\frac{dv_C}{dt}. \tag{17.2}
+V_S=Ri_C+v_C,\qquad i_C=C\frac{dv_C}{dt}. \tag{16.2}
 $$
 
 A solução, para $t\ge0$, é
 
 $$
-v_C(t)=V_S\left(1-e^{-t/(RC)}\right). \tag{17.3}
+v_C(t)=V_S\left(1-e^{-t/(RC)}\right). \tag{16.3}
 $$
 
 Para uma condição inicial arbitrária $V_0$ e uma tensão final $V_F$,
 
 $$
-v_C(t)=V_F+(V_0-V_F)e^{-t/\tau}. \tag{17.4}
+v_C(t)=V_F+(V_0-V_F)e^{-t/\tau}. \tag{16.4}
 $$
 
 Essa expressão descreve tanto a carga quanto a descarga, desde que o circuito
@@ -80,14 +80,14 @@ a carga a partir de zero, obtemos
 
 $$
 t_L=-RC\ln\left(1-\frac{V_L}{V_S}\right),
-\qquad 0<V_L<V_S. \tag{17.5}
+\qquad 0<V_L<V_S. \tag{16.5}
 $$
 
 Durante a descarga de $V_0$ em direção a zero,
 
 $$
 v_C(t)=V_0e^{-t/(RC)},\qquad
-t_L=RC\ln\left(\frac{V_0}{V_L}\right). \tag{17.6}
+t_L=RC\ln\left(\frac{V_0}{V_L}\right). \tag{16.6}
 $$
 
 ::: example Cálculo de um atraso RC {#ex-timing-rc-delay}
@@ -126,7 +126,7 @@ lógica convencional.** Se a entrada permanecer por muito tempo na região de
 transição, o circuito pode apresentar comutações indesejadas ou consumo
 elevado. Uma entrada com histerese é frequentemente mais apropriada.
 
-## 17.2. Comparadores com histerese e disparadores Schmitt {#sec-timing-schmitt}
+## 16.2. Comparadores com histerese e disparadores Schmitt {#sec-timing-schmitt}
 
 Um comparador ideal sem histerese muda de estado quando a tensão de entrada
 cruza uma referência. Na presença de ruído, pequenas oscilações em torno desse
@@ -137,7 +137,7 @@ utilizado quando a entrada cresce, e $V_{T-}$, utilizado quando ela decresce. A
 largura de histerese é
 
 $$
-V_H=V_{T+}-V_{T-},\qquad V_{T+}>V_{T-}. \tag{17.7}
+V_H=V_{T+}-V_{T-},\qquad V_{T+}>V_{T-}. \tag{16.7}
 $$
 
 No comportamento não inversor ideal, a saída passa ao nível alto quando a
@@ -178,7 +178,7 @@ Em dispositivos comerciais, os limiares e sua dispersão devem ser obtidos da
 folha de dados. Não se deve assumir que sejam iguais a frações fixas da tensão
 de alimentação, a menos que isso seja especificado.
 
-## 17.3. Circuitos monoestáveis, astáveis e biestáveis {#sec-timing-stable-circuits}
+## 16.3. Circuitos monoestáveis, astáveis e biestáveis {#sec-timing-stable-circuits}
 
 Os circuitos regenerativos podem ser classificados pelo número de estados
 estáveis e pela forma como mudam de estado.
@@ -229,14 +229,14 @@ O circuito astável, por sua vez, gera uma sequência de pulsos. Seu período $T
 e frequência $f$ satisfazem
 
 $$
-f=\frac1T. \tag{17.8}
+f=\frac1T. \tag{16.8}
 $$
 
 Se o tempo em nível alto é $t_H$ e o tempo em nível baixo é $t_L$, então
 
 $$
 T=t_H+t_L,\qquad
-D=\frac{t_H}{T}. \tag{17.9}
+D=\frac{t_H}{T}. \tag{16.9}
 $$
 
 A grandeza $D$ é o **ciclo de trabalho** (_duty cycle_). Pode ser expressa como
@@ -253,7 +253,7 @@ fração ou porcentagem.
 
 :::
 
-## 17.4. Temporizadores integrados {#sec-timing-integrated-timers}
+## 16.4. Temporizadores integrados {#sec-timing-integrated-timers}
 
 Os temporizadores integrados reúnem comparadores, referências de tensão,
 elementos de armazenamento e estágios de saída para facilitar a implementação
@@ -279,7 +279,7 @@ $$
 segue que
 
 $$
-t_p=RC\ln3\approx1{,}099RC. \tag{17.10}
+t_p=RC\ln3\approx1{,}099RC. \tag{16.10}
 $$
 
 É comum utilizar a aproximação $t_p\approx1{,}1RC$. A precisão real depende das
@@ -292,24 +292,24 @@ capacitor carrega-se por $R_A+R_B$ e descarrega-se por $R_B$. Considerando os
 limiares ideais de $V_{CC}/3$ e $2V_{CC}/3$,
 
 $$
-t_H=\ln2\,(R_A+R_B)C, \tag{17.11}
+t_H=\ln2\,(R_A+R_B)C, \tag{16.11}
 $$
 
 $$
-t_L=\ln2\,R_BC, \tag{17.12}
+t_L=\ln2\,R_BC, \tag{16.12}
 $$
 
 e, portanto,
 
 $$
 T=\ln2\,(R_A+2R_B)C,\qquad
-f\approx\frac{1{,}443}{(R_A+2R_B)C}. \tag{17.13}
+f\approx\frac{1{,}443}{(R_A+2R_B)C}. \tag{16.13}
 $$
 
 O ciclo de trabalho ideal é
 
 $$
-D=\frac{R_A+R_B}{R_A+2R_B}. \tag{17.14}
+D=\frac{R_A+R_B}{R_A+2R_B}. \tag{16.14}
 $$
 
 Como $R_A>0$, essa configuração ideal não produz ciclo de trabalho inferior a
@@ -340,7 +340,7 @@ $D\approx60\%$.
 saída, correntes de descarga e valores recomendados de componentes, que diferem
 entre variantes do temporizador.
 
-## 17.5. Osciladores e geradores de relógio {#sec-timing-clock-generators}
+## 16.5. Osciladores e geradores de relógio {#sec-timing-clock-generators}
 
 Um **oscilador** produz um sinal periódico a partir de energia fornecida por
 uma fonte de alimentação. Em sistemas digitais, esse sinal frequentemente serve
@@ -410,7 +410,7 @@ redes RC com histerese e osciladores controlados eletricamente atendem a
 necessidades diferentes. A escolha depende do compromisso entre precisão,
 consumo, custo e integração.
 
-## 17.6. Cristais e referências de frequência {#sec-timing-crystals}
+## 16.6. Cristais e referências de frequência {#sec-timing-crystals}
 
 Cristais de quartzo exploram o efeito **piezoelétrico**: deformações mecânicas
 e grandezas elétricas interagem, permitindo ressonâncias de elevada
@@ -451,21 +451,21 @@ temperatura, envelhecimento e tolerâncias de fabricação. Em projetos que exig
 precisão elevada, podem ser utilizados osciladores compensados em temperatura
 (TCXO), controlados por temperatura (OCXO) ou referências externas.
 
-## 17.7. Divisão e multiplicação de frequência {#sec-timing-frequency-scaling}
+## 16.7. Divisão e multiplicação de frequência {#sec-timing-frequency-scaling}
 
 A divisão de frequência é frequentemente realizada com contadores e flip-flops.
 Um flip-flop configurado para alternar seu estado a cada borda ativa divide por
 dois a frequência do sinal de entrada:
 
 $$
-f_{\mathrm{out}}=\frac{f_{\mathrm{in}}}{2}. \tag{17.15}
+f_{\mathrm{out}}=\frac{f_{\mathrm{in}}}{2}. \tag{16.15}
 $$
 
 Uma cadeia de $n$ estágios divide a frequência por $2^n$, quando cada estágio
 realiza divisão por dois:
 
 $$
-f_{\mathrm{out}}=\frac{f_{\mathrm{in}}}{2^n}. \tag{17.16}
+f_{\mathrm{out}}=\frac{f_{\mathrm{in}}}{2^n}. \tag{16.16}
 $$
 
 Contadores programáveis permitem outros fatores inteiros de divisão. Deve-se
@@ -513,7 +513,7 @@ $$
 
 :::
 
-## 17.8. Circuitos de atraso e conformação de pulsos {#sec-timing-pulse-shaping}
+## 16.8. Circuitos de atraso e conformação de pulsos {#sec-timing-pulse-shaping}
 
 Um circuito de **conformação de pulsos** modifica a duração, a amplitude ou a
 qualidade das transições de um sinal. Exemplos incluem antirrepique, limitação
@@ -533,7 +533,7 @@ Em uma temporização digital por contagem de $N$ períodos de um relógio de
 frequência $f_{\mathrm{clk}}$,
 
 $$
-t=N\,T_{\mathrm{clk}}=\frac{N}{f_{\mathrm{clk}}}. \tag{17.17}
+t=N\,T_{\mathrm{clk}}=\frac{N}{f_{\mathrm{clk}}}. \tag{16.17}
 $$
 
 O intervalo efetivo pode apresentar erro de quantização temporal, dependendo de
@@ -553,7 +553,7 @@ A conformação de pulsos também exige atenção à **largura mínima de pulso*
 reconhecida pelo dispositivo receptor. Um pulso estreito demais pode não ser
 detectado ou pode produzir comportamento não especificado.
 
-## 17.9. Introdução aos PLLs {#sec-timing-pll}
+## 16.9. Introdução aos PLLs {#sec-timing-pll}
 
 Um **laço de travamento de fase** (_phase-locked loop_, PLL) é um sistema de
 realimentação que ajusta a frequência e a fase de um oscilador controlado para
@@ -595,7 +595,7 @@ condições ideais de travamento e supondo divisão inteira, a relação de
 frequências é
 
 $$
-f_{\mathrm{out}}=Nf_{\mathrm{ref}}. \tag{17.18}
+f_{\mathrm{out}}=Nf_{\mathrm{ref}}. \tag{16.18}
 $$
 
 Em arquiteturas mais gerais, pode haver também um divisor de referência $R$,
@@ -608,7 +608,7 @@ da dinâmica de aquisição e de possíveis instabilidades. Um projeto completo
 exige análise de controle e de ruído de fase, além do escopo introdutório deste
 capítulo.
 
-## 17.10. Aplicações de temporização {#sec-timing-applications}
+## 16.10. Aplicações de temporização {#sec-timing-applications}
 
 Os circuitos de temporização aparecem em numerosas funções de sistemas
 digitais:
@@ -633,7 +633,7 @@ consequentemente, o ciclo de trabalho $D$. Para uma saída ideal que alterna
 entre $0$ e $V_H$, a tensão média é
 
 $$
-\overline V=D\,V_H. \tag{17.19}
+\overline V=D\,V_H. \tag{16.19}
 $$
 
 A tensão média não descreve, sozinha, a resposta de qualquer carga. Em motores,
@@ -749,5 +749,5 @@ físicas de operação.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 16 — Memórias semicondutoras](semiconductor-memories.md) ·
-[Capítulo 18 — Conversores digital-analógico](digital-to-analog-converters.md)
+[Capítulo 15 — Memórias semicondutoras](semiconductor-memories.md) ·
+[Capítulo 17 — Conversores digital-analógico](digital-to-analog-converters.md)

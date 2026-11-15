@@ -913,7 +913,7 @@ A {@ref fig-binary-addition-carries} explicita os transportes da soma apresentad
 A divisão binária pode ser feita por subtrações e deslocamentos sucessivos. Em
 circuitos reais, somadores, subtratores e multiplicadores são implementados com
 redes lógicas e elementos de armazenamento; essas arquiteturas serão examinadas
-no Capítulo 8, dedicado aos circuitos aritméticos digitais.
+no Capítulo 7, dedicado aos circuitos aritméticos digitais.
 
 <!-- prettier-ignore -->
 Uma operação aritmética em palavra de largura fixa deve ser distinguida da operação sobre inteiros matemáticos sem limite de magnitude. Em uma palavra de $N$ bits, uma soma pode produzir um transporte além do bit mais significativo. O significado desse transporte depende da interpretação adotada, como veremos na {@ref sec-signed-unsigned-numbers}.

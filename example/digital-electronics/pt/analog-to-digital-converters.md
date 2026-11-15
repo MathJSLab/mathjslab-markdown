@@ -1,4 +1,4 @@
-# 19. Conversores analógico-digitais (ADC) {#chapter-19}
+# 18. Conversores analógico-digitais (ADC) {#chapter-18}
 
 Os **conversores analógico-digitais** (_analog-to-digital converters_, ADCs)
 transformam uma grandeza elétrica contínua, geralmente uma tensão, em uma
@@ -13,7 +13,7 @@ amplitude, referências de tensão, ruído, limitações dinâmicas e erros de
 implementação. O objetivo deste capítulo é compreender esses mecanismos e
 relacioná-los às principais arquiteturas de conversão.
 
-## 19.1. Amostragem e quantização
+## 18.1. Amostragem e quantização
 
 Em um ADC, distinguem-se duas operações conceituais. A **amostragem** associa
 instantes discretos a um sinal contínuo no tempo; a **quantização** associa
@@ -106,7 +106,7 @@ dispositivo.
 
 :::
 
-## 19.2. Teorema da amostragem
+## 18.2. Teorema da amostragem
 
 Um sinal estritamente limitado em banda, sem componentes de frequência acima de
 $B$, pode ser reconstruído idealmente a partir de amostras uniformes quando
@@ -137,7 +137,7 @@ informação adicional sobre a banda original.
 
 :::
 
-## 19.3. Erro de quantização e relação sinal-ruído
+## 18.3. Erro de quantização e relação sinal-ruído
 
 O **erro de quantização** é a diferença entre a amplitude amostrada e sua
 representação quantizada:
@@ -190,7 +190,7 @@ comportamento observado.
 Aumentar a resolução nominal reduz o passo de quantização, mas não elimina
 ruído térmico, distorção, instabilidade da referência ou erros de linearidade.
 
-## 19.4. Conversores por comparação paralela (_flash_)
+## 18.4. Conversores por comparação paralela (_flash_)
 
 Um ADC **flash** emprega vários comparadores simultâneos, alimentados por
 limiares derivados de uma rede de referência. Para $N$ bits, uma implementação
@@ -244,7 +244,7 @@ principal vantagem é a baixa latência de decisão. Em contrapartida, a
 quantidade de comparadores cresce exponencialmente com $N$, elevando área,
 potência, capacitância de entrada e complexidade de calibração.
 
-## 19.5. Conversores por rampa e contagem
+## 18.5. Conversores por rampa e contagem
 
 Um conversor por **rampa simples** compara a entrada a uma tensão que varia com
 o tempo. Um contador ou temporizador mede o instante em que a rampa cruza a
@@ -283,7 +283,7 @@ integrador retornar ao nível inicial. A duração da segunda fase é proporcion
 associadas à rede elétrica, quando os tempos de integração são escolhidos
 adequadamente.
 
-## 19.6. Conversores por aproximações sucessivas (SAR)
+## 18.6. Conversores por aproximações sucessivas (SAR)
 
 O ADC de **aproximações sucessivas** (_successive-approximation register_, SAR)
 determina os bits por decisões sucessivas, começando pelo mais significativo.
@@ -332,7 +332,7 @@ correspondente ao intervalo $[10,11)\,\mathrm{V}$.
 
 :::
 
-## 19.7. Conversores sigma-delta
+## 18.7. Conversores sigma-delta
 
 Conversores **sigma-delta** ($\Sigma\Delta$) utilizam sobreamostragem e
 realimentação para moldar a distribuição espectral do ruído de quantização. Um
@@ -392,7 +392,7 @@ Essa arquitetura é especialmente adequada a medições de alta resolução em
 bandas relativamente estreitas, embora latência, estabilidade do modulador e
 comportamento diante de mudanças abruptas precisem ser considerados.
 
-## 19.8. Resolução efetiva e desempenho dinâmico
+## 18.8. Resolução efetiva e desempenho dinâmico
 
 A resolução nominal $N$ informa a quantidade de códigos, mas não descreve,
 isoladamente, a qualidade de uma conversão. Entre as métricas utilizadas estão:
@@ -437,7 +437,7 @@ ao de um quantizador ideal de aproximadamente 10 bits.
 
 :::
 
-## 19.9. Aliasing e filtragem antialiasing
+## 18.9. Aliasing e filtragem antialiasing
 
 Um **filtro antialiasing** é colocado antes da amostragem para atenuar
 componentes analógicas que poderiam se sobrepor à banda útil depois da
@@ -483,7 +483,7 @@ filtragem digital posterior pode remover componentes já separadas em
 frequência, mas não desfaz, em geral, a sobreposição espectral provocada pela
 amostragem.
 
-## 19.10. Referências de tensão e condicionamento de entrada
+## 18.10. Referências de tensão e condicionamento de entrada
 
 A referência de tensão estabelece a escala de conversão. Sua estabilidade,
 ruído, deriva térmica e capacidade de fornecer corrente afetam diretamente a
@@ -512,7 +512,7 @@ nominal, desde que seus próprios erros não eliminem o benefício.
 
 :::
 
-## 19.11. Aplicações e critérios de seleção
+## 18.11. Aplicações e critérios de seleção
 
 A escolha de um ADC deve começar pelas exigências do sinal e do sistema, e não
 apenas pela quantidade de bits anunciada. Convém estabelecer a banda útil, a
@@ -556,7 +556,7 @@ condicionamento de entrada, da referência de tensão e dos critérios de mediç
 
 1. Um ADC ideal de 8 bits opera na faixa de $0$ a $3{,}3\,\mathrm{V}$. Calcule
    o passo de quantização e o número de códigos disponíveis.
-2. Para o quantizador ideal uniforme definido na Seção 19.1, determine o código
+2. Para o quantizador ideal uniforme definido na Seção 18.1, determine o código
    de saída para $v_{in}=1{,}25\,\mathrm{V}$, com $N=10$ e faixa
    $[0,5)\,\mathrm{V}$.
 3. Explique por que a condição $f_s>2B$ não dispensa o filtro antialiasing em

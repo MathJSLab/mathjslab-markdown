@@ -1,4 +1,4 @@
-# 14. Famílias lógicas e circuitos integrados digitais {#chapter-14}
+# 13. Famílias lógicas e circuitos integrados digitais {#chapter-13}
 
 O capítulo anterior mostrou como transistores bipolares e MOSFETs podem
 realizar o chaveamento eletrônico. Entretanto, o projeto de um sistema digital
@@ -18,7 +18,7 @@ apenas porque dois componentes implementam a mesma função booleana.
 Este capítulo compara as famílias clássicas e introduz critérios quantitativos
 de seleção e interligação de circuitos integrados digitais.
 
-## 14.1. Parâmetros elétricos das famílias lógicas {#sec-logic-families-parameters}
+## 13.1. Parâmetros elétricos das famílias lógicas {#sec-logic-families-parameters}
 
 Um circuito lógico real opera dentro de uma faixa de alimentação, temperatura e
 carga. Sua folha de dados distingue **valores recomendados de operação** de
@@ -53,7 +53,7 @@ onda e dependem da tensão de alimentação, da temperatura, da carga e da dire�
 da transição. Por isso, comparar números de catálogo sem comparar suas
 condições de medição pode levar a conclusões incorretas.
 
-## 14.2. Níveis de tensão e margens de ruído {#sec-logic-families-noise-margins}
+## 13.2. Níveis de tensão e margens de ruído {#sec-logic-families-noise-margins}
 
 Entre os níveis garantidos de entrada existe uma **região não especificada**,
 na qual o fabricante não assegura a interpretação lógica. Essa região não deve
@@ -63,11 +63,11 @@ As margens de ruído estáticas, para uma saída que aciona uma entrada
 compatível, são definidas por:
 
 $$
-NM_L=V_{IL,\max}-V_{OL,\max}. \tag{14.1}
+NM_L=V_{IL,\max}-V_{OL,\max}. \tag{13.1}
 $$
 
 $$
-NM_H=V_{OH,\min}-V_{IH,\min}. \tag{14.2}
+NM_H=V_{OH,\min}-V_{IH,\min}. \tag{13.2}
 $$
 
 Valores positivos indicam uma separação estática entre os níveis garantidos,
@@ -101,7 +101,7 @@ reflexões.
 
 A {@ref fig-logic-families-noise-margins} é conceitual: os níveis foram
 desenhados em posições ilustrativas, sem representar uma família específica. As
-duas colunas devem ser interpretadas com as equações (14.1) e (14.2), não como
+duas colunas devem ser interpretadas com as equações (13.1) e (13.2), não como
 uma escala numérica comum de valores garantidos.
 
 ::: example Cálculo das margens de ruído {#ex-logic-families-noise-margin}
@@ -114,7 +114,7 @@ especificação de um componente real.
 
 :::
 
-## 14.3. _Fan-in_, _fan-out_ e capacidade de acionamento {#sec-logic-families-fan-in-fan-out}
+## 13.3. _Fan-in_, _fan-out_ e capacidade de acionamento {#sec-logic-families-fan-in-fan-out}
 
 O **fan-in** é o número de entradas lógicas de uma porta. Aumentá-lo pode
 alterar o número de transistores, a capacitância de entrada e a complexidade
@@ -126,11 +126,11 @@ compatíveis, uma estimativa conservadora é:
 
 $$
 FO_L=\left\lfloor\frac{|I_{OL,\max}|}{|I_{IL}|}\right\rfloor,\qquad
-FO_H=\left\lfloor\frac{|I_{OH,\max}|}{|I_{IH}|}\right\rfloor. \tag{14.3}
+FO_H=\left\lfloor\frac{|I_{OH,\max}|}{|I_{IH}|}\right\rfloor. \tag{13.3}
 $$
 
 $$
-FO_{\mathrm{est}}=\min(FO_L,FO_H). \tag{14.4}
+FO_{\mathrm{est}}=\min(FO_L,FO_H). \tag{13.4}
 $$
 
 Os módulos evitam ambiguidades de convenção de sinais. Os valores usados devem
@@ -149,7 +149,7 @@ entradas ainda exigiria verificar a carga capacitiva e os tempos de transição.
 
 :::
 
-## 14.4. Família TTL e Schottky TTL {#sec-logic-families-ttl}
+## 13.4. Família TTL e Schottky TTL {#sec-logic-families-ttl}
 
 A família **TTL** (_transistor–transistor logic_) emprega transistores
 bipolares para realizar funções lógicas. Em suas arquiteturas clássicas, a
@@ -180,7 +180,7 @@ correntes excessivas.
 
 :::
 
-## 14.5. Famílias NMOS e pseudo-NMOS {#sec-logic-families-nmos}
+## 13.5. Famílias NMOS e pseudo-NMOS {#sec-logic-families-nmos}
 
 Circuitos **NMOS** podem implementar funções lógicas com transistores de canal
 n e uma carga que eleva a saída. Em arquiteturas clássicas, a carga pode ser
@@ -217,7 +217,7 @@ complementar ideal, o pseudo-NMOS pode dissipar potência estática significativ
 no estado baixo de saída. As dimensões relativas dos transistores influenciam o
 nível baixo obtido.
 
-## 14.6. Tecnologia CMOS {#sec-logic-families-cmos}
+## 13.6. Tecnologia CMOS {#sec-logic-families-cmos}
 
 A tecnologia **CMOS** (_complementary metal–oxide–semiconductor_) combina redes
 de transistores PMOS e NMOS. Em uma porta estática complementar bem projetada,
@@ -225,7 +225,7 @@ a rede de elevação e a rede de redução implementam condições lógicas
 complementares. Nos estados estáveis ideais, não existe caminho contínuo de
 baixa resistência entre a alimentação e o terra.
 
-O inversor CMOS estudado no Capítulo 13 é o exemplo mais simples. Uma porta
+O inversor CMOS estudado no Capítulo 12 é o exemplo mais simples. Uma porta
 NAND de duas entradas pode ser construída com dois PMOS em paralelo na rede de
 elevação e dois NMOS em série na rede de redução. A porta NOR utiliza o arranjo
 dual: PMOS em série e NMOS em paralelo.
@@ -247,7 +247,7 @@ $5\,\mathrm{V}$ sem confirmação explícita da folha de dados. As entradas MOS
 apresentam alta impedância estática, mas são sensíveis a cargas eletrostáticas
 e não devem permanecer flutuantes em condições de uso não previstas.
 
-## 14.7. Tecnologia BiCMOS {#sec-logic-families-bicmos}
+## 13.7. Tecnologia BiCMOS {#sec-logic-families-bicmos}
 
 A tecnologia **BiCMOS** integra dispositivos bipolares e MOSFETs no mesmo
 processo de fabricação. Os MOSFETs podem realizar funções de controle com
@@ -260,7 +260,7 @@ aplicação, do processo de fabricação e da arquitetura. A combinação de
 dispositivos também aumenta a complexidade tecnológica e pode não compensar em
 produtos que priorizam custo e consumo muito baixos.
 
-## 14.8. Família ECL {#sec-logic-families-ecl}
+## 13.8. Família ECL {#sec-logic-families-ecl}
 
 A família **ECL** (_emitter-coupled logic_) utiliza pares diferenciais
 bipolares e evita, em arquiteturas clássicas, a saturação profunda dos
@@ -274,7 +274,7 @@ análise dos níveis comuns de tensão, da polarização, da terminação e da
 capacidade de acionamento. Não é correto ligar sinais ECL diretamente a
 entradas CMOS apenas porque ambos representam 0 e 1.
 
-## 14.9. Portas especiais, saídas de três estados e coletor/dreno aberto {#sec-logic-families-special-outputs}
+## 13.9. Portas especiais, saídas de três estados e coletor/dreno aberto {#sec-logic-families-special-outputs}
 
 Uma saída **push-pull** possui dispositivos ativos para estabelecer tanto o
 nível alto quanto o baixo. Uma saída de **três estados** acrescenta a condição
@@ -351,25 +351,25 @@ dreno aberto pode ser aproximado por um circuito RC. Uma estimativa entre 10% e
 90% da tensão final é:
 
 $$
-t_r\approx 2{,}2R_PC_L. \tag{14.5}
+t_r\approx 2{,}2R_PC_L. \tag{13.5}
 $$
 
 A resistência menor acelera a subida, mas aumenta a corrente absorvida pelo
 transistor quando a saída está baixa. Assim, o dimensionamento exige um
 compromisso entre tempo de subida e corrente de condução.
 
-## 14.10. Compatibilidade e interfaces entre famílias {#sec-logic-families-interfaces}
+## 13.10. Compatibilidade e interfaces entre famílias {#sec-logic-families-interfaces}
 
 Uma interligação é válida somente se o dispositivo transmissor satisfizer
 simultaneamente os requisitos de tensão, corrente, temporização e limites de
 tensão aplicados ao receptor. Para os níveis estáticos, verificam-se:
 
 $$
-V_{OH,\min}^{(\mathrm{origem})}\ge V_{IH,\min}^{(\mathrm{destino})}, \tag{14.6}
+V_{OH,\min}^{(\mathrm{origem})}\ge V_{IH,\min}^{(\mathrm{destino})}, \tag{13.6}
 $$
 
 $$
-V_{OL,\max}^{(\mathrm{origem})}\le V_{IL,\max}^{(\mathrm{destino})}. \tag{14.7}
+V_{OL,\max}^{(\mathrm{origem})}\le V_{IL,\max}^{(\mathrm{destino})}. \tag{13.7}
 $$
 
 As desigualdades não bastam quando a tensão de saída pode ultrapassar os
@@ -403,20 +403,20 @@ adequados ou um tradutor de níveis, conforme as folhas de dados.
 
 :::
 
-## 14.11. Potência estática, dinâmica e produto potência-atraso {#sec-logic-families-power-delay}
+## 13.11. Potência estática, dinâmica e produto potência-atraso {#sec-logic-families-power-delay}
 
 A potência média consumida por um circuito depende das correntes de alimentação
 em repouso e durante as transições. Em primeira aproximação:
 
 $$
-P_{\mathrm{total}}\approx P_{\mathrm{est}}+P_{\mathrm{din}}+P_{\mathrm{curto}}. \tag{14.8}
+P_{\mathrm{total}}\approx P_{\mathrm{est}}+P_{\mathrm{din}}+P_{\mathrm{curto}}. \tag{13.8}
 $$
 
 Para uma carga capacitiva efetiva em CMOS, sob a convenção de $\alpha$ como
 número médio de transições $0\to1$ por ciclo:
 
 $$
-P_{\mathrm{din}}\approx \alpha C_LV_{DD}^{2}f. \tag{14.9}
+P_{\mathrm{din}}\approx \alpha C_LV_{DD}^{2}f. \tag{13.9}
 $$
 
 A potência estática inclui correntes de fuga e, em algumas famílias, correntes
@@ -428,7 +428,7 @@ Um indicador de compromisso entre consumo e velocidade é o **produto
 potência-atraso**:
 
 $$
-PDP=P_{\mathrm{médio}}t_{pd}. \tag{14.10}
+PDP=P_{\mathrm{médio}}t_{pd}. \tag{13.10}
 $$
 
 Sua unidade é o joule. A interpretação como energia associada a uma operação
@@ -445,7 +445,7 @@ nós ou correntes internas.
 
 :::
 
-## 14.12. Seleção de componentes por folhas de dados {#sec-logic-families-datasheets}
+## 13.12. Seleção de componentes por folhas de dados {#sec-logic-families-datasheets}
 
 A escolha de um circuito integrado começa pela função lógica e termina com a
 verificação das condições físicas de uso. A mesma porta NAND pode existir em
@@ -497,7 +497,7 @@ garantidos, correntes, cargas, atrasos e limites de operação. Saídas de três
 estados e de coletor/dreno aberto ampliam as possibilidades de interligação,
 mas exigem regras próprias de habilitação e dimensionamento. Esses conceitos
 fundamentam o estudo de integridade de sinais e implementação física no
-Capítulo 15.
+Capítulo 14.
 
 ## Exercícios propostos {#sec-logic-families-exercises}
 
@@ -564,6 +564,6 @@ Capítulo 15.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 13 — Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md)
+[Capítulo 12 — Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md)
 ·
-[Capítulo 15 — Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md)
+[Capítulo 14 — Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md)

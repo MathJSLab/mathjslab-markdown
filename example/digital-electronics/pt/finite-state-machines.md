@@ -1,6 +1,6 @@
-# 12. Máquinas de estados finitos {#chapter-12}
+# 11. Máquinas de estados finitos {#chapter-11}
 
-Os registradores e contadores do Capítulo 11 armazenam estados e os atualizam
+Os registradores e contadores do Capítulo 10 armazenam estados e os atualizam
 segundo regras bem definidas. Uma **máquina de estados finitos** (_finite-state
 machine_, FSM) generaliza essa ideia: seu comportamento é descrito por um
 conjunto finito de estados, condições de transição e saídas associadas aos
@@ -11,14 +11,14 @@ unidades de controle.
 Este capítulo adota, como modelo principal, máquinas sequenciais síncronas: as
 entradas são avaliadas por uma lógica combinacional, enquanto o estado é
 atualizado na borda ativa do relógio. O comportamento lógico é descrito
-separadamente das restrições físicas de temporização discutidas no Capítulo 10.
+separadamente das restrições físicas de temporização discutidas no Capítulo 9.
 
-## 12.1. Conceito de máquina de estados {#sec-fsm-concept}
+## 11.1. Conceito de máquina de estados {#sec-fsm-concept}
 
 Uma máquina de estados pode ser descrita pela quíntupla
 
 $$
-\mathcal{M}=(S,I,O,\delta,\lambda),\tag{12.1}
+\mathcal{M}=(S,I,O,\delta,\lambda),\tag{11.1}
 $$
 
 em que $S$ é o conjunto finito de estados, $I$ o conjunto de combinações de
@@ -26,7 +26,7 @@ entrada, $O$ o conjunto de saídas, $\delta$ a função de transição e $\lambd
 função de saída. Para uma máquina síncrona, o próximo estado é calculado como
 
 $$
-S^{+}=\delta(S,I).\tag{12.2}
+S^{+}=\delta(S,I).\tag{11.2}
 $$
 
 O estado presente $S$ resume a informação histórica necessária para determinar
@@ -95,7 +95,7 @@ descrevem etapas distintas de operação. A presença de um sensor não cria, po
 si só, um novo estado; ela pode apenas determinar a transição entre estados
 existentes.
 
-## 12.2. Modelos de Moore e Mealy {#sec-fsm-moore-mealy}
+## 11.2. Modelos de Moore e Mealy {#sec-fsm-moore-mealy}
 
 A classificação mais comum distingue as máquinas **de Moore** e **de Mealy**
 pela função de saída.
@@ -103,13 +103,13 @@ pela função de saída.
 Na máquina de Moore, a saída depende exclusivamente do estado presente:
 
 $$
-O=\lambda(S).\tag{12.3}
+O=\lambda(S).\tag{11.3}
 $$
 
 Na máquina de Mealy, a saída depende do estado e das entradas presentes:
 
 $$
-O=\lambda(S,I).\tag{12.4}
+O=\lambda(S,I).\tag{11.4}
 $$
 
 <!-- prettier-ignore -->
@@ -141,7 +141,7 @@ realizar funções de controle semelhantes.
 
 :::
 
-## 12.3. Diagramas e tabelas de transição {#sec-fsm-diagrams-tables}
+## 11.3. Diagramas e tabelas de transição {#sec-fsm-diagrams-tables}
 
 Um **diagrama de estados** representa os estados como nós e as transições como
 setas. Uma **tabela de transição** registra, para cada par estado–entrada, o
@@ -190,14 +190,14 @@ A seta de inicialização no diagrama indica o estado de partida lógico, mas n�
 substitui o circuito de _reset_ necessário para garantir esse estado no
 equipamento real.
 
-## 12.4. Codificação de estados {#sec-fsm-state-encoding}
+## 11.4. Codificação de estados {#sec-fsm-state-encoding}
 
 Para implementar uma FSM, cada estado simbólico precisa receber uma
 representação binária. Se a máquina possui $N$ estados, a codificação binária
 compacta exige ao menos
 
 $$
-n=\lceil\log_2 N\rceil\tag{12.5}
+n=\lceil\log_2 N\rceil\tag{11.5}
 $$
 
 bits de estado. Outras codificações podem usar mais bits para simplificar a
@@ -235,7 +235,7 @@ Os códigos não utilizados precisam ter comportamento especificado. Um _reset_
 deve estabelecer um estado válido, e o projeto pode prever recuperação caso uma
 falha coloque a máquina em um código inválido.
 
-## 12.5. Minimização de estados {#sec-fsm-state-minimization}
+## 11.5. Minimização de estados {#sec-fsm-state-minimization}
 
 A **minimização de estados** busca eliminar estados funcionalmente
 indistinguíveis sem alterar o comportamento observável da máquina. Dois estados
@@ -277,7 +277,7 @@ Estados inalcançáveis a partir da inicialização também podem ser removidos,
 desde que não exista requisito de recuperação que exija tratá-los
 explicitamente.
 
-## 12.6. Síntese de máquinas sequenciais {#sec-fsm-synthesis}
+## 11.6. Síntese de máquinas sequenciais {#sec-fsm-synthesis}
 
 A **síntese** transforma uma especificação de estados em uma rede de lógica
 combinacional e elementos de memória. O procedimento compreende: definir
@@ -290,13 +290,13 @@ com um _flip-flop_ D de estado $Q$. A tabela mostra que o próximo estado é
 igual à entrada $X$, independentemente do estado atual:
 
 $$
-D=Q^{+}=X.\tag{12.6}
+D=Q^{+}=X.\tag{11.6}
 $$
 
 A saída Moore é simplesmente
 
 $$
-Y=Q.\tag{12.7}
+Y=Q.\tag{11.7}
 $$
 
 <!-- prettier-ignore -->
@@ -320,13 +320,13 @@ $$
 O exemplo evidencia que uma especificação com estados pode, após síntese,
 resultar em circuito muito simples. Para máquinas maiores, as funções
 $D_i=f_i(Q,I)$ são obtidas da tabela de transição e podem ser minimizadas pelos
-métodos estudados no Capítulo 5.
+métodos estudados no Capítulo 4.
 
 É importante não confundir **minimização de estados** com **minimização da
 lógica**: uma máquina com menos estados pode exigir uma rede combinacional mais
 complexa, dependendo da codificação escolhida.
 
-## 12.7. Detectores de sequências {#sec-fsm-sequence-detectors}
+## 11.7. Detectores de sequências {#sec-fsm-sequence-detectors}
 
 Um **detector de sequências** reconhece padrões específicos em um fluxo de
 bits. Seu estado representa o maior prefixo do padrão que coincide com o sufixo
@@ -386,7 +386,7 @@ duas ocorrências de $101$ que compartilham um bit.
 
 :::
 
-## 12.8. Controladores digitais {#sec-fsm-digital-controllers}
+## 11.8. Controladores digitais {#sec-fsm-digital-controllers}
 
 Um **controlador digital** coordena ações segundo eventos e condições do
 sistema. Sua FSM pode comandar atuadores, habilitar operações, aguardar
@@ -421,7 +421,7 @@ ocorram fora de $IDLE$ não são armazenadas. Se isso não for aceitável, o
 controlador deverá incluir um mecanismo adicional, como um sinal de _busy_, uma
 fila ou uma regra explícita para pedidos pendentes.
 
-## 12.9. Projeto de unidades de controle {#sec-fsm-control-units}
+## 11.9. Projeto de unidades de controle {#sec-fsm-control-units}
 
 Em sistemas digitais maiores, a **unidade de controle** determina a sequência
 de micro-operações executadas pelo caminho de dados (_datapath_). Enquanto o
@@ -481,13 +481,13 @@ com controle microprogramado, parte das decisões pode ser codificada em uma
 memória de controle. Ambas as abordagens relacionam estados ou endereços de
 controle a conjuntos de micro-operações.
 
-## 12.10. Verificação funcional de máquinas de estados {#sec-fsm-verification}
+## 11.10. Verificação funcional de máquinas de estados {#sec-fsm-verification}
 
 A verificação deve confirmar não apenas as transições esperadas, mas também a
 inicialização, a permanência em estados de espera, a prioridade de comandos e o
 comportamento diante de sequências de entradas não triviais.
 
-Para o detector de $101$ da seção 12.7, uma implementação em Verilog pode usar
+Para o detector de $101$ da seção 11.7, uma implementação em Verilog pode usar
 codificação simbólica dos estados e um bloco combinacional para calcular
 próximo estado e saída:
 
@@ -623,5 +623,5 @@ funcional, os estados excepcionais e as restrições temporais da implementaçã
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 11 — Registradores e contadores](registers-and-counters.md) ·
-[Capítulo 13 — Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md)
+[Capítulo 10 — Registradores e contadores](registers-and-counters.md) ·
+[Capítulo 12 — Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md)

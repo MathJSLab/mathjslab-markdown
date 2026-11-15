@@ -1,4 +1,4 @@
-# 21. Linguagens de descrição de hardware {#chapter-21}
+# 20. Linguagens de descrição de hardware {#chapter-20}
 
 Os dispositivos lógicos programáveis estudados no capítulo anterior permitem
 implementar circuitos complexos sem que cada conexão seja definida manualmente.
@@ -17,9 +17,9 @@ Neste capítulo, VHDL e Verilog são apresentados por meio de exemplos pequenos 
 verificáveis. O objetivo não é esgotar suas normas, mas estabelecer os
 conceitos necessários para escrever, interpretar, simular e sintetizar
 descrições digitais. O fluxo completo de projeto e verificação será aprofundado
-no Capítulo 22.
+no Capítulo 21.
 
-## 21.1. Descrição estrutural e comportamental
+## 20.1. Descrição estrutural e comportamental
 
 Uma descrição **estrutural** identifica componentes e as conexões entre eles.
 Uma descrição **comportamental** especifica como as saídas e os estados
@@ -66,7 +66,7 @@ estabelece uma sequência temporal de execução. Já dentro de certos processos
 ordem das instruções possui significado para a semântica da linguagem. Essa
 distinção é essencial para interpretar corretamente o código.
 
-## 21.2. Conceitos de VHDL e Verilog
+## 20.2. Conceitos de VHDL e Verilog
 
 **VHDL** e **Verilog** são linguagens padronizadas amplamente utilizadas em
 projeto digital. VHDL organiza frequentemente a interface em uma `entity` e a
@@ -142,7 +142,7 @@ SystemVerilog, a declaração `logic` e as construções `always_comb` e
 A escolha da linguagem e de sua versão deve corresponder às ferramentas
 disponíveis.
 
-## 21.3. Representação de lógica combinacional
+## 20.3. Representação de lógica combinacional
 
 Um circuito combinacional satisfaz, idealmente, uma relação da forma
 
@@ -221,7 +221,7 @@ preservar o valor anterior quando `habilita = 0`; em síntese, isso pode
 resultar em um _latch_. Quando se deseja lógica combinacional, todas as saídas
 devem receber atribuição em todos os ramos, incluindo condições padrão.
 
-## 21.4. Representação de circuitos sequenciais
+## 20.4. Representação de circuitos sequenciais
 
 Circuitos sequenciais dependem das entradas e do estado armazenado. Para um
 registrador de um bit com captura na borda de subida,
@@ -317,9 +317,9 @@ requisitos do sistema e dos recursos do dispositivo.
 A {@ref fig-hdl-register-datapath} ilustra a separação entre cálculo e
 armazenamento. Em sistemas reais, os atrasos da lógica combinacional, do
 registrador e da distribuição do relógio determinam a frequência admissível,
-conforme estudado no Capítulo 10.
+conforme estudado no Capítulo 9.
 
-## 21.5. Processos síncronos e assíncronos
+## 20.5. Processos síncronos e assíncronos
 
 A palavra **processo** designa uma construção da HDL, não necessariamente um
 processador físico. Em VHDL, um `process` executa instruções sequenciais
@@ -382,7 +382,7 @@ sistema. Um circuito pode possuir entradas que mudam sem relação com seu
 relógio; nesse caso, a sincronização física dessas entradas é uma questão
 separada da forma de escrever o processo em HDL.
 
-## 21.6. Simulação e bancos de testes
+## 20.6. Simulação e bancos de testes
 
 A **simulação funcional** avalia como a descrição responde a estímulos
 definidos, antes da implementação física. Um **banco de testes** (_testbench_)
@@ -390,7 +390,7 @@ instancia o circuito sob teste, aplica entradas e verifica as saídas. Ele pode
 conter comandos de espera, geração de relógio, relatórios e verificações
 automáticas que não se destinam à síntese.
 
-Para o multiplexador da Seção 21.3, podemos aplicar as oito combinações
+Para o multiplexador da Seção 20.3, podemos aplicar as oito combinações
 binárias de três entradas e comparar a saída com o valor esperado.
 
 <!-- prettier-ignore -->
@@ -456,7 +456,7 @@ com uma especificação ou um modelo de referência. Para circuitos sequenciais,
 também é necessário controlar a ordem dos estímulos em relação às bordas do
 relógio.
 
-## 21.7. Síntese lógica
+## 20.7. Síntese lógica
 
 A **síntese** transforma uma descrição HDL compatível com hardware em uma
 representação lógica, frequentemente denominada _netlist_. O resultado pode
@@ -504,7 +504,7 @@ ferramenta poderá inferir um latch. Da mesma forma, um sinal atribuído em bord
 de relógio tende a corresponder a um registrador, desde que a descrição seja
 suportada pela ferramenta.
 
-## 21.8. Restrições de temporização
+## 20.8. Restrições de temporização
 
 A descrição funcional não estabelece, por si só, se o circuito pode operar na
 frequência pretendida. O projeto precisa de **restrições temporais** que
@@ -526,7 +526,7 @@ t_{CQ,\min}+t_{comb,\min}\ge t_{hold}.
 $$
 
 As expressões completas, incluindo diferenças de chegada de relógio e
-incertezas, foram estudadas no Capítulo 10. A verificação temporal deve
+incertezas, foram estudadas no Capítulo 9. A verificação temporal deve
 considerar o circuito **após o mapeamento e a implementação física**, pois
 interconexões e recursos selecionados afetam os atrasos.
 
@@ -547,7 +547,7 @@ Restrições incorretas podem ser tão perigosas quanto uma implementação
 incorreta. Um caminho não analisado ou indevidamente declarado como falso pode
 falhar no hardware mesmo que a ferramenta apresente um relatório sem violações.
 
-## 21.9. Correspondência entre HDL e hardware implementado
+## 20.9. Correspondência entre HDL e hardware implementado
 
 O mesmo comportamento pode ser descrito de maneiras diferentes e resultar em
 implementações com áreas, frequências e consumos distintos. A relação entre HDL
@@ -630,7 +630,7 @@ temporais e análise dos resultados físicos.
    de dados. Apresente uma situação em que cada abordagem seja conveniente.
 2. Escreva, em VHDL e em Verilog, a função $Y=\overline{A}B+AC$ usando
    atribuições concorrentes.
-3. Construa a tabela-verdade do multiplexador apresentado na Seção 21.3 e
+3. Construa a tabela-verdade do multiplexador apresentado na Seção 20.3 e
    explique o papel do sinal de seleção.
 4. Escreva um módulo Verilog combinacional que produza o bit de paridade de
    quatro entradas. Justifique a escolha do operador.
@@ -652,7 +652,7 @@ temporais e análise dos resultados físicos.
     $t_{comb,\max}=5{,}2\ \mathrm{ns}$ e $t_{setup}=0{,}6\ \mathrm{ns}$.
     Desconsiderando _skew_ e incertezas, determine o menor período nominal de
     relógio permitido pela condição simplificada de _setup_.
-12. Descreva como o contador de quatro bits da Seção 21.9 pode ser realizado
+12. Descreva como o contador de quatro bits da Seção 20.9 pode ser realizado
     por registradores e lógica combinacional. Explique por que a implementação
     física pode diferir entre dispositivos.
 13. Discuta por que uma simulação funcional bem-sucedida não substitui a

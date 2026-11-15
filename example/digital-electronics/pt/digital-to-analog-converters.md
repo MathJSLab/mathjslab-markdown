@@ -1,4 +1,4 @@
-# 18. Conversores digital-analógico (DAC) {#chapter-18}
+# 17. Conversores digital-analógico (DAC) {#chapter-17}
 
 Os sistemas digitais armazenam e processam códigos discretos, mas muitas de
 suas aplicações exigem sinais elétricos capazes de atuar sobre equipamentos
@@ -13,20 +13,20 @@ arquiteturas de DAC, os parâmetros de exatidão e os critérios de aplicação.
 expressões são deduzidas sob hipóteses explícitas; valores e limites de
 componentes reais devem ser conferidos em suas folhas de dados.
 
-## 18.1. Princípios da conversão digital-analógica {#sec-dac-principles}
+## 17.1. Princípios da conversão digital-analógica {#sec-dac-principles}
 
 Um DAC de $N$ bits recebe uma palavra $b_{N-1}\ldots b_1b_0$, com
 $b_i\in\{0,1\}$, e produz uma saída associada ao número inteiro sem sinal
 
 $$
-D=\sum_{i=0}^{N-1}b_i2^i,\qquad 0\le D\le 2^N-1. \tag{18.1}
+D=\sum_{i=0}^{N-1}b_i2^i,\qquad 0\le D\le 2^N-1. \tag{17.1}
 $$
 
 Para um DAC ideal **unipolar**, com saída em tensão, referência positiva
 $V_{\mathrm{ref}}$ e convenção de escala binária, a transferência é
 
 $$
-V_{\mathrm{out}}(D)=V_{\mathrm{ref}}\frac{D}{2^N}. \tag{18.2}
+V_{\mathrm{out}}(D)=V_{\mathrm{ref}}\frac{D}{2^N}. \tag{17.2}
 $$
 
 A saída cresce em degraus iguais. O maior código não alcança
@@ -60,27 +60,27 @@ digital, interface serial, terra de referência e circuitos de saída.
 Uma forma geral de representar um DAC unipolar é
 
 $$
-Y(D)=Y_0+K_D D, \tag{18.3}
+Y(D)=Y_0+K_D D, \tag{17.3}
 $$
 
 em que $Y$ é tensão ou corrente, $Y_0$ é o valor associado ao código zero e
 $K_D$ é o incremento ideal por código. O modelo permite distinguir o ganho de
 conversão da origem da escala.
 
-## 18.2. Resolução, faixa e quantização {#sec-dac-resolution}
+## 17.2. Resolução, faixa e quantização {#sec-dac-resolution}
 
 A **resolução nominal** de um DAC de $N$ bits corresponde à existência de $2^N$
-códigos possíveis. Para a convenção da Equação (18.2), o tamanho do degrau,
+códigos possíveis. Para a convenção da Equação (17.2), o tamanho do degrau,
 frequentemente denominado **1 LSB** (_least significant bit_), é
 
 $$
-\Delta V=\frac{V_{\mathrm{ref}}}{2^N}. \tag{18.4}
+\Delta V=\frac{V_{\mathrm{ref}}}{2^N}. \tag{17.4}
 $$
 
 A **faixa de saída codificável** estende-se de zero até
 
 $$
-V_{\max}=(2^N-1)\Delta V=V_{\mathrm{ref}}-\Delta V. \tag{18.5}
+V_{\max}=(2^N-1)\Delta V=V_{\mathrm{ref}}-\Delta V. \tag{17.5}
 $$
 
 Não se deve confundir o intervalo nominal definido pela referência com a maior
@@ -150,7 +150,7 @@ dentro da faixa representável; saturação nos extremos e convenções de
 codificação exigem tratamento próprio. Esse erro de representação não deve ser
 confundido com os erros físicos do conversor.
 
-## 18.3. Conversores por resistores ponderados {#sec-dac-weighted-resistors}
+## 17.3. Conversores por resistores ponderados {#sec-dac-weighted-resistors}
 
 Um método direto de conversão consiste em atribuir a cada bit uma contribuição
 de corrente proporcional ao seu peso binário. Em uma implementação com
@@ -158,7 +158,7 @@ amplificador operacional somador, cada bit habilita ou desabilita um ramo
 resistivo. Se o resistor associado ao bit $b_i$ for escolhido como
 
 $$
-R_i=2^{N-1-i}R, \tag{18.6}
+R_i=2^{N-1-i}R, \tag{17.6}
 $$
 
 então, supondo uma tensão lógica ideal $V_H$ nos ramos ativos e terra virtual
@@ -166,7 +166,7 @@ na entrada inversora, a corrente do ramo será $I_i=b_iV_H/R_i$. Com resistor de
 realimentação $R_f$, a saída ideal do somador inversor será
 
 $$
-V_{\mathrm{out}}=-\frac{R_fV_H}{R}\sum_{i=0}^{N-1}\frac{b_i}{2^{N-1-i}}. \tag{18.7}
+V_{\mathrm{out}}=-\frac{R_fV_H}{R}\sum_{i=0}^{N-1}\frac{b_i}{2^{N-1-i}}. \tag{17.7}
 $$
 
 A polaridade negativa decorre da configuração inversora; outros estágios podem
@@ -200,7 +200,7 @@ razões muito diferentes. Para $N$ bits, a razão entre o maior e o menor
 resistor ideal é $2^{N-1}$. Em resoluções elevadas, tolerâncias, resistências
 das chaves e correntes de fuga tornam difícil manter os pesos relativos.
 
-## 18.4. Conversores em escada R–2R {#sec-dac-r2r-ladder}
+## 17.4. Conversores em escada R–2R {#sec-dac-r2r-ladder}
 
 A **escada R–2R** usa apenas duas resistências nominais, $R$ e $2R$,
 organizadas em uma rede repetitiva. Em condições ideais, cada estágio divide a
@@ -246,7 +246,7 @@ chave conecta seu ramo a uma referência ou a um potencial de retorno
 apropriado, preservando a rede de resistências vista pelos demais ramos.
 
 Para um DAC ideal com escala binária, a soma ponderada continua sendo dada pela
-Equação (18.2). A rede R–2R é um modo de realizar fisicamente esses pesos, não
+Equação (17.2). A rede R–2R é um modo de realizar fisicamente esses pesos, não
 uma mudança na regra de codificação.
 
 A precisão depende do casamento entre resistores, da resistência e da injeção
@@ -254,7 +254,7 @@ de carga das chaves, das capacitâncias parasitas e das condições de referênc
 Mesmo com resistores nominais idênticos, diferenças de fabricação podem gerar
 erros de linearidade.
 
-## 18.5. Conversores por corrente {#sec-dac-current-steering}
+## 17.5. Conversores por corrente {#sec-dac-current-steering}
 
 Em DACs por **direcionamento de corrente** (_current steering_), fontes de
 corrente são comutadas entre um nó de saída e um caminho alternativo. Em uma
@@ -262,7 +262,7 @@ versão binariamente ponderada ideal,
 
 $$
 I_{\mathrm{out}}=I_{\mathrm{LSB}}\sum_{i=0}^{N-1}b_i2^i
-=I_{\mathrm{LSB}}D. \tag{18.8}
+=I_{\mathrm{LSB}}D. \tag{17.8}
 $$
 
 Uma alternativa utiliza **fontes de corrente unitárias**, com várias unidades
@@ -313,7 +313,7 @@ temporização das chaves, ruído e distorção dinâmica.
 
 :::
 
-## 18.6. Erros de offset, ganho e linearidade {#sec-dac-static-errors}
+## 17.6. Erros de offset, ganho e linearidade {#sec-dac-static-errors}
 
 Um DAC real não produz exatamente os níveis previstos pela transferência ideal.
 Os erros estáticos são caracterizados por medidas distintas.
@@ -337,7 +337,7 @@ adjacentes em relação ao degrau ideal. Se $Y(D)$ é a saída estática,
 
 $$
 \operatorname{DNL}(D)=\frac{Y(D)-Y(D-1)}{\Delta Y_{\mathrm{ideal}}}-1,
-\quad D=1,\ldots,2^N-1. \tag{18.9}
+\quad D=1,\ldots,2^N-1. \tag{17.9}
 $$
 
 A DNL costuma ser expressa em LSB. Um DAC é **monotônico** se sua saída não
@@ -365,7 +365,7 @@ de saída, sensibilidade à carga e interferências entre alimentação digital 
 analógica. **Resolução nominal** não é sinônimo de **exatidão**: um DAC de
 muitos bits pode apresentar erros maiores que um LSB.
 
-## 18.7. Tempo de acomodação {#sec-dac-settling-time}
+## 17.7. Tempo de acomodação {#sec-dac-settling-time}
 
 A saída de um DAC não muda instantaneamente quando o código é atualizado. O
 **tempo de acomodação** (_settling time_) é o intervalo necessário para que a
@@ -414,7 +414,7 @@ Em sistemas de controle e geração de formas de onda, a taxa de atualização
 admissível depende do tempo de acomodação exigido e da precisão necessária em
 cada amostra.
 
-## 18.8. Conversão por modulação de largura de pulso {#sec-dac-pwm-conversion}
+## 17.8. Conversão por modulação de largura de pulso {#sec-dac-pwm-conversion}
 
 A **modulação por largura de pulso** (_pulse-width modulation_, PWM) alterna um
 sinal entre dois níveis, modificando a fração do período em que permanece no
@@ -422,13 +422,13 @@ nível alto. Para níveis $V_L$ e $V_H$ e ciclo de trabalho $d=t_H/T$, a média
 ideal é
 
 $$
-\overline V=dV_H+(1-d)V_L. \tag{18.10}
+\overline V=dV_H+(1-d)V_L. \tag{17.10}
 $$
 
 Quando $V_L=0$,
 
 $$
-\overline V=dV_H. \tag{18.11}
+\overline V=dV_H. \tag{17.11}
 $$
 
 Um filtro passa-baixas pode atenuar as componentes alternadas e aproximar a
@@ -479,7 +479,7 @@ um temporizador digital e a aplicação tolera filtragem e latência. Para sinai
 de alta fidelidade, alta largura de banda ou baixa ondulação, outras
 arquiteturas podem ser mais adequadas.
 
-## 18.9. Aplicações e critérios de seleção {#sec-dac-applications}
+## 17.9. Aplicações e critérios de seleção {#sec-dac-applications}
 
 DACs aparecem em geração de sinais de teste, instrumentação, controle de
 atuadores, síntese de áudio, ajustes programáveis de referência, fontes
@@ -541,7 +541,7 @@ resposta.
 2. Para o DAC do exercício anterior, calcule a saída ideal correspondente a
    $D=512$.
 3. Qual é a maior tensão de saída ideal de um DAC de $8$ bits com referência de
-   $3{,}3\,\mathrm V$ na convenção da Equação (18.2)?
+   $3{,}3\,\mathrm V$ na convenção da Equação (17.2)?
 4. Explique por que o código máximo não alcança a referência nessa convenção.
 5. Em um DAC de $4$ bits por resistores ponderados, qual é a razão entre o
    maior e o menor resistor ideal?
@@ -611,6 +611,6 @@ resposta.
 ---
 
 [Voltar ao sumário](README.md) ·
-[Capítulo 17 — Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md)
+[Capítulo 16 — Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md)
 ·
-[Capítulo 19 — Conversores analógico-digitais](analog-to-digital-converters.md)
+[Capítulo 18 — Conversores analógico-digitais](analog-to-digital-converters.md)

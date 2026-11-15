@@ -1,7 +1,7 @@
 # Apêndice F. Respostas e soluções selecionadas {#appendix-f}
 
 Este apêndice reúne soluções comentadas de exercícios efetivamente propostos no
-**Capítulo 25** e nos **Apêndices A, D e E** de _Eletrônica Digital_. A
+**Capítulo 24** e nos **Apêndices A, D e E** de _Eletrônica Digital_. A
 numeração conserva a correspondência com os enunciados originais. As respostas
 discursivas e os projetos apresentados constituem **soluções possíveis**, não
 implementações únicas nem substitutos para a verificação experimental.
@@ -231,86 +231,86 @@ documentada.
 um transmissor UART e verificar se a sequência recebida corresponde às
 contagens geradas. O teste integra circuitos sequenciais e comunicação serial.
 
-## F.5. Capítulo 25 — Projetos integradores
+## F.5. Capítulo 24 — Projetos integradores
 
-**25.1 — Maioria com cinco entradas.** A saída é 1 quando pelo menos três
+**24.1 — Maioria com cinco entradas.** A saída é 1 quando pelo menos três
 entradas são 1. Para $x_i\in\{0,1\}$, a condição é $\sum_{i=1}^{5}x_i\geq3$.
 Uma implementação possível usa a soma dos bits e um comparador.
 
-**25.2 — Maioria de três entradas com NAND.** A função é $M=AB+AC+BC$. Gere
+**24.2 — Maioria de três entradas com NAND.** A função é $M=AB+AC+BC$. Gere
 $n_1=\overline{AB}$, $n_2=\overline{AC}$, $n_3=\overline{BC}$ e depois
 $M=\overline{n_1n_2n_3}$, empregando NAND de três entradas na etapa final (ou
 decomposição em NAND de duas entradas).
 
-**25.3 — Confirmação registrada.** Uma solução é armazenar o resultado de
+**24.3 — Confirmação registrada.** Uma solução é armazenar o resultado de
 maioria em um flip-flop na borda de confirmação. O reset coloca a saída
 registrada em 0; entradas que mudem sem confirmação não alteram o valor
 armazenado.
 
-**25.4 — Falha do semáforo.** Defina uma transição para estado seguro diante de
+**24.4 — Falha do semáforo.** Defina uma transição para estado seguro diante de
 falha detectada. O padrão luminoso deve ser escolhido conforme os requisitos e
 as normas aplicáveis; desligar todas as lâmpadas não é universalmente seguro.
 
-**25.5 — Divisor de 100 MHz.** Para contar $100\,000\,000$ ciclos, é preciso
+**24.5 — Divisor de 100 MHz.** Para contar $100\,000\,000$ ciclos, é preciso
 representar valores de 0 a $99\,999\,999$. Como $2^{26}<100\,000\,000<2^{27}$,
 o contador requer **27 bits**. A emissão de um pulso a cada contagem completa
 produz habilitação de 1 Hz.
 
-**25.6 — Virada de dia.** Verifique a sequência
+**24.6 — Virada de dia.** Verifique a sequência
 $23{:}59{:}58\to23{:}59{:}59\to00{:}00{:}00$; confirme que horas, minutos e
 segundos mudam de maneira coerente na mesma transição de atualização e que não
 surgem valores inválidos.
 
-**25.7 — Antirrepique.** Sincronize o botão com o clock, aguarde estabilidade
+**24.7 — Antirrepique.** Sincronize o botão com o clock, aguarde estabilidade
 por um intervalo definido e gere um único pulso por acionamento. Teste pressões
 rápidas, longas e com múltiplas oscilações.
 
-**25.8 — Três senhas incorretas.** Use um contador de tentativas consecutivas,
+**24.8 — Três senhas incorretas.** Use um contador de tentativas consecutivas,
 zerado após autenticação válida conforme a política adotada. Ao atingir três
 falhas, entre em estado bloqueado; defina explicitamente o procedimento
 autorizado de desbloqueio.
 
-**25.9 — Soma na ULA.** Pela tabela da Seção 25.5, $S=10$ seleciona soma.
+**24.9 — Soma na ULA.** Pela tabela da Seção 24.5, $S=10$ seleciona soma.
 $1111_2+0001_2=10000_2$; a saída de quatro bits é $\boxed{0000_2}$, com
 transporte $C=1$. Em complemento de dois, $-1+1=0$, portanto **não ocorre
 transbordamento com sinal** ($V=0$).
 
-**25.10 — Novas operações.** Amplie o campo de seleção para três bits,
+**24.10 — Novas operações.** Amplie o campo de seleção para três bits,
 preservando as quatro operações originais e acrescentando, por exemplo, `100`
 para XOR e `101` para deslocamento lógico à esquerda. Defina o preenchimento
 com zero e o destino do bit deslocado.
 
-**25.11 — Taxa de armazenamento.** $25\,000$ amostras/s $\times16$ bits/amostra
+**24.11 — Taxa de armazenamento.** $25\,000$ amostras/s $\times16$ bits/amostra
 = $\boxed{400\,000\,\mathrm{bit/s}}=\boxed{50\,000\,\mathrm{bytes/s}}$.
 
-**25.12 — Buffer para 20 ms.** $25\,000\times0{,}020=500$ amostras. A 2 bytes
+**24.12 — Buffer para 20 ms.** $25\,000\times0{,}020=500$ amostras. A 2 bytes
 por amostra, a capacidade mínima teórica é $\boxed{1000\ \text{bytes}}$; uma
 implementação deve prever margem para controle e variações temporais.
 
-**25.13 — Sinal `DONE`.** Conte as bordas consecutivas em que `DONE=1` após
+**24.13 — Sinal `DONE`.** Conte as bordas consecutivas em que `DONE=1` após
 cada solicitação. A aprovação exige exatamente uma borda ativa por operação
 concluída, seguida de retorno a zero antes da próxima conclusão.
 
-**25.14 — Solicitação contínua.** Detecte a borda de subida de `START` ou exija
+**24.14 — Solicitação contínua.** Detecte a borda de subida de `START` ou exija
 que o sinal volte a zero antes de aceitar nova operação. Um estado de espera
 pela liberação impede repetição involuntária.
 
-**25.15 — Acumulador de média.** O maior valor de 12 bits é 4095. A soma máxima
+**24.15 — Acumulador de média.** O maior valor de 12 bits é 4095. A soma máxima
 de 32 amostras é $32\cdot4095=131040$, que cabe em **17 bits**. A média inteira
 pode ser obtida dividindo a soma por 32, com a política de arredondamento
 escolhida.
 
-**25.16 — Protocolo UART.** Uma proposta: byte de início de mensagem,
+**24.16 — Protocolo UART.** Uma proposta: byte de início de mensagem,
 comprimento, identificador, dados e checksum de oito bits. O receptor verifica
 comprimento e checksum antes de aceitar a mensagem; o mecanismo detecta alguns
 erros, mas não todos.
 
-**25.17 — Matriz de rastreabilidade.** Associe cada requisito a pelo menos um
+**24.17 — Matriz de rastreabilidade.** Associe cada requisito a pelo menos um
 teste: período de amostragem → medição entre pulsos; ordem FIFO → sequência
 conhecida; integridade dos registros → comparação de dados; reset →
 reinicialização em diferentes estados.
 
-**25.18 — Tecnologias de implementação.** Portas discretas favorecem
+**24.18 — Tecnologias de implementação.** Portas discretas favorecem
 demonstrações simples, mas aumentam interconexões. CPLD pode ser apropriado
 para controle de complexidade moderada e temporização previsível. FPGA oferece
 mais recursos e integração, exigindo ferramentas, configuração e análise
