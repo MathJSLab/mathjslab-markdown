@@ -32,7 +32,7 @@ sistemas.
 - 2.9. Códigos BCD, Gray e códigos alfanuméricos
 - 2.10. Códigos de detecção de erros e paridade
 
-### 3. [Álgebra booleana e funções lógicas](boolean-algebra-and-logic-functions.md) {#chapter-03}
+### 3. [Fundamentos da lógica digital: representações matemáticas e circuitos lógicos](boolean-algebra-and-logic-functions.md) {#chapter-03}
 
 - 3.1. Conjuntos, universo e operações
 - 3.2. Lógica proposicional
@@ -44,295 +44,284 @@ sistemas.
 - 3.8. Equivalência das representações
 - 3.9. Síntese conceitual e fronteiras do modelo
 
-### 4. [Portas lógicas e representação de circuitos](logic-gates-and-circuit-representation.md) {#chapter-04}
-
-- 4.1. Portas NOT, AND e OR
-- 4.2. Portas NAND e NOR
-- 4.3. Portas XOR e XNOR
-- 4.4. Portas universais
-- 4.5. Símbolos e convenções de representação
-- 4.6. Implementação de funções por portas lógicas
-- 4.7. Circuitos multiníveis
-- 4.8. Introdução ao atraso de propagação e aos diagramas temporais
-
 ## Parte II — Análise e síntese de circuitos combinacionais
 
-### 5. [Simplificação e minimização de funções lógicas](logic-function-simplification-and-minimization.md) {#chapter-05}
+### 4. [Simplificação e minimização de funções lógicas](logic-function-simplification-and-minimization.md) {#chapter-04}
 
-- 5.1. Simplificação algébrica
-- 5.2. Mapas de Karnaugh
-- 5.3. Agrupamentos e implicantes
-- 5.4. Condições indiferentes (_don’t care_)
-- 5.5. Método de Quine–McCluskey
-- 5.6. Seleção de implicantes essenciais
-- 5.7. Minimização de circuitos multiníveis
-- 5.8. Compromissos entre área, atraso e consumo
-- 5.9. Riscos lógicos (_hazards_) e condições transitórias
+- 4.1. Simplificação algébrica
+- 4.2. Mapas de Karnaugh
+- 4.3. Agrupamentos e implicantes
+- 4.4. Condições indiferentes (_don’t care_)
+- 4.5. Método de Quine–McCluskey
+- 4.6. Seleção de implicantes essenciais
+- 4.7. Minimização de circuitos multiníveis
+- 4.8. Compromissos entre área, atraso e consumo
+- 4.9. Riscos lógicos (_hazards_) e condições transitórias
 
-### 6. [Projeto de circuitos combinacionais](combinational-circuit-design.md) {#chapter-06}
+### 5. [Projeto de circuitos combinacionais](combinational-circuit-design.md) {#chapter-05}
 
-- 6.1. Especificação funcional
-- 6.2. Modelagem por tabelas-verdade
-- 6.3. Análise de circuitos existentes
-- 6.4. Síntese de circuitos a partir de especificações
-- 6.5. Circuitos de votação e decisão
-- 6.6. Detectores e geradores de paridade
-- 6.7. Circuitos de comparação
-- 6.8. Validação e testes funcionais
+- 5.1. Especificação funcional
+- 5.2. Modelagem por tabelas-verdade
+- 5.3. Análise de circuitos existentes
+- 5.4. Síntese de circuitos a partir de especificações
+- 5.5. Circuitos de votação e decisão
+- 5.6. Detectores e geradores de paridade
+- 5.7. Circuitos de comparação
+- 5.8. Validação e testes funcionais
 
-### 7. [Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md) {#chapter-07}
+### 6. [Codificadores, decodificadores e seleção de dados](encoders-decoders-and-data-selection.md) {#chapter-06}
 
-- 7.1. Codificadores binários
-- 7.2. Codificadores com prioridade
-- 7.3. Decodificadores
-- 7.4. Conversores de códigos
-- 7.5. Displays de sete segmentos
-- 7.6. Multiplexadores
-- 7.7. Demultiplexadores
-- 7.8. Implementação de funções com multiplexadores
-- 7.9. Estruturas de seleção e roteamento de sinais
+- 6.1. Codificadores binários
+- 6.2. Codificadores com prioridade
+- 6.3. Decodificadores
+- 6.4. Conversores de códigos
+- 6.5. Displays de sete segmentos
+- 6.6. Multiplexadores
+- 6.7. Demultiplexadores
+- 6.8. Implementação de funções com multiplexadores
+- 6.9. Estruturas de seleção e roteamento de sinais
 
-### 8. [Circuitos aritméticos digitais](digital-arithmetic-circuits.md) {#chapter-08}
+### 7. [Circuitos aritméticos digitais](digital-arithmetic-circuits.md) {#chapter-07}
 
-- 8.1. Meio somador e somador completo
-- 8.2. Somadores de múltiplos bits
-- 8.3. Propagação de transporte (_carry_)
-- 8.4. Somadores com antecipação de transporte
-- 8.5. Subtratores e circuitos somadores-subtratores
-- 8.6. Detecção de transbordamento (_overflow_)
-- 8.7. Comparadores aritméticos
-- 8.8. Multiplicação binária e circuitos multiplicadores
-- 8.9. Deslocadores e operações bit a bit
-- 8.10. Unidade lógica e aritmética (ULA)
+- 7.1. Meio somador e somador completo
+- 7.2. Somadores de múltiplos bits
+- 7.3. Propagação de transporte (_carry_)
+- 7.4. Somadores com antecipação de transporte
+- 7.5. Subtratores e circuitos somadores-subtratores
+- 7.6. Detecção de transbordamento (_overflow_)
+- 7.7. Comparadores aritméticos
+- 7.8. Multiplicação binária e circuitos multiplicadores
+- 7.9. Deslocadores e operações bit a bit
+- 7.10. Unidade lógica e aritmética (ULA)
 
 ## Parte III — Circuitos sequenciais e sistemas síncronos
 
-### 9. [Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md) {#chapter-09}
+### 8. [Fundamentos dos circuitos sequenciais](sequential-circuit-fundamentals.md) {#chapter-08}
 
-- 9.1. Estado e memória
-- 9.2. Realimentação lógica
-- 9.3. Circuitos síncronos e assíncronos
-- 9.4. Sinais de relógio (_clock_)
-- 9.5. Diagramas temporais
-- 9.6. Latches SR e D
-- 9.7. Flip-flops SR, JK, D e T
-- 9.8. Entradas assíncronas de controle
-- 9.9. Equações características e tabelas de excitação
+- 8.1. Estado e memória
+- 8.2. Realimentação lógica
+- 8.3. Circuitos síncronos e assíncronos
+- 8.4. Sinais de relógio (_clock_)
+- 8.5. Diagramas temporais
+- 8.6. Latches SR e D
+- 8.7. Flip-flops SR, JK, D e T
+- 8.8. Entradas assíncronas de controle
+- 8.9. Equações características e tabelas de excitação
 
-### 10. [Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md) {#chapter-10}
+### 9. [Temporização e confiabilidade de circuitos sequenciais](sequential-timing-and-reliability.md) {#chapter-09}
 
-- 10.1. Atrasos de propagação
-- 10.2. Tempos de estabelecimento (_setup_) e retenção (_hold_)
-- 10.3. Frequência máxima de operação
-- 10.4. Distribuição de relógio e _clock skew_
-- 10.5. Metastabilidade
-- 10.6. Sincronização de entradas assíncronas
-- 10.7. Domínios de relógio e transferência de sinais
-- 10.8. Condições de corrida e riscos temporais
+- 9.1. Atrasos de propagação
+- 9.2. Tempos de estabelecimento (_setup_) e retenção (_hold_)
+- 9.3. Frequência máxima de operação
+- 9.4. Distribuição de relógio e _clock skew_
+- 9.5. Metastabilidade
+- 9.6. Sincronização de entradas assíncronas
+- 9.7. Domínios de relógio e transferência de sinais
+- 9.8. Condições de corrida e riscos temporais
 
-### 11. [Registradores e contadores](registers-and-counters.md) {#chapter-11}
+### 10. [Registradores e contadores](registers-and-counters.md) {#chapter-10}
 
-- 11.1. Registradores paralelos
-- 11.2. Registradores de deslocamento
-- 11.3. Conversão série-paralelo e paralelo-série
-- 11.4. Registradores bidirecionais
-- 11.5. Contadores assíncronos
-- 11.6. Contadores síncronos
-- 11.7. Contadores de módulo arbitrário
-- 11.8. Contadores em anel e Johnson
-- 11.9. Divisores de frequência
-- 11.10. Aplicações de contadores e registradores
+- 10.1. Registradores paralelos
+- 10.2. Registradores de deslocamento
+- 10.3. Conversão série-paralelo e paralelo-série
+- 10.4. Registradores bidirecionais
+- 10.5. Contadores assíncronos
+- 10.6. Contadores síncronos
+- 10.7. Contadores de módulo arbitrário
+- 10.8. Contadores em anel e Johnson
+- 10.9. Divisores de frequência
+- 10.10. Aplicações de contadores e registradores
 
-### 12. [Máquinas de estados finitos](finite-state-machines.md) {#chapter-12}
+### 11. [Máquinas de estados finitos](finite-state-machines.md) {#chapter-11}
 
-- 12.1. Conceito de máquina de estados
-- 12.2. Modelos de Moore e Mealy
-- 12.3. Diagramas e tabelas de transição
-- 12.4. Codificação de estados
-- 12.5. Minimização de estados
-- 12.6. Síntese de máquinas sequenciais
-- 12.7. Detectores de sequências
-- 12.8. Controladores digitais
-- 12.9. Projeto de unidades de controle
-- 12.10. Verificação funcional de máquinas de estados
+- 11.1. Conceito de máquina de estados
+- 11.2. Modelos de Moore e Mealy
+- 11.3. Diagramas e tabelas de transição
+- 11.4. Codificação de estados
+- 11.5. Minimização de estados
+- 11.6. Síntese de máquinas sequenciais
+- 11.7. Detectores de sequências
+- 11.8. Controladores digitais
+- 11.9. Projeto de unidades de controle
+- 11.10. Verificação funcional de máquinas de estados
 
 ## Parte IV — Implementação eletrônica dos circuitos digitais
 
-### 13. [Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md) {#chapter-13}
+### 12. [Dispositivos semicondutores e chaveamento digital](semiconductor-devices-and-digital-switching.md) {#chapter-12}
 
-- 13.1. Fundamentos de semicondutores aplicados à lógica digital
-- 13.2. Diodos e transistores como chaves
-- 13.3. Transistores bipolares de junção
-- 13.4. Transistores MOSFET
-- 13.5. Regiões de operação e chaveamento
-- 13.6. Características estáticas e dinâmicas
-- 13.7. Inversores implementados com transistores
-- 13.8. Dissipação de potência e limitações físicas
+- 12.1. Fundamentos de semicondutores aplicados à lógica digital
+- 12.2. Diodos e transistores como chaves
+- 12.3. Transistores bipolares de junção
+- 12.4. Transistores MOSFET
+- 12.5. Regiões de operação e chaveamento
+- 12.6. Características estáticas e dinâmicas
+- 12.7. Inversores implementados com transistores
+- 12.8. Dissipação de potência e limitações físicas
 
-### 14. [Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md) {#chapter-14}
+### 13. [Famílias lógicas e circuitos integrados digitais](logic-families-and-digital-integrated-circuits.md) {#chapter-13}
 
-- 14.1. Parâmetros elétricos das famílias lógicas
-- 14.2. Níveis de tensão e margens de ruído
-- 14.3. _Fan-in_, _fan-out_ e capacidade de acionamento
-- 14.4. Família TTL e Schottky TTL
-- 14.5. Famílias NMOS e pseudo-NMOS
-- 14.6. Tecnologia CMOS
-- 14.7. Tecnologia BiCMOS
-- 14.8. Família ECL
-- 14.9. Portas especiais, saídas de três estados e coletor/dreno aberto
-- 14.10. Compatibilidade e interfaces entre famílias
-- 14.11. Potência estática, dinâmica e produto potência-atraso
-- 14.12. Seleção de componentes por folhas de dados
+- 13.1. Parâmetros elétricos das famílias lógicas
+- 13.2. Níveis de tensão e margens de ruído
+- 13.3. _Fan-in_, _fan-out_ e capacidade de acionamento
+- 13.4. Família TTL e Schottky TTL
+- 13.5. Famílias NMOS e pseudo-NMOS
+- 13.6. Tecnologia CMOS
+- 13.7. Tecnologia BiCMOS
+- 13.8. Família ECL
+- 13.9. Portas especiais, saídas de três estados e coletor/dreno aberto
+- 13.10. Compatibilidade e interfaces entre famílias
+- 13.11. Potência estática, dinâmica e produto potência-atraso
+- 13.12. Seleção de componentes por folhas de dados
 
-### 15. [Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md) {#chapter-15}
+### 14. [Integridade de sinais e implementação física](signal-integrity-and-physical-implementation.md) {#chapter-14}
 
-- 15.1. Modelos reais de entradas e saídas digitais
-- 15.2. Capacitâncias parasitas e cargas
-- 15.3. Tempos de subida e descida
-- 15.4. Reflexões e linhas de transmissão
-- 15.5. Ruído, interferência e diafonia
-- 15.6. Aterramento e desacoplamento
-- 15.7. Terminação de sinais
-- 15.8. Interligação de circuitos integrados
-- 15.9. Cuidados no projeto de placas de circuito impresso
-- 15.10. Testes, medições e diagnóstico de falhas
+- 14.1. Modelos reais de entradas e saídas digitais
+- 14.2. Capacitâncias parasitas e cargas
+- 14.3. Tempos de subida e descida
+- 14.4. Reflexões e linhas de transmissão
+- 14.5. Ruído, interferência e diafonia
+- 14.6. Aterramento e desacoplamento
+- 14.7. Terminação de sinais
+- 14.8. Interligação de circuitos integrados
+- 14.9. Cuidados no projeto de placas de circuito impresso
+- 14.10. Testes, medições e diagnóstico de falhas
 
 ## Parte V — Memórias, temporização e conversão de sinais
 
-### 16. [Memórias semicondutoras](semiconductor-memories.md) {#chapter-16}
+### 15. [Memórias semicondutoras](semiconductor-memories.md) {#chapter-15}
 
-- 16.1. Organização e endereçamento
-- 16.2. Células de memória
-- 16.3. Memórias ROM, PROM, EPROM e EEPROM
-- 16.4. Memórias SRAM e DRAM
-- 16.5. Memórias Flash
-- 16.6. Organização em palavras e bancos
-- 16.7. Barramentos de endereço, dados e controle
-- 16.8. Ciclos de leitura e escrita
-- 16.9. Temporização e desempenho
-- 16.10. Memórias síncronas e assíncronas
-- 16.11. Seleção e expansão de memórias
+- 15.1. Organização e endereçamento
+- 15.2. Células de memória
+- 15.3. Memórias ROM, PROM, EPROM e EEPROM
+- 15.4. Memórias SRAM e DRAM
+- 15.5. Memórias Flash
+- 15.6. Organização em palavras e bancos
+- 15.7. Barramentos de endereço, dados e controle
+- 15.8. Ciclos de leitura e escrita
+- 15.9. Temporização e desempenho
+- 15.10. Memórias síncronas e assíncronas
+- 15.11. Seleção e expansão de memórias
 
-### 17. [Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md) {#chapter-17}
+### 16. [Circuitos de temporização e geração de pulsos](timing-and-pulse-generation-circuits.md) {#chapter-16}
 
-- 17.1. Redes RC de temporização
-- 17.2. Comparadores com histerese e disparadores Schmitt
-- 17.3. Circuitos monoestáveis, astáveis e biestáveis
-- 17.4. Temporizadores integrados
-- 17.5. Osciladores e geradores de relógio
-- 17.6. Cristais e referências de frequência
-- 17.7. Divisão e multiplicação de frequência
-- 17.8. Circuitos de atraso e conformação de pulsos
-- 17.9. Introdução aos PLLs
-- 17.10. Aplicações de temporização
+- 16.1. Redes RC de temporização
+- 16.2. Comparadores com histerese e disparadores Schmitt
+- 16.3. Circuitos monoestáveis, astáveis e biestáveis
+- 16.4. Temporizadores integrados
+- 16.5. Osciladores e geradores de relógio
+- 16.6. Cristais e referências de frequência
+- 16.7. Divisão e multiplicação de frequência
+- 16.8. Circuitos de atraso e conformação de pulsos
+- 16.9. Introdução aos PLLs
+- 16.10. Aplicações de temporização
 
-### 18. [Conversores digital-analógico (DAC)](digital-to-analog-converters.md) {#chapter-18}
+### 17. [Conversores digital-analógico (DAC)](digital-to-analog-converters.md) {#chapter-17}
 
-- 18.1. Princípios da conversão digital-analógica
-- 18.2. Resolução, faixa e quantização
-- 18.3. Conversores por resistores ponderados
-- 18.4. Conversores em escada R–2R
-- 18.5. Conversores por corrente
-- 18.6. Erros de offset, ganho e linearidade
-- 18.7. Tempo de acomodação
-- 18.8. Conversão por modulação de largura de pulso
-- 18.9. Aplicações e critérios de seleção
+- 17.1. Princípios da conversão digital-analógica
+- 17.2. Resolução, faixa e quantização
+- 17.3. Conversores por resistores ponderados
+- 17.4. Conversores em escada R–2R
+- 17.5. Conversores por corrente
+- 17.6. Erros de offset, ganho e linearidade
+- 17.7. Tempo de acomodação
+- 17.8. Conversão por modulação de largura de pulso
+- 17.9. Aplicações e critérios de seleção
 
-### 19. [Conversores analógico-digitais (ADC)](analog-to-digital-converters.md) {#chapter-19}
+### 18. [Conversores analógico-digitais (ADC)](analog-to-digital-converters.md) {#chapter-18}
 
-- 19.1. Amostragem e quantização
-- 19.2. Teorema da amostragem
-- 19.3. Erro de quantização e relação sinal-ruído
-- 19.4. Conversores por comparação paralela (_flash_)
-- 19.5. Conversores por rampa e contagem
-- 19.6. Conversores por aproximações sucessivas (SAR)
-- 19.7. Conversores sigma-delta
-- 19.8. Resolução efetiva e desempenho dinâmico
-- 19.9. Aliasing e filtragem antialiasing
-- 19.10. Referências de tensão e condicionamento de entrada
-- 19.11. Aplicações e critérios de seleção
+- 18.1. Amostragem e quantização
+- 18.2. Teorema da amostragem
+- 18.3. Erro de quantização e relação sinal-ruído
+- 18.4. Conversores por comparação paralela (_flash_)
+- 18.5. Conversores por rampa e contagem
+- 18.6. Conversores por aproximações sucessivas (SAR)
+- 18.7. Conversores sigma-delta
+- 18.8. Resolução efetiva e desempenho dinâmico
+- 18.9. Aliasing e filtragem antialiasing
+- 18.10. Referências de tensão e condicionamento de entrada
+- 18.11. Aplicações e critérios de seleção
 
 ## Parte VI — Dispositivos programáveis e projeto digital
 
-### 20. [Dispositivos lógicos programáveis](programmable-logic-devices.md) {#chapter-20}
+### 19. [Dispositivos lógicos programáveis](programmable-logic-devices.md) {#chapter-19}
 
-- 20.1. Conceito de lógica programável
-- 20.2. ROM como implementação de funções lógicas
-- 20.3. PLA e PAL
-- 20.4. PLDs e CPLDs
-- 20.5. Arquitetura básica de FPGAs
-- 20.6. Blocos lógicos configuráveis
-- 20.7. Redes de interconexão programáveis
-- 20.8. Recursos de memória e processamento
-- 20.9. Comparação entre lógica discreta, CPLDs e FPGAs
-- 20.10. Aplicações de dispositivos programáveis
+- 19.1. Conceito de lógica programável
+- 19.2. ROM como implementação de funções lógicas
+- 19.3. PLA e PAL
+- 19.4. PLDs e CPLDs
+- 19.5. Arquitetura básica de FPGAs
+- 19.6. Blocos lógicos configuráveis
+- 19.7. Redes de interconexão programáveis
+- 19.8. Recursos de memória e processamento
+- 19.9. Comparação entre lógica discreta, CPLDs e FPGAs
+- 19.10. Aplicações de dispositivos programáveis
 
-### 21. [Linguagens de descrição de hardware](hardware-description-languages.md) {#chapter-21}
+### 20. [Linguagens de descrição de hardware](hardware-description-languages.md) {#chapter-20}
 
-- 21.1. Descrição estrutural e comportamental
-- 21.2. Conceitos de VHDL e Verilog
-- 21.3. Representação de lógica combinacional
-- 21.4. Representação de circuitos sequenciais
-- 21.5. Processos síncronos e assíncronos
-- 21.6. Simulação e bancos de testes
-- 21.7. Síntese lógica
-- 21.8. Restrições de temporização
-- 21.9. Correspondência entre HDL e hardware implementado
+- 20.1. Descrição estrutural e comportamental
+- 20.2. Conceitos de VHDL e Verilog
+- 20.3. Representação de lógica combinacional
+- 20.4. Representação de circuitos sequenciais
+- 20.5. Processos síncronos e assíncronos
+- 20.6. Simulação e bancos de testes
+- 20.7. Síntese lógica
+- 20.8. Restrições de temporização
+- 20.9. Correspondência entre HDL e hardware implementado
 
-### 22. [Metodologia de projeto e verificação digital](digital-design-and-verification-methodology.md) {#chapter-22}
+### 21. [Metodologia de projeto e verificação digital](digital-design-and-verification-methodology.md) {#chapter-21}
 
-- 22.1. Especificação de requisitos
-- 22.2. Decomposição funcional e arquitetura
-- 22.3. Modelagem e simulação
-- 22.4. Síntese e otimização
-- 22.5. Análise estática de temporização
-- 22.6. Testes funcionais e estruturais
-- 22.7. Projeto para testabilidade
-- 22.8. Implementação em circuitos discretos e FPGA
-- 22.9. Validação experimental
-- 22.10. Documentação técnica
+- 21.1. Especificação de requisitos
+- 21.2. Decomposição funcional e arquitetura
+- 21.3. Modelagem e simulação
+- 21.4. Síntese e otimização
+- 21.5. Análise estática de temporização
+- 21.6. Testes funcionais e estruturais
+- 21.7. Projeto para testabilidade
+- 21.8. Implementação em circuitos discretos e FPGA
+- 21.9. Validação experimental
+- 21.10. Documentação técnica
 
 ## Parte VII — Integração e aplicações
 
-### 23. [Interfaces e comunicação entre sistemas digitais](digital-system-interfaces-and-communication.md) {#chapter-23}
+### 22. [Interfaces e comunicação entre sistemas digitais](digital-system-interfaces-and-communication.md) {#chapter-22}
 
-- 23.1. Barramentos e sinais de controle
-- 23.2. Comunicação paralela e serial
-- 23.3. Interfaces síncronas e assíncronas
-- 23.4. Princípios de UART, SPI e I²C
-- 23.5. UART e camadas físicas: RS-232
-- 23.6. Barramento 1-Wire e identificação de dispositivos
-- 23.7. Sinalização diferencial: RS-422 e RS-485
-- 23.8. PROFIBUS e redes industriais
-- 23.9. JTAG: teste, depuração e programação
-- 23.10. Integridade do sinal e dimensionamento das interconexões
-- 23.11. Adaptação de níveis lógicos
-- 23.12. Buffers e isolamento
-- 23.13. Interface com sensores e atuadores
-- 23.14. Integração com conversores e memórias
-- 23.15. Comparação e critérios de escolha
+- 22.1. Barramentos e sinais de controle
+- 22.2. Comunicação paralela e serial
+- 22.3. Interfaces síncronas e assíncronas
+- 22.4. Princípios de UART, SPI e I²C
+- 22.5. UART e camadas físicas: RS-232
+- 22.6. Barramento 1-Wire e identificação de dispositivos
+- 22.7. Sinalização diferencial: RS-422 e RS-485
+- 22.8. PROFIBUS e redes industriais
+- 22.9. JTAG: teste, depuração e programação
+- 22.10. Integridade do sinal e dimensionamento das interconexões
+- 22.11. Adaptação de níveis lógicos
+- 22.12. Buffers e isolamento
+- 22.13. Interface com sensores e atuadores
+- 22.14. Integração com conversores e memórias
+- 22.15. Comparação e critérios de escolha
 
-### 24. [Sistemas digitais integrados](integrated-digital-systems.md) {#chapter-24}
+### 23. [Sistemas digitais integrados](integrated-digital-systems.md) {#chapter-23}
 
-- 24.1. Organização em caminho de dados e controle
-- 24.2. Interligação de blocos combinacionais e sequenciais
-- 24.3. Temporização global do sistema
-- 24.4. Projeto de controladores
-- 24.5. Sistemas de aquisição de dados
-- 24.6. Introdução à organização de processadores
-- 24.7. Compromissos entre desempenho, consumo e custo
-- 24.8. Exemplos de sistemas digitais completos
+- 23.1. Organização em caminho de dados e controle
+- 23.2. Interligação de blocos combinacionais e sequenciais
+- 23.3. Temporização global do sistema
+- 23.4. Projeto de controladores
+- 23.5. Sistemas de aquisição de dados
+- 23.6. Introdução à organização de processadores
+- 23.7. Compromissos entre desempenho, consumo e custo
+- 23.8. Exemplos de sistemas digitais completos
 
-### 25. [Projetos integradores](integrative-projects.md) {#chapter-25}
+### 24. [Projetos integradores](integrative-projects.md) {#chapter-24}
 
-- 25.1. Sistema de votação digital
-- 25.2. Controlador de semáforo
-- 25.3. Relógio e cronômetro digital
-- 25.4. Controlador de acesso por código
-- 25.5. Unidade aritmética e lógica
-- 25.6. Sistema de aquisição e apresentação de dados
-- 25.7. Controlador baseado em máquina de estados
-- 25.8. Projeto integrado com FPGA
+- 24.1. Sistema de votação digital
+- 24.2. Controlador de semáforo
+- 24.3. Relógio e cronômetro digital
+- 24.4. Controlador de acesso por código
+- 24.5. Unidade aritmética e lógica
+- 24.6. Sistema de aquisição e apresentação de dados
+- 24.7. Controlador baseado em máquina de estados
+- 24.8. Projeto integrado com FPGA
 
 ## Apêndices
 
@@ -440,7 +429,7 @@ sistemas.
 - F.2. Apêndice A — Fundamentos matemáticos complementares
 - F.3. Apêndice D — Introdução às ferramentas de simulação
 - F.4. Apêndice E — Experimentos de laboratório
-- F.5. Capítulo 25 — Projetos integradores
+- F.5. Capítulo 24 — Projetos integradores
 - F.6. Limites e critérios de validação
 
 ### Apêndice G. Glossário técnico {#appendix-g}

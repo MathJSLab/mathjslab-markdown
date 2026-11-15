@@ -292,8 +292,9 @@ $$
 V_C(t)=V_{DD}\left(1-e^{-t/RC}\right). \tag{13.7}
 $$
 
-O instante em que $V_C$ atinge metade de $V_{DD}$ é $t_{50\%}=RC\ln
-2\approx0{,}693RC$. Esse resultado é útil como aproximação de atraso de uma
+<!-- prettier-ignore -->
+O instante em que $V_C$ atinge metade de $V_{DD}$ é $t_{50\%}=RC\ln 2\approx0{,}693RC$.
+Esse resultado é útil como aproximação de atraso de uma
 transição, mas **não** substitui a medição ou os parâmetros de temporização
 especificados para uma porta lógica real.
 
